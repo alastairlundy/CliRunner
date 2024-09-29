@@ -1,1 +1,1 @@
-# PlatformKit.CoreRunner
+# PlatformKit.CliRunner
