@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TargetFrameworks>net8.0;netstandard2.0;net6.0</TargetFrameworks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>CliRunner</Title>
+        <Authors>AlastairLundy</Authors>
+    </PropertyGroup>
+
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="PlatformKit.Extensions.OperatingSystem" Version="1.*" />
+    </ItemGroup>
+
+
+
+
+    <ItemGroup>
+      <Folder Include="Processes\" />
+    </ItemGroup>
+
+</Project>
