@@ -6,7 +6,7 @@
 
 using System;
 
-namespace CliRunner.Commands.Abstractions
+namespace CliRunner.Processes.Abstractions
 {
     public interface IProcessResult
     {
