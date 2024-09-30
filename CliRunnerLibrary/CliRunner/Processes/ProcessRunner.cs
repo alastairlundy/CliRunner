@@ -51,7 +51,8 @@ namespace CliRunner
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
-        public IProcessResult RunProcessOnWindows(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null,
+        public ProcessResult RunProcessOnWindows(string executableLocation, string executableName,
+            string arguments = "", ProcessStartInfo? processStartInfo = null,
             bool runAsAdministrator = false, bool insertExeInExecutableNameIfMissing = true)
         {
             Process process;
@@ -126,7 +127,7 @@ namespace CliRunner
         /// <param name="executableLocation">The working directory of the executable.</param>
         /// <param name="executableName">The name of the file to be run.</param>
         /// <param name="processArguments">Arguments to be passed to the executable.</param>
-        public IProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
+        public ProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
         {
             ProcessStartInfo procStartInfo = new ProcessStartInfo
             {
@@ -171,7 +172,7 @@ namespace CliRunner
         /// <param name="arguments">Arguments to be passed to the executable.</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public IProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
+        public ProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
         {
             ProcessStartInfo procStartInfo;
                 
@@ -197,7 +198,7 @@ namespace CliRunner
                 
             Process process = new Process { StartInfo = procStartInfo };
             process.Start();
-
+            
             process.WaitForExit();
 
             ProcessResult output = new ProcessResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
@@ -211,8 +212,10 @@ namespace CliRunner
         /// <param name="executableLocation">The working directory of the executable.</param>
         /// <param name="executableName">The name of the file to be run.</param>
         /// <param name="arguments">Arguments to be passed to the executable.</param>
+        /// <param name="processStartInfo"></param>
         /// <returns></returns>
-        public IProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
+        public ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName,
+            string arguments = "", ProcessStartInfo? processStartInfo = null)
         {
             return RunProcessOnLinux(executableLocation, executableName, arguments, processStartInfo);
         }

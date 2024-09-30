@@ -15,13 +15,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
    */
 
+using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
 namespace CliRunner
 {
     public class ExecutableRunner : IExecutableRunner
     {
-        public IProcessResult Execute(string executableLocation, string executableName, bool runAsAdministrator)
+        public ProcessResult Execute(string executableLocation, string executableName, bool runAsAdministrator)
         {
             throw new System.NotImplementedException();
         }

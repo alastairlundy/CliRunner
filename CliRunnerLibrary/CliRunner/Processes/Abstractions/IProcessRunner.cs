@@ -16,23 +16,24 @@
    */
 
 using System.Diagnostics;
-using CliRunner.Processes.Abstractions;
+
+using CliRunner.Processes;
 
 namespace CliRunner
 {
     public interface IProcessRunner
     {
-        IProcessResult RunProcessOnWindows(string executableLocation, string executableName, string arguments = "",
+        ProcessResult RunProcessOnWindows(string executableLocation, string executableName, string arguments = "",
             ProcessStartInfo? processStartInfo = null, bool runAsAdministrator = false,
             bool insertExeInExecutableNameIfMissing = true);
         
-        IProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "",
+        ProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "",
             ProcessStartInfo? processStartInfo = null);
 
-        IProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "",
+        ProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "",
             ProcessStartInfo? processStartInfo = null);
 
-        IProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, string arguments = "",
+        ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, string arguments = "",
             ProcessStartInfo? processStartInfo = null);
 
     }
