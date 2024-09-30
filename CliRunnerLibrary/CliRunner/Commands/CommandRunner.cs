@@ -16,11 +16,15 @@
    */
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Text;
 
 using CliRunner.Commands.Abstractions;
+using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -59,38 +63,67 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("maccatalyst")]
     #endif
      public ProcessResult RunCommandOnMac(string command, bool runAsAdministrator = false)
+     {
+            List<string> args = command.Split(' ').ToList();
+            string commandName = args[0];
+            
+            args.RemoveAt(0);
+            
+            string location = "/usr/bin/";
+
+            Command actualCommand = new Command(commandName, location,
+                args, false, false, true); 
+         
+            return RunCommandOnMac(actualCommand, runAsAdministrator);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="runAsAdministrator"></param>
+        /// <returns></returns>
+        /// <exception cref="PlatformNotSupportedException"></exception>
+        public ProcessResult RunCommandOnMac(Command command, bool runAsAdministrator = false)
         {
-            if (OperatingSystem.IsMacOS() == false)
+            if (OperatingSystem.IsMacOS() == false || command.SupportsMac == false)
             {
                 throw new PlatformNotSupportedException();
             }
-            
-            string location = "/usr/bin/";
-                    
-            string[] array = command.Split(' ');
 
-            if (array.Length > 1)
+            string args = "";
+            
+            string commandName = command.Name;
+            
+            if (runAsAdministrator)
+            {
+                commandName = command.Name.Insert(0, "sudo ");
+            }
+            
+            if (command.Arguments.Any())
             {
                 StringBuilder stringBuilder = new StringBuilder();
 
-                foreach (string argument in array)
+                foreach (string argument in command.Arguments)
                 {
                     stringBuilder.Append($"{argument} ");
                 }
+                
+                args = stringBuilder.ToString().Replace(command.Arguments.ElementAt(0), string.Empty);
+            }
+            
+            ProcessStartInfo? startInfo;
 
-                string args = stringBuilder.ToString().Replace(array[0], string.Empty);
-                    
-                return processRunner.RunProcessOnMac(location, array[0], args);
+            if (command.StartInfo != null)
+            {
+                startInfo = command.StartInfo!;
             }
             else
             {
-                if (runAsAdministrator)
-                {
-                    command = command.Insert(0, "sudo ");
-                }
-                    
-                return processRunner.RunProcessOnMac(location, command);
+                startInfo = null;
             }
+
+            return processRunner.RunProcessOnMac(command.FilePath, commandName, args, startInfo);
         }
 
         /// <summary>
@@ -106,7 +139,56 @@ namespace CliRunner.Commands
         {
             return RunCommandOnLinux(command, runAsAdministrator);
         }
-        
+
+        public ProcessResult RunCommandOnFreeBsd(Command command, bool runAsAdministrator = false)
+        {
+            return RunCommandOnLinux(command, runAsAdministrator);
+        }
+
+        public ProcessResult RunCommandOnLinux(Command command, bool runAsAdministrator = false)
+        {
+            if (OperatingSystem.IsLinux() == false && OperatingSystem.IsFreeBSD() == false && command.SupportsLinux == false)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
+            string commandName = command.Name;
+            string args = "";
+            ProcessStartInfo? startInfo;
+            
+            if (runAsAdministrator)
+            {
+                commandName = commandName.Insert(0, "sudo ");
+            }
+            
+            if (command.Arguments.Any())
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+
+                foreach (string argument in command.Arguments)
+                {
+                    stringBuilder.Append($"{argument} ");
+                }
+                
+                args = stringBuilder.ToString().Replace(command.Arguments.ElementAt(0), string.Empty);
+            }
+            
+            if (Directory.Exists(command.FilePath) == false)
+            {
+                throw new DirectoryNotFoundException("Could not find directory " + command.FilePath);
+            }
+
+            if (command.StartInfo != null)
+            {
+                startInfo = command.StartInfo!;
+            }
+            else
+            {
+                startInfo = null;
+            }
+                        
+            return processRunner.RunProcessOnLinux(command.FilePath, commandName, args, startInfo);
+        }
 
         /// <summary>
         /// Run a command or program as if inside a terminal on Linux.
@@ -118,41 +200,19 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
     #endif
-        public ProcessResult RunCommandOnFreeBsd(Command command, bool runAsAdministrator = false)
+        public ProcessResult RunCommandOnLinux(string command, bool runAsAdministrator = false)
         {
-            if (OperatingSystem.IsLinux() == false && OperatingSystem.IsFreeBSD() == false)
-            {
-                throw new PlatformNotSupportedException();
-            }
-            
             string location = "/usr/bin/";
+            
+            List<string> args = command.Split(' ').ToList();
+            
+            string commandName = args[0];
 
-            string[] args = command.Split(' ');
-            command = args[0];
-
-            StringBuilder stringBuilder = new StringBuilder();
-                
-            if (args.Length > 0)
-            {
-                for (int index = 1; index < args.Length; index++)
-                {
-                    stringBuilder.Append(args[index].Replace(command, string.Empty));
-                }
-            }
-
-            string processArguments = stringBuilder.ToString();
-
-            if (!Directory.Exists(location))
-            {
-                throw new DirectoryNotFoundException("Could not find directory " + location);
-            }
-
-            if (runAsAdministrator)
-            {
-                command = command.Insert(0, "sudo ");
-            }
-                        
-            return processRunner.RunProcessOnLinux(location, command, processArguments);
+            args.RemoveAt(0);
+            
+            Command actualCommand = new Command(commandName, location, args, false, true, false);
+            
+            return RunCommandOnLinux(actualCommand, runAsAdministrator);
         }
     }        
 }
