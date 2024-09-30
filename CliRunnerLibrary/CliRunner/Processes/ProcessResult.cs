@@ -9,7 +9,7 @@ using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Processes
 {
-    public class ProcessResult : IProcessResult
+    public class ProcessResult
     {
         public ProcessResult(int exitCode, string standardOutput,
             DateTime startTime, DateTime exitTime)
