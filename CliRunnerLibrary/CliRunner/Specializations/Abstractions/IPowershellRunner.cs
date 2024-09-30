@@ -17,6 +17,7 @@
 
 using System;
 using System.Runtime.Versioning;
+using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Specializations.Abstractions
@@ -28,7 +29,7 @@ namespace CliRunner.Specializations.Abstractions
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("linux")]
         #endif
-        IProcessResult Execute(string commandLine, bool runAsAdministrator);
+        ProcessResult Execute(string commandLine, bool runAsAdministrator);
 
         bool IsInstalled();
         
