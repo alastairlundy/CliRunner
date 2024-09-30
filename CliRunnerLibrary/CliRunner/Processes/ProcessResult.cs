@@ -5,9 +5,9 @@
  */
 
 using System;
-using CliRunner.Commands.Abstractions;
+using CliRunner.Processes.Abstractions;
 
-namespace CliRunner.Commands
+namespace CliRunner.Processes
 {
     public class ProcessResult : IProcessResult
     {
