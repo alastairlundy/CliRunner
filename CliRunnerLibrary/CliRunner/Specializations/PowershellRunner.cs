@@ -16,7 +16,7 @@
    */
 
 using System;
-
+using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 using CliRunner.Specializations.Abstractions;
 
@@ -24,7 +24,7 @@ namespace CliRunner.Specializations
 {
     public class PowershellRunner : IPowershellRunner
     {
-        public IProcessResult Execute(string commandLine, bool runAsAdministrator)
+        public ProcessResult Execute(string commandLine, bool runAsAdministrator)
         {
             throw new NotImplementedException();
         }

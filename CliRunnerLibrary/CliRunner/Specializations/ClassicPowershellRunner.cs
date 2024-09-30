@@ -19,7 +19,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
+using System.Threading.Tasks;
+using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
+
 using CliRunner.Specializations.Abstractions;
 
 
@@ -46,7 +49,7 @@ namespace CliRunner.Specializations
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
-        public IProcessResult Execute(string command, bool runAsAdministrator)
+        public ProcessResult Execute(string command, bool runAsAdministrator)
         {
             return processRunner.RunProcessOnWindows(GetInstallLocation(),
                 "powershell", command, null, 

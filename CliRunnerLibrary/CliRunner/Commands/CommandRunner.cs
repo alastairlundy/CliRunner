@@ -58,7 +58,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("maccatalyst")]
     #endif
-     public IProcessResult RunCommandOnMac(string command, bool runAsAdministrator = false)
+     public ProcessResult RunCommandOnMac(string command, bool runAsAdministrator = false)
         {
             if (OperatingSystem.IsMacOS() == false)
             {
@@ -102,7 +102,7 @@ namespace CliRunner.Commands
     #if NET5_0_OR_GREATER
         [SupportedOSPlatform("freebsd")]
     #endif
-        public IProcessResult RunCommandOnFreeBsd(string command, bool runAsAdministrator = false)
+        public ProcessResult RunCommandOnFreeBsd(string command, bool runAsAdministrator = false)
         {
             return RunCommandOnLinux(command, runAsAdministrator);
         }
@@ -118,7 +118,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
     #endif
-        public IProcessResult RunCommandOnLinux(string command, bool runAsAdministrator = false)
+        public ProcessResult RunCommandOnFreeBsd(Command command, bool runAsAdministrator = false)
         {
             if (OperatingSystem.IsLinux() == false && OperatingSystem.IsFreeBSD() == false)
             {

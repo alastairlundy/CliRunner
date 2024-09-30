@@ -18,7 +18,9 @@
 using System;
 
 using System.Runtime.Versioning;
-using CliRunner.Processes.Abstractions;
+using System.Threading.Tasks;
+
+using CliRunner.Processes;
 
 namespace CliRunner.Specializations.Abstractions
 {
@@ -27,7 +29,7 @@ namespace CliRunner.Specializations.Abstractions
         #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         #endif
-        IProcessResult Execute(string command, bool runAsAdministrator);
+        ProcessResult Execute(string command, bool runAsAdministrator);
 
         string GetInstallLocation();
         

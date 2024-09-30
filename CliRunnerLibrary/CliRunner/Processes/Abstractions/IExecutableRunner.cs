@@ -19,7 +19,7 @@ namespace CliRunner.Processes.Abstractions
 {
     public interface IExecutableRunner
     {
-        IProcessResult Execute(string executableLocation, string executableName, bool runAsAdministrator);
+        ProcessResult Execute(string executableLocation, string executableName, bool runAsAdministrator);
 
         
     }

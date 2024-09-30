@@ -15,18 +15,23 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
    */
 
+using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Commands.Abstractions
 {
     public interface ICommandRunner
     { 
-        IProcessResult RunCommandOnMac(string command, bool runAsAdministrator = false);
+        ProcessResult RunCommandOnMac(string command, bool runAsAdministrator = false);
+        
+        ProcessResult RunCommandOnMac(Command command, bool runAsAdministrator = false);
 
-        IProcessResult RunCommandOnLinux(string command, bool runAsAdministrator = false);
+        ProcessResult RunCommandOnLinux(string command, bool runAsAdministrator = false);
+        
+        ProcessResult RunCommandOnLinux(Command command, bool runAsAdministrator = false);
 
-        IProcessResult RunCommandOnFreeBsd(string command, bool runAsAdministrator = false);
-
-
+        ProcessResult RunCommandOnFreeBsd(string command, bool runAsAdministrator = false);
+        
+        ProcessResult RunCommandOnFreeBsd(Command command, bool runAsAdministrator = false);
     }
 }
