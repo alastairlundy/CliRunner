@@ -5,7 +5,7 @@ CliRunner is a library for interacting with Command Line Interfaces,
 * Though this project cannot claim to be dependency free; it has just 1 dependency ^1
 * Support for specific specializations such as running executables or commands via Windows Powershell or CMD on Windows
 
-## Why use CliRunner over CliWrap?
+## Why use CliRunner over [CliWrap](https://github.com/Tyrrrz/CliWrap/)?
 * No hidden or additional licensing terms are required beyond the source code license
 * No imported C code - This library is entirely written in C#.
 
