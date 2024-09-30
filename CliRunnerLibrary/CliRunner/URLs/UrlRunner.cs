@@ -24,7 +24,7 @@ using CliRunner.Specializations;
 using CliRunner.Specializations.Abstractions;
 using CliRunner.URLs.Abstractions;
 
-#if NETSTANDARD2_0
+#if NETSTANDARD2_1
     using OperatingSystem = PlatformKit.Extensions.OperatingSystem.OperatingSystemExtension;
 #endif
 
