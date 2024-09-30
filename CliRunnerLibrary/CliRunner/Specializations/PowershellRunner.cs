@@ -16,6 +16,7 @@
    */
 
 using System;
+
 using CliRunner.Processes.Abstractions;
 using CliRunner.Specializations.Abstractions;
 

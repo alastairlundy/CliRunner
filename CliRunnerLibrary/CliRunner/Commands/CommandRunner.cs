@@ -23,7 +23,7 @@ using System.Text;
 using CliRunner.Commands.Abstractions;
 using CliRunner.Processes.Abstractions;
 
-#if NETSTANDARD2_1
+#if NETSTANDARD2_0 || NETSTANDARD2_1
     using OperatingSystem = PlatformKit.Extensions.OperatingSystem.OperatingSystemExtension;
 #endif
 
