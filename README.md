@@ -1,5 +1,5 @@
 # CliRunner
-CliRunner is a library for interacting with Command Line Interfaces, 
+CliRunner is a **Work In Progress** library for interacting with Command Line Interfaces, 
 
 ## Features
 * Though this project cannot claim to be dependency free; it has just 1 dependency ^1
