@@ -17,9 +17,7 @@
 
 using System.Diagnostics;
 
-using CliRunner.Processes;
-
-namespace CliRunner
+namespace CliRunner.Processes.Abstractions
 {
     public interface IProcessRunner
     {

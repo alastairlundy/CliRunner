@@ -20,17 +20,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
-
-using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
-
 #if NETSTANDARD2_0 || NETSTANDARD2_1
     using OperatingSystem = PlatformKit.Extensions.OperatingSystem.OperatingSystemExtension;
 #endif
 
 // ReSharper disable InvalidXmlDocComment
 
-namespace CliRunner
+namespace CliRunner.Processes
 {
     /// <summary>
     ///  A class to manage processes on a device and/or start new processes.

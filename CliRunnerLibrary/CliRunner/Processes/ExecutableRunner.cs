@@ -15,10 +15,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
    */
 
-using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
-namespace CliRunner
+namespace CliRunner.Processes
 {
     public class ExecutableRunner : IExecutableRunner
     {
