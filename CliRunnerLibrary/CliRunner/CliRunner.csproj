@@ -3,10 +3,20 @@
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <TargetFrameworks>net6.0;net8.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>net8.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CliRunner</Title>
         <Authors>AlastairLundy</Authors>
+        <Description>CliRunner is a Work In Progress library for interacting with Command Line Interfaces,</Description>
+        <Copyright>Copyright (c) Alastair Lundy 2024</Copyright>
+        <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Version>0.1.0</Version>
+        
     </PropertyGroup>
 
 
@@ -16,7 +26,18 @@
 
 
     <ItemGroup>
-      <Folder Include="Piping\Enums\" />
+      <Content Update="LICENSE.txt">
+          <PackagePath>LICENSE.txt</PackagePath>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Content Include="..\..\README.md">
+        <Link>README.md</Link>
+          <PackagePath>README.md</PackagePath>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
