@@ -14,4 +14,9 @@
         <PackageReference Include="PlatformKit.Extensions.OperatingSystem" Version="1.*" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Folder Include="Piping\Enums\" />
+    </ItemGroup>
+
 </Project>
