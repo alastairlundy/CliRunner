@@ -5,6 +5,7 @@
  */
 
 using System;
+
 using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Processes
