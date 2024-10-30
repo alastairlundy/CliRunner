@@ -26,4 +26,4 @@ NOTE: .NET Standard 2.0 is not supported at this time.
 [![NuGet](https://img.shields.io/nuget/dt/CliRunner.svg)](https://www.nuget.org/packages/CliRunner/)
 
 ## Licensing
-CliRunner is licensed under the LGPLv3 license.
+CliRunner is licensed under the MPL 2.0 license.
