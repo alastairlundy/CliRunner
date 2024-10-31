@@ -11,13 +11,19 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using CliRunner.Piping.Abstractions.Options;
 
 namespace CliRunner.Piping.Abstractions
 {
     public abstract class AbstractPipeSource
     {
-        protected PipeSourceOptions? options;
-
+        
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+         protected PipeSourceOptions? options;  
+#elif NETSTANDARD2_0
+        protected PipeSourceOptions options;
+#endif
+        
         public AbstractPipeSource()
         {
             options = null;

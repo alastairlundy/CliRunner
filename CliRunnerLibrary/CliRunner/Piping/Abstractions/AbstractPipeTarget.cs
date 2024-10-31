@@ -12,6 +12,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
+using CliRunner.Piping.Abstractions.Options;
+
 namespace CliRunner.Piping.Abstractions
 {
     public abstract class AbstractPipeTarget

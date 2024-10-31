@@ -7,7 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-namespace CliRunner.Piping
+namespace CliRunner.Piping.Abstractions.Options
 {
     public class PipeSourceOptions
     {
