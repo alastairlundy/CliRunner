@@ -98,9 +98,36 @@ namespace CliRunner.Specializations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         public Version GetInstalledVersion()
         {
-            throw new NotImplementedException();
+            if (OperatingSystem.IsWindows())
+            {
+                ProcessResult result = Execute("$PSVersionTable", false);
+                
+                string[] lines = result.StandardOutput.Split(Environment.NewLine);
+
+                foreach (string line in lines)
+                {
+                    if (line.ToLower().Contains("psversion"))
+                    {
+                        string version = line.Split(' ')[1];
+                        
+                        return Version.Parse(version);
+                    }
+                }
+
+                throw new Exception("Failed to get psversion");
+            }
+            else
+            {
+                throw new PlatformNotSupportedException();
+            }
         }
     }
 }
