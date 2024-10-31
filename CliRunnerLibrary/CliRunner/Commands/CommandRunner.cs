@@ -104,11 +104,15 @@ namespace CliRunner.Commands
                 args = stringBuilder.ToString().Replace(command.Arguments.ElementAt(0), string.Empty);
             }
             
-            ProcessStartInfo? startInfo;
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+         ProcessStartInfo? startInfo;    
+#elif NETSTANDARD2_0
+            ProcessStartInfo startInfo;
+#endif
 
             if (command.StartInfo != null)
             {
-                startInfo = command.StartInfo!;
+                startInfo = command.StartInfo;
             }
             else
             {
@@ -146,7 +150,12 @@ namespace CliRunner.Commands
 
             string commandName = command.Name;
             string args = "";
-            ProcessStartInfo? startInfo;
+
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+         ProcessStartInfo? startInfo;    
+#elif NETSTANDARD2_0
+            ProcessStartInfo startInfo;
+#endif
             
             if (runAsAdministrator)
             {
@@ -172,7 +181,7 @@ namespace CliRunner.Commands
 
             if (command.StartInfo != null)
             {
-                startInfo = command.StartInfo!;
+                startInfo = command.StartInfo;
             }
             else
             {

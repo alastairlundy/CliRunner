@@ -41,7 +41,13 @@ namespace CliRunner.Commands
         public string Name { get; }
         public string FilePath { get; }
         public IEnumerable<string> Arguments { get; }
+        
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessStartInfo? StartInfo { get; }
+#elif NETSTANDARD2_0
+        public ProcessStartInfo StartInfo { get; }
+#endif
+        
         public bool SupportsWindows { get; }
         public bool SupportsLinux { get; }
         public bool SupportsMac { get; } }

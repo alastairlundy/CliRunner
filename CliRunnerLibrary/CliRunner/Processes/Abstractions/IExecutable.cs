@@ -20,7 +20,11 @@ namespace CliRunner.Processes.Abstractions
         
         IEnumerable<string> Arguments { get; }
         
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         ProcessStartInfo? StartInfo { get; }
+#elif NETSTANDARD2_0
+        ProcessStartInfo StartInfo { get; }
+#endif
         
         
     }

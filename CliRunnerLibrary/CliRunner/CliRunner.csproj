@@ -24,6 +24,9 @@
         <PackageReference Include="PlatformKit.Extensions.OperatingSystem" Version="1.*" />
     </ItemGroup>
 
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="PlatformKit.Extensions.OperatingSystem" Version="1.*" />
+    </ItemGroup>
 
     <ItemGroup>
       <Content Update="LICENSE.txt">
