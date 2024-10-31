@@ -16,9 +16,19 @@ namespace CliRunner.Specializations
 {
     public class PowershellRunner : IPowershellRunner
     {
-        public ProcessResult Execute(string commandLine, bool runAsAdministrator)
+        protected IProcessRunner processRunner;
+
+        public PowershellRunner()
         {
-            throw new NotImplementedException();
+            processRunner = new ProcessRunner();
+        }
+        
+        public ProcessResult Execute(string command, bool runAsAdministrator)
+        {
+            return processRunner.RunProcessOnWindows(GetInstallLocation(),
+                "pwsh", command, null, 
+                runAsAdministrator);
+        }
         }
 
         public bool IsInstalled()
