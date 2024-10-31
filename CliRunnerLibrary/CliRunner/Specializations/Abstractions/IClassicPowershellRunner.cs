@@ -20,6 +20,9 @@ namespace CliRunner.Specializations.Abstractions
     {
         #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("freebsd")]
         #endif
         ProcessResult Execute(string command, bool runAsAdministrator);
 

@@ -20,9 +20,12 @@ namespace CliRunner.Specializations.Abstractions
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
         #endif
         ProcessResult Execute(string commandLine, bool runAsAdministrator);
 
+        string GetInstallLocation();
+        
         bool IsInstalled();
         
         Version GetInstalledVersion();
