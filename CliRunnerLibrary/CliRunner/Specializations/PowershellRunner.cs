@@ -8,6 +8,9 @@
    */
 
 using System;
+using System.IO;
+using System.Runtime.Versioning;
+
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 using CliRunner.Specializations.Abstractions;
@@ -29,6 +32,53 @@ namespace CliRunner.Specializations
                 "pwsh", command, null, 
                 runAsAdministrator);
         }
+
+        public string GetInstallLocation()
+        {
+            if (IsInstalled() == false)
+            {
+                throw new ArgumentException("Powershell is not installed");
+            }
+            
+            if (OperatingSystem.IsWindows())
+            {
+                string programFiles;
+
+                if (Environment.Is64BitOperatingSystem == true)
+                {
+                    programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                }
+                else
+                {
+                    programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                }
+                
+                string[] directories = Directory.GetDirectories(programFiles + Path.DirectorySeparatorChar + "Powershell");
+
+                foreach (string directory in directories)
+                {
+                    if (File.Exists(directory + Path.DirectorySeparatorChar + "pwsh.exe"))
+                    {
+                        return directory;
+                    }
+                }
+                
+                throw new Exception("Could not find pwsh.exe");
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                
+            }
+            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+            {
+                ProcessResult result = processRunner.RunProcessOnLinux("/usr/bin", "which", " powershell");
+                
+                return res
+            }
+            else
+            {
+                throw new PlatformNotSupportedException();
+            }
         }
 
         public bool IsInstalled()
