@@ -43,9 +43,16 @@ namespace CliRunner.Specializations
 #endif
         public ProcessResult Execute(string command, bool runAsAdministrator)
         {
-            return processRunner.RunProcessOnWindows(GetInstallLocation(),
-                "powershell", command, null, 
-                runAsAdministrator);
+            if (OperatingSystem.IsWindows())
+            {
+                return processRunner.RunProcessOnWindows(GetInstallLocation(),
+                    "powershell", command, null, 
+                    runAsAdministrator);
+            }
+            else
+            {
+                throw new PlatformNotSupportedException();
+            }
         }
 
         /// <summary>
