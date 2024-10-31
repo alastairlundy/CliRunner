@@ -8,11 +8,15 @@
    */
 
 using System;
-using System.Diagnostics;
 using System.Runtime.Versioning;
+
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 using CliRunner.Specializations.Abstractions;
+
+#if NETSTANDARD2_0 || NETSTANDARD2_1
+    using OperatingSystem = PlatformKit.Extensions.OperatingSystem.OperatingSystemExtension;
+#endif
 
 namespace CliRunner.Specializations
 {
@@ -35,8 +39,15 @@ namespace CliRunner.Specializations
         #endif
         public ProcessResult Execute(string command, bool runAsAdministrator)
         {
-            return processRunner.RunProcessOnWindows(Environment.SystemDirectory,
-                "cmd", command, null, runAsAdministrator);
+            if (OperatingSystem.IsWindows())
+            {
+                return processRunner.RunProcessOnWindows(Environment.SystemDirectory,
+                    "cmd", command, null, runAsAdministrator);
+            }
+            else
+            {
+                throw new PlatformNotSupportedException();
+            }
         }
     }
 }
