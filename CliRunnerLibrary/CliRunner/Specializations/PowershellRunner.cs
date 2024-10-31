@@ -28,7 +28,27 @@ namespace CliRunner.Specializations
 
         public Version GetInstalledVersion()
         {
-            throw new NotImplementedException();
+            ProcessResult result = Execute("$PSVersionTable", false);
+
+            if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||
+                OperatingSystem.IsIOS())
+            {
+                throw new PlatformNotSupportedException();
+            }
+            
+            string[] lines = result.StandardOutput.Split(Environment.NewLine);
+
+            foreach (string line in lines)
+            {
+                if (line.ToLower().Contains("psversion"))
+                {
+                    string version = line.Split(' ')[1];
+                        
+                    return Version.Parse(version);
+                }
+            }
+
+            throw new Exception("Failed to get psversion");
         }
     }
 }
