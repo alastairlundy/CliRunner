@@ -26,6 +26,21 @@ namespace CliRunner.Specializations
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public Version GetInstalledVersion()
         {
             ProcessResult result = Execute("$PSVersionTable", false);
