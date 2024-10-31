@@ -20,7 +20,7 @@ namespace CliRunner.Piping.Abstractions
     {
         public abstract void WriteToStream(Stream stream);
 
-        public abstract ValueTask WriteToStreamAsync(Stream stream, CancellationToken cancellationToken = default);
+        public abstract Task WriteToStreamAsync(Stream stream, CancellationToken cancellationToken = default);
 
         public abstract AbstractPipeTarget ToStream(Stream stream);
 

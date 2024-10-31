@@ -44,7 +44,7 @@ namespace CliRunner.Piping.Abstractions
             CancellationToken cancellationToken = default);
 
        public abstract Stream GetStream();
-       public abstract ValueTask<Stream> GetStreamAsync(CancellationToken cancellationToken = default);
+       public abstract Task<Stream> GetStreamAsync(CancellationToken cancellationToken = default);
        
        public abstract AbstractPipeSource FromStream(Stream stream);
        public abstract AbstractPipeSource FromStream(Stream stream, PipeSourceOptions? options);
