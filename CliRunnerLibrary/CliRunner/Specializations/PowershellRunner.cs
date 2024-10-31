@@ -13,7 +13,12 @@ using System.Runtime.Versioning;
 
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
+
 using CliRunner.Specializations.Abstractions;
+
+#if NETSTANDARD2_0 || NETSTANDARD2_1
+using OperatingSystem = PlatformKit.Extensions.OperatingSystem.OperatingSystemExtension;
+#endif
 
 namespace CliRunner.Specializations
 {
@@ -73,7 +78,7 @@ namespace CliRunner.Specializations
             {
                 ProcessResult result = processRunner.RunProcessOnLinux("/usr/bin", "which", " powershell");
                 
-                return res
+                return result.StandardOutput.Split(Environment.NewLine)[0];
             }
             else
             {
