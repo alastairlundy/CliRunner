@@ -34,11 +34,19 @@ namespace CliRunner.Piping.Abstractions
             options = null;
         }
 
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public AbstractPipeSource(Func<Stream> streamFactory, PipeSourceOptions? options)
         {
             
             this.options = options;
         }
+#elif NETSTANDARD2_0
+        public AbstractPipeSource(Func<Stream> streamFactory, PipeSourceOptions options)
+        {
+            
+            this.options = options;
+        }
+#endif
         
        public abstract Task CopyToAsync(out Stream destination,
             CancellationToken cancellationToken = default);
@@ -47,10 +55,19 @@ namespace CliRunner.Piping.Abstractions
        public abstract Task<Stream> GetStreamAsync(CancellationToken cancellationToken = default);
        
        public abstract AbstractPipeSource FromStream(Stream stream);
-       public abstract AbstractPipeSource FromStream(Stream stream, PipeSourceOptions? options);
 
-       public abstract AbstractPipeSource FromStream(Func<Stream> streamFactory);
-       public abstract AbstractPipeSource FromStream(Func<Stream> streamFactory, PipeSourceOptions? options);
-
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+        public abstract AbstractPipeSource FromStream(Stream stream, PipeSourceOptions? options);
+#elif NETSTANDARD2_0
+        public abstract AbstractPipeSource FromStream(Stream stream, PipeSourceOptions options);
+#endif
+       
+        public abstract AbstractPipeSource FromStream(Func<Stream> streamFactory);
+       
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+        public abstract AbstractPipeSource FromStream(Func<Stream> streamFactory, PipeSourceOptions? options);
+#elif NETSTANDARD2_0
+        public abstract AbstractPipeSource FromStream(Func<Stream> streamFactory, PipeSourceOptions options);
+#endif
     }
 }

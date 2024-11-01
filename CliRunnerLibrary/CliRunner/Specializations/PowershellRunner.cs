@@ -72,9 +72,9 @@
 
                  ProcessResult result = cmdRunner.Execute(Environment.SystemDirectory + Path.DirectorySeparatorChar + "where pwsh.exe", false);
                  
-                 if (result.StandardOutput.Split(Environment.NewLine).Any())
+                 if (result.StandardOutput.Split(Environment.NewLine.ToCharArray()).Any())
                  {
-                     return result.StandardOutput.Split(Environment.NewLine).First();
+                     return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
                  }
                  
                  throw new Exception("Could not find pwsh.exe");
@@ -83,13 +83,13 @@
              {
                  ProcessResult result = processRunner.RunProcessOnMac("/usr/bin", "which", "pwsh");
                  
-                 return result.StandardOutput.Split(Environment.NewLine)[0];
+                 return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
              else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
              {
                  ProcessResult result = processRunner.RunProcessOnLinux("/usr/bin", "which", "pwsh");
                  
-                 return result.StandardOutput.Split(Environment.NewLine)[0];
+                 return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
              else
              {
@@ -139,7 +139,7 @@
                  throw new PlatformNotSupportedException();
              }
              
-             string[] lines = result.StandardOutput.Split(Environment.NewLine);
+             string[] lines = result.StandardOutput.Split(Environment.NewLine.ToCharArray());
 
              foreach (string line in lines)
              {

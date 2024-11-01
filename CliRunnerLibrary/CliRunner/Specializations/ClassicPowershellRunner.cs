@@ -109,8 +109,12 @@ namespace CliRunner.Specializations
             if (OperatingSystem.IsWindows())
             {
                 ProcessResult result = Execute("$PSVersionTable", false);
-                
+               
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
                 string[] lines = result.StandardOutput.Split(Environment.NewLine);
+#elif NETSTANDARD2_0
+                string[] lines = result.StandardOutput.Split(Environment.NewLine.ToCharArray());
+#endif
 
                 foreach (string line in lines)
                 {

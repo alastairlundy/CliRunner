@@ -13,6 +13,7 @@ namespace CliRunner.Processes.Abstractions
 {
     public interface IProcessRunner
     {
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         ProcessResult RunProcessOnWindows(string executableLocation, string executableName, string arguments = "",
             ProcessStartInfo? processStartInfo = null, bool runAsAdministrator = false,
             bool insertExeInExecutableNameIfMissing = true);
@@ -25,6 +26,19 @@ namespace CliRunner.Processes.Abstractions
 
         ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, string arguments = "",
             ProcessStartInfo? processStartInfo = null);
+#elif NETSTANDARD2_0
+        ProcessResult RunProcessOnWindows(string executableLocation, string executableName, string arguments = "",
+            ProcessStartInfo processStartInfo = null, bool runAsAdministrator = false,
+            bool insertExeInExecutableNameIfMissing = true);
+        
+        ProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "",
+            ProcessStartInfo processStartInfo = null);
 
+        ProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "",
+            ProcessStartInfo processStartInfo = null);
+
+        ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, string arguments = "",
+            ProcessStartInfo processStartInfo = null);
+#endif
     }
 }

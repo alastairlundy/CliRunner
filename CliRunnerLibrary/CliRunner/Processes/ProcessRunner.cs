@@ -41,10 +41,17 @@ namespace CliRunner.Processes
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
+        
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessResult RunProcessOnWindows(string executableLocation, string executableName,
             string arguments = "", ProcessStartInfo? processStartInfo = null,
             bool runAsAdministrator = false, bool insertExeInExecutableNameIfMissing = true)
-        {
+#elif NETSTANDARD2_0
+        public ProcessResult RunProcessOnWindows(string executableLocation, string executableName,
+            string arguments = "", ProcessStartInfo processStartInfo = null,
+            bool runAsAdministrator = false, bool insertExeInExecutableNameIfMissing = true)
+#endif
+{
             Process process;
             
             if (processStartInfo != null)
@@ -117,7 +124,13 @@ namespace CliRunner.Processes
         /// <param name="executableLocation">The working directory of the executable.</param>
         /// <param name="executableName">The name of the file to be run.</param>
         /// <param name="processArguments">Arguments to be passed to the executable.</param>
-        public ProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+        public ProcessResult RunProcessOnMac(string executableLocation, string executableName,
+            string arguments = "", ProcessStartInfo? processStartInfo = null)
+#elif NETSTANDARD2_0
+        public ProcessResult RunProcessOnMac(string executableLocation, string executableName,
+            string arguments = "", ProcessStartInfo processStartInfo = null)
+#endif
         {
             ProcessStartInfo procStartInfo = new ProcessStartInfo
             {
@@ -162,7 +175,13 @@ namespace CliRunner.Processes
         /// <param name="arguments">Arguments to be passed to the executable.</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public ProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+        public ProcessResult RunProcessOnLinux(string executableLocation,
+            string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
+#elif NETSTANDARD2_0
+        public ProcessResult RunProcessOnLinux(string executableLocation,
+            string executableName, string arguments = "", ProcessStartInfo processStartInfo = null)
+#endif
         {
             ProcessStartInfo procStartInfo;
                 
@@ -204,8 +223,13 @@ namespace CliRunner.Processes
         /// <param name="arguments">Arguments to be passed to the executable.</param>
         /// <param name="processStartInfo"></param>
         /// <returns></returns>
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName,
             string arguments = "", ProcessStartInfo? processStartInfo = null)
+#elif NETSTANDARD2_0
+        public ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName,
+            string arguments = "", ProcessStartInfo processStartInfo = null)
+#endif
         {
             return RunProcessOnLinux(executableLocation, executableName, arguments, processStartInfo);
         }
