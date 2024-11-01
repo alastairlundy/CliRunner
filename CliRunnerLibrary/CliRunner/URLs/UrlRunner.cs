@@ -13,14 +13,13 @@ using System.Threading.Tasks;
 
 using CliRunner.Commands;
 using CliRunner.Commands.Abstractions;
-
 using CliRunner.Specializations;
 using CliRunner.Specializations.Abstractions;
 
 using CliRunner.URLs.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
-    using OperatingSystem = PlatformKit.Extensions.OperatingSystem.OperatingSystemExtension;
+    using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
 #endif
 
 namespace CliRunner.URLs

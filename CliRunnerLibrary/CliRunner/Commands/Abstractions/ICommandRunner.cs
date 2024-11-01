@@ -8,7 +8,6 @@
    */
 
 using CliRunner.Processes;
-using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Commands.Abstractions
 {
