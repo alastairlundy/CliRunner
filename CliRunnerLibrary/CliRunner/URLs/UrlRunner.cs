@@ -36,9 +36,8 @@ namespace CliRunner.URLs
             commandRunner = new CommandRunner();
         }
 
-        public UrlRunner(ICmdRunner cmdRunner, ICommandRunner commandRunner)
+        public UrlRunner(ICommandRunner commandRunner)
         {
-            this.cmdRunner = cmdRunner;
             this.commandRunner = commandRunner;
         }
         
