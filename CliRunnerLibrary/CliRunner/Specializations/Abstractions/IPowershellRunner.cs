@@ -16,12 +16,6 @@ namespace CliRunner.Specializations.Abstractions
 {
     public interface IPowershellRunner
     {
-        #if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        #endif
         ProcessResult Execute(string commandLine, bool runAsAdministrator);
 
         string GetInstallLocation();

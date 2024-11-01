@@ -20,7 +20,7 @@ using CliRunner.Specializations.Abstractions;
 
 namespace CliRunner.Specializations
 {
-    public class CmdRunner : ICmdRunner
+    public class CmdRunner
     {
         protected IProcessRunner processRunner;
 
