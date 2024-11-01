@@ -15,14 +15,13 @@ using CliRunner.Commands;
 using CliRunner.Commands.Abstractions;
 using CliRunner.Specializations;
 using CliRunner.Specializations.Abstractions;
-
-using CliRunner.URLs.Abstractions;
+using CliRunner.Urls.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
     using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
 #endif
 
-namespace CliRunner.URLs
+namespace CliRunner.Urls
 {
 
     public class UrlRunner : IUrlRunner
