@@ -11,7 +11,7 @@ namespace CliRunner.Piping.Abstractions.Options
 {
     public class PipeSourceOptions
     {
-        public bool LeaveOpen { get; set; }
+        
         
         public bool ConfigureAwait { get; set; }
     }
