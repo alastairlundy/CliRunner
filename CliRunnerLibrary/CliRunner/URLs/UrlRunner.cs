@@ -27,7 +27,7 @@ namespace CliRunner.URLs
 
     public class UrlRunner : IUrlRunner
     {
-        protected ICmdRunner cmdRunner;
+        protected CmdRunner cmdRunner;
         protected ICommandRunner commandRunner;
 
         public UrlRunner()
