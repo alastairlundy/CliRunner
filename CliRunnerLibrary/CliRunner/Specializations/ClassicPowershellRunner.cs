@@ -19,12 +19,12 @@ using CliRunner.Specializations.Abstractions;
 
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
-    using OperatingSystem = PlatformKit.Extensions.OperatingSystem.OperatingSystemExtension;
+    using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
 #endif
 
 namespace CliRunner.Specializations
 {
-    public class ClassicPowershellRunner : IClassicPowershellRunner
+    public class ClassicPowershellRunner : IPowershellRunner
     {
         protected IProcessRunner processRunner;
 
