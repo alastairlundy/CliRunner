@@ -17,7 +17,6 @@ using CliRunner.Processes.Abstractions;
 
 using CliRunner.Specializations.Abstractions;
 
-
 #if NETSTANDARD2_0 || NETSTANDARD2_1
     using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
 #endif
@@ -37,7 +36,6 @@ namespace CliRunner.Specializations
         {
             this.processRunner = processRunner;
         }
-        
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif

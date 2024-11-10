@@ -87,7 +87,7 @@
              }
              else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
              {
-                 ProcessResult result = processRunner.RunProcessOnLinux("/usr/bin", "which", "pwsh");
+                 ProcessResult result = _processRunner.RunProcessOnLinux("/usr/bin", "which", new []{"pwsh"});
                  
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }

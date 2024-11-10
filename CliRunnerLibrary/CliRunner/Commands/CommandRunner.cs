@@ -117,30 +117,16 @@ namespace CliRunner.Commands
         /// <exception cref="PlatformNotSupportedException"></exception>
         public ProcessResult RunCommandOnMac(Command command, bool runAsAdministrator = false)
         {
-            if (OperatingSystem.IsMacOS() == false || command.SupportsMac == false)
+            if (OperatingSystem.IsMacOS() == false)
             {
                 throw new PlatformNotSupportedException();
             }
-
-            string args = "";
             
             string commandName = command.Name;
             
             if (runAsAdministrator)
             {
                 commandName = command.Name.Insert(0, "sudo ");
-            }
-            
-            if (command.Arguments.Any())
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-
-                foreach (string argument in command.Arguments)
-                {
-                    stringBuilder.Append($"{argument} ");
-                }
-                
-                args = stringBuilder.ToString().Replace(command.Arguments.ElementAt(0), string.Empty);
             }
             
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
@@ -158,7 +144,8 @@ namespace CliRunner.Commands
                 startInfo = null;
             }
 
-            return processRunner.RunProcessOnMac(command.FilePath, commandName, args, startInfo);
+            return _processRunner.RunProcessOnMac(command.FilePath,
+                commandName, command.Arguments, startInfo, runAsAdministrator);
         }
 
         /// <summary>
@@ -182,13 +169,12 @@ namespace CliRunner.Commands
 
         public ProcessResult RunCommandOnLinux(Command command, bool runAsAdministrator = false)
         {
-            if (OperatingSystem.IsLinux() == false && OperatingSystem.IsFreeBSD() == false && command.SupportsLinux == false)
+            if (OperatingSystem.IsLinux() == false && OperatingSystem.IsFreeBSD() == false)
             {
                 throw new PlatformNotSupportedException();
             }
 
             string commandName = command.Name;
-            string args = "";
 
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
          ProcessStartInfo? startInfo;    
@@ -199,18 +185,6 @@ namespace CliRunner.Commands
             if (runAsAdministrator)
             {
                 commandName = commandName.Insert(0, "sudo ");
-            }
-            
-            if (command.Arguments.Any())
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-
-                foreach (string argument in command.Arguments)
-                {
-                    stringBuilder.Append($"{argument} ");
-                }
-                
-                args = stringBuilder.ToString().Replace(command.Arguments.ElementAt(0), string.Empty);
             }
             
             if (Directory.Exists(command.FilePath) == false)
@@ -251,7 +225,8 @@ namespace CliRunner.Commands
 
             args.RemoveAt(0);
             
-            Command actualCommand = new Command(commandName, location, args, false, true, false);
+            Command actualCommand = new Command(commandName, location, args,
+                false, true, false);
             
             return RunCommandOnLinux(actualCommand, runAsAdministrator);
         }
