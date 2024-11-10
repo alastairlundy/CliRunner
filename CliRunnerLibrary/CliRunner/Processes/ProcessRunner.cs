@@ -8,8 +8,10 @@
    */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
@@ -44,11 +46,11 @@ namespace CliRunner.Processes
         
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessResult RunProcessOnWindows(string executableLocation, string executableName,
-            string arguments = "", ProcessStartInfo? processStartInfo = null,
+            IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
             bool runAsAdministrator = false, bool insertExeInExecutableNameIfMissing = true)
 #elif NETSTANDARD2_0
         public ProcessResult RunProcessOnWindows(string executableLocation, string executableName,
-            string arguments = "", ProcessStartInfo processStartInfo = null,
+            IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
             bool runAsAdministrator = false, bool insertExeInExecutableNameIfMissing = true)
 #endif
 {
@@ -58,7 +60,7 @@ namespace CliRunner.Processes
             {
                 processStartInfo.WorkingDirectory = executableLocation;
                 processStartInfo.FileName = executableName;
-                processStartInfo.Arguments = arguments;
+                processStartInfo.Arguments =  string.Join(" ", arguments);
                 processStartInfo.RedirectStandardOutput = true;
                 process = new Process { StartInfo = processStartInfo};
             }
@@ -75,7 +77,7 @@ namespace CliRunner.Processes
 
                 process.StartInfo.WorkingDirectory = executableLocation;
                 process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.Arguments = arguments;
+                process.StartInfo.Arguments =  string.Join(" ", arguments);
             }
 
             if (runAsAdministrator)
@@ -113,8 +115,7 @@ namespace CliRunner.Processes
             }
 
             ProcessResult output = new ProcessResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
-
-
+            
             return output;
         }
 
@@ -126,12 +127,15 @@ namespace CliRunner.Processes
         /// <param name="processArguments">Arguments to be passed to the executable.</param>
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessResult RunProcessOnMac(string executableLocation, string executableName,
-            string arguments = "", ProcessStartInfo? processStartInfo = null)
+            IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
+  bool runAsAdministrator = false)
 #elif NETSTANDARD2_0
         public ProcessResult RunProcessOnMac(string executableLocation, string executableName,
-            string arguments = "", ProcessStartInfo processStartInfo = null)
+            IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
+            bool runAsAdministrator = false)
 #endif
         {
+            string[] enumerable = arguments as string[] ?? arguments.ToArray();
             ProcessStartInfo procStartInfo = new ProcessStartInfo
             {
                 WorkingDirectory = executableLocation,
@@ -139,7 +143,7 @@ namespace CliRunner.Processes
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = false,
-                Arguments = arguments
+                Arguments =  string.Join(" ", enumerable)
             };
 
             Process process;
@@ -153,9 +157,16 @@ namespace CliRunner.Processes
                 procStartInfo = processStartInfo;
                 procStartInfo.WorkingDirectory = executableLocation;
                 procStartInfo.FileName = executableName;
-                procStartInfo.Arguments = arguments;
+                procStartInfo.Arguments =  string.Join(" ", enumerable);
                 procStartInfo.RedirectStandardOutput = true;
+                
                 process = new Process { StartInfo = processStartInfo};
+            }
+            
+            if (runAsAdministrator)
+            {
+                process.StartInfo.Arguments = process.StartInfo.Arguments.Insert(0, process.StartInfo.FileName);
+                process.StartInfo.FileName = "sudo";
             }
             
             process.Start();
@@ -177,10 +188,12 @@ namespace CliRunner.Processes
         /// <exception cref="Exception"></exception>
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessResult RunProcessOnLinux(string executableLocation,
-            string executableName, string arguments = "", ProcessStartInfo? processStartInfo = null)
+            string executableName, IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
+            bool runAsAdministrator = false)
 #elif NETSTANDARD2_0
         public ProcessResult RunProcessOnLinux(string executableLocation,
-            string executableName, string arguments = "", ProcessStartInfo processStartInfo = null)
+            string executableName, IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
+            bool runAsAdministrator = false)
 #endif
         {
             ProcessStartInfo procStartInfo;
@@ -193,7 +206,7 @@ namespace CliRunner.Processes
                     FileName = executableName,
                     RedirectStandardOutput = true,
                     CreateNoWindow = false,
-                    Arguments = arguments
+                    Arguments = string.Join(" ", arguments)
                 };
             }
             else
@@ -201,10 +214,16 @@ namespace CliRunner.Processes
                 procStartInfo = processStartInfo;
                 procStartInfo.WorkingDirectory = executableLocation;
                 procStartInfo.FileName = executableName;
-                procStartInfo.Arguments = arguments;
+                procStartInfo.Arguments =  string.Join(" ", arguments);
                 procStartInfo.RedirectStandardOutput = true;
             }
                 
+            if (runAsAdministrator)
+            {
+               procStartInfo.Arguments = procStartInfo.Arguments.Insert(0, procStartInfo.FileName);
+               procStartInfo.FileName = "sudo";
+            }
+            
             Process process = new Process { StartInfo = procStartInfo };
             process.Start();
             
@@ -225,13 +244,16 @@ namespace CliRunner.Processes
         /// <returns></returns>
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName,
-            string arguments = "", ProcessStartInfo? processStartInfo = null)
+            IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
+            bool runAsAdministrator = false)
 #elif NETSTANDARD2_0
         public ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName,
-            string arguments = "", ProcessStartInfo processStartInfo = null)
+            IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
+            bool runAsAdministrator = false)
 #endif
         {
-            return RunProcessOnLinux(executableLocation, executableName, arguments, processStartInfo);
+            return RunProcessOnLinux(executableLocation, executableName, arguments,
+                processStartInfo, runAsAdministrator);
         }
     }
 }

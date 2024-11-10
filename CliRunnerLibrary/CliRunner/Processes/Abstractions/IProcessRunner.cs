@@ -7,6 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace CliRunner.Processes.Abstractions
@@ -14,31 +15,31 @@ namespace CliRunner.Processes.Abstractions
     public interface IProcessRunner
     {
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
-        ProcessResult RunProcessOnWindows(string executableLocation, string executableName, string arguments = "",
+        ProcessResult RunProcessOnWindows(string executableLocation, string executableName, IEnumerable<string> arguments,
             ProcessStartInfo? processStartInfo = null, bool runAsAdministrator = false,
             bool insertExeInExecutableNameIfMissing = true);
         
-        ProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "",
-            ProcessStartInfo? processStartInfo = null);
+        ProcessResult RunProcessOnMac(string executableLocation, string executableName, IEnumerable<string> arguments,
+            ProcessStartInfo? processStartInfo = null, bool runAsAdministrator = false);
 
-        ProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "",
-            ProcessStartInfo? processStartInfo = null);
+        ProcessResult RunProcessOnLinux(string executableLocation, string executableName, IEnumerable<string> arguments,
+            ProcessStartInfo? processStartInfo = null, bool runAsAdministrator = false);
 
-        ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, string arguments = "",
-            ProcessStartInfo? processStartInfo = null);
+        ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, IEnumerable<string> arguments,
+            ProcessStartInfo? processStartInfo = null, bool runAsAdministrator = false);
 #elif NETSTANDARD2_0
-        ProcessResult RunProcessOnWindows(string executableLocation, string executableName, string arguments = "",
+        ProcessResult RunProcessOnWindows(string executableLocation, string executableName, IEnumerable<string> arguments,
             ProcessStartInfo processStartInfo = null, bool runAsAdministrator = false,
             bool insertExeInExecutableNameIfMissing = true);
         
-        ProcessResult RunProcessOnMac(string executableLocation, string executableName, string arguments = "",
-            ProcessStartInfo processStartInfo = null);
+        ProcessResult RunProcessOnMac(string executableLocation, string executableName, IEnumerable<string> arguments,
+            ProcessStartInfo processStartInfo = null, bool runAsAdministrator = false);
 
-        ProcessResult RunProcessOnLinux(string executableLocation, string executableName, string arguments = "",
-            ProcessStartInfo processStartInfo = null);
+        ProcessResult RunProcessOnLinux(string executableLocation, string executableName, IEnumerable<string> arguments,
+            ProcessStartInfo processStartInfo = null, bool runAsAdministrator = false);
 
-        ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, string arguments = "",
-            ProcessStartInfo processStartInfo = null);
+        ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName, IEnumerable<string> arguments,
+            ProcessStartInfo processStartInfo = null, bool runAsAdministrator = false);
 #endif
     }
 }
