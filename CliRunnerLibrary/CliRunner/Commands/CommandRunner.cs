@@ -43,6 +43,7 @@ namespace CliRunner.Commands
             this._processRunner = processRunner;
         }
         
+        
         public ProcessResult RunCommandOnWindows(Command command, bool runAsAdministrator = false)
         {
             if (OperatingSystem.IsWindows() == false)
@@ -122,6 +123,11 @@ namespace CliRunner.Commands
                 throw new PlatformNotSupportedException();
             }
             
+            if (command.SupportsMac == false)
+            {
+                throw new PlatformNotSupportedException($"Command {command.Name} declared that it does not support macOS.");
+            }
+            
             string commandName = command.Name;
             
             if (runAsAdministrator)
@@ -162,16 +168,35 @@ namespace CliRunner.Commands
             return RunCommandOnLinux(command, runAsAdministrator);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="runAsAdministrator"></param>
+        /// <returns></returns>
         public ProcessResult RunCommandOnFreeBsd(Command command, bool runAsAdministrator = false)
         {
             return RunCommandOnLinux(command, runAsAdministrator);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="runAsAdministrator"></param>
+        /// <returns></returns>
+        /// <exception cref="PlatformNotSupportedException"></exception>
+        /// <exception cref="DirectoryNotFoundException"></exception>
         public ProcessResult RunCommandOnLinux(Command command, bool runAsAdministrator = false)
         {
             if (OperatingSystem.IsLinux() == false && OperatingSystem.IsFreeBSD() == false)
             {
                 throw new PlatformNotSupportedException();
+            }
+            
+            if (command.SupportsLinux == false)
+            {
+                throw new PlatformNotSupportedException($"Command {command.Name} declared that it does not support Linux.");
             }
 
             string commandName = command.Name;
