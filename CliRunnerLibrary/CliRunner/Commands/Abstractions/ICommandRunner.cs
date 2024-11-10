@@ -13,6 +13,8 @@ namespace CliRunner.Commands.Abstractions
 {
     public interface ICommandRunner
     { 
+        ProcessResult RunCommandOnWindows(Command command, bool runAsAdministrator = false);
+        
         ProcessResult RunCommandOnMac(string command, bool runAsAdministrator = false);
         
         ProcessResult RunCommandOnMac(Command command, bool runAsAdministrator = false);

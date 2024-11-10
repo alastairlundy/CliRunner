@@ -42,6 +42,44 @@ namespace CliRunner.Commands
         {
             this.processRunner = processRunner;
         }
+        public ProcessResult RunCommandOnWindows(Command command, bool runAsAdministrator = false)
+        {
+            if (OperatingSystem.IsWindows() == false)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
+            if (command.SupportsWindows == false)
+            {
+                throw new PlatformNotSupportedException($"Command {command.Name} declared that it does not support windows.");
+            }
+            
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
+            ProcessStartInfo? startInfo;    
+#elif NETSTANDARD2_0
+            ProcessStartInfo startInfo;
+#endif
+
+            if (command.StartInfo != null)
+            {
+                startInfo = command.StartInfo;
+            }
+            else
+            {
+                startInfo = null;
+            }
+            
+            if (runAsAdministrator)
+            {
+                if (startInfo != null)
+                {
+                    startInfo.Verb = "runas";
+                }
+            }
+
+            return _processRunner.RunProcessOnWindows(command.FilePath,
+                command.Name, command.Arguments, startInfo, runAsAdministrator);
+        }
 
         /// <summary>
         /// Run a command on macOS located in the /usr/bin/ folder.
