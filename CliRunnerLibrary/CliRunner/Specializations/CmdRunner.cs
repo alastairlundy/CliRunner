@@ -118,14 +118,26 @@ namespace CliRunner.Specializations
             if (OperatingSystem.IsWindows())
             {
                 ProcessResult result = Execute("--version", false);
-                
+
+                string output;
+#if NET5_0_OR_GREATER
                 string versionString = result.StandardOutput.Split(Environment.NewLine)[0]
-                    .Replace("Microsoft Windows [", string.Empty)
+                .Replace("Microsoft Windows [", string.Empty)
                     .Replace("]", string.Empty)
                     .Replace("Version",string.Empty)
                     .Replace(" ", string.Empty);
+                
+                output = versionString;
+#else
+                string versionString = result.StandardOutput
+                    .Replace("Microsoft Windows [", string.Empty)
+                    .Replace("]", string.Empty)
+                    .Replace("Version", string.Empty);
 
-                return Version.Parse(versionString);
+                output = versionString.Split(' ').First();
+#endif
+                   
+                return Version.Parse(output);
             }
             else
             {
