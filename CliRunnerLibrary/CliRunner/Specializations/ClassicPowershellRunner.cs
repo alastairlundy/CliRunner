@@ -10,7 +10,10 @@
 using System;
 using System.IO;
 using System.Linq;
+
+#if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
+#endif
 
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
@@ -55,7 +58,7 @@ namespace CliRunner.Specializations
             if (OperatingSystem.IsWindows())
             {
                 return processRunner.RunProcessOnWindows(GetInstallLocation(),
-                    "powershell", command, null, 
+                    "powershell", command.Split(' '), null, 
                     runAsAdministrator);
             }
             else
@@ -115,7 +118,7 @@ namespace CliRunner.Specializations
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows based.</exception>
         public Version GetInstalledVersion()
         {
-            if (OperatingSystem.IsWindows())
+            if (OperatingSystem.IsWindows() && IsInstalled())
             {
                 ProcessResult result = Execute("$PSVersionTable", false);
                
