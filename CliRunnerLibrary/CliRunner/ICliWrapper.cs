@@ -8,7 +8,7 @@
    */
 
 using System.Threading.Tasks;
-
+using CliRunner.Commands;
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
@@ -25,7 +25,7 @@ namespace CliRunner
         ProcessResult Execute();
         Task<ProcessResult> ExecuteAsync();
         
-        ProcessResult Execute(IExecutable executable);
-        Task<ProcessResult> ExecuteAsync(IExecutable executable);
+        ProcessResult Execute(Executable executable);
+        Task<ProcessResult> ExecuteAsync(Executable executable);
     }
 }
