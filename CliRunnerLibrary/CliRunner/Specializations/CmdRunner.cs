@@ -8,7 +8,14 @@
    */
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using CliRunner.Commands;
+
+#if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
+#endif
 
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
@@ -20,10 +27,10 @@ using CliRunner.Specializations.Abstractions;
 
 namespace CliRunner.Specializations
 {
-    public class CmdRunner
     /// <summary>
     /// A class to make running commands through Windows CMD easier.
     /// </summary>
+    public class CmdRunner : IRunner
     {
         protected IProcessRunner processRunner;
 
@@ -51,12 +58,78 @@ namespace CliRunner.Specializations
         {
             if (OperatingSystem.IsWindows())
             {
+                IEnumerable<string> args;
+
+                if (command.Contains("cmd"))
+                {
+                    args = command.Replace("cmd", string.Empty).Split(' ');
+                }
+                else
+                {
+                    args = command.Split(' ');
+                }
+                
                 return processRunner.RunProcessOnWindows(Environment.SystemDirectory,
                     "cmd", command, null, runAsAdministrator);
             }
             else
             {
                 throw new PlatformNotSupportedException();
+            }
+        }
+
+        public string GetInstallLocation()
+        {
+            if (IsInstalled() == false)
+            {
+                throw new ArgumentException("cmd is not installed on this system.");
+            }
+            else
+            {
+                return Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool IsInstalled()
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                if (File.Exists(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Version GetInstalledVersion()
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                ProcessResult result = Execute("--version", false);
+                
+                string versionString = result.StandardOutput.Split(Environment.NewLine)[0]
+                    .Replace("Microsoft Windows [", string.Empty)
+                    .Replace("]", string.Empty)
+                    .Replace("Version",string.Empty)
+                    .Replace(" ", string.Empty);
+
+                return Version.Parse(versionString);
+            }
+            else
+            {
+                throw new PlatformNotSupportedException("cmd is not supported on Operating systems that are not based on Windows.");
             }
         }
     }
