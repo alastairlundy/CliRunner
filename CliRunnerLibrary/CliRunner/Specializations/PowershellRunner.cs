@@ -23,7 +23,7 @@
 
  namespace CliRunner.Specializations
  {
-     public class PowershellRunner : IPowershellRunner
+     public class PowershellRunner : IRunner
      {
          protected IProcessRunner processRunner;
          protected CmdRunner cmdRunner;

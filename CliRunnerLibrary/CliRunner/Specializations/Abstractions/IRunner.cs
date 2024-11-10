@@ -14,7 +14,7 @@ using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Specializations.Abstractions
 {
-    public interface IPowershellRunner
+    public interface IRunner
     {
         ProcessResult Execute(string commandLine, bool runAsAdministrator);
 

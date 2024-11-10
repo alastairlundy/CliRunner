@@ -24,7 +24,7 @@ using CliRunner.Specializations.Abstractions;
 
 namespace CliRunner.Specializations
 {
-    public class ClassicPowershellRunner : IPowershellRunner
+    public class ClassicPowershellRunner : IRunner
     {
         protected IProcessRunner processRunner;
 
