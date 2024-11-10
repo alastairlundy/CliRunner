@@ -21,6 +21,9 @@ using CliRunner.Specializations.Abstractions;
 namespace CliRunner.Specializations
 {
     public class CmdRunner
+    /// <summary>
+    /// A class to make running commands through Windows CMD easier.
+    /// </summary>
     {
         protected IProcessRunner processRunner;
 
@@ -34,6 +37,13 @@ namespace CliRunner.Specializations
             this.processRunner = processRunner;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command">The command to run.</param>
+        /// <param name="runCmdAsAdministrator">Whether to run CMD as an administrator.</param>
+        /// <returns>the result of running the command via CMD.</returns>
+        /// <exception cref="PlatformNotSupportedException">Thrown if not run on an Operating System based on Windows.</exception>
         #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         #endif

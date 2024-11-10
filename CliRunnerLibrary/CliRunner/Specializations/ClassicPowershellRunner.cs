@@ -23,6 +23,9 @@ using CliRunner.Specializations.Abstractions;
 
 namespace CliRunner.Specializations
 {
+    /// <summary>
+    /// A class to make running commands through Windows Powershell easier.
+    /// </summary>
     public class ClassicPowershellRunner : IRunner
     {
         protected IProcessRunner processRunner;
@@ -36,6 +39,14 @@ namespace CliRunner.Specializations
         {
             this.processRunner = processRunner;
         }
+
+        /// <summary>
+        /// Executes the specified command in Windows Powershell.
+        /// </summary>
+        /// <param name="command">The command to be run.</param>
+        /// <param name="runAsAdministrator">Whether to run the command and Windows Powershell as an administrator.</param>
+        /// <returns>the result from running the specified Command.</returns>
+        /// <exception cref="PlatformNotSupportedException"></exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
@@ -54,10 +65,10 @@ namespace CliRunner.Specializations
         }
 
         /// <summary>
-        /// 
+        /// Gets the installation location for Windows Powershell.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="PlatformNotSupportedException"></exception>
+        /// <returns>the file path of where Windows Powershell is installed to.</returns>
+        /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows based.</exception>
         public string GetInstallLocation()
         {
             if (OperatingSystem.IsWindows())
@@ -72,9 +83,9 @@ namespace CliRunner.Specializations
         }
 
         /// <summary>
-        /// 
+        /// Detects whether Windows Powershell is installed on a system.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
         public bool IsInstalled()
         {
             if (OperatingSystem.IsWindows())
@@ -97,11 +108,11 @@ namespace CliRunner.Specializations
         }
 
         /// <summary>
-        /// 
+        /// Gets the installed version of Windows Powershell.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        /// <exception cref="PlatformNotSupportedException"></exception>
+        /// <returns>the installed version of Windows Powershell.</returns>
+        /// <exception cref="Exception">Thrown if the installed version of Windows Powershell could not be detected.</exception>
+        /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows based.</exception>
         public Version GetInstalledVersion()
         {
             if (OperatingSystem.IsWindows())

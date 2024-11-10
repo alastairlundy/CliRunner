@@ -33,6 +33,14 @@
              cmdRunner = new CmdRunner();
          }
          
+         /// <summary>
+         /// 
+         /// </summary>
+         /// <param name="command"></param>
+         /// <param name="runAsAdministrator"></param>
+         /// <returns></returns>
+         /// <exception cref="PlatformNotSupportedException"></exception>
+         /// <exception cref="ArgumentException"></exception>
          public ProcessResult Execute(string command, bool runAsAdministrator)
          {
              return processRunner.RunProcessOnWindows(GetInstallLocation(),
@@ -40,6 +48,13 @@
                  runAsAdministrator);
          }
 
+         /// <summary>
+         /// 
+         /// </summary>
+         /// <returns></returns>
+         /// <exception cref="ArgumentException"></exception>
+         /// <exception cref="Exception"></exception>
+         /// <exception cref="PlatformNotSupportedException"></exception>
          public string GetInstallLocation()
          {
              if (IsInstalled() == false)
