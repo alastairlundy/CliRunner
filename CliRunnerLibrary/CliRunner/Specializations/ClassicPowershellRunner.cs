@@ -31,16 +31,16 @@ namespace CliRunner.Specializations
     /// </summary>
     public class ClassicPowershellRunner : IRunner
     {
-        protected IProcessRunner processRunner;
+        protected IProcessRunner _processRunner;
 
         public ClassicPowershellRunner()
         {
-            processRunner = new ProcessRunner();
+            _processRunner = new ProcessRunner();
         }
 
         public ClassicPowershellRunner(IProcessRunner processRunner)
         {
-            this.processRunner = processRunner;
+            this._processRunner = processRunner;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace CliRunner.Specializations
         {
             if (OperatingSystem.IsWindows())
             {
-                return processRunner.RunProcessOnWindows(GetInstallLocation(),
+                return _processRunner.RunProcessOnWindows(GetInstallLocation(),
                     "powershell", command.Split(' '), null, 
                     runAsAdministrator);
             }

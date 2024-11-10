@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CliRunner.Commands;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
@@ -32,16 +31,16 @@ namespace CliRunner.Specializations
     /// </summary>
     public class CmdRunner : IRunner
     {
-        protected IProcessRunner processRunner;
+        protected IProcessRunner _processRunner;
 
         public CmdRunner()
         {
-            processRunner = new ProcessRunner();
+            _processRunner = new ProcessRunner();
         }
 
         public CmdRunner(IProcessRunner processRunner)
         {
-            this.processRunner = processRunner;
+            this._processRunner = processRunner;
         }
         
         /// <summary>
@@ -69,7 +68,7 @@ namespace CliRunner.Specializations
                     args = command.Split(' ');
                 }
                 
-                return processRunner.RunProcessOnWindows(Environment.SystemDirectory,
+                return _processRunner.RunProcessOnWindows(Environment.SystemDirectory,
                     "cmd", args, null, runAsAdministrator);
             }
             else
