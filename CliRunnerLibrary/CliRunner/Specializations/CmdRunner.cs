@@ -48,7 +48,7 @@ namespace CliRunner.Specializations
         /// 
         /// </summary>
         /// <param name="command">The command to run.</param>
-        /// <param name="runCmdAsAdministrator">Whether to run CMD as an administrator.</param>
+        /// <param name="runAsAdministrator">Whether to run CMD as an administrator.</param>
         /// <returns>the result of running the command via CMD.</returns>
         /// <exception cref="PlatformNotSupportedException">Thrown if not run on an Operating System based on Windows.</exception>
         #if NET5_0_OR_GREATER
@@ -70,7 +70,7 @@ namespace CliRunner.Specializations
                 }
                 
                 return processRunner.RunProcessOnWindows(Environment.SystemDirectory,
-                    "cmd", command, null, runAsAdministrator);
+                    "cmd", args, null, runAsAdministrator);
             }
             else
             {
