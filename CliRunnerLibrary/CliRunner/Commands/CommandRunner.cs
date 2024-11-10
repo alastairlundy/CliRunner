@@ -31,17 +31,18 @@ namespace CliRunner.Commands
     /// </summary>
     public class CommandRunner : ICommandRunner
     {
-        protected IProcessRunner processRunner;
+        protected IProcessRunner _processRunner;
 
         public CommandRunner()
         {
-            processRunner = new ProcessRunner();
+            _processRunner = new ProcessRunner();
         }
 
         public CommandRunner(IProcessRunner processRunner)
         {
-            this.processRunner = processRunner;
+            this._processRunner = processRunner;
         }
+        
         public ProcessResult RunCommandOnWindows(Command command, bool runAsAdministrator = false)
         {
             if (OperatingSystem.IsWindows() == false)
@@ -226,7 +227,8 @@ namespace CliRunner.Commands
                 startInfo = null;
             }
                         
-            return processRunner.RunProcessOnLinux(command.FilePath, commandName, args, startInfo);
+            return _processRunner.RunProcessOnLinux(command.FilePath,
+                commandName, command.Arguments, startInfo, runAsAdministrator);
         }
 
         /// <summary>
