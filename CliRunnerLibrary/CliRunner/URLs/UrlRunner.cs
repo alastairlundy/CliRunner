@@ -13,8 +13,9 @@ using System.Threading.Tasks;
 
 using CliRunner.Commands;
 using CliRunner.Commands.Abstractions;
-using CliRunner.Specializations;
-using CliRunner.Specializations.Abstractions;
+using CliRunner.Processes;
+using CliRunner.Processes.Abstractions;
+
 using CliRunner.Urls.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -26,18 +27,16 @@ namespace CliRunner.Urls
 
     public class UrlRunner : IUrlRunner
     {
-        protected CmdRunner cmdRunner;
-        protected ICommandRunner commandRunner;
+        protected ICommandRunner _commandRunner;
 
         public UrlRunner()
         {
-            cmdRunner = new CmdRunner();
-            commandRunner = new CommandRunner();
+            _commandRunner = new CommandRunner();
         }
 
         public UrlRunner(ICommandRunner commandRunner)
         {
-            this.commandRunner = commandRunner;
+            this._commandRunner = commandRunner;
         }
         
         /// <summary>
@@ -76,11 +75,15 @@ namespace CliRunner.Urls
         {
             if (OperatingSystem.IsWindows())
             {
-               cmdRunner.Execute($"/c start {url.Replace("&", "^&")}", false);
+                string[] args = new string[] { $"/c start {url.Replace("&", "^&")}"};
+                
+                Command cmdCommand = new Command("cmd.exe", Environment.SystemDirectory, args, true, false, false);
+                
+               _commandRunner.RunCommandOnWindows(cmdCommand, false);
             }
             if (OperatingSystem.IsLinux())
             {
-                commandRunner.RunCommandOnLinux($"xdg-open {url}");
+                _commandRunner.RunCommandOnLinux($"xdg-open {url}");
             }
             if (OperatingSystem.IsMacOS())
             {
@@ -89,7 +92,7 @@ namespace CliRunner.Urls
             }
             if (OperatingSystem.IsFreeBSD())
             {
-                commandRunner.RunCommandOnFreeBsd($"xdg-open {url}");
+                _commandRunner.RunCommandOnFreeBsd($"xdg-open {url}");
             }
         }
 

@@ -10,8 +10,11 @@
  using System;
  using System.IO;
  using System.Linq;
- using System.Runtime.Versioning;
 
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+ 
  using CliRunner.Processes;
  using CliRunner.Processes.Abstractions;
 
@@ -19,18 +22,19 @@
 
  #if NETSTANDARD2_0 || NETSTANDARD2_1
  using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
- #endif
+ // ReSharper disable RedundantBoolCompare
+#endif
 
  namespace CliRunner.Specializations
  {
      public class PowershellRunner : IRunner
      {
-         protected IProcessRunner processRunner;
-         protected CmdRunner cmdRunner;
+         protected IProcessRunner _processRunner;
+         protected CmdRunner _cmdRunner;
          public PowershellRunner()
          {
-             processRunner = new ProcessRunner();
-             cmdRunner = new CmdRunner();
+             _processRunner = new ProcessRunner();
+             _cmdRunner = new CmdRunner();
          }
          
          /// <summary>
@@ -43,9 +47,53 @@
          /// <exception cref="ArgumentException"></exception>
          public ProcessResult Execute(string command, bool runAsAdministrator)
          {
-             return processRunner.RunProcessOnWindows(GetInstallLocation(),
-                 "pwsh", command, null, 
-                 runAsAdministrator);
+             ProcessResult output;
+
+             if (runAsAdministrator)
+             {
+                 if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
+                 {
+                     command = command.Insert(0,"sudo ");
+                 }
+                 else if (OperatingSystem.IsWindows())
+                 {
+                     command = command.Insert(command.Length, " runas");
+                 }
+             }
+
+             string[] args = command.Split(' ').Skip(0).ToArray();
+             
+             if (OperatingSystem.IsWindows())
+             {
+                 output = _processRunner.RunProcessOnWindows(GetInstallLocation(),
+                     "pwsh", args, null, 
+                     runAsAdministrator);
+             }
+             else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+             {
+                 output = _processRunner.RunProcessOnLinux(GetInstallLocation(),
+                     "pwsh", args, null,
+                     runAsAdministrator);
+             }
+             else if (OperatingSystem.IsMacOS())
+             {
+                 output = _processRunner.RunProcessOnMac(GetInstallLocation(),
+                     "pwsh", args, null,
+                     runAsAdministrator);
+             }
+             else
+             {
+                 throw new PlatformNotSupportedException();
+             }
+
+             if (output != null)
+             {
+                 return output;
+             }
+             else
+             {
+                 throw new ArgumentException($"Could not execute command: {command}");
+             }
          }
 
          /// <summary>
@@ -85,7 +133,8 @@
                      }
                  }
 
-                 ProcessResult result = cmdRunner.Execute(Environment.SystemDirectory + Path.DirectorySeparatorChar + "where pwsh.exe", false);
+                 ProcessResult result = _cmdRunner.Execute(
+                     $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}where pwsh.exe", false);
                  
                  if (result.StandardOutput.Split(Environment.NewLine.ToCharArray()).Any())
                  {
@@ -96,7 +145,7 @@
              }
              else if (OperatingSystem.IsMacOS())
              {
-                 ProcessResult result = processRunner.RunProcessOnMac("/usr/bin", "which", "pwsh");
+                 ProcessResult result = _processRunner.RunProcessOnMac("/usr/bin", "which", new []{"pwsh"});
                  
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
@@ -120,7 +169,31 @@
          {
              try
              {
-                 var result = GetInstallLocation();
+                 ProcessResult result;
+
+                 if (OperatingSystem.IsWindows())
+                 {
+                    result = _processRunner.RunProcessOnWindows($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}", "where.exe", new []{"pwsh.exe"});
+                 }
+                 else if (OperatingSystem.IsMacOS())
+                 {
+                     result = _processRunner.RunProcessOnMac("/usr/bin", "which", new []{"pwsh"});
+                 }
+                 else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+                 {
+                     result = _processRunner.RunProcessOnLinux("/usr/bin", "which", new []{"pwsh"});
+                 }
+                 else
+                 {
+                     throw new PlatformNotSupportedException();
+                 }
+
+                 if (result.StandardOutput.ToLower().Contains("error") ||
+                     result.StandardOutput.ToLower().Contains("not found"))
+                 {
+                     return false;
+                 }
+                 
                  return true;
              }
              catch
