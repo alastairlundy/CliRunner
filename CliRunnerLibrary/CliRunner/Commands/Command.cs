@@ -44,11 +44,17 @@ namespace CliRunner.Commands
         
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public ProcessStartInfo? StartInfo { get; }
+        
+        public bool? SupportsWindows { get; }
+        public bool? SupportsLinux { get; }
+        public bool? SupportsMac { get; } }
 #elif NETSTANDARD2_0
         public ProcessStartInfo StartInfo { get; }
-#endif
-        
+    
         public bool SupportsWindows { get; }
         public bool SupportsLinux { get; }
         public bool SupportsMac { get; } }
+#endif
+        
+
 }
