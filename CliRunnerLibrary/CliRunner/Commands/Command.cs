@@ -15,7 +15,7 @@ using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Commands
 {
-    public class Command : Executable
+    public class Command
     {
         public Command(string commandName, string filePath, IEnumerable<string> arguments, bool supportsWindows, bool supportsLinux, bool supportsMac)
         {

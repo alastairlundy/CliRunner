@@ -24,8 +24,5 @@ namespace CliRunner
         
         ProcessResult Execute();
         Task<ProcessResult> ExecuteAsync();
-        
-        ProcessResult Execute(Executable executable);
-        Task<ProcessResult> ExecuteAsync(Executable executable);
     }
 }
