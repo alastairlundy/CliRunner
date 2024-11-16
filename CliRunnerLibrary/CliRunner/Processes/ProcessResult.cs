@@ -30,8 +30,7 @@ SOFTWARE.
  */
 
 using System;
-
-using CliRunner.Processes.Abstractions;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace CliRunner.Processes
 {
