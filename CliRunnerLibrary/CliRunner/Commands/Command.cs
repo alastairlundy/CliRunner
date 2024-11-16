@@ -8,12 +8,9 @@
    */
 
 using System.Collections.Generic;
-using System.Diagnostics;
 
-using CliRunner.Commands.Abstractions;
 using CliRunner.Piping.Abstractions;
 using CliRunner.Processes;
-using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Commands
 {
@@ -25,7 +22,7 @@ namespace CliRunner.Commands
         
         public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
         public Credentials Credentials { get; protected set; }
-        public ProcessResultValidator ProcessResultValidator { get; protected set;}
+        public CommandResultValidation ProcessResultValidator { get; protected set;}
         
         public AbstractPipeSource StandardInputPipe { get; protected set; }
         public AbstractPipeTarget StandardOutputPipe { get; protected set; }
@@ -35,5 +32,7 @@ namespace CliRunner.Commands
         {
             
         }
+        
+        
     }
 }
