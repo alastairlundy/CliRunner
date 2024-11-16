@@ -11,50 +11,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 using CliRunner.Commands.Abstractions;
+using CliRunner.Piping.Abstractions;
+using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
 namespace CliRunner.Commands
 {
-    public class Command
+    public class Command : ICommandConfiguration
     {
-        public Command(string commandName, string filePath, IEnumerable<string> arguments, bool supportsWindows, bool supportsLinux, bool supportsMac)
+        public string TargetFilePath { get; protected set; }
+        public string WorkingDirectoryPath { get; protected set; }
+        public string[] Arguments { get; protected set; }
+        
+        public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
+        public Credentials Credentials { get; protected set; }
+        public ProcessResultValidator ProcessResultValidator { get; protected set;}
+        
+        public AbstractPipeSource StandardInputPipe { get; protected set; }
+        public AbstractPipeTarget StandardOutputPipe { get; protected set; }
+        public AbstractPipeTarget StandardErrorPipe { get; protected set; }
+        
+        public Command(string targetFilePath)
         {
-            this.Name = commandName;
-            this.FilePath = filePath;
-            this.Arguments = arguments;
-            this.SupportsWindows = supportsWindows;
-            this.SupportsMac = supportsMac;
-            this.SupportsLinux = supportsLinux;
+            
         }
-
-        public Command(string commandName, string filePath, IEnumerable<string> arguments, bool supportsWindows, bool supportsLinux, bool supportsMac, ProcessStartInfo processStartInfo)
-        {
-            this.Name = commandName;
-            this.FilePath = filePath;
-            this.Arguments = arguments;
-            this.SupportsWindows = supportsWindows;
-            this.SupportsMac = supportsMac;
-            this.SupportsLinux = supportsLinux;
-            this.StartInfo = processStartInfo;
-        }
-        
-        public string Name { get; }
-        public string FilePath { get; }
-        public IEnumerable<string> Arguments { get; }
-        
-#if NETSTANDARD2_1 || NET6_0_OR_GREATER
-        public ProcessStartInfo? StartInfo { get; }
-        
-        public bool? SupportsWindows { get; }
-        public bool? SupportsLinux { get; }
-        public bool? SupportsMac { get; } }
-#elif NETSTANDARD2_0
-        public ProcessStartInfo StartInfo { get; }
-    
-        public bool SupportsWindows { get; }
-        public bool SupportsLinux { get; }
-        public bool SupportsMac { get; } }
-#endif
-        
-
+    }
 }
