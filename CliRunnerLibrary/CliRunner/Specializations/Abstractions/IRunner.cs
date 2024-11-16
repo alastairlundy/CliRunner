@@ -16,7 +16,7 @@ namespace CliRunner.Specializations.Abstractions
 {
     public interface IRunner
     {
-        ProcessResult Execute(string commandLine, bool runAsAdministrator);
+        CommandResult Execute(string commandLine, bool runAsAdministrator);
 
         string GetInstallLocation();
         

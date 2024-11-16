@@ -22,7 +22,7 @@ namespace CliRunner
         ICliWrapper WithEnvironmentVariables(params string[] variables);
         ICliWrapper WithCredentials();
         
-        ProcessResult Execute();
-        Task<ProcessResult> ExecuteAsync();
+        CommandResult Execute();
+        Task<CommandResult> ExecuteAsync();
     }
 }

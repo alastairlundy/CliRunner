@@ -45,9 +45,9 @@ using System.Runtime.Versioning;
          /// <returns></returns>
          /// <exception cref="PlatformNotSupportedException"></exception>
          /// <exception cref="ArgumentException"></exception>
-         public ProcessResult Execute(string command, bool runAsAdministrator)
+         public CommandResult Execute(string command, bool runAsAdministrator)
          {
-             ProcessResult output;
+             CommandResult output;
 
              if (runAsAdministrator)
              {
@@ -133,7 +133,7 @@ using System.Runtime.Versioning;
                      }
                  }
 
-                 ProcessResult result = _cmdRunner.Execute(
+                 CommandResult result = _cmdRunner.Execute(
                      $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}where pwsh.exe", false);
                  
                  if (result.StandardOutput.Split(Environment.NewLine.ToCharArray()).Any())
@@ -145,13 +145,13 @@ using System.Runtime.Versioning;
              }
              else if (OperatingSystem.IsMacOS())
              {
-                 ProcessResult result = _processRunner.RunProcessOnMac("/usr/bin", "which", new []{"pwsh"});
+                 CommandResult result = _processRunner.RunProcessOnMac("/usr/bin", "which", new []{"pwsh"});
                  
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
              else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
              {
-                 ProcessResult result = _processRunner.RunProcessOnLinux("/usr/bin", "which", new []{"pwsh"});
+                 CommandResult result = _processRunner.RunProcessOnLinux("/usr/bin", "which", new []{"pwsh"});
                  
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
@@ -169,7 +169,7 @@ using System.Runtime.Versioning;
          {
              try
              {
-                 ProcessResult result;
+                 CommandResult result;
 
                  if (OperatingSystem.IsWindows())
                  {
@@ -219,7 +219,7 @@ using System.Runtime.Versioning;
  #endif
          public Version GetInstalledVersion()
          {
-             ProcessResult result = Execute("$PSVersionTable", false);
+             CommandResult result = Execute("$PSVersionTable", false);
 
              if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||
                  OperatingSystem.IsIOS())

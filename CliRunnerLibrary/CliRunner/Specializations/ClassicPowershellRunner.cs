@@ -19,6 +19,7 @@ using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
 using CliRunner.Specializations.Abstractions;
+// ReSharper disable InconsistentNaming
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
     using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
@@ -31,7 +32,7 @@ namespace CliRunner.Specializations
     /// </summary>
     public class ClassicPowershellRunner : IRunner
     {
-        protected IProcessRunner _processRunner;
+        protected readonly IProcessRunner _processRunner;
 
         public ClassicPowershellRunner()
         {
@@ -53,7 +54,7 @@ namespace CliRunner.Specializations
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
-        public ProcessResult Execute(string command, bool runAsAdministrator)
+        public CommandResult Execute(string command, bool runAsAdministrator)
         {
             if (OperatingSystem.IsWindows())
             {
@@ -120,7 +121,7 @@ namespace CliRunner.Specializations
         {
             if (OperatingSystem.IsWindows() && IsInstalled())
             {
-                ProcessResult result = Execute("$PSVersionTable", false);
+                CommandResult result = Execute("$PSVersionTable", false);
                
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
                 string[] lines = result.StandardOutput.Split(Environment.NewLine);

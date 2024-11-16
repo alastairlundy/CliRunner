@@ -45,11 +45,11 @@ namespace CliRunner.Processes
 #endif
         
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
-        public ProcessResult RunProcessOnWindows(string executableLocation, string executableName,
+        public CommandResult RunProcessOnWindows(string executableLocation, string executableName,
             IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
             bool runAsAdministrator = false, bool insertExeInExecutableNameIfMissing = true)
 #elif NETSTANDARD2_0
-        public ProcessResult RunProcessOnWindows(string executableLocation, string executableName,
+        public CommandResult RunProcessOnWindows(string executableLocation, string executableName,
             IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
             bool runAsAdministrator = false, bool insertExeInExecutableNameIfMissing = true)
 #endif
@@ -114,7 +114,7 @@ namespace CliRunner.Processes
                 throw new Exception(end);
             }
 
-            ProcessResult output = new ProcessResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
+            CommandResult output = new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
             
             return output;
         }
@@ -126,11 +126,11 @@ namespace CliRunner.Processes
         /// <param name="executableName">The name of the file to be run.</param>
         /// <param name="processArguments">Arguments to be passed to the executable.</param>
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
-        public ProcessResult RunProcessOnMac(string executableLocation, string executableName,
+        public CommandResult RunProcessOnMac(string executableLocation, string executableName,
             IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
   bool runAsAdministrator = false)
 #elif NETSTANDARD2_0
-        public ProcessResult RunProcessOnMac(string executableLocation, string executableName,
+        public CommandResult RunProcessOnMac(string executableLocation, string executableName,
             IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
             bool runAsAdministrator = false)
 #endif
@@ -173,7 +173,7 @@ namespace CliRunner.Processes
 
             process.WaitForExit();
             
-            ProcessResult output = new ProcessResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
+            CommandResult output = new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
             
             return output;
         }
@@ -187,11 +187,11 @@ namespace CliRunner.Processes
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
-        public ProcessResult RunProcessOnLinux(string executableLocation,
+        public CommandResult RunProcessOnLinux(string executableLocation,
             string executableName, IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
             bool runAsAdministrator = false)
 #elif NETSTANDARD2_0
-        public ProcessResult RunProcessOnLinux(string executableLocation,
+        public CommandResult RunProcessOnLinux(string executableLocation,
             string executableName, IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
             bool runAsAdministrator = false)
 #endif
@@ -229,7 +229,7 @@ namespace CliRunner.Processes
             
             process.WaitForExit();
 
-            ProcessResult output = new ProcessResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
+            CommandResult output = new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
 
             return output;
         }
@@ -243,11 +243,11 @@ namespace CliRunner.Processes
         /// <param name="processStartInfo"></param>
         /// <returns></returns>
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
-        public ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName,
+        public CommandResult RunProcessOnFreeBsd(string executableLocation, string executableName,
             IEnumerable<string> arguments, ProcessStartInfo? processStartInfo = null,
             bool runAsAdministrator = false)
 #elif NETSTANDARD2_0
-        public ProcessResult RunProcessOnFreeBsd(string executableLocation, string executableName,
+        public CommandResult RunProcessOnFreeBsd(string executableLocation, string executableName,
             IEnumerable<string> arguments, ProcessStartInfo processStartInfo = null,
             bool runAsAdministrator = false)
 #endif

@@ -53,7 +53,7 @@ namespace CliRunner.Specializations
         #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         #endif
-        public ProcessResult Execute(string command, bool runAsAdministrator)
+        public CommandResult Execute(string command, bool runAsAdministrator)
         {
             if (OperatingSystem.IsWindows())
             {
@@ -116,7 +116,7 @@ namespace CliRunner.Specializations
         {
             if (OperatingSystem.IsWindows())
             {
-                ProcessResult result = Execute("--version", false);
+                CommandResult result = Execute("--version", false);
 
                 string output;
 #if NET5_0_OR_GREATER
