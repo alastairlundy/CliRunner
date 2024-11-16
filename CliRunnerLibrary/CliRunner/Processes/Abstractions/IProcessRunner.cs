@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using CliRunner.Commands;
 
 namespace CliRunner.Processes.Abstractions
 {

@@ -7,9 +7,10 @@
  */
 
 using System;
+
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace CliRunner.Processes
+namespace CliRunner.Commands
 {
     public class CommandResult
     {

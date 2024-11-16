@@ -9,6 +9,7 @@
 
 using System;
 using System.Runtime.Versioning;
+using CliRunner.Commands;
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 

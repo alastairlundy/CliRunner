@@ -14,7 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
-
+using CliRunner.Commands;
 using CliRunner.Processes.Abstractions;
 #if NETSTANDARD2_0 || NETSTANDARD2_1
     using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;

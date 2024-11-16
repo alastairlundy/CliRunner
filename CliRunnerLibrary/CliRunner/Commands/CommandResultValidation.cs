@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CliRunner.Processes
+namespace CliRunner.Commands
 {
     [Flags]
     public enum CommandResultValidation

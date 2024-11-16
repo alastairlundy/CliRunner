@@ -10,6 +10,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using CliRunner.Commands;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
