@@ -9,12 +9,11 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
 using CliRunner.Commands;
 using CliRunner.Commands.Abstractions;
-using CliRunner.Processes;
-using CliRunner.Processes.Abstractions;
 
 using CliRunner.Urls.Abstractions;
 
@@ -63,39 +62,49 @@ namespace CliRunner.Urls
         /// Courtesy of https://github.com/dotnet/corefx/issues/10361
         /// </summary>
         /// <param name="url">The URL to be opened.</param>
+        #if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("browser")]
+        #endif
         public void OpenUrlInDefaultBrowser(string url)
         {
             url = AddHttpIfMissing(url, false);
             url = ReplaceHttpWithHttps(url);
             
-            OpenUrl(url);
-        }
-
-        protected void OpenUrl(string url)
-        {
             if (OperatingSystem.IsWindows())
             {
-                string[] args = new string[] { $"/c start {url.Replace("&", "^&")}"};
+                string args = $"/c start {url.Replace("&", "^&")}";
                 
-                Command cmdCommand = new Command("cmd.exe", Environment.SystemDirectory, args, true, false, false);
+                Command cmdCommand = new Command(targetFilePath:"cmd.exe", arguments: args,
+                    workingDirectoryPath:Environment.SystemDirectory);
                 
-               _commandRunner.RunCommandOnWindows(cmdCommand, false);
+                _commandRunner.Execute(cmdCommand);
             }
-            if (OperatingSystem.IsLinux())
+            if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
-                _commandRunner.RunCommandOnLinux($"xdg-open {url}");
+                Command command = new Command("/usr/bin/xdg-open", arguments: url.Replace("&", "^&"), workingDirectoryPath: "/usr/bin");
+                _commandRunner.Execute(command);
             }
             if (OperatingSystem.IsMacOS())
             {
                 Task task = new Task(() => Process.Start("open", url));
                 task.Start();
             }
-            if (OperatingSystem.IsFreeBSD())
-            {
-                _commandRunner.RunCommandOnFreeBsd($"xdg-open {url}");
-            }
         }
 
+        /// <summary>
+        /// Adds HTTP(S) to a URL if it's missing.
+        /// </summary>
+        /// <param name="url">The URL to be checked.</param>
+        /// <param name="allowNonSecureHttp">Whether to use HTTP instead of HTTPS.</param>
+        /// <returns>the modified URL string.</returns>
         public string AddHttpIfMissing(string url, bool allowNonSecureHttp)
         {
             if ((!url.StartsWith("https://") || !url.StartsWith("www.")) && (!url.StartsWith("file://")))
