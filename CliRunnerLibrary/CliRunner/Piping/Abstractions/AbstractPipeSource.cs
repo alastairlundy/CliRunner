@@ -19,32 +19,32 @@ namespace CliRunner.Piping.Abstractions
     {
         
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
-         protected PipeSourceOptions? options;  
+         protected PipeSourceOptions? _options;  
 #elif NETSTANDARD2_0
-        protected PipeSourceOptions options;
+        protected PipeSourceOptions _options;
 #endif
         
         public AbstractPipeSource()
         {
-            options = null;
+            _options = null;
         }
 
         public AbstractPipeSource(Func<Stream> streamFactory)
         {
-            options = null;
+            _options = null;
         }
 
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public AbstractPipeSource(Func<Stream> streamFactory, PipeSourceOptions? options)
         {
             
-            this.options = options;
+            this._options = options;
         }
 #elif NETSTANDARD2_0
         public AbstractPipeSource(Func<Stream> streamFactory, PipeSourceOptions options)
         {
             
-            this.options = options;
+            this._options = options;
         }
 #endif
         public abstract AbstractPipeSource Null { get; }
