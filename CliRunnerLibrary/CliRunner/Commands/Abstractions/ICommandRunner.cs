@@ -9,7 +9,7 @@
 
 using System.Diagnostics;
 using System.Runtime.Versioning;
-
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CliRunner.Commands.Abstractions
@@ -26,9 +26,21 @@ namespace CliRunner.Commands.Abstractions
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
 #endif
+        Process CreateProcess(Command command);
+        
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("tvos")]
+#endif
         ProcessStartInfo GetStartInfo(Command command);
         
         CommandResult Execute(Command command);
-        Task<CommandResult> ExecuteAsync(Command command);
+        Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
     }
 }

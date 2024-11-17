@@ -1,9 +1,19 @@
-﻿using System;
+﻿/*
+    CliRunner 
+    Copyright (C) 2024  Alastair Lundy
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+   */
+
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Versioning;
-
+using System.Threading;
 using System.Threading.Tasks;
+
 using CliRunner.Commands.Abstractions;
 using CliRunner.Piping.Abstractions;
 
@@ -79,9 +89,32 @@ namespace CliRunner.Commands
             throw new System.NotImplementedException(); 
         }
 
-        public Task<CommandResult> ExecuteAsync(Command command)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
+        public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            Process process = CreateProcess(command);
+
+            process.Start();
+            
+            await process.WaitForExitAsync(cancellationToken);
+            
+            return new CommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken), process.StartTime, process.ExitTime);
         }
     }
 }
