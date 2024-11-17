@@ -2,7 +2,9 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+
 using CliRunner.Piping.Abstractions;
+using CliRunner.Piping.Abstractions.Options;
 
 namespace CliRunner.Piping
 {
@@ -23,7 +25,25 @@ namespace CliRunner.Piping
             throw new NotImplementedException();
         }
 
+#if NET5_0_OR_GREATER || NETSTANDARD2_1
+        public override AbstractPipeTarget ToStream(Stream stream, PipeSourceOptions? options)
+#else
+        public override AbstractPipeTarget ToStream(Stream stream, PipeSourceOptions options)
+#endif
+        {
+            throw new NotImplementedException();
+        }
+
         public override AbstractPipeTarget ToStream(Action<Stream> streamAction)
+        {
+            throw new NotImplementedException();
+        }
+
+#if NET5_0_OR_GREATER || NETSTANDARD2_1
+        public override AbstractPipeTarget ToStream(Action<Stream> streamAction, PipeTargetOptions? options)
+#else
+        public override AbstractPipeTarget ToStream(Action<Stream> streamAction, PipeTargetOptions options)
+#endif
         {
             throw new NotImplementedException();
         }
