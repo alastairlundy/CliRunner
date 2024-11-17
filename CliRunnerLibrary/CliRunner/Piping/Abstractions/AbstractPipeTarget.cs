@@ -24,13 +24,13 @@ namespace CliRunner.Piping.Abstractions
 
         public abstract AbstractPipeTarget ToStream(Stream stream);
 
-#if NETSTANDARD2_1 || NET6_OR_GREATER
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public abstract AbstractPipeTarget ToStream(Stream stream, PipeSourceOptions? options);
 #elif NETSTANDARD2_0
         public abstract AbstractPipeTarget ToStream(Stream stream, PipeSourceOptions options);
 #endif
         public abstract AbstractPipeTarget ToStream(Action<Stream> streamAction);
-#if NETSTANDARD2_1 || NET6_OR_GREATER
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
         public abstract AbstractPipeTarget ToStream(Action<Stream> streamAction, PipeTargetOptions? options);
 #elif NETSTANDARD2_0
         public abstract AbstractPipeTarget ToStream(Action<Stream> streamAction, PipeTargetOptions options);
