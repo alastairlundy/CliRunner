@@ -1,5 +1,4 @@
-﻿using System.Security;
-// ReSharper disable ClassNeverInstantiated.Global
+﻿// ReSharper disable ClassNeverInstantiated.Global
 
 /*
    Based on Tyrrrz's CliWrap Credentials.cs
@@ -7,6 +6,8 @@
 
     Portions of this code are licensed under the MIT license.
  */
+
+using System.Security;
 
 namespace CliRunner
 {
@@ -35,5 +36,7 @@ namespace CliRunner
         public string Username { get; set; }
         public SecureString Password { get; set; }
 #endif
+        
+        public static Credentials Default { get; } = new Credentials();
     }
 }

@@ -36,12 +36,6 @@ namespace CliRunner.Piping.Abstractions
         public abstract AbstractPipeTarget ToStream(Action<Stream> streamAction, PipeTargetOptions options);
 #endif
 
-        public abstract AbstractPipeTarget ToNull();
-        
-#if NETSTANDARD2_1 || NET6_OR_GREATER
-        public abstract AbstractPipeTarget ToNull(PipeTargetOptions? options);
-#elif NETSTANDARD2_0
-        public abstract AbstractPipeTarget ToNull(PipeTargetOptions options);
-#endif
+        public abstract AbstractPipeTarget Null { get; }
     }
 }
