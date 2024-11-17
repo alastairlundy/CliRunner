@@ -49,8 +49,7 @@ namespace CliRunner.Piping.Abstractions
 #endif
         public abstract AbstractPipeSource Null { get; }
         
-       public abstract Task CopyToAsync(out Stream destination,
-            CancellationToken cancellationToken = default);
+       public abstract Task<Stream> CopyToAsync(CancellationToken cancellationToken = default);
 
        public abstract Stream GetStream();
        public abstract Task<Stream> GetStreamAsync(CancellationToken cancellationToken = default);

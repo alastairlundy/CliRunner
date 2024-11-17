@@ -30,6 +30,7 @@ namespace CliRunner.Commands
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="command"></param>
         /// <returns></returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -40,6 +41,35 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("android")]
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
+#endif
+        public Process CreateProcess(Command command)
+        {
+            ProcessStartInfo startInfo = GetStartInfo(command);
+
+            Process output = new Process
+            {
+                StartInfo = startInfo,
+                
+            };
+            
+            
+            return output;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
 #endif
         public ProcessStartInfo GetStartInfo(Command command)
         {
@@ -84,9 +114,32 @@ namespace CliRunner.Commands
             return output;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         public CommandResult Execute(Command command)
         {
-            throw new System.NotImplementedException(); 
+            Process process = CreateProcess(command);
+
+            process.Start();
+            
+            process.WaitForExit();
+            
+            return new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
         }
 
         /// <summary>

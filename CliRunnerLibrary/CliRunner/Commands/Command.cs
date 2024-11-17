@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+
 using CliRunner.Commands.Abstractions;
 using CliRunner.Piping.Abstractions;
 
@@ -32,6 +33,7 @@ namespace CliRunner.Commands
 
         public Command(string targetFilePath,
              string arguments = null, string workingDirectoryPath = null,
+             bool runAsAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
              Credentials credentials = null,
              CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
@@ -41,7 +43,7 @@ namespace CliRunner.Commands
         )
         {
             TargetFilePath = targetFilePath;
-
+            RunAsAdministrator = runAsAdministrator;
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
@@ -49,9 +51,9 @@ namespace CliRunner.Commands
 
             CommandResultValidation = commandResultValidation;
             
-            StandardInputPipe = standardInputPipe ?? standardInputPipe.Null;
-            StandardOutputPipe = standardOutputPipe ?? standardOutputPipe.Null;
-            StandardErrorPipe = standardErrorPipe ?? standardErrorPipe.Null;
+            StandardInputPipe = standardInputPipe ?? StandardInputPipe.Null;
+            StandardOutputPipe = standardOutputPipe ?? StandardOutputPipe.Null;
+            StandardErrorPipe = standardErrorPipe ?? StandardErrorPipe.Null;
         }
 
         [Pure]
@@ -59,6 +61,7 @@ namespace CliRunner.Commands
             new Command(targetFilePath,
             Arguments,
             WorkingDirectoryPath,
+            RunAsAdministrator,
             EnvironmentVariables,
             Credentials,
             CommandResultValidation,
@@ -72,6 +75,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 workingDirectoryPath,
+                RunAsAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 CommandResultValidation,
@@ -84,6 +88,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
+                RunAsAdministrator,
                 EnvironmentVariables,
                 credentials,
                 CommandResultValidation,
