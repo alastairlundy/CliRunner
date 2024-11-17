@@ -39,5 +39,9 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Builders\" />
+    </ItemGroup>
 
 </Project>
