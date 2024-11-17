@@ -32,7 +32,11 @@ namespace CliRunner.Piping
             throw new NotImplementedException();
         }
 
+#if NET5_0_OR_GREATER || NETSTANDARD2_1
         public override AbstractPipeSource FromStream(Stream stream, PipeSourceOptions? options)
+#else
+        public override AbstractPipeSource FromStream(Stream stream, PipeSourceOptions options)
+#endif
         {
             throw new NotImplementedException();
         }
@@ -42,7 +46,11 @@ namespace CliRunner.Piping
             throw new NotImplementedException();
         }
 
+#if NET5_0_OR_GREATER || NETSTANDARD2_1
         public override AbstractPipeSource FromStream(Func<Stream> streamFactory, PipeSourceOptions? options)
+#else
+        public override AbstractPipeSource FromStream(Func<Stream> streamFactory, PipeSourceOptions options)
+#endif
         {
             throw new NotImplementedException();
         }
