@@ -39,9 +39,5 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Commands\Abstractions\" />
-    </ItemGroup>
 
 </Project>

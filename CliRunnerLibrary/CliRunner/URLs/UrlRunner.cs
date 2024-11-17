@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using CliRunner.Commands;
+using CliRunner.Commands.Abstractions;
 using CliRunner.Processes;
 using CliRunner.Processes.Abstractions;
 
