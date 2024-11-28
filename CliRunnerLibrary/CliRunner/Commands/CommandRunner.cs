@@ -165,9 +165,20 @@ namespace CliRunner.Commands
 
             process.Start();
             
+#if NET6_0_OR_GREATER
             await process.WaitForExitAsync(cancellationToken);
-            
-            return new CommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken), process.StartTime, process.ExitTime);
+#else
+            process.WaitForExit();
+#endif
+
+            return new CommandResult(process.ExitCode, 
+#if NET6_0_OR_GREATER
+                await process.StandardOutput.ReadToEndAsync(cancellationToken)
+#else
+                await process.StandardOutput.ReadToEndAsync()
+#endif
+, 
+                process.StartTime, process.ExitTime);
         }
     }
 }
