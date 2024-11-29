@@ -11,8 +11,10 @@ namespace CliRunner.Commands
         public async Task<AbstractPipeSource> PipeStandardInputAsync(Process process)
         {
             PipeSource output = new PipeSource();
-            
-            process.StandardInput.BaseStream.
+
+            byte[] buffer = await process.StandardInput.;
+
+            await process.StandardInput.BaseStream.WriteAsync(buffer);
 
             return output;
         }
