@@ -25,6 +25,9 @@ using CliRunner.Extensibility;
 
 namespace CliRunner.Specializations.Commands
 {
+    /// <summary>
+    /// 
+    /// </summary>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [UnsupportedOSPlatform("macos")]
