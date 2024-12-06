@@ -9,11 +9,9 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
-
-using CliRunner.Commands;
-using CliRunner.Commands.Abstractions;
 
 using CliRunner.Urls.Abstractions;
 
@@ -26,18 +24,6 @@ namespace CliRunner.Urls
 
     public class UrlRunner : IUrlRunner
     {
-        protected ICommandRunner _commandRunner;
-
-        public UrlRunner()
-        {
-            _commandRunner = new CommandRunner();
-        }
-
-        public UrlRunner(ICommandRunner commandRunner)
-        {
-            this._commandRunner = commandRunner;
-        }
-        
         /// <summary>
         /// Convert HTTP to HTTPS
         /// </summary>
@@ -75,6 +61,11 @@ namespace CliRunner.Urls
         #endif
         public void OpenUrlInDefaultBrowser(string url)
         {
+            Task.WaitAll(OpenUrlInDefaultBrowserAsync(url));
+        }
+        
+        public async Task OpenUrlInDefaultBrowserAsync(string url)
+        {
             url = AddHttpIfMissing(url, false);
             url = ReplaceHttpWithHttps(url);
             
@@ -82,20 +73,24 @@ namespace CliRunner.Urls
             {
                 string args = $"/c start {url.Replace("&", "^&")}";
                 
-                Command cmdCommand = new Command(targetFilePath:"cmd.exe", arguments: args,
-                    workingDirectoryPath:Environment.SystemDirectory);
-                
-                _commandRunner.Execute(cmdCommand);
+                await Cli.Run($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe")
+                    .WithArguments(args)
+                    .WithWorkingDirectory(Environment.SystemDirectory)
+                    .ExecuteAsync();
             }
             if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
-                Command command = new Command("/usr/bin/xdg-open", arguments: url.Replace("&", "^&"), workingDirectoryPath: "/usr/bin");
-                _commandRunner.Execute(command);
+                await Cli.Run("/usr/bin/xdg-open")
+                    .WithArguments(url.Replace("&", "^&"))
+                    .WithWorkingDirectory("/usr/bin")
+                    .ExecuteAsync();
             }
             if (OperatingSystem.IsMacOS())
             {
                 Task task = new Task(() => Process.Start("open", url));
                 task.Start();
+                
+                await task.ConfigureAwait(false);
             }
         }
 
