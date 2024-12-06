@@ -14,11 +14,10 @@ namespace CliRunner.Commands
 {
     public class CommandResult
     {
-        public CommandResult(int exitCode, string standardOutput,
+        public CommandResult(int exitCode,
             DateTime startTime, DateTime exitTime)
         {
             this.ExitCode = exitCode;
-            this.StandardOutput = standardOutput;
             
             this.ExitTime = exitTime;
             this.StartTime = startTime;
@@ -30,7 +29,5 @@ namespace CliRunner.Commands
         public DateTime ExitTime { get; }
 
         public TimeSpan RuntimeDuration => ExitTime.Subtract(StartTime);
-
-        public string StandardOutput { get; }
     }
 }

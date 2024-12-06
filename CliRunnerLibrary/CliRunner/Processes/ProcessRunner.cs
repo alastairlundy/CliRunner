@@ -114,7 +114,7 @@ namespace CliRunner.Processes
                 throw new Exception(end);
             }
 
-            CommandResult output = new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
+            CommandResult output = new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
             
             return output;
         }
@@ -173,7 +173,7 @@ namespace CliRunner.Processes
 
             process.WaitForExit();
             
-            CommandResult output = new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
+            CommandResult output = new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
             
             return output;
         }
@@ -229,7 +229,7 @@ namespace CliRunner.Processes
             
             process.WaitForExit();
 
-            CommandResult output = new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
+            CommandResult output = new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
 
             return output;
         }
