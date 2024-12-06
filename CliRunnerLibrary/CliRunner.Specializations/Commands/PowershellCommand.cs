@@ -199,5 +199,4 @@ namespace CliRunner.Specializations.Commands
             throw new Exception("Failed to get psversion");
         }
     }
-    }
 }
