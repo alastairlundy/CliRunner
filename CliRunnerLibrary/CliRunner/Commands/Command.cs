@@ -16,7 +16,7 @@ using CliRunner.Piping.Abstractions;
 
 namespace CliRunner.Commands
 {
-    public class Command : ICommandConfiguration
+    public partial class Command : ICommandConfiguration
     {
         public bool RunAsAdministrator { get; protected set; }
         public string TargetFilePath { get; protected set; }
@@ -56,7 +56,19 @@ namespace CliRunner.Commands
             StandardErrorPipe = standardErrorPipe ?? StandardErrorPipe.Null;
         }
 
-        [Pure]
+        public Command WithArguments(string arguments)=> 
+            new Command(TargetFilePath,
+                arguments,
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                CommandResultValidation,
+                StandardInputPipe,
+                StandardOutputPipe,
+                StandardErrorPipe);
+        
+        
         public Command WithTargetFile(string targetFilePath) => 
             new Command(targetFilePath,
             Arguments,
@@ -70,7 +82,19 @@ namespace CliRunner.Commands
             StandardErrorPipe);
         
         
-        [Pure]
+        public Command RequiresAdministrator(bool runAsAdministrator) =>
+            new Command(TargetFilePath,
+            Arguments,
+            WorkingDirectoryPath,
+            runAsAdministrator,
+            EnvironmentVariables,
+            Credentials,
+            CommandResultValidation,
+            StandardInputPipe,
+            StandardOutputPipe,
+            StandardErrorPipe);
+        
+        
         public Command WithWorkingDirectory(string workingDirectoryPath) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -83,7 +107,7 @@ namespace CliRunner.Commands
                 StandardOutputPipe,
                 StandardErrorPipe);
         
-        [Pure]
+        
         public Command WithCredentials(Credentials credentials) =>
             new Command(TargetFilePath,
                 Arguments,
