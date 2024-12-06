@@ -7,67 +7,61 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+
 using System;
 using System.IO;
 using System.Linq;
 
 using CliRunner.Commands;
-
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
-
-using CliRunner.Processes;
-using CliRunner.Processes.Abstractions;
-
-using CliRunner.Specializations.Abstractions;
-// ReSharper disable InconsistentNaming
+using CliRunner.Extensibility;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
-    using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
+ using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
+ // ReSharper disable RedundantBoolCompare
 #endif
 
-namespace CliRunner.Specializations
+namespace CliRunner.Specializations.Commands
 {
-    /// <summary>
-    /// A class to make running commands through Windows Powershell easier.
-    /// </summary>
-    public class ClassicPowershellRunner : IRunner
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [UnsupportedOSPlatform("macos")]
+    [UnsupportedOSPlatform("linux")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("browser")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("watchos")]
+#endif
+    public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
     {
-        protected readonly IProcessRunner _processRunner;
-
-        public ClassicPowershellRunner()
+        
+        public new string TargetFilePath => GetInstallLocation();
+        
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
+        public ClassicPowershellCommand() : base("")
         {
-            _processRunner = new ProcessRunner();
-        }
-
-        public ClassicPowershellRunner(IProcessRunner processRunner)
-        {
-            this._processRunner = processRunner;
+            base.TargetFilePath = TargetFilePath;
         }
 
         /// <summary>
-        /// Executes the specified command in Windows Powershell.
+        /// 
         /// </summary>
-        /// <param name="command">The command to be run.</param>
-        /// <param name="runAsAdministrator">Whether to run the command and Windows Powershell as an administrator.</param>
-        /// <returns>the result from running the specified Command.</returns>
-        /// <exception cref="PlatformNotSupportedException"></exception>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-#endif
-        public CommandResult Execute(string command, bool runAsAdministrator)
+        /// <returns></returns>
+        public static Command Create()
         {
-            if (OperatingSystem.IsWindows())
-            {
-                return _processRunner.RunProcessOnWindows(GetInstallLocation(),
-                    "powershell", command.Split(' '), null, 
-                    runAsAdministrator);
-            }
-            else
-            {
-                throw new PlatformNotSupportedException();
-            }
+            return new ClassicPowershellCommand();
         }
 
         /// <summary>
@@ -75,6 +69,16 @@ namespace CliRunner.Specializations
         /// </summary>
         /// <returns>the file path of where Windows Powershell is installed to.</returns>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows based.</exception>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public string GetInstallLocation()
         {
             if (OperatingSystem.IsWindows())
@@ -84,14 +88,24 @@ namespace CliRunner.Specializations
             }
             else
             {
-                throw new PlatformNotSupportedException();
+                throw new PlatformNotSupportedException("WindowsPowerShell only supports Windows.");
             }
         }
-
+        
         /// <summary>
         /// Detects whether Windows Powershell is installed on a system.
         /// </summary>
         /// <returns>true if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public bool IsInstalled()
         {
             if (OperatingSystem.IsWindows())
@@ -112,18 +126,31 @@ namespace CliRunner.Specializations
                 return false;
             }
         }
-
+        
         /// <summary>
         /// Gets the installed version of Windows Powershell.
         /// </summary>
         /// <returns>the installed version of Windows Powershell.</returns>
         /// <exception cref="Exception">Thrown if the installed version of Windows Powershell could not be detected.</exception>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows based.</exception>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public Version GetInstalledVersion()
         {
             if (OperatingSystem.IsWindows() && IsInstalled())
             {
-                CommandResult result = Execute("$PSVersionTable", false);
+                BufferedCommandResult result = Cli.Run(this)
+                    .WithArguments("$PSVersionTable")
+                    .RequiresAdministrator(false)
+                    .ExecuteBuffered();
                
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
                 string[] lines = result.StandardOutput.Split(Environment.NewLine);

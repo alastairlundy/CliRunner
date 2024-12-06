@@ -8,17 +8,11 @@
    */
 
 using System;
-using System.Runtime.Versioning;
-using CliRunner.Commands;
-using CliRunner.Processes;
-using CliRunner.Processes.Abstractions;
 
-namespace CliRunner.Specializations.Abstractions
+namespace CliRunner.Extensibility
 {
-    public interface IRunner
+    public interface ISpecializedCommandInformation
     {
-        CommandResult Execute(string commandLine, bool runAsAdministrator);
-
         string GetInstallLocation();
         
         bool IsInstalled();

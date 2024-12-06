@@ -7,11 +7,14 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
+using System.Threading.Tasks;
+
 namespace CliRunner.Urls.Abstractions
 {
     public interface IUrlRunner
     {
         void OpenUrlInDefaultBrowser(string url);
+        Task OpenUrlInDefaultBrowserAsync(string url);
 
         string ReplaceHttpWithHttps(string url);
 
