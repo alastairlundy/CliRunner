@@ -10,12 +10,15 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+
 using CliRunner.Commands.Abstractions;
-using CliRunner.Piping.Abstractions;
+using CliRunner.Commands.Extensions;
 
 // ReSharper disable RedundantBoolCompare
 
@@ -25,12 +28,11 @@ using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensio
 
 namespace CliRunner.Commands
 {
-    public class CommandRunner : ICommandRunner
+    public partial class Command : ICommandRunner
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="command"></param>
         /// <returns></returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -42,16 +44,15 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
 #endif
-        public Process CreateProcess(Command command)
+        public Process CreateProcess()
         {
-            ProcessStartInfo startInfo = GetStartInfo(command);
+            ProcessStartInfo startInfo = GetStartInfo();
 
             Process output = new Process
             {
                 StartInfo = startInfo,
                 
             };
-            
             
             return output;
         }
@@ -71,22 +72,22 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo GetStartInfo(Command command)
+        public ProcessStartInfo GetStartInfo()
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
-                FileName = command.TargetFilePath,
-                WorkingDirectory = command.WorkingDirectoryPath,
+                FileName = TargetFilePath,
+                WorkingDirectory = WorkingDirectoryPath,
                 UseShellExecute = false,
                 CreateNoWindow = false,
             };
 
-            if (string.IsNullOrEmpty(command.Arguments) == false)
+            if (string.IsNullOrEmpty(Arguments) == false)
             {
-                output.Arguments = command.Arguments;
+                output.Arguments = Arguments;
             }
 
-            if (command.RunAsAdministrator == true)
+            if (RunAsAdministrator == true)
             {
                 if (OperatingSystem.IsWindows())
                 {
@@ -98,15 +99,15 @@ namespace CliRunner.Commands
                 }
             }
 
-            if (command.StandardInputPipe != command.StandardInputPipe.Null)
+            if (StandardInputPipe != StandardInputPipe.Null)
             {
                 output.RedirectStandardInput = true;
             }
-            if (command.StandardOutputPipe != command.StandardOutputPipe.Null)
+            if (StandardOutputPipe != StandardOutputPipe.Null)
             {
                 output.RedirectStandardOutput = true;
             }
-            if (command.StandardErrorPipe != command.StandardErrorPipe.Null)
+            if (StandardErrorPipe != StandardErrorPipe.Null)
             {
                 output.RedirectStandardError = true;
             }
@@ -117,7 +118,6 @@ namespace CliRunner.Commands
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="command"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
 #if NET5_0_OR_GREATER
@@ -131,21 +131,48 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public CommandResult Execute(Command command)
+        public CommandResult Execute()
         {
-            Process process = CreateProcess(command);
-
-            process.Start();
-            
-            process.WaitForExit();
-            
-            return new CommandResult(process.ExitCode, process.StandardOutput.ReadToEnd(), process.StartTime, process.ExitTime);
+            return ExecuteBuffered().ToCommandResult();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="command"></param>
+        /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
+        public BufferedCommandResult ExecuteBuffered()
+        {
+            Process process = CreateProcess();
+
+            process.Start();
+            
+            process.WaitForExit();
+           
+#if NET6_0_OR_GREATER
+            return new BufferedCommandResult(process.ExitCode, process.StandardInput.ToString()!,
+                process.StandardOutput.ReadToEnd(),
+                process.StartTime, process.ExitTime);
+#else
+            return new BufferedCommandResult(process.ExitCode, process.StandardInput.ToString(),
+                process.StandardOutput.ReadToEnd(),
+                process.StartTime, process.ExitTime);
+#endif
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #if NET5_0_OR_GREATER
@@ -159,9 +186,31 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
+        public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
         {
-            Process process = CreateProcess(command);
+           var result = await ExecuteBufferedAsync(cancellationToken);
+           return result.ToCommandResult();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
+        public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)
+        {
+            Process process = CreateProcess();
 
             process.Start();
             
@@ -170,15 +219,14 @@ namespace CliRunner.Commands
 #else
             process.WaitForExit();
 #endif
-
-            return new CommandResult(process.ExitCode, 
+            
 #if NET6_0_OR_GREATER
-                await process.StandardOutput.ReadToEndAsync(cancellationToken)
+            return new BufferedCommandResult(process.ExitCode, 
+                process.StandardInput.ToString()!, await process.StandardOutput.ReadToEndAsync(cancellationToken), process.StartTime, process.ExitTime);
 #else
-                await process.StandardOutput.ReadToEndAsync()
+            return new BufferedCommandResult(process.ExitCode, 
+                process.StandardInput.ToString(), await process.StandardOutput.ReadToEndAsync(), process.StartTime, process.ExitTime);
 #endif
-, 
-                process.StartTime, process.ExitTime);
-        }
+}
     }
 }
