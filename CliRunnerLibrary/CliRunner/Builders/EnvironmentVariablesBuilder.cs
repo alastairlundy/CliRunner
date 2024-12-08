@@ -20,7 +20,7 @@ namespace CliRunner.Builders
     {
         private readonly Dictionary<string, string> _environmentVariables = new Dictionary<string, string>(StringComparer.Ordinal);
 
-        private EnvironmentVariablesBuilder()
+        public EnvironmentVariablesBuilder()
         {
             
         }

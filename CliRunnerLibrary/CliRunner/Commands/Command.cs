@@ -7,11 +7,13 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-
+using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
+using CliRunner.Piping;
 using CliRunner.Piping.Abstractions;
 
 namespace CliRunner.Commands
@@ -27,9 +29,9 @@ namespace CliRunner.Commands
         public Credentials Credentials { get; protected set; }
         public CliRunner.Commands.CommandResultValidation CommandResultValidation { get; protected set;}
         
-        public AbstractPipeSource StandardInputPipe { get; protected set; }
-        public AbstractPipeTarget StandardOutputPipe { get; protected set; }
-        public AbstractPipeTarget StandardErrorPipe { get; protected set; }
+        public PipeSource StandardInputPipe { get; protected set; }
+        public PipeTarget StandardOutputPipe { get; protected set; }
+        public PipeTarget StandardErrorPipe { get; protected set; }
 
         public Command(string targetFilePath,
              string arguments = null, string workingDirectoryPath = null,
@@ -37,9 +39,9 @@ namespace CliRunner.Commands
             IReadOnlyDictionary<string, string> environmentVariables = null,
              Credentials credentials = null,
              CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
-             AbstractPipeSource standardInputPipe = null,
-             AbstractPipeTarget standardOutputPipe = null,
-             AbstractPipeTarget standardErrorPipe = null
+             PipeSource standardInputPipe = null,
+             PipeTarget standardOutputPipe = null,
+             PipeTarget standardErrorPipe = null
         )
         {
             TargetFilePath = targetFilePath;
@@ -51,13 +53,13 @@ namespace CliRunner.Commands
 
             CommandResultValidation = commandResultValidation;
             
-            StandardInputPipe = standardInputPipe ?? StandardInputPipe.Null;
-            StandardOutputPipe = standardOutputPipe ?? StandardOutputPipe.Null;
-            StandardErrorPipe = standardErrorPipe ?? StandardErrorPipe.Null;
+            StandardInputPipe = standardInputPipe ?? StandardInputPipe!.Null;
+            StandardOutputPipe = standardOutputPipe ?? StandardOutputPipe!.Null;
+            StandardErrorPipe = standardErrorPipe ?? StandardErrorPipe!.Null;
         }
         
         public Command WithArguments(IEnumerable<string> arguments) =>
-            new(TargetFilePath,
+            new Command(TargetFilePath,
                 string.Join(" ", arguments),
                 WorkingDirectoryPath,
                 RunAsAdministrator,
@@ -122,7 +124,12 @@ namespace CliRunner.Commands
 
         public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
         {
-            
+            var environmentVariablesBuilder = new EnvironmentVariablesBuilder()
+                .Set(EnvironmentVariables);
+
+            configure(environmentVariablesBuilder);
+           
+            return WithEnvironmentVariables(environmentVariablesBuilder.Build());
         }
         
         public Command RequiresAdministrator(bool runAsAdministrator) =>
@@ -165,7 +172,13 @@ namespace CliRunner.Commands
 
         public Command WithCredentials(Action<CredentialsBuilder> configure)
         {
-            
+           var credentialBuilder = new CredentialsBuilder().SetDomain(Credentials.Domain)
+                .SetPassword(Credentials.Password)
+                .SetUsername(Credentials.Username);
+
+           configure(credentialBuilder);
+           
+           return WithCredentials(credentialBuilder.Build());
         }
 
         public Command WithValidation(CommandResultValidation validation) =>
@@ -180,7 +193,7 @@ namespace CliRunner.Commands
                 StandardOutputPipe,
                 StandardErrorPipe);
         
-        public Command WithStandardInputPipe(AbstractPipeSource source) =>
+        public Command WithStandardInputPipe(PipeSource source) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -192,7 +205,7 @@ namespace CliRunner.Commands
                 StandardOutputPipe,
                 StandardErrorPipe);
         
-        public Command WithStandardOutputPipe(AbstractPipeTarget target) =>
+        public Command WithStandardOutputPipe(PipeTarget target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -204,7 +217,7 @@ namespace CliRunner.Commands
                 target,
                 StandardErrorPipe);
         
-        public Command WithStandardErrorPipe(AbstractPipeTarget target) =>
+        public Command WithStandardErrorPipe(PipeTarget target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
