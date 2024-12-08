@@ -55,7 +55,33 @@ namespace CliRunner.Commands
             StandardOutputPipe = standardOutputPipe ?? StandardOutputPipe.Null;
             StandardErrorPipe = standardErrorPipe ?? StandardErrorPipe.Null;
         }
+        
+        public Command WithArguments(IEnumerable<string> arguments) =>
+            new(TargetFilePath,
+                string.Join(" ", arguments),
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                CommandResultValidation,
+                StandardInputPipe,
+                StandardOutputPipe,
+                StandardErrorPipe);
 
+        public Command WithArguments(IEnumerable<string> arguments, bool escape)
+        {
+            return new Command(TargetFilePath,
+                string.Join(" ", arguments),
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                CommandResultValidation,
+                StandardInputPipe,
+                StandardOutputPipe,
+                StandardErrorPipe);
+        }
+        
         public Command WithArguments(string arguments)=> 
             new Command(TargetFilePath,
                 arguments,
@@ -81,6 +107,23 @@ namespace CliRunner.Commands
             StandardOutputPipe,
             StandardErrorPipe);
         
+        
+        public Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
+            new Command(TargetFilePath,
+                Arguments,
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                environmentVariables,
+                Credentials,
+                CommandResultValidation,
+                StandardInputPipe,
+                StandardOutputPipe,
+                StandardErrorPipe);
+
+        public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
+        {
+            
+        }
         
         public Command RequiresAdministrator(bool runAsAdministrator) =>
             new Command(TargetFilePath,
@@ -119,5 +162,63 @@ namespace CliRunner.Commands
                 StandardInputPipe,
                 StandardOutputPipe,
                 StandardErrorPipe);
+
+        public Command WithCredentials(Action<CredentialsBuilder> configure)
+        {
+            
+        }
+
+        public Command WithValidation(CommandResultValidation validation) =>
+            new Command(TargetFilePath,
+                Arguments,
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                validation,
+                StandardInputPipe,
+                StandardOutputPipe,
+                StandardErrorPipe);
+        
+        public Command WithStandardInputPipe(AbstractPipeSource source) =>
+            new Command(TargetFilePath,
+                Arguments,
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                CommandResultValidation,
+                source,
+                StandardOutputPipe,
+                StandardErrorPipe);
+        
+        public Command WithStandardOutputPipe(AbstractPipeTarget target) =>
+            new Command(TargetFilePath,
+                Arguments,
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                CommandResultValidation,
+                StandardInputPipe,
+                target,
+                StandardErrorPipe);
+        
+        public Command WithStandardErrorPipe(AbstractPipeTarget target) =>
+            new Command(TargetFilePath,
+                Arguments,
+                WorkingDirectoryPath,
+                RunAsAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                CommandResultValidation,
+                StandardInputPipe,
+                StandardOutputPipe,
+                target);
+        
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }
