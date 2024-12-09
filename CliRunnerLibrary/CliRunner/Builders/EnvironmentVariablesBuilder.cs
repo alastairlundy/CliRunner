@@ -24,7 +24,24 @@ namespace CliRunner.Builders
         {
             
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vars"></param>
+        private EnvironmentVariablesBuilder(Dictionary<string, string> vars)
+        {
+            foreach (KeyValuePair<string, string> pair in vars)
+            {
+                _environmentVariables.Add(pair.Key, pair.Value);
+            }
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pairs"></param>
+        /// <returns></returns>
         private Dictionary<string, string> AddToExisting(KeyValuePair<string, string>[] pairs)
         {
             Dictionary<string, string> output = new Dictionary<string, string>();
@@ -33,7 +50,7 @@ namespace CliRunner.Builders
             {
                 output.Add(pair.Key, pair.Value);
             }
-
+                
             foreach (KeyValuePair<string, string> newPair in pairs)
             {
                 output.Add(newPair.Key, newPair.Value);
@@ -42,14 +59,12 @@ namespace CliRunner.Builders
             return output;
         }
         
-        private EnvironmentVariablesBuilder(Dictionary<string, string> vars)
-        {
-            foreach (KeyValuePair<string, string> pair in vars)
-            {
-                _environmentVariables.Add(pair.Key, pair.Value);
-            }
-        }
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public EnvironmentVariablesBuilder Set(string name, string value)
         {
             Dictionary<string, string> vars = AddToExisting(new KeyValuePair<string, string>[]
@@ -58,6 +73,11 @@ namespace CliRunner.Builders
             return new EnvironmentVariablesBuilder(vars);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="variables"></param>
+        /// <returns></returns>
         public EnvironmentVariablesBuilder Set(IEnumerable<KeyValuePair<string, string>> variables)
         {
             Dictionary<string, string> vars = AddToExisting(variables.ToArray());
@@ -65,6 +85,11 @@ namespace CliRunner.Builders
             return new EnvironmentVariablesBuilder(vars);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="variables"></param>
+        /// <returns></returns>
         public EnvironmentVariablesBuilder Set(IReadOnlyDictionary<string, string> variables)
         {
             Dictionary<string, string> vars = AddToExisting(variables.ToArray());
@@ -72,6 +97,10 @@ namespace CliRunner.Builders
             return new EnvironmentVariablesBuilder(vars);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IReadOnlyDictionary<string, string> Build()
         {
             return _environmentVariables;
