@@ -11,12 +11,30 @@ namespace CliRunner.Piping
 {
     public abstract class PipeTarget
     {
+        private class AnonymousPipeTarget(Func<Stream, CancellationToken, Task> copyFromAsync) : PipeTarget()
+        {
+            public override async Task CopyFromAsync(Stream origin, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private class AggregatePipeTarget(IReadOnlyList<PipeTarget> targets) : PipeTarget()
+        {
+            public IReadOnlyList<PipeTarget> Targets { get; } = targets;
+
+            public override async Task CopyFromAsync(Stream origin, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        
         public abstract Task CopyFromAsync(Stream origin, CancellationToken cancellationToken = default);
         
-        public static PipeTarget Null =>
+        public static PipeTarget Null { get; } = 
             Create((Stream _, CancellationToken cancellationToken) => cancellationToken.IsCancellationRequested
-                ? Task.FromCanceled(cancellationToken)
-                : Task.CompletedTask);
+            ? Task.FromCanceled(cancellationToken)
+            : Task.CompletedTask);
         
         
         public static PipeTarget Create(Func<Stream, CancellationToken, Task> handlePipeAsync)

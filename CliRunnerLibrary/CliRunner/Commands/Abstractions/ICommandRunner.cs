@@ -38,7 +38,7 @@ namespace CliRunner.Commands.Abstractions
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
 #endif
-        ProcessStartInfo GetStartInfo();
+        ProcessStartInfo CreateStartInfo();
         
         CommandResult Execute();
         BufferedCommandResult ExecuteBuffered();

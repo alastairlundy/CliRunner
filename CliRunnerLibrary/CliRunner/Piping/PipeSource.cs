@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,9 +13,16 @@ namespace CliRunner.Piping
 {
     public abstract class PipeSource
     {
+        private class AnonymousPipeSource(Func<Stream, CancellationToken, Task> copyToAsync) : PipeSource()
+        {
+            public override async Task CopyToAsync(Stream destination, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+        }
         public abstract Task CopyToAsync(Stream destination, CancellationToken cancellationToken = default);
-        
-        public static PipeSource Null =>
+            
+        public static PipeSource Null { get; } = 
             Create((Stream _, CancellationToken cancellationToken) => cancellationToken.IsCancellationRequested
                 ? Task.FromCanceled(cancellationToken)
                 : Task.CompletedTask);

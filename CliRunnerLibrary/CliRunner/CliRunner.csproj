@@ -33,6 +33,5 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
-      <Folder Include="Specializations\" />
 
 </Project>

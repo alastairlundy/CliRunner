@@ -9,7 +9,7 @@
 
 using System;
 using System.Diagnostics;
-using System.Linq;
+
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,6 +19,7 @@ using System.Runtime.Versioning;
 
 using CliRunner.Commands.Abstractions;
 using CliRunner.Commands.Extensions;
+using CliRunner.Piping;
 
 // ReSharper disable RedundantBoolCompare
 
@@ -46,7 +47,7 @@ namespace CliRunner.Commands
 #endif
         public Process CreateProcess()
         {
-            ProcessStartInfo startInfo = GetStartInfo();
+            ProcessStartInfo startInfo = CreateStartInfo();
 
             Process output = new Process
             {
@@ -72,7 +73,7 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo GetStartInfo()
+        public ProcessStartInfo CreateStartInfo()
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
@@ -99,15 +100,15 @@ namespace CliRunner.Commands
                 }
             }
 
-            if (StandardInputPipe != StandardInputPipe.Null)
+            if (StandardInputPipe != PipeSource.Null)
             {
                 output.RedirectStandardInput = true;
             }
-            if (StandardOutputPipe != StandardOutputPipe.Null)
+            if (StandardOutputPipe != PipeTarget.Null)
             {
                 output.RedirectStandardOutput = true;
             }
-            if (StandardErrorPipe != StandardErrorPipe.Null)
+            if (StandardErrorPipe != PipeTarget.Null)
             {
                 output.RedirectStandardError = true;
             }
@@ -154,6 +155,7 @@ namespace CliRunner.Commands
         public BufferedCommandResult ExecuteBuffered()
         {
             Process process = CreateProcess();
+            process.StartInfo = CreateStartInfo();
 
             process.Start();
             
@@ -211,7 +213,7 @@ namespace CliRunner.Commands
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess();
-
+            process.StartInfo = CreateStartInfo();
             process.Start();
             
 #if NET6_0_OR_GREATER

@@ -53,9 +53,9 @@ namespace CliRunner.Commands
 
             CommandResultValidation = commandResultValidation;
             
-            StandardInputPipe = standardInputPipe ?? StandardInputPipe!.Null;
-            StandardOutputPipe = standardOutputPipe ?? StandardOutputPipe!.Null;
-            StandardErrorPipe = standardErrorPipe ?? StandardErrorPipe!.Null;
+            StandardInputPipe = standardInputPipe ?? PipeSource.Null;
+            StandardOutputPipe = standardOutputPipe ?? PipeTarget.Null;
+            StandardErrorPipe = standardErrorPipe ?? PipeTarget.Null;
         }
         
         public Command WithArguments(IEnumerable<string> arguments) =>
