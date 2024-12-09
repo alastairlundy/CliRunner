@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
+using CliRunner.Commands.Buffered;
 
 namespace CliRunner.Commands.Abstractions
 {

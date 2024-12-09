@@ -18,7 +18,8 @@ using System.Runtime.Versioning;
 #endif
 
 using CliRunner.Commands.Abstractions;
-using CliRunner.Commands.Extensions;
+using CliRunner.Commands.Buffered;
+using CliRunner.Commands.Buffered.Extensions;
 using CliRunner.Piping;
 
 // ReSharper disable RedundantBoolCompare

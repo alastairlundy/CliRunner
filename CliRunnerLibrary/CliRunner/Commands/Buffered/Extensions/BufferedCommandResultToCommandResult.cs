@@ -7,9 +7,9 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-namespace CliRunner.Commands.Extensions
+namespace CliRunner.Commands.Buffered.Extensions
 {
-    public static class BufferedCommandResultToUnbuffered
+    public static class BufferedCommandResultToCommandResult
     {
         /// <summary>
         /// Converts a Buffered Command Result to a Command Result.

@@ -8,7 +8,7 @@
 
 using System;
 
-namespace CliRunner.Commands
+namespace CliRunner.Commands.Buffered
 {
     /// <summary>
     /// 
