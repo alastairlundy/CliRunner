@@ -42,7 +42,7 @@ namespace CliRunner.Specializations.Commands
     public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
     {
         
-        public new string TargetFilePath => GetInstallLocation();
+        public new string TargetFilePath => GetInstallLocation() + Path.DirectorySeparatorChar + "Powershell.exe";
         
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -54,7 +54,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public ClassicPowershellCommand() : base("")
+        public ClassicPowershellCommand() : base("Powershell.exe")
         {
             base.TargetFilePath = TargetFilePath;
         }
