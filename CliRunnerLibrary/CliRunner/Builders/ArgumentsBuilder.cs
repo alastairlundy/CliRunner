@@ -22,8 +22,13 @@ namespace CliRunner.Builders
     {
         private static readonly IFormatProvider DefaultFormatProvider = CultureInfo.InvariantCulture;
 
-        private readonly StringBuilder _buffer = new StringBuilder();
-
+        private readonly StringBuilder _buffer;
+        
+        public ArgumentsBuilder()
+        {
+            _buffer = new StringBuilder();
+        }
+        
         private ArgumentsBuilder(StringBuilder buffer)
         {
             this._buffer = buffer;
