@@ -10,14 +10,12 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using CliRunner.Piping;
-
 namespace CliRunner.Commands.Abstractions
 {
     public interface ICommandPipeHandler
     {
-        Task<PipeSource> PipeStandardInputAsync(Process process);
-        Task<PipeTarget> PipeStandardOutputAsync(Process process);
-        Task<PipeTarget> PipeStandardErrorAsync(Process process);
+        Task PipeStandardInputAsync(Process process);
+        Task PipeStandardOutputAsync(Process process);
+        Task PipeStandardErrorAsync(Process process);
     }
 }
