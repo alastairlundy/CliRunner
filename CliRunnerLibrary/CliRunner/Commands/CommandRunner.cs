@@ -163,7 +163,7 @@ namespace CliRunner.Commands
             output.UseShellExecute = UseShellExecute;
 
             #if NETSTANDARD2_1 || NET5_0_OR_GREATER
-            output.StandardInputEncoding = encoding ?? Encoding.Default;
+            output.StandardInputEncoding = Encoding.Default;
             #endif
             output.StandardOutputEncoding = encoding ?? Encoding.Default;
             output.StandardErrorEncoding = encoding ?? Encoding.Default;
