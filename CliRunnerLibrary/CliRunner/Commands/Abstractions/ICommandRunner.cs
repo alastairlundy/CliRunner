@@ -9,6 +9,7 @@
 
 using System.Diagnostics;
 using System.Runtime.Versioning;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CliRunner.Commands.Buffered;
@@ -39,10 +40,13 @@ namespace CliRunner.Commands.Abstractions
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
 #endif
-        ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError);
+        ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, Encoding encoding = default);
         
         Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default);
+        
         Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default);
+        Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default);
+
 
     }
 }

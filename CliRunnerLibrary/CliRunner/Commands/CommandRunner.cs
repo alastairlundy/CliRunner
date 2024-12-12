@@ -15,6 +15,7 @@
 
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -79,7 +80,7 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError)
+        public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, Encoding encoding = default)
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
@@ -136,7 +137,9 @@ namespace CliRunner.Commands
                 {
                     output.Password = Credentials.Password;
                 }
+#pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
                 if (Credentials.LoadUserProfile != null)
+#pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
                 {
 #if NETSTANDARD2_0
                     output.LoadUserProfile = Credentials.LoadUserProfile;
@@ -158,6 +161,12 @@ namespace CliRunner.Commands
             }
             
             output.UseShellExecute = UseShellExecute;
+
+            #if NETSTANDARD2_1 || NET5_0_OR_GREATER
+            output.StandardInputEncoding = encoding ?? Encoding.Default;
+            #endif
+            output.StandardOutputEncoding = encoding ?? Encoding.Default;
+            output.StandardErrorEncoding = encoding ?? Encoding.Default;
             
             return output;
         }
@@ -228,8 +237,30 @@ namespace CliRunner.Commands
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)
         {
+            return await ExecuteBufferedAsync(Encoding.Default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
+        public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
+        {
             Process process = CreateProcess(
-                CreateStartInfo(true, true, true));
+                CreateStartInfo(true, true, true, encoding));
             process.Start();
             
 #if NET6_0_OR_GREATER
@@ -237,7 +268,6 @@ namespace CliRunner.Commands
 #else
             process.WaitForExit();
 #endif
-
             if (process.StartInfo.RedirectStandardInput == true)
             {
                 await PipeStandardInputAsync(process);
@@ -258,6 +288,6 @@ namespace CliRunner.Commands
             return new BufferedCommandResult(process.ExitCode, 
                 process.StandardInput.ToString(), await process.StandardOutput.ReadToEndAsync(), process.StartTime, process.ExitTime);
 #endif
-}
+        }
     }
 }
