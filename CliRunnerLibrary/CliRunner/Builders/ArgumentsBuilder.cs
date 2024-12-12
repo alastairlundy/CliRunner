@@ -29,11 +29,21 @@ namespace CliRunner.Builders
             _buffer = new StringBuilder();
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
         private ArgumentsBuilder(StringBuilder buffer)
         {
             this._buffer = buffer;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(string value, bool escape)
         {
             _buffer.Append(value);
@@ -46,11 +56,22 @@ namespace CliRunner.Builders
             return new ArgumentsBuilder(_buffer);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(string value)
         {
             return Add(value, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IEnumerable<string> values, bool escape)
         {
             string[] enumerable = values as string[] ?? values.ToArray();
@@ -68,11 +89,23 @@ namespace CliRunner.Builders
             return new ArgumentsBuilder(_buffer);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IEnumerable<string> values)
         {
             return Add(values, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="formatProvider"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IFormattable value, IFormatProvider formatProvider, bool escape = true)
         {
            string val = (string)formatProvider.GetFormat(value.GetType());
@@ -80,26 +113,57 @@ namespace CliRunner.Builders
            return Add(value.ToString(val, formatProvider), escape);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="cultureInfo"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo, bool escape)
         {
             return Add(value.ToString((string)cultureInfo.GetFormat(value.GetType()), DefaultFormatProvider), escape);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo)
         {
             return Add(value, cultureInfo, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IFormattable value, bool escape)
         {
             return Add(value, CultureInfo.CurrentCulture, escape);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IFormattable value)
         {
             return Add(value, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="formatProvider"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escape = true)
         {
             foreach (var val in values)
@@ -119,6 +183,13 @@ namespace CliRunner.Builders
             return new ArgumentsBuilder(_buffer);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="cultureInfo"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escape)
         {
             foreach (var val in values)
@@ -136,27 +207,48 @@ namespace CliRunner.Builders
             return new ArgumentsBuilder(_buffer);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo)
         {
             return Add(values, cultureInfo, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="escape"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, bool escape)
         {
             return Add(values, CultureInfo.CurrentCulture, escape);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values)
         {
             return Add(values, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string Build()
         {
             return _buffer.ToString();
         }
 
-        private static string Escape(string argument)
+        public static string Escape(string argument)
         {
             return argument.Replace("\\", "\\\\")
                 .Replace("\n", "\\n")

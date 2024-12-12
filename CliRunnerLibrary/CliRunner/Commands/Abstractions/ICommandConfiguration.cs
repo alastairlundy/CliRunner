@@ -48,8 +48,8 @@ namespace CliRunner.Commands.Abstractions
 
         IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
 
-        global::CliRunner.UserCredentials Credentials { get;  } 
-        global::CliRunner.Commands.CommandResultValidation ResultValidation { get;}
+        UserCredentials Credentials { get;  } 
+        CommandResultValidation ResultValidation { get;}
 
         StreamWriter StandardInput { get; }
         StreamReader StandardOutput { get; }

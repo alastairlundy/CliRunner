@@ -21,6 +21,11 @@ namespace CliRunner.Builders
         private SecureString _password;
         private bool _loadUserProfile;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
         public CredentialsBuilder SetDomain(string domain) =>
             new CredentialsBuilder()
             {
@@ -30,6 +35,11 @@ namespace CliRunner.Builders
                 _username = _username,
             };
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public CredentialsBuilder SetUsername(string username) =>
             new CredentialsBuilder()
             {
@@ -39,6 +49,11 @@ namespace CliRunner.Builders
                 _username = username,
             };
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public CredentialsBuilder SetPassword(SecureString password) =>
             new CredentialsBuilder()
             {
@@ -48,6 +63,11 @@ namespace CliRunner.Builders
                 _username = _username,
             };
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loadUserProfile"></param>
+        /// <returns></returns>
         public CredentialsBuilder LoadUserProfile(bool loadUserProfile) =>
             new CredentialsBuilder()
             {
@@ -57,6 +77,10 @@ namespace CliRunner.Builders
                 _username = _username,
             };
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public UserCredentials Build() => 
             new UserCredentials(_domain, _username, _password, _loadUserProfile);
     }
