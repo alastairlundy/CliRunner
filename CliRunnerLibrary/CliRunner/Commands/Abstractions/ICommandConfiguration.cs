@@ -34,8 +34,7 @@
 */
 
 using System.Collections.Generic;
-using CliRunner.Piping;
-using CliRunner.Piping.Abstractions;
+using System.IO;
 
 namespace CliRunner.Commands.Abstractions
 {
@@ -49,11 +48,11 @@ namespace CliRunner.Commands.Abstractions
 
         IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
 
-        CliRunner.Credentials Credentials { get;  } 
-        CliRunner.Commands.CommandResultValidation CommandResultValidation { get;}
+        global::CliRunner.UserCredentials Credentials { get;  } 
+        global::CliRunner.Commands.CommandResultValidation ResultValidation { get;}
 
-        PipeSource StandardInputPipe { get; }
-        PipeTarget StandardOutputPipe { get; }
-        PipeTarget StandardErrorPipe { get; }
+        StreamWriter StandardInput { get; }
+        StreamReader StandardOutput { get; }
+        StreamReader StandardError { get; }
     }
 }
