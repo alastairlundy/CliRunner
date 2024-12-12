@@ -1,26 +1,31 @@
 ﻿/*
-    CliRunner 
+    CliRunner
     Copyright (C) 2024  Alastair Lundy
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
-   */
 
-using System;
+    Based on Tyrrrz's CliWrap Command.Execution.cs
+    https://github.com/Tyrrrz/CliWrap/blob/master/CliWrap/Command.Execution.cs
+
+     Constructor signature and field declarations from CliWrap licensed under the MIT License except where considered Copyright Fair Use by law.
+     See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
+ */
+
 using System.Diagnostics;
-
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
+
+using System;
 #endif
 
 using CliRunner.Commands.Abstractions;
 using CliRunner.Commands.Buffered;
-using CliRunner.Commands.Buffered.Extensions;
-using CliRunner.Piping;
 
 // ReSharper disable RedundantBoolCompare
 
@@ -35,6 +40,7 @@ namespace CliRunner.Commands
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="processStartInfo"></param>
         /// <returns></returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -46,15 +52,14 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
 #endif
-        public Process CreateProcess()
+        public Process CreateProcess(ProcessStartInfo processStartInfo)
         {
-            ProcessStartInfo startInfo = CreateStartInfo();
-
             Process output = new Process
             {
-                StartInfo = startInfo,
-                
+                StartInfo = processStartInfo,
             };
+
+            output.ProcessorAffinity = ProcessorAffinity;
             
             return output;
         }
@@ -74,7 +79,7 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo()
+        public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError)
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
@@ -82,6 +87,9 @@ namespace CliRunner.Commands
                 WorkingDirectory = WorkingDirectoryPath,
                 UseShellExecute = false,
                 CreateNoWindow = false,
+                RedirectStandardInput = redirectStandardInput,
+                RedirectStandardOutput = redirectStandardOutput,
+                RedirectStandardError = redirectStandardError,
             };
 
             if (string.IsNullOrEmpty(Arguments) == false)
@@ -101,76 +109,57 @@ namespace CliRunner.Commands
                 }
             }
 
-            if (StandardInputPipe != PipeSource.Null)
+            if (StandardInput != StreamWriter.Null)
             {
                 output.RedirectStandardInput = true;
             }
-            if (StandardOutputPipe != PipeTarget.Null)
+            if (StandardOutput != StreamReader.Null)
             {
                 output.RedirectStandardOutput = true;
             }
-            if (StandardErrorPipe != PipeTarget.Null)
+            if (StandardError != StreamReader.Null)
             {
                 output.RedirectStandardError = true;
             }
 
-            return output;
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        public CommandResult Execute()
-        {
-            return ExecuteBuffered().ToCommandResult();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        public BufferedCommandResult ExecuteBuffered()
-        {
-            Process process = CreateProcess();
-            process.StartInfo = CreateStartInfo();
-
-            process.Start();
-            
-            process.WaitForExit();
-           
-#if NET6_0_OR_GREATER
-            return new BufferedCommandResult(process.ExitCode, process.StandardInput.ToString()!,
-                process.StandardOutput.ReadToEnd(),
-                process.StartTime, process.ExitTime);
+            if (Credentials != null)
+            {
+                if (Credentials.Domain != null)
+                {
+                    output.Domain = Credentials.Domain;
+                }
+                if (Credentials.UserName != null)
+                {
+                    output.UserName = Credentials.UserName;
+                }
+                if (Credentials.Password != null)
+                {
+                    output.Password = Credentials.Password;
+                }
+                if (Credentials.LoadUserProfile != null)
+                {
+#if NETSTANDARD2_0
+                    output.LoadUserProfile = Credentials.LoadUserProfile;
 #else
-            return new BufferedCommandResult(process.ExitCode, process.StandardInput.ToString(),
-                process.StandardOutput.ReadToEnd(),
-                process.StartTime, process.ExitTime);
+                   output.LoadUserProfile = (bool)Credentials.LoadUserProfile;
 #endif
+                }
+            }
+
+            if (EnvironmentVariables != null)
+            {
+                foreach (var variable in EnvironmentVariables)
+                {
+                    if (variable.Value != null)
+                    {
+                        output.Environment[variable.Key] = variable.Value;
+                    }
+                }
+            }
+            
+            output.UseShellExecute = UseShellExecute;
+            
+            return output;
         }
 
         /// <summary>
@@ -191,8 +180,34 @@ namespace CliRunner.Commands
 #endif
         public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
         {
-           var result = await ExecuteBufferedAsync(cancellationToken);
-           return result.ToCommandResult();
+            Process process = CreateProcess(
+                CreateStartInfo(false, false, false));
+            process.Start();
+            
+#if NET6_0_OR_GREATER
+            await process.WaitForExitAsync(cancellationToken);
+#else
+            process.WaitForExit();
+#endif
+
+            if (process.StartInfo.RedirectStandardInput == true)
+            {
+                await PipeStandardInputAsync(process);
+            }
+            if (process.StartInfo.RedirectStandardOutput == true)
+            {
+                await PipeStandardOutputAsync(process);
+            }
+            if (process.StartInfo.RedirectStandardError == true)
+            {
+                await PipeStandardErrorAsync(process);
+            }
+
+#if NET6_0_OR_GREATER
+            return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+#else
+            return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+#endif
         }
 
         /// <summary>
@@ -213,8 +228,8 @@ namespace CliRunner.Commands
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)
         {
-            Process process = CreateProcess();
-            process.StartInfo = CreateStartInfo();
+            Process process = CreateProcess(
+                CreateStartInfo(true, true, true));
             process.Start();
             
 #if NET6_0_OR_GREATER
@@ -222,6 +237,19 @@ namespace CliRunner.Commands
 #else
             process.WaitForExit();
 #endif
+
+            if (process.StartInfo.RedirectStandardInput == true)
+            {
+                await PipeStandardInputAsync(process);
+            }
+            if (process.StartInfo.RedirectStandardOutput == true)
+            {
+                await PipeStandardOutputAsync(process);
+            }
+            if (process.StartInfo.RedirectStandardError == true)
+            {
+                await PipeStandardErrorAsync(process);
+            }
             
 #if NET6_0_OR_GREATER
             return new BufferedCommandResult(process.ExitCode, 

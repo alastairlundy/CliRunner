@@ -57,7 +57,7 @@ namespace CliRunner.Builders
                 _username = _username,
             };
         
-        public Credentials Build() => 
-            new Credentials(_domain, _username, _password);
+        public UserCredentials Build() => 
+            new UserCredentials(_domain, _username, _password, _loadUserProfile);
     }
 }

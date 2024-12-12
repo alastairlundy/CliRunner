@@ -27,7 +27,7 @@ namespace CliRunner.Commands.Abstractions
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
 #endif
-        Process CreateProcess();
+        Process CreateProcess(ProcessStartInfo processStartInfo);
         
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -39,10 +39,8 @@ namespace CliRunner.Commands.Abstractions
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("tvos")]
 #endif
-        ProcessStartInfo CreateStartInfo();
+        ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError);
         
-        CommandResult Execute();
-        BufferedCommandResult ExecuteBuffered();
         Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default);
         Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default);
 
