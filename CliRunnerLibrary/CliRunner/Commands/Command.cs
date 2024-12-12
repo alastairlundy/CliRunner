@@ -9,12 +9,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
+
 using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
-using CliRunner.Piping;
-using CliRunner.Piping.Abstractions;
 
 namespace CliRunner.Commands
 {
@@ -26,22 +24,22 @@ namespace CliRunner.Commands
         public string Arguments { get; protected set; }
         
         public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
-        public Credentials Credentials { get; protected set; }
         public CliRunner.Commands.CommandResultValidation CommandResultValidation { get; protected set;}
+        public UserCredentials Credentials { get; protected set; }
         
-        public PipeSource StandardInputPipe { get; protected set; }
-        public PipeTarget StandardOutputPipe { get; protected set; }
-        public PipeTarget StandardErrorPipe { get; protected set; }
+        public StreamWriter StandardInput{ get; protected set; }
+        public StreamReader StandardOutput { get; protected set; }
+        public StreamReader StandardError { get; protected set; }
 
         public Command(string targetFilePath,
              string arguments = null, string workingDirectoryPath = null,
              bool runAsAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
-             Credentials credentials = null,
+             UserCredentials credentials = null,
              CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
-             PipeSource standardInputPipe = null,
-             PipeTarget standardOutputPipe = null,
-             PipeTarget standardErrorPipe = null
+             StreamWriter standardInput = null,
+             StreamReader standardOutput = null,
+             StreamReader standardError = null,
         )
         {
             TargetFilePath = targetFilePath;
@@ -49,13 +47,13 @@ namespace CliRunner.Commands
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
-            Credentials = credentials ?? Credentials.Default;
+            Credentials = credentials ?? UserCredentials.Default;
 
             CommandResultValidation = commandResultValidation;
+            StandardInput = standardInput ?? StreamWriter.Null;
+            StandardOutput = standardOutput ?? StreamReader.Null;
+            StandardError = standardError ?? StreamReader.Null;
             
-            StandardInputPipe = standardInputPipe ?? PipeSource.Null;
-            StandardOutputPipe = standardOutputPipe ?? PipeTarget.Null;
-            StandardErrorPipe = standardErrorPipe ?? PipeTarget.Null;
         }
         
         public Command WithArguments(IEnumerable<string> arguments) =>
@@ -66,9 +64,9 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 Credentials,
                 CommandResultValidation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                StandardErrorPipe);
+                StandardInput,
+                StandardOutput,
+                StandardError,
 
         public Command WithArguments(IEnumerable<string> arguments, bool escape)
         {
@@ -79,9 +77,9 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 Credentials,
                 CommandResultValidation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                StandardErrorPipe);
+                StandardInput,
+                StandardOutput,
+                StandardError,
         }
         
         public Command WithArguments(string arguments)=> 
@@ -92,10 +90,9 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 Credentials,
                 CommandResultValidation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                StandardErrorPipe);
-        
+                StandardInput,
+                StandardOutput,
+                StandardError,
         
         public Command WithTargetFile(string targetFilePath) => 
             new Command(targetFilePath,
@@ -105,9 +102,9 @@ namespace CliRunner.Commands
             EnvironmentVariables,
             Credentials,
             CommandResultValidation,
-            StandardInputPipe,
-            StandardOutputPipe,
-            StandardErrorPipe);
+            StandardInput,
+            StandardOutput,
+            StandardError,
         
         
         public Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
@@ -118,9 +115,9 @@ namespace CliRunner.Commands
                 environmentVariables,
                 Credentials,
                 CommandResultValidation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                StandardErrorPipe);
+                StandardInput,
+                StandardOutput,
+                StandardError,
 
         public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
         {
@@ -140,10 +137,9 @@ namespace CliRunner.Commands
             EnvironmentVariables,
             Credentials,
             CommandResultValidation,
-            StandardInputPipe,
-            StandardOutputPipe,
-            StandardErrorPipe);
-        
+            StandardInput,
+            StandardOutput,
+            StandardError,
         
         public Command WithWorkingDirectory(string workingDirectoryPath) =>
             new Command(TargetFilePath,
@@ -153,9 +149,9 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 Credentials,
                 CommandResultValidation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                StandardErrorPipe);
+                StandardInput,
+                StandardOutput,
+                StandardError,
         
         
         public Command WithCredentials(Credentials credentials) =>
@@ -166,15 +162,14 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 credentials,
                 CommandResultValidation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                StandardErrorPipe);
+                StandardInput,
+                StandardOutput,
+                StandardError,
 
         public Command WithCredentials(Action<CredentialsBuilder> configure)
         {
-           var credentialBuilder = new CredentialsBuilder().SetDomain(Credentials.Domain)
+            var credentialBuilder = new CredentialsBuilder().SetDomain(Credentials.Domain)
                 .SetPassword(Credentials.Password)
-                .SetUsername(Credentials.Username);
 
            configure(credentialBuilder);
            
@@ -189,11 +184,16 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 Credentials,
                 validation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                StandardErrorPipe);
+                StandardInput,
+                StandardOutput,
+                StandardError,
         
-        public Command WithStandardInputPipe(PipeSource source) =>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public Command WithStandardInput(StreamWriter source) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -202,10 +202,15 @@ namespace CliRunner.Commands
                 Credentials,
                 CommandResultValidation,
                 source,
-                StandardOutputPipe,
-                StandardErrorPipe);
+                StandardOutput,
+                StandardError,
         
-        public Command WithStandardOutputPipe(PipeTarget target) =>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public Command WithStandardOutputStream(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -213,11 +218,16 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 Credentials,
                 CommandResultValidation,
-                StandardInputPipe,
+                StandardInput,
                 target,
-                StandardErrorPipe);
+                StandardError,
         
-        public Command WithStandardErrorPipe(PipeTarget target) =>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public Command WithStandardErrorStream(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -225,13 +235,9 @@ namespace CliRunner.Commands
                 EnvironmentVariables,
                 Credentials,
                 CommandResultValidation,
-                StandardInputPipe,
-                StandardOutputPipe,
-                target);
+                StandardInput,
+                StandardOutput,
+                target,
         
-        public override string ToString()
-        {
-            return base.ToString();
-        }
     }
 }
