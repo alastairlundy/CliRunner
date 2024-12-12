@@ -10,7 +10,11 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+
+#if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
+#endif
+
 using System.Threading.Tasks;
 
 using CliRunner.Urls.Abstractions;
@@ -42,28 +46,12 @@ namespace CliRunner.Urls
 
             return url;
         }
-
-        /// <summary>
-        /// Open a URL in the default browser.
-        /// Courtesy of https://github.com/dotnet/corefx/issues/10361
-        /// </summary>
-        /// <param name="url">The URL to be opened.</param>
-        #if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("browser")]
-        #endif
-        public void OpenUrlInDefaultBrowser(string url)
-        {
-            Task.WaitAll(OpenUrlInDefaultBrowserAsync(url));
-        }
         
+        /// <summary>
+        ///
+        /// Some code contained courtesy of https://github.com/dotnet/corefx/issues/10361
+        /// </summary>
+        /// <param name="url"></param>
         public async Task OpenUrlInDefaultBrowserAsync(string url)
         {
             url = AddHttpIfMissing(url, false);
@@ -73,14 +61,14 @@ namespace CliRunner.Urls
             {
                 string args = $"/c start {url.Replace("&", "^&")}";
                 
-                await Cli.Run($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe")
+                await CliRunner.Wrap($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe")
                     .WithArguments(args)
                     .WithWorkingDirectory(Environment.SystemDirectory)
                     .ExecuteAsync();
             }
             if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
-                await Cli.Run("/usr/bin/xdg-open")
+                await CliRunner.Wrap("/usr/bin/xdg-open")
                     .WithArguments(url.Replace("&", "^&"))
                     .WithWorkingDirectory("/usr/bin")
                     .ExecuteAsync();
