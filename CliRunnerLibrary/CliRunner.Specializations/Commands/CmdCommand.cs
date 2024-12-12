@@ -13,9 +13,9 @@ using System.Runtime.Versioning;
 
 using System;
 using System.IO;
-
+using System.Threading.Tasks;
 using CliRunner.Commands;
-using CliRunner.Commands.Buffered;
+
 using CliRunner.Extensibility;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -42,7 +42,7 @@ namespace CliRunner.Specializations.Commands
 #endif
     public class CmdCommand : Command, ISpecializedCommandInformation
     {
-        public new string TargetFilePath => GetInstallLocation();
+        public new string TargetFilePath => GetInstallLocationAsync().Result;
         
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -64,15 +64,15 @@ namespace CliRunner.Specializations.Commands
             return new CmdCommand();
         }
         
-        public string GetInstallLocation()
+        public async Task<string> GetInstallLocationAsync()
         {
-            if (IsInstalled() == false)
+            if (await IsInstalledAsync() == false)
             {
                 throw new ArgumentException("cmd.exe is not installed on this system. This may be because you are running a non-windows operating system.");
             }
             else
             {
-                return Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe";
+                return await Task.FromResult(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe");
             }
         }
 
@@ -80,15 +80,15 @@ namespace CliRunner.Specializations.Commands
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool IsInstalled()
+        public Task<bool> IsInstalledAsync()
         {
             if (OperatingSystem.IsWindows())
             {
-                return File.Exists(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe");
+                return Task.FromResult(File.Exists(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe"));
             }
             else
             {
-                return false;
+                return Task.FromResult(false);
             }
         }
 
@@ -97,15 +97,15 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns></returns>
         /// <exception cref="PlatformNotSupportedException"></exception>
-        public Version GetInstalledVersion()
+        public async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsWindows())
             {
-               BufferedCommandResult result =  Cli.Run(this)
+               var result =  await CliRunner.Wrap(this)
                     .WithArguments("--version")
                     .WithWorkingDirectory(Environment.SystemDirectory)
                     .RequiresAdministrator(false)
-                    .ExecuteBuffered();
+                    .ExecuteBufferedAsync();
 
 #if NET5_0_OR_GREATER
                 string output = result.StandardOutput.Split(Environment.NewLine)[0]

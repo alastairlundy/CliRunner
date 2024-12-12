@@ -8,15 +8,16 @@
    */
 
 using System;
+using System.Threading.Tasks;
 
 namespace CliRunner.Extensibility
 {
     public interface ISpecializedCommandInformation
     {
-        string GetInstallLocation();
+        Task<string> GetInstallLocationAsync();
         
-        bool IsInstalled();
+        Task<bool> IsInstalledAsync();
         
-        Version GetInstalledVersion();
+        Task<Version> GetInstalledVersionAsync();
     }
 }

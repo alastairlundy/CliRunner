@@ -14,7 +14,7 @@ using System.Runtime.Versioning;
 using System;
 using System.IO;
 using System.Linq;
-
+using System.Threading.Tasks;
 using CliRunner.Commands;
 using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
@@ -41,9 +41,9 @@ namespace CliRunner.Specializations.Commands
 #endif
     public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
     {
-        
-        public new string TargetFilePath => GetInstallLocation() + Path.DirectorySeparatorChar + "Powershell.exe";
-        
+
+        public new string TargetFilePath => GetInstallLocationAsync().Result + Path.DirectorySeparatorChar + "Powershell.exe";
+
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [UnsupportedOSPlatform("macos")]
@@ -83,12 +83,12 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public string GetInstallLocation()
+        public Task<string> GetInstallLocationAsync()
         {
             if (OperatingSystem.IsWindows())
             {
-                return $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
-                       $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0";
+                return Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
+                                       $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0");
             }
             else
             {
@@ -110,11 +110,11 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public bool IsInstalled()
+        public async Task<bool> IsInstalledAsync()
         {
             if (OperatingSystem.IsWindows())
             {
-                string installLocation = GetInstallLocation();
+                string installLocation = await GetInstallLocationAsync();
 
                 if (Directory.Exists(installLocation))
                 {
@@ -147,14 +147,14 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public Version GetInstalledVersion()
+        public async Task<Version> GetInstalledVersionAsync()
         {
-            if (OperatingSystem.IsWindows() && IsInstalled())
+            if (OperatingSystem.IsWindows() && await IsInstalledAsync())
             {
-                BufferedCommandResult result = Cli.Run(this)
+                var result = await CliRunner.Wrap(this)
                     .WithArguments("$PSVersionTable")
                     .RequiresAdministrator(false)
-                    .ExecuteBuffered();
+                    .ExecuteBufferedAsync();
                
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
                 string[] lines = result.StandardOutput.Split(Environment.NewLine);

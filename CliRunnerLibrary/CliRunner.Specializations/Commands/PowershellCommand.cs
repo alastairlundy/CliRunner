@@ -10,6 +10,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using CliRunner.Commands;
 using CliRunner.Commands.Buffered;
@@ -41,9 +42,9 @@ namespace CliRunner.Specializations.Commands
          /// <exception cref="ArgumentException"></exception>
          /// <exception cref="Exception"></exception>
          /// <exception cref="PlatformNotSupportedException"></exception>
-         public string GetInstallLocation()
+         public async Task<string> GetInstallLocationAsync()
          {
-             if (IsInstalled() == false)
+             if (await IsInstalledAsync() == false)
              {
                  throw new ArgumentException("Powershell is not installed");
              }
@@ -71,10 +72,10 @@ namespace CliRunner.Specializations.Commands
                      }
                  }
 
-                 BufferedCommandResult result = Cli.Run(CmdCommand.Create())
+                 var result = await CliRunner.Wrap(CmdCommand.Create())
                      .WithArguments("where pwsh.exe")
                      .RequiresAdministrator(false)
-                     .ExecuteBuffered();
+                     .ExecuteBufferedAsync();
                  
                  if (result.StandardOutput.Split(Environment.NewLine.ToCharArray()).Any())
                  {
@@ -85,19 +86,19 @@ namespace CliRunner.Specializations.Commands
              }
              else if (OperatingSystem.IsMacOS())
              {
-                 BufferedCommandResult result = Cli.Run("/usr/bin/which")
+                 var result = await CliRunner.Wrap("/usr/bin/which")
                      .WithArguments("pwsh")
                      .RequiresAdministrator(false)
-                     .ExecuteBuffered();
+                     .ExecuteBufferedAsync();
                      
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
              else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
              {
-                 BufferedCommandResult result = Cli.Run("/usr/bin/which")
+                 var result = await CliRunner.Wrap("/usr/bin/which")
                      .WithArguments("pwsh")
                      .RequiresAdministrator(false)
-                     .ExecuteBuffered();
+                     .ExecuteBufferedAsync();
                  
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
@@ -111,32 +112,32 @@ namespace CliRunner.Specializations.Commands
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool IsInstalled()
+        public async Task<bool> IsInstalledAsync()
         {
             try
             {
                 BufferedCommandResult result;
-
+                
                 if (OperatingSystem.IsWindows())
                 {
-                     result = Cli.Run(CmdCommand.Create())
+                     result = await CliRunner.Wrap(CmdCommand.Create())
                         .WithArguments("where pwsh.exe")
                         .RequiresAdministrator(false)
-                        .ExecuteBuffered();
+                        .ExecuteBufferedAsync();
                 }
                 else if (OperatingSystem.IsMacOS())
                 {
-                    result = Cli.Run("/usr/bin/which")
+                    result = await CliRunner.Wrap("/usr/bin/which")
                         .WithArguments("pwsh")
                         .RequiresAdministrator(false)
-                        .ExecuteBuffered();
+                        .ExecuteBufferedAsync();
                 }
                 else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
                 {
-                    result = Cli.Run("/usr/bin/which")
+                    result = await CliRunner.Wrap("/usr/bin/which")
                         .WithArguments("pwsh")
                         .RequiresAdministrator(false)
-                        .ExecuteBuffered();
+                        .ExecuteBufferedAsync();
                 }
                 else
                 {
@@ -172,12 +173,12 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public Version GetInstalledVersion()
+        public async Task<Version> GetInstalledVersionAsync()
         {
-            BufferedCommandResult result = Cli.Run(this)
+            var result = await CliRunner.Wrap(this)
                 .WithArguments("$PSVersionTable")
                 .RequiresAdministrator(false)
-                .ExecuteBuffered();
+                .ExecuteBufferedAsync();
 
             if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||
                 OperatingSystem.IsIOS())
