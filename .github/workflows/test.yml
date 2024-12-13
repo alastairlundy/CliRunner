@@ -4,16 +4,11 @@
 name: Test Build
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths: 
-       - /CliRunnerLibrary/CliRunner/
-       - /CliRunnerLibrary/CliRunner.Specializations
   pull_request:
     branches: [ "main" ]
-    paths: 
-       - /CliRunnerLibrary/CliRunner/
-       - /CliRunnerLibrary/CliRunner.Specializations
 
 jobs:
   build:
