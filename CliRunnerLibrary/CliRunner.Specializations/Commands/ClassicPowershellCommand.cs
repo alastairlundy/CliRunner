@@ -16,7 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CliRunner.Commands;
-using CliRunner.Commands.Buffered;
+
 using CliRunner.Extensibility;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -42,7 +42,7 @@ namespace CliRunner.Specializations.Commands
     public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
     {
 
-        public new string TargetFilePath => GetInstallLocationAsync().Result + Path.DirectorySeparatorChar + "Powershell.exe";
+        public new string TargetFilePath => GetInstallLocationAsync().Result + Path.DirectorySeparatorChar + "powershell.exe";
 
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -57,6 +57,7 @@ namespace CliRunner.Specializations.Commands
         public ClassicPowershellCommand() : base("Powershell.exe")
         {
             base.TargetFilePath = TargetFilePath;
+            UseShellExecute = true;
         }
 
         /// <summary>
