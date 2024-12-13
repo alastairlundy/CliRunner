@@ -130,7 +130,7 @@ namespace CliRunner.Specializations.Commands
         {
             if (OperatingSystem.IsWindows())
             {
-               var result =  await Cli.Wrap(this)
+               var result =  await Cli.Run(this)
                     .WithArguments("--version")
                     .WithWorkingDirectory(Environment.SystemDirectory)
                     .RequiresAdministrator(false)

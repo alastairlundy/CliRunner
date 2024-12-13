@@ -61,14 +61,14 @@ namespace CliRunner.Urls
             {
                 string args = $"/c start {url.Replace("&", "^&")}";
                 
-                await Cli.Wrap($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe")
+                await Cli.Run($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe")
                     .WithArguments(args)
                     .WithWorkingDirectory(Environment.SystemDirectory)
                     .ExecuteAsync();
             }
             if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
-                await Cli.Wrap("/usr/bin/xdg-open")
+                await Cli.Run("/usr/bin/xdg-open")
                     .WithArguments(url.Replace("&", "^&"))
                     .WithWorkingDirectory("/usr/bin")
                     .ExecuteAsync();

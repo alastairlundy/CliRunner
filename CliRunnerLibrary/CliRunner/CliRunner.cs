@@ -29,14 +29,14 @@ namespace CliRunner
         /// </remarks>
         /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
         /// <returns></returns>
-        public static Command Wrap(string targetFilePath) => new Command(targetFilePath);
+        public static Command Run(string targetFilePath) => new Command(targetFilePath);
         
         /// <summary>
         /// Used to wrap an existing Command object when a modified version is desired.
         /// </summary>
         /// <param name="command">The command to wrap</param>
         /// <returns></returns>
-        public static Command Wrap(Command command) => new Command(command.TargetFilePath, command.Arguments,
+        public static Command Run(Command command) => new Command(command.TargetFilePath, command.Arguments,
             command.WorkingDirectoryPath, command.RunAsAdministrator, command.EnvironmentVariables,
             command.Credentials, command.ResultValidation, command.StandardInput,
             command.StandardOutput, command.StandardError);

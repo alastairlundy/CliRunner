@@ -152,7 +152,7 @@ namespace CliRunner.Specializations.Commands
         {
             if (OperatingSystem.IsWindows() && await IsInstalledAsync())
             {
-                var result = await Cli.Wrap(this)
+                var result = await Cli.Run(this)
                     .WithArguments("$PSVersionTable")
                     .RequiresAdministrator(false)
                     .ExecuteBufferedAsync();
