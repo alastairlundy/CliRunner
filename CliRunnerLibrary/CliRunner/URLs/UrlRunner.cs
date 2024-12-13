@@ -52,6 +52,17 @@ namespace CliRunner.Urls
         /// Some code contained courtesy of https://github.com/dotnet/corefx/issues/10361
         /// </summary>
         /// <param name="url"></param>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tizen")]
+#endif
         public async Task OpenUrlInDefaultBrowserAsync(string url)
         {
             url = AddHttpIfMissing(url, false);
