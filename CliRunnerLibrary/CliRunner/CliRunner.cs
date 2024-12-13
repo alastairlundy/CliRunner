@@ -17,7 +17,7 @@ using CliRunner.Commands;
 
 namespace CliRunner
 {
-    public static class CliRunner
+    public static class Cli
     {
         /// <summary>
         /// Builds a Command
