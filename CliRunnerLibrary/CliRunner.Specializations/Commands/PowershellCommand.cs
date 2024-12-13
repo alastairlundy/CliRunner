@@ -28,6 +28,17 @@ using System.Runtime.Versioning;
 
 namespace CliRunner.Specializations.Commands
 {
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("browser")]
+    [UnsupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("watchos")]
+#endif
     public class PowershellCommand : Command, ISpecializedCommandInformation
     {
         public PowershellCommand() : base("")
@@ -112,6 +123,17 @@ namespace CliRunner.Specializations.Commands
         /// 
         /// </summary>
         /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public async Task<bool> IsInstalledAsync()
         {
             try
@@ -168,6 +190,7 @@ namespace CliRunner.Specializations.Commands
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("browser")]
         [UnsupportedOSPlatform("android")]
         [UnsupportedOSPlatform("ios")]
         [UnsupportedOSPlatform("tvos")]

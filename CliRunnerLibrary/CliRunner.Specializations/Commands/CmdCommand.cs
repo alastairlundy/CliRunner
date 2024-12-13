@@ -34,6 +34,7 @@ namespace CliRunner.Specializations.Commands
     [SupportedOSPlatform("windows")]
     [UnsupportedOSPlatform("macos")]
     [UnsupportedOSPlatform("linux")]
+    [UnsupportedOSPlatform("browser")]
     [UnsupportedOSPlatform("ios")]
     [UnsupportedOSPlatform("android")]
     [UnsupportedOSPlatform("browser")]
@@ -57,6 +58,7 @@ namespace CliRunner.Specializations.Commands
         public CmdCommand() : base(targetFilePath: "")
         {
             base.TargetFilePath = TargetFilePath;
+            UseShellExecute = true;
         }
 
         public static CmdCommand Create()
@@ -64,6 +66,22 @@ namespace CliRunner.Specializations.Commands
             return new CmdCommand();
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public async Task<string> GetInstallLocationAsync()
         {
             if (await IsInstalledAsync() == false)
@@ -97,6 +115,17 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns></returns>
         /// <exception cref="PlatformNotSupportedException"></exception>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsWindows())
