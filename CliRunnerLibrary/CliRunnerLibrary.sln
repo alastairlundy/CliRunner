@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner", "CliRunner\CliR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Specializations", "CliRunner.Specializations\CliRunner.Specializations.csproj", "{30D9300C-007A-4A3A-B76B-D883496477C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Tests", "CliRunner.Tests\CliRunner.Tests.csproj", "{662A8015-BC5A-4FAD-99BD-8514F4CEAE9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{30D9300C-007A-4A3A-B76B-D883496477C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30D9300C-007A-4A3A-B76B-D883496477C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30D9300C-007A-4A3A-B76B-D883496477C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{662A8015-BC5A-4FAD-99BD-8514F4CEAE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662A8015-BC5A-4FAD-99BD-8514F4CEAE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662A8015-BC5A-4FAD-99BD-8514F4CEAE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662A8015-BC5A-4FAD-99BD-8514F4CEAE9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
