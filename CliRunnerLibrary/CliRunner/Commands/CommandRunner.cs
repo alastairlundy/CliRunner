@@ -192,6 +192,11 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false));
             
+            if (UseShellExecute == true && process.StartInfo.RedirectStandardInput == true)
+            {
+                UseShellExecute = false;
+            }
+            
             if (process.StartInfo.RedirectStandardInput == true)
             {
                 await PipeStandardInputAsync(process);
@@ -204,10 +209,8 @@ namespace CliRunner.Commands
             process.WaitForExit();
 #endif
 
-            if (process.StartInfo.RedirectStandardInput == true)
             if (process.ExitCode != 0 && this.ResultValidation == CommandResultValidation.ExitCodeZero)
             {
-                await PipeStandardInputAsync(process);
             }
             if (process.StartInfo.RedirectStandardOutput == true)
             {
@@ -267,6 +270,11 @@ namespace CliRunner.Commands
         {
             Process process = CreateProcess(
                 CreateStartInfo(true, true, true, encoding));
+
+            if (UseShellExecute == true && process.StartInfo.RedirectStandardInput == true)
+            {
+                UseShellExecute = false;
+            }
             
             if (process.StartInfo.RedirectStandardInput == true)
             {
@@ -280,9 +288,9 @@ namespace CliRunner.Commands
 #else
             process.WaitForExit();
 #endif
-            if (process.StartInfo.RedirectStandardInput == true)
+            
+            if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
             {
-                await PipeStandardInputAsync(process);
             }
             if (process.StartInfo.RedirectStandardOutput == true)
             {
