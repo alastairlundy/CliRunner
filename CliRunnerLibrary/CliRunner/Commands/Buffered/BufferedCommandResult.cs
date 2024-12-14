@@ -25,19 +25,16 @@ namespace CliRunner.Commands.Buffered
         /// <summary>
         /// 
         /// </summary>
-        public string StandardInput { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public string StandardOutput { get; }
         
-        public BufferedCommandResult(int exitCode, string standardInput, string standardOutput,
+        public string StandardError { get; }
+        
+        public BufferedCommandResult(int exitCode, string standardOutput, string standardError,
             DateTime startTime, DateTime exitTime)
             : base(exitCode, startTime, exitTime)
         {
-            StandardInput = standardInput;
             StandardOutput = standardOutput;
+            StandardError = standardError;
         }
     }
 }
