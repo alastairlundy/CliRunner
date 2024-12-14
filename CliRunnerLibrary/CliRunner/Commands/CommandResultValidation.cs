@@ -12,7 +12,13 @@ namespace CliRunner.Commands
     [Flags]
     public enum CommandResultValidation
     {
+        /// <summary>
+        /// No validation is performed.
+        /// </summary>
         None = 0b0,
+        /// <summary>
+        /// Throw an exception is Exit code is not zero.
+        /// </summary>
         ExitCodeZero = 0b1,
     }
 }
