@@ -15,8 +15,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CliRunner.Commands;
 
+using CliRunner.Commands;
 using CliRunner.Extensibility;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
