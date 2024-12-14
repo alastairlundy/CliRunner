@@ -27,6 +27,7 @@ using System;
 
 using CliRunner.Commands.Abstractions;
 using CliRunner.Commands.Buffered;
+using CliRunner.Exceptions;
 
 // ReSharper disable RedundantBoolCompare
 
@@ -201,6 +202,7 @@ namespace CliRunner.Commands
             {
                 await PipeStandardInputAsync(process);
             }
+            
             process.Start();
             
 #if NET6_0_OR_GREATER
@@ -211,7 +213,9 @@ namespace CliRunner.Commands
 
             if (process.ExitCode != 0 && this.ResultValidation == CommandResultValidation.ExitCodeZero)
             {
+                throw new CommandNotSuccesfulException(process.ExitCode, this);
             }
+            
             if (process.StartInfo.RedirectStandardOutput == true)
             {
                 await PipeStandardOutputAsync(process);
@@ -220,7 +224,7 @@ namespace CliRunner.Commands
             {
                 await PipeStandardErrorAsync(process);
             }
-
+            
 #if NET6_0_OR_GREATER
             return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
 #else
@@ -291,7 +295,10 @@ namespace CliRunner.Commands
             
             if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
             {
+                throw new CommandNotSuccesfulException(process.ExitCode, this);
             }
+            
+
             if (process.StartInfo.RedirectStandardOutput == true)
             {
                 await PipeStandardOutputAsync(process);
