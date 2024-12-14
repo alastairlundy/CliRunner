@@ -61,7 +61,6 @@ namespace CliRunner.Urls
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("ios")]
         [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tizen")]
 #endif
         public async Task OpenUrlInDefaultBrowserAsync(string url)
         {
