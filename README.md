@@ -25,6 +25,20 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1 or .NET 8 supporte
 ## Install
 * [Nuget](https://nuget.org/packages/) or ``dotnet add package CliRunner``
 
+## Usage
+
+```csharp
+using CliRunner;
+
+var result = await Cli.Run("Path/To/Exe")
+              .WithArguments(["arg1", "arg2"])
+              .WithWorkingDirectory("/Path/To/Directory")
+              .ExecuteBufferedAsync();
+
+
+``
+```
+
 ## Licensing
 CliRunner is licensed under the MPL 2.0 license. If you modify any of CliRunner's files then the modified files must be licensed under the MPL 2.0 .
 
