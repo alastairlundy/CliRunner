@@ -270,6 +270,9 @@ namespace CliRunner.Commands
             
             if (process.StartInfo.RedirectStandardInput == true)
             {
+                await PipeStandardInputAsync(process);
+            }
+            
             process.Start();
             
 #if NET6_0_OR_GREATER
