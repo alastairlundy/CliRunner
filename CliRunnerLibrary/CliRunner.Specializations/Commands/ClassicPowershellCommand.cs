@@ -1,5 +1,5 @@
 ﻿/*
-    CliRunner 
+    CliRunner Specializations
     Copyright (C) 2024  Alastair Lundy
 
     This Source Code Form is subject to the terms of the Mozilla Public
