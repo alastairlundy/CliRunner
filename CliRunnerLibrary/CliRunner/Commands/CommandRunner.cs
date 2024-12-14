@@ -273,7 +273,7 @@ namespace CliRunner.Commands
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(
-                CreateStartInfo(true, true, true, encoding));
+                CreateStartInfo(StandardInput != null, true, true, encoding));
 
             if (UseShellExecute == true && process.StartInfo.RedirectStandardInput == true)
             {
