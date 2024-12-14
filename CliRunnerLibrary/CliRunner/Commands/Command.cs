@@ -33,7 +33,7 @@ namespace CliRunner.Commands
         public UserCredentials Credentials { get; protected set; }
         public CommandResultValidation ResultValidation { get; protected set;}
         
-        public StreamWriter StandardInput{ get; protected set; }
+        public StreamWriter StandardInput { get; protected set; }
         public StreamReader StandardOutput { get; protected set; }
         public StreamReader StandardError { get; protected set; }
         
@@ -55,6 +55,7 @@ namespace CliRunner.Commands
         /// <param name="standardOutput"></param>
         /// <param name="standardError"></param>
         /// <param name="processorAffinity"></param>
+        /// <param name="useShellExecute"></param>
         public Command(string targetFilePath,
              string arguments = null, string workingDirectoryPath = null,
              bool runAsAdministrator = false,
@@ -297,7 +298,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public Command WithStandardInput(StreamWriter source) =>
+        public Command WithStandardInputPipe(StreamWriter source) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -316,7 +317,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public Command WithStandardOutput(StreamReader target) =>
+        public Command WithStandardOutputPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -335,7 +336,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public Command WithStandardError(StreamReader target) =>
+        public Command WithStandardErrorPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
