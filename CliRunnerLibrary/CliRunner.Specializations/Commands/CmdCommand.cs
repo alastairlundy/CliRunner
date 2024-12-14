@@ -58,7 +58,7 @@ namespace CliRunner.Specializations.Commands
         public CmdCommand() : base(targetFilePath: "")
         {
             base.TargetFilePath = TargetFilePath;
-            UseShellExecute = true;
+            UseShellExecute = false;
         }
 
         public static CmdCommand Create()
