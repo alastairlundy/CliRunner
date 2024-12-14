@@ -191,6 +191,11 @@ namespace CliRunner.Commands
         {
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false));
+            
+            if (process.StartInfo.RedirectStandardInput == true)
+            {
+                await PipeStandardInputAsync(process);
+            }
             process.Start();
             
 #if NET6_0_OR_GREATER
@@ -200,6 +205,7 @@ namespace CliRunner.Commands
 #endif
 
             if (process.StartInfo.RedirectStandardInput == true)
+            if (process.ExitCode != 0 && this.ResultValidation == CommandResultValidation.ExitCodeZero)
             {
                 await PipeStandardInputAsync(process);
             }
@@ -261,6 +267,9 @@ namespace CliRunner.Commands
         {
             Process process = CreateProcess(
                 CreateStartInfo(true, true, true, encoding));
+            
+            if (process.StartInfo.RedirectStandardInput == true)
+            {
             process.Start();
             
 #if NET6_0_OR_GREATER
