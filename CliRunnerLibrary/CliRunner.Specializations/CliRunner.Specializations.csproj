@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CliRunner\CliRunner.csproj" />
+      <PackageReference Include="CliRunner" Version="[0.2.0, 1.0.0)" />
     </ItemGroup>
 
     <ItemGroup>
