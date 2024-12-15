@@ -10,11 +10,14 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+using System;
 using System.Security;
 
 namespace CliRunner.Builders
 {
-    public class CredentialsBuilder
+    /// <summary>
+    /// A class that provides builder methods for constructing UserCredentials.
+    /// </summary>
     public class CredentialsBuilder : IDisposable
     {
         private string _domain;
@@ -22,11 +25,19 @@ namespace CliRunner.Builders
         private SecureString _password;
         private bool _loadUserProfile;
 
+        public CredentialsBuilder()
+        {
+            _domain = string.Empty;
+            _username = string.Empty;
+            _password = new SecureString();
+            _loadUserProfile = false;
+        }
+        
         /// <summary>
-        /// 
+        /// Sets the domain for the credential to be created.
         /// </summary>
-        /// <param name="domain"></param>
-        /// <returns></returns>
+        /// <param name="domain">The domain to set.</param>
+        /// <returns>A new instance of the CredentialsBuilder with the updated domain.</returns>
         public CredentialsBuilder SetDomain(string domain) =>
             new CredentialsBuilder()
             {
@@ -37,10 +48,10 @@ namespace CliRunner.Builders
             };
 
         /// <summary>
-        /// 
+        /// Sets the username for the credential to be created.
         /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
+        /// <param name="username">The username to set.</param>
+        /// <returns>A new instance of the CredentialsBuilder with the updated username.</returns>
         public CredentialsBuilder SetUsername(string username) =>
             new CredentialsBuilder()
             {
@@ -51,10 +62,10 @@ namespace CliRunner.Builders
             };
 
         /// <summary>
-        /// 
+        /// Sets the password for the credential to be created.
         /// </summary>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="password">The password to set, as a SecureString.</param>
+        /// <returns>A new instance of the CredentialsBuilder with the updated password.</returns>
         public CredentialsBuilder SetPassword(SecureString password) =>
             new CredentialsBuilder()
             {
@@ -65,10 +76,10 @@ namespace CliRunner.Builders
             };
         
         /// <summary>
-        /// 
+        /// Specifies whether to load the user profile.
         /// </summary>
-        /// <param name="loadUserProfile"></param>
-        /// <returns></returns>
+        /// <param name="loadUserProfile">True to load the user profile, false otherwise.</param>
+        /// <returns>A new instance of the CredentialsBuilder with the updated load user profile setting.</returns>
         public CredentialsBuilder LoadUserProfile(bool loadUserProfile) =>
             new CredentialsBuilder()
             {
@@ -79,11 +90,22 @@ namespace CliRunner.Builders
             };
         
         /// <summary>
-        /// 
+        /// Builds a new instance of UserCredentials using the current settings.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The built UserCredentials.</returns>
         public UserCredentials Build() => 
             new UserCredentials(_domain, _username, _password, _loadUserProfile);
+
+        /// <summary>
+        /// Deletes the values of the provided settings.
+        /// </summary>
+        public void Clear()
+        {
+            _domain = string.Empty;
+            _username = string.Empty;
+            _password.Clear();
+        }
+        
         /// <summary>
         /// Disposes of the provided settings.
         /// </summary>
