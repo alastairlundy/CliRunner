@@ -12,14 +12,18 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>### Changes since 0.1.0
-* Renamed ``CliRunner`` entrypoint static class to ``Cli`` to avoid conflicts with namespace
-* Renamed entrypoint method from ``Wrap`` to ``Run`` to avoid potential confusion
-* Initial release for CliRunner specializations library</PackageReleaseNotes>
+        <PackageReleaseNotes>### Changes since 0.2.0
+* Fixed #1 
+* Fixed #2 
+* Fixed an issue where CliRunner Specializations would throw an exception when run due to using ``UseShellExecute``. 
+* Disabled standard input redirection by default with ``BufferedCommandResult``
+* Removed ``StandardInput`` property and parameter from ``BufferedCommandResult``
+* Added ``StandardError`` property and parameter to ``BufferedCommandResult``
+* Disable ``UseShellExecute`` in Command execution code if Standard Input redirection is enabled</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.2.0</PackageVersion>
+        <PackageVersion>0.3.0</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
