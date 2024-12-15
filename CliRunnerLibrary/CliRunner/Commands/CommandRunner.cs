@@ -19,6 +19,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+#if NETSTANDARD2_0 || NETSTANDARD2_1
+using AlastairLundy.Extensions.Processes;
+#endif
+
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
 
@@ -208,7 +212,7 @@ namespace CliRunner.Commands
 #if NET6_0_OR_GREATER
             await process.WaitForExitAsync(cancellationToken);
 #else
-            process.WaitForExit();
+            await process.WaitForExitAsync(cancellationToken);
 #endif
 
             if (process.ExitCode != 0 && this.ResultValidation == CommandResultValidation.ExitCodeZero)
@@ -287,10 +291,10 @@ namespace CliRunner.Commands
             
             process.Start();
             
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             await process.WaitForExitAsync(cancellationToken);
 #else
-            process.WaitForExit();
+            await process.WaitForExitAsync(cancellationToken);
 #endif
             
             if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)

@@ -16,7 +16,8 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+        <PackageReleaseNotes>### Changes since 0.2.0
+* Reverted ``UseShellExecute`` to false as a workaround to prevent a potential Exception being thrown due to a conflict with standard input redirection</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
     </PropertyGroup>
 
