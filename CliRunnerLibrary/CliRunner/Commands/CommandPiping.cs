@@ -12,6 +12,7 @@
 
 using System.Diagnostics;
 using System.Threading.Tasks;
+
 using CliRunner.Commands.Abstractions;
 
 namespace CliRunner.Commands
@@ -19,9 +20,9 @@ namespace CliRunner.Commands
     public partial class Command : ICommandPipeHandler
     {
         /// <summary>
-        /// 
+        /// Asynchronously copies the process' Standard Input to the Command's Standard Input.
         /// </summary>
-        /// <param name="process"></param>
+        /// <param name="process">The process to be copied from.</param>
         public async Task PipeStandardInputAsync(Process process)
         {
             await StandardInput.FlushAsync();
@@ -30,9 +31,9 @@ namespace CliRunner.Commands
         }
 
         /// <summary>
-        /// 
+        /// Asynchronously copies the process' Standard Output to the Command's Standard Output.
         /// </summary>
-        /// <param name="process"></param>
+        /// <param name="process">The process to be copied from.</param>
         public async Task PipeStandardOutputAsync(Process process)
         {
             StandardOutput.DiscardBufferedData();
@@ -41,9 +42,9 @@ namespace CliRunner.Commands
         }
 
         /// <summary>
-        /// 
+        /// Asynchronously copies the process' Standard Error to the Command's Standard Error.
         /// </summary>
-        /// <param name="process"></param>
+        /// <param name="process">The process to be copied from.</param>
         public async Task PipeStandardErrorAsync(Process process)
         {
             StandardError.DiscardBufferedData();
