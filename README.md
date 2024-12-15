@@ -29,8 +29,8 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1 or .NET 8 supporte
 
 
 ```csharp
-using CliRunner;
-using CliRunner.Buffered;
+using CliRunner.Commands;
+using CliRunner.Commands.Buffered;
 
 var result = await Cli.Run("Path/To/Exe")
               .WithArguments(["arg1", "arg2"])
