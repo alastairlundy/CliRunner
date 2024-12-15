@@ -24,7 +24,6 @@ namespace CliRunner.Builders
     /// <summary>
     /// A class that provides builder methods for constructing Arguments to provide to a program.
     /// </summary>
-    [SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
     public class ArgumentsBuilder
     {
         private static readonly IFormatProvider DefaultFormatProvider = CultureInfo.InvariantCulture;
