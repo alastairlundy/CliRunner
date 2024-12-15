@@ -24,10 +24,10 @@ namespace CliRunner.Exceptions
     public sealed class CommandNotSuccesfulException : Exception
     {
 #if NET5_0_OR_GREATER
-        public Command? ExecutedCommand { get; protected set; }
+        public Command? ExecutedCommand { get; private set; }
 #endif
         
-        public int ExitCode { get; protected set; }
+        public int ExitCode { get; private set; }
         
         /// <summary>
         /// 
