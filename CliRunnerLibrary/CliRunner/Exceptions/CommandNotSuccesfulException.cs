@@ -47,7 +47,7 @@ namespace CliRunner.Exceptions
         /// </summary>
         /// <param name="exitCode"></param>
         /// <param name="command"></param>
-        public CommandNotSuccesfulException(int exitCode, Command command) : base(Resources.Exceptions_CommandNotSuccessful_Generic.Replace("{y}", exitCode.ToString()
+        public CommandNotSuccesfulException(int exitCode, Command command) : base(Resources.Exceptions_CommandNotSuccessful_Specific.Replace("{y}", exitCode.ToString()
             .Replace("{x}", command.TargetFilePath)))
         {
 #if NET5_0_OR_GREATER
