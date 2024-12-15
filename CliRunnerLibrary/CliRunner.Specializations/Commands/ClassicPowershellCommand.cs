@@ -57,7 +57,6 @@ namespace CliRunner.Specializations.Commands
         public ClassicPowershellCommand() : base("Powershell.exe")
         {
             base.TargetFilePath = TargetFilePath;
-            UseShellExecute = false;
         }
 
         /// <summary>

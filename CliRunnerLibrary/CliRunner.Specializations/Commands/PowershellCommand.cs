@@ -43,7 +43,6 @@ namespace CliRunner.Specializations.Commands
     {
         public PowershellCommand() : base("")
         {
-            UseShellExecute = false;
         }
         
         /// <summary>
