@@ -10,14 +10,15 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.2.0</PackageVersion>
+        <PackageVersion>0.3.0</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageReleaseNotes>### Changes since 0.2.0
-* Reverted ``UseShellExecute`` to false as a workaround to prevent a potential Exception being thrown due to a conflict with standard input redirection</PackageReleaseNotes>
+* Reverted ``UseShellExecute`` to false - library consumers are free to set it as they wish.
+* Fixed potential issues with TargetFilePath</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
     </PropertyGroup>
 
