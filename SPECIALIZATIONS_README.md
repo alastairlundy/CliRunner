@@ -3,9 +3,9 @@ This readme covers the **CliRunner Specializations** library. Looking for the [C
 
 ## Usage
 CliRunner.Specializations comes with 3 specializations as of 0.3.0: 
-- [CmdCommand](#cmd-command) - An easier way to execute processes and commands through cmd.exe (Only supported on Windows)
-- [ClassicPowershellCommand](#classic-power-shell-command) - An easier way to execute processes and commands through Windows Powershell (Only supported on Windows)
-- [PowershellCommand](#power-shell-command) - An easier way to execute processes and commands through the modern Cross-Platform open source Powershell (Powershell is not installed by CliRunner and is expected to be installed if you plan to use it.)
+- [CmdCommand](#cmdcommand) - An easier way to execute processes and commands through cmd.exe (Only supported on Windows)
+- [ClassicPowershellCommand](#classicpower-shellcommand) - An easier way to execute processes and commands through Windows Powershell (Only supported on Windows)
+- [PowershellCommand](#powershellcommand) - An easier way to execute processes and commands through the modern Cross-Platform open source Powershell (Powershell is not installed by CliRunner and is expected to be installed if you plan to use it.)
 
 All Command specialization classes come with an already configured TargetFilePath that points to the relevant executable.
 
