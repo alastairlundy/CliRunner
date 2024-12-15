@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable HeapView.ObjectAllocation.Evident
+// ReSharper disable SuggestVarOrType_BuiltInTypes
 
 namespace CliRunner.Builders
 {
@@ -162,7 +163,6 @@ namespace CliRunner.Builders
         {
             return Add(value, false);
         }
-
         
         /// <summary>
         /// Appends a collection of formattable values to the arguments builder.
@@ -224,7 +224,6 @@ namespace CliRunner.Builders
         {
             return Add(values, cultureInfo, false);
         }
-
         
         /// <summary>
         /// Appends a collection of formattable values to the arguments builder without specifying a culture.
