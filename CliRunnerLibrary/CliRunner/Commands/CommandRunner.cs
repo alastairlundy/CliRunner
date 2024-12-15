@@ -282,11 +282,6 @@ namespace CliRunner.Commands
         {
             Process process = CreateProcess(
                 CreateStartInfo(StandardInput != null, true, true, encoding));
-
-            if (UseShellExecute == true && process.StartInfo.RedirectStandardInput == true)
-            {
-                UseShellExecute = false;
-            }
             
             if (process.StartInfo.RedirectStandardInput == true)
             {
