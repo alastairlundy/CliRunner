@@ -31,10 +31,7 @@ namespace CliRunner.Builders
         /// <param name="vars"></param>
         private EnvironmentVariablesBuilder(Dictionary<string, string> vars)
         {
-            foreach (KeyValuePair<string, string> pair in vars)
-            {
-                _environmentVariables.Add(pair.Key, pair.Value);
-            }
+            _environmentVariables = AddToExisting(vars.ToArray());
         }
 
         /// <summary>
@@ -46,9 +43,12 @@ namespace CliRunner.Builders
         {
             Dictionary<string, string> output = new Dictionary<string, string>();
 
-            foreach (KeyValuePair<string, string> pair in _environmentVariables)
+            if (_environmentVariables.Count > 0)
             {
-                output.Add(pair.Key, pair.Value);
+                foreach (KeyValuePair<string, string> pair in _environmentVariables)
+                {
+                    output.Add(pair.Key, pair.Value);
+                }
             }
                 
             foreach (KeyValuePair<string, string> newPair in pairs)
