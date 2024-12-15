@@ -41,6 +41,16 @@ Usage is identical to using ``Cli.Run`` except that the entrypoint is ``ClassicP
 ```
 
 ### PowershellCommand
+The PowershellCommand's TargetFilePath points to the installed copy of cross-platform Powershell if it is installed.
+
+Usage is identical to using ``Cli.Run`` except that the entrypoint is ``PowershellCommand.Create()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
+
+```csharp
+  var result = await PowershellCommand.Create()
+                .WithArguments("Your arguments go here")
+                .WithWorkingDirectory(Environment.SystemDirectory)
+                .ExecuteBufferedAsync();
+```
 
 ## Licensing
 CliRunner and CliRunner Specializations are licensed under the MPL 2.0 license. If you modify any of CliRunner's or CliRunner.Specialization's files then the modified files must be licensed under the MPL 2.0 .
