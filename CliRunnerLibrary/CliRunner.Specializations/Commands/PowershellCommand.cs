@@ -28,6 +28,9 @@ using System.Runtime.Versioning;
 
 namespace CliRunner.Specializations.Commands
 {
+    /// <summary>
+    /// 
+    /// </summary>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("macos")]

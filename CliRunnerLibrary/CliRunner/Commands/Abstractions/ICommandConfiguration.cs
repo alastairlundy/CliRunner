@@ -38,6 +38,9 @@ using System.IO;
 
 namespace CliRunner.Commands.Abstractions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ICommandConfiguration
     {
         bool RunAsAdministrator { get; }

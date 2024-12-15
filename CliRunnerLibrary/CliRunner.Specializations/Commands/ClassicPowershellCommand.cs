@@ -109,16 +109,6 @@ namespace CliRunner.Specializations.Commands
         /// Detects whether Windows Powershell is installed on a system.
         /// </summary>
         /// <returns>true if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [UnsupportedOSPlatform("macos")]
-        [UnsupportedOSPlatform("linux")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("browser")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("watchos")]
-#endif
         public async Task<bool> IsInstalledAsync()
         {
             if (OperatingSystem.IsWindows())

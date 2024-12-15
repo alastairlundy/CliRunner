@@ -16,6 +16,9 @@ using System.Linq;
 
 namespace CliRunner.Builders
 {
+    /// <summary>
+    /// A class that provides builder methods for constructing Environment Variables.
+    /// </summary>
     public class EnvironmentVariablesBuilder
     {
         private readonly Dictionary<string, string> _environmentVariables = new Dictionary<string, string>(StringComparer.Ordinal);
