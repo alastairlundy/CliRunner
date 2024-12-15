@@ -41,8 +41,31 @@ namespace CliRunner.Specializations.Commands
 #endif
     public class PowershellCommand : Command, ISpecializedCommandInformation
     {
+        public new string TargetFilePath
+        {
+            get
+            {
+                Task<string> task = GetInstallLocationAsync();
+                task.RunSynchronously();
+
+                string filePath = task.Result;
+
+                if (OperatingSystem.IsWindows())
+                {
+                    filePath += Path.DirectorySeparatorChar + "pwsh.exe";
+                }
+                else if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+                {
+                    filePath += Path.DirectorySeparatorChar + "pwsh";
+                }
+
+                return filePath;
+            }
+        }
+
         public PowershellCommand() : base("")
         {
+            base.TargetFilePath = TargetFilePath;
         }
         
         /// <summary>
@@ -51,7 +74,18 @@ namespace CliRunner.Specializations.Commands
          /// <returns></returns>
          /// <exception cref="ArgumentException"></exception>
          /// <exception cref="Exception"></exception>
-         /// <exception cref="PlatformNotSupportedException"></exception>
+         /// <exception cref="PlatformNotSupportedException">Thrown if run on an unsupported platform.</exception>
+#if NET5_0_OR_GREATER
+         [SupportedOSPlatform("windows")]
+         [SupportedOSPlatform("macos")]
+         [SupportedOSPlatform("linux")]
+         [SupportedOSPlatform("freebsd")]
+         [UnsupportedOSPlatform("browser")]
+         [UnsupportedOSPlatform("android")]
+         [UnsupportedOSPlatform("ios")]
+         [UnsupportedOSPlatform("tvos")]
+         [UnsupportedOSPlatform("watchos")]
+#endif
          public async Task<string> GetInstallLocationAsync()
          {
              if (await IsInstalledAsync() == false)

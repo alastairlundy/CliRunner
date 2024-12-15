@@ -42,7 +42,16 @@ namespace CliRunner.Specializations.Commands
     public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
     {
 
-        public new string TargetFilePath => GetInstallLocationAsync().Result + Path.DirectorySeparatorChar + "powershell.exe";
+        public new string TargetFilePath
+        {
+            get
+            {
+               Task<string> task = GetInstallLocationAsync();
+               task.RunSynchronously();
+                       
+               return task.Result + Path.DirectorySeparatorChar + "powershell.exe";
+            }
+        }
 
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -54,7 +63,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public ClassicPowershellCommand() : base("Powershell.exe")
+        public ClassicPowershellCommand() : base("")
         {
             base.TargetFilePath = TargetFilePath;
         }

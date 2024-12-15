@@ -43,7 +43,16 @@ namespace CliRunner.Specializations.Commands
 #endif
     public class CmdCommand : Command, ISpecializedCommandInformation
     {
-        public new string TargetFilePath => GetInstallLocationAsync().Result;
+        public new string TargetFilePath
+        {
+            get
+            {
+                Task<string> task = GetInstallLocationAsync();
+                task.RunSynchronously();
+
+                return task.Result + Path.DirectorySeparatorChar + "cmd.exe";
+            }
+        }
         
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
