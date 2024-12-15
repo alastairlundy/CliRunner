@@ -15,6 +15,9 @@ The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 Usage is identical to using ``Cli.Run`` except that the entrypoint is ``CmdCommand.Create()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
 
 ```csharp
+using CliRunner.Commands;
+using CliRunner.Commands.Buffered;
+
   var result = await CmdCommand.Create()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
@@ -23,7 +26,9 @@ Usage is identical to using ``Cli.Run`` except that the entrypoint is ``CmdComma
 
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
 ```csharp
-   await CmdCommand.Create()
+using CliRunner.Commands;
+
+await CmdCommand.Create()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
                 .ExecuteAsync();
@@ -35,6 +40,9 @@ The ClassicPowershellCommand is a specialized Command class with an already conf
 Usage is identical to using ``Cli.Run`` except that the entrypoint is ``ClassicPowershellCommand.Create()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
 
 ```csharp
+using CliRunner.Commands;
+using CliRunner.Commands.Buffered;
+
  var task = await ClassicPowershellCommand.Create()
                 .WithArguments("Your arguments go here")
                 .ExecuteBufferedAsync();
@@ -46,6 +54,9 @@ The PowershellCommand's TargetFilePath points to the installed copy of cross-pla
 Usage is identical to using ``Cli.Run`` except that the entrypoint is ``PowershellCommand.Create()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
 
 ```csharp
+using CliRunner.Commands;
+using CliRunner.Commands.Buffered;
+
   var result = await PowershellCommand.Create()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
