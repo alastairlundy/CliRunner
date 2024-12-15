@@ -15,6 +15,7 @@ using System.Security;
 namespace CliRunner.Builders
 {
     public class CredentialsBuilder
+    public class CredentialsBuilder : IDisposable
     {
         private string _domain;
         private string _username;
@@ -83,5 +84,13 @@ namespace CliRunner.Builders
         /// <returns></returns>
         public UserCredentials Build() => 
             new UserCredentials(_domain, _username, _password, _loadUserProfile);
+        /// <summary>
+        /// Disposes of the provided settings.
+        /// </summary>
+        public void Dispose()
+        {
+           Clear();
+           _password?.Dispose();
+        }
     }
 }
