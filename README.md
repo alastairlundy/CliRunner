@@ -27,16 +27,15 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1 or .NET 8 supporte
 
 ## Usage
 
+
 ```csharp
 using CliRunner;
+using CliRunner.Buffered;
 
 var result = await Cli.Run("Path/To/Exe")
               .WithArguments(["arg1", "arg2"])
               .WithWorkingDirectory("/Path/To/Directory")
               .ExecuteBufferedAsync();
-
-
-``
 ```
 
 ## Licensing
