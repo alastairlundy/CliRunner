@@ -52,6 +52,7 @@ namespace CliRunner.Exceptions
         {
 #if NET5_0_OR_GREATER
             ExecutedCommand = command;
+            Source = ExecutedCommand.TargetFilePath;
 #endif
             
             ExitCode = exitCode;
