@@ -26,19 +26,19 @@ namespace CliRunner.Builders
         }
         
         /// <summary>
-        /// 
+        /// Initializes a new instance of the EnvironmentVariablesBuilder class.
         /// </summary>
-        /// <param name="vars"></param>
+        /// <param name="vars">The initial environment variables to use.</param>
         private EnvironmentVariablesBuilder(Dictionary<string, string> vars)
         {
             _environmentVariables = AddToExisting(vars.ToArray());
         }
 
         /// <summary>
-        /// 
+        /// Adds new environment variables to the existing ones.
         /// </summary>
-        /// <param name="pairs"></param>
-        /// <returns></returns>
+        /// <param name="pairs">The new environment variables to add.</param>
+        /// <returns>A dictionary containing the updated environment variables.</returns>
         private Dictionary<string, string> AddToExisting(KeyValuePair<string, string>[] pairs)
         {
             Dictionary<string, string> output = new Dictionary<string, string>();
@@ -60,11 +60,11 @@ namespace CliRunner.Builders
         }
         
         /// <summary>
-        /// 
+        /// Sets a single environment variable.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of the environment variable to set.</param>
+        /// <param name="value">The value of the environment variable to set.</param>
+        /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
         public EnvironmentVariablesBuilder Set(string name, string value)
         {
             Dictionary<string, string> vars = AddToExisting(new KeyValuePair<string, string>[]
@@ -74,10 +74,10 @@ namespace CliRunner.Builders
         }
 
         /// <summary>
-        /// 
+        /// Sets multiple environment variables.
         /// </summary>
-        /// <param name="variables"></param>
-        /// <returns></returns>
+        /// <param name="variables">The environment variables to set.</param>
+        /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
         public EnvironmentVariablesBuilder Set(IEnumerable<KeyValuePair<string, string>> variables)
         {
             Dictionary<string, string> vars = AddToExisting(variables.ToArray());
@@ -86,10 +86,10 @@ namespace CliRunner.Builders
         }
 
         /// <summary>
-        /// 
+        /// Sets multiple environment variables from a read-only dictionary.
         /// </summary>
-        /// <param name="variables"></param>
-        /// <returns></returns>
+        /// <param name="variables">The read-only dictionary of environment variables to set.</param>
+        /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
         public EnvironmentVariablesBuilder Set(IReadOnlyDictionary<string, string> variables)
         {
             Dictionary<string, string> vars = AddToExisting(variables.ToArray());
@@ -98,12 +98,20 @@ namespace CliRunner.Builders
         }
 
         /// <summary>
-        /// 
+        /// Builds the dictionary of configured environment variables.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A read-only dictionary containing the configured environment variables.</returns>
         public IReadOnlyDictionary<string, string> Build()
         {
             return _environmentVariables;
+        }
+
+        /// <summary>
+        /// Deletes the environment variable values.
+        /// </summary>
+        public void Clear()
+        {
+            _environmentVariables.Clear();
         }
     }
 }
