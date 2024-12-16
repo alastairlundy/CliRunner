@@ -28,28 +28,10 @@ namespace CliRunner.Urls
 
     public class UrlRunner : IUrlRunner
     {
-        /// <summary>
-        /// Convert HTTP to HTTPS
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public string ReplaceHttpWithHttps(string url)
-        {
-            if (url.StartsWith("http://"))
-            {
-                url = url.Replace("http://", "https://");
-            }
-            else if (url.StartsWith("www."))
-            {
-                url = url.Replace("www.", "https://www.");
-            }
 
-            return url;
-        }
-        
+
         /// <summary>
-        ///
-        /// Some code contained courtesy of https://github.com/dotnet/corefx/issues/10361
+        /// Some code contained in this method is courtesy of https://github.com/dotnet/corefx/issues/10361
         /// </summary>
         /// <param name="url"></param>
 #if NET5_0_OR_GREATER
@@ -65,7 +47,6 @@ namespace CliRunner.Urls
         public async Task OpenUrlInDefaultBrowserAsync(string url)
         {
             url = AddHttpIfMissing(url, false);
-            url = ReplaceHttpWithHttps(url);
             
             if (OperatingSystem.IsWindows())
             {
