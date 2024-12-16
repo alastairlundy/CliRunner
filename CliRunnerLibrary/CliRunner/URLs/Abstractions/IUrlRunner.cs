@@ -13,7 +13,6 @@ namespace CliRunner.Urls.Abstractions
 {
     public interface IUrlRunner
     {
-        Task OpenUrlInDefaultBrowserAsync(string url);
-
+        Task<UrlResult> OpenWithDefaultBrowserAsync();
     }
 }

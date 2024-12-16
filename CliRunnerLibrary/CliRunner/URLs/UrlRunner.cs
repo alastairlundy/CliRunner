@@ -16,7 +16,8 @@ using System.Runtime.Versioning;
 #endif
 
 using System.Threading.Tasks;
-
+using CliRunner.Commands;
+using CliRunner.Commands.Extensions;
 using CliRunner.Urls.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -26,74 +27,69 @@ using CliRunner.Urls.Abstractions;
 namespace CliRunner.Urls
 {
 
-    public class UrlRunner : IUrlRunner
+    public partial class Url : IUrlRunner
     {
 
 
         /// <summary>
         /// Some code contained in this method is courtesy of https://github.com/dotnet/corefx/issues/10361
         /// </summary>
-        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="PlatformNotSupportedException">Thrown if run on a platform besides Windows, macOS, FreeBSD, or Linux.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("freebsd")]
         [UnsupportedOSPlatform("browser")]
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("ios")]
         [UnsupportedOSPlatform("android")]
 #endif
-        public async Task OpenUrlInDefaultBrowserAsync(string url)
+        public async Task<UrlResult> OpenWithDefaultBrowserAsync()
         {
-            url = AddHttpIfMissing(url, false);
+            CommandResult result;
+
+            string url = ToString();
             
             if (OperatingSystem.IsWindows())
             {
                 string args = $"/c start {url.Replace("&", "^&")}";
                 
-                await Cli.Run($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe")
+               result = await Cli.Run($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe")
                     .WithArguments(args)
                     .WithWorkingDirectory(Environment.SystemDirectory)
+                    .WithValidation(CommandResultValidation.None)
                     .ExecuteAsync();
+               
+               return await Task.FromResult(new UrlResult(result.ExitCode, result.StartTime, result.ExitTime, FromString(url)));
             }
             if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
-                await Cli.Run("/usr/bin/xdg-open")
+               result = await Cli.Run("/usr/bin/xdg-open")
                     .WithArguments(url.Replace("&", "^&"))
                     .WithWorkingDirectory("/usr/bin")
+                    .WithValidation(CommandResultValidation.None)
                     .ExecuteAsync();
+               
+               return await Task.FromResult(new UrlResult(result.ExitCode, result.StartTime, result.ExitTime, FromString(url)));
             }
             if (OperatingSystem.IsMacOS())
             {
-                Task task = new Task(() => Process.Start("open", url));
-                task.Start();
+                Process process = new Process();
                 
+                Task task = new Task(() => process = Process.Start("open", url));
+                task.Start();
+
                 await task.ConfigureAwait(false);
-            }
-        }
 
-        /// <summary>
-        /// Adds HTTP(S) to a URL if it's missing.
-        /// </summary>
-        /// <param name="url">The URL to be checked.</param>
-        /// <param name="allowNonSecureHttp">Whether to use HTTP instead of HTTPS.</param>
-        /// <returns>the modified URL string.</returns>
-        public string AddHttpIfMissing(string url, bool allowNonSecureHttp)
-        {
-            if ((!url.StartsWith("https://") || !url.StartsWith("www.")) && (!url.StartsWith("file://")))
-            {
-                if (allowNonSecureHttp)
-                {
-                    url = "http://" + url;
-                }
-                else
-                {
-                    url = "https://" + url;
-                }
+                result = process.ToCommandResult();
+                
+                return await Task.FromResult(new UrlResult(result.ExitCode, result.StartTime, result.ExitTime, FromString(url)));
             }
-
-            return url;
+            
+            throw new PlatformNotSupportedException("This method is only supported on Windows, macOS, FreeBSD, or Linux.");
         }
     }        
 }
