@@ -84,9 +84,5 @@
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Urls\" />
-    </ItemGroup>
 
 </Project>

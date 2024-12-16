@@ -48,6 +48,13 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="processStartInfo"></param>
         /// <returns></returns>
+        #if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("browser")]
+        #endif
         public Process CreateProcess(ProcessStartInfo processStartInfo)
         {
             Process output = new Process
@@ -55,7 +62,10 @@ namespace CliRunner.Commands
                 StartInfo = processStartInfo,
             };
 
-            output.ProcessorAffinity = ProcessorAffinity;
+            if (OperatingSystem.IsWindows() | OperatingSystem.IsLinux())
+            {
+                output.ProcessorAffinity = ProcessorAffinity;
+            }
             
             return output;
         }
@@ -64,6 +74,13 @@ namespace CliRunner.Commands
         /// 
         /// </summary>
         /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, Encoding encoding = default)
         {
             ProcessStartInfo output = new ProcessStartInfo()
@@ -109,7 +126,7 @@ namespace CliRunner.Commands
 
             if (Credentials != null)
             {
-                if (Credentials.Domain != null)
+                if (Credentials.Domain != null && OperatingSystem.IsWindows())
                 {
                     output.Domain = Credentials.Domain;
                 }
@@ -117,12 +134,12 @@ namespace CliRunner.Commands
                 {
                     output.UserName = Credentials.UserName;
                 }
-                if (Credentials.Password != null)
+                if (Credentials.Password != null && OperatingSystem.IsWindows())
                 {
                     output.Password = Credentials.Password;
                 }
 #pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                if (Credentials.LoadUserProfile != null)
+                if (Credentials.LoadUserProfile != null && OperatingSystem.IsWindows())
 #pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
                 {
 #if NETSTANDARD2_0
@@ -164,6 +181,13 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(
@@ -235,6 +259,13 @@ namespace CliRunner.Commands
         /// <param name="cancellationToken"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(

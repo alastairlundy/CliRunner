@@ -16,7 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Runtime.Versioning;
 using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
 
@@ -37,6 +37,10 @@ namespace CliRunner.Commands
         public StreamReader StandardOutput { get; protected set; }
         public StreamReader StandardError { get; protected set; }
         
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+#endif
         public IntPtr ProcessorAffinity { get; protected set; }
         
         public bool UseShellExecute { get; protected set; }

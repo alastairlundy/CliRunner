@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Runtime.Versioning;
 using System.Security;
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
@@ -34,9 +35,18 @@ namespace CliRunner
         }
         
 #if NET6_0_OR_GREATER || NETSTANDARD2_1
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+#endif
         public string? Domain { get; set; }
         public string? UserName { get; set; }
-        public SecureString? Password { get; set; }        
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+#endif
+        public SecureString? Password { get; set; }       
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+#endif
         public bool? LoadUserProfile { get; set; }
 #else
         public string Domain { get; set; }
