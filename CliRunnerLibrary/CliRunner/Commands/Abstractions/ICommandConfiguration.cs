@@ -43,7 +43,7 @@ namespace CliRunner.Commands.Abstractions
     /// </summary>
     public interface ICommandConfiguration
     {
-        bool RunAsAdministrator { get; }
+        bool RequiresAdministrator { get; }
         string TargetFilePath { get; }
         string WorkingDirectoryPath { get; }
 

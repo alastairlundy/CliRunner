@@ -82,7 +82,7 @@ namespace CliRunner.Commands
                 output.Arguments = Arguments;
             }
 
-            if (RunAsAdministrator == true)
+            if (RequiresAdministrator == true)
             {
                 if (OperatingSystem.IsWindows())
                 {

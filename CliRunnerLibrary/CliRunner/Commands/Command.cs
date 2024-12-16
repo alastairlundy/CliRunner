@@ -24,7 +24,7 @@ namespace CliRunner.Commands
 {
     public partial class Command : ICommandConfiguration
     {
-        public bool RunAsAdministrator { get; protected set; }
+        public bool RequiresAdministrator { get; protected set; }
         public string TargetFilePath { get; protected set; }
         public string WorkingDirectoryPath { get; protected set; }
         public string Arguments { get; protected set; }
@@ -70,7 +70,7 @@ namespace CliRunner.Commands
         )
         {
             TargetFilePath = targetFilePath;
-            RunAsAdministrator = runAsAdministrator;
+            RequiresAdministrator = runAsAdministrator;
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
@@ -116,7 +116,7 @@ namespace CliRunner.Commands
             return new Command(TargetFilePath,
                 string.Join(" ", arguments),
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
@@ -136,7 +136,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
@@ -155,7 +155,7 @@ namespace CliRunner.Commands
             new Command(targetFilePath,
             Arguments,
             WorkingDirectoryPath,
-            RunAsAdministrator,
+            RequiresAdministrator,
             EnvironmentVariables,
             Credentials,
             ResultValidation,
@@ -175,7 +175,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 environmentVariables,
                 Credentials,
                 ResultValidation,
@@ -205,7 +205,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="runAsAdministrator"></param>
         /// <returns></returns>
-        public Command RequiresAdministrator(bool runAsAdministrator) =>
+        public Command RunAsAdministrator(bool runAsAdministrator) =>
             new Command(TargetFilePath,
             Arguments,
             WorkingDirectoryPath,
@@ -228,7 +228,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 workingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
@@ -248,7 +248,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 credentials,
                 ResultValidation,
@@ -283,7 +283,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 validation,
@@ -302,7 +302,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
@@ -321,7 +321,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
@@ -340,7 +340,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
@@ -359,7 +359,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
@@ -378,7 +378,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,

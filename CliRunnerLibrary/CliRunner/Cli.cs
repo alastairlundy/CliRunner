@@ -37,7 +37,7 @@ namespace CliRunner
         /// <param name="command">The command to wrap</param>
         /// <returns></returns>
         public static Command Run(Command command) => new Command(command.TargetFilePath, command.Arguments,
-            command.WorkingDirectoryPath, command.RunAsAdministrator, command.EnvironmentVariables,
+            command.WorkingDirectoryPath, command.RequiresAdministrator, command.EnvironmentVariables,
             command.Credentials, command.ResultValidation, command.StandardInput,
             command.StandardOutput, command.StandardError);
     }
