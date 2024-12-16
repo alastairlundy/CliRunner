@@ -113,8 +113,15 @@ namespace CliRunner.Commands
         /// <returns></returns>
         public Command WithArguments(IEnumerable<string> arguments, bool escape)
         {
+            string args = string.Join(" ", arguments);
+            
+            if (escape)
+            {
+                args = ArgumentsBuilder.Escape(args);    
+            }
+            
             return new Command(TargetFilePath,
-                string.Join(" ", arguments),
+                args,
                 WorkingDirectoryPath,
                 RequiresAdministrator,
                 EnvironmentVariables,
