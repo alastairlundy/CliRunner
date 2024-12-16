@@ -121,7 +121,7 @@ namespace CliRunner.Specializations.Commands
 
                  var result = await Cli.Run(CmdCommand.Create())
                      .WithArguments("where pwsh.exe")
-                     .RequiresAdministrator(false)
+                     .RunAsAdministrator(false)
                      .ExecuteBufferedAsync();
                  
                  if (result.StandardOutput.Split(Environment.NewLine.ToCharArray()).Any())
@@ -135,7 +135,7 @@ namespace CliRunner.Specializations.Commands
              {
                  var result = await Cli.Run("/usr/bin/which")
                      .WithArguments("pwsh")
-                     .RequiresAdministrator(false)
+                     .RunAsAdministrator(false)
                      .ExecuteBufferedAsync();
                      
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
@@ -144,7 +144,7 @@ namespace CliRunner.Specializations.Commands
              {
                  var result = await Cli.Run("/usr/bin/which")
                      .WithArguments("pwsh")
-                     .RequiresAdministrator(false)
+                     .RunAsAdministrator(false)
                      .ExecuteBufferedAsync();
                  
                  return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
@@ -180,21 +180,21 @@ namespace CliRunner.Specializations.Commands
                 {
                      result = await Cli.Run(CmdCommand.Create())
                         .WithArguments("where pwsh.exe")
-                        .RequiresAdministrator(false)
+                        .RunAsAdministrator(false)
                         .ExecuteBufferedAsync();
                 }
                 else if (OperatingSystem.IsMacOS())
                 {
                     result = await Cli.Run("/usr/bin/which")
                         .WithArguments("pwsh")
-                        .RequiresAdministrator(false)
+                        .RunAsAdministrator(false)
                         .ExecuteBufferedAsync();
                 }
                 else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
                 {
                     result = await Cli.Run("/usr/bin/which")
                         .WithArguments("pwsh")
-                        .RequiresAdministrator(false)
+                        .RunAsAdministrator(false)
                         .ExecuteBufferedAsync();
                 }
                 else
@@ -236,7 +236,7 @@ namespace CliRunner.Specializations.Commands
         {
             var result = await Cli.Run(this)
                 .WithArguments("$PSVersionTable")
-                .RequiresAdministrator(false)
+                .RunAsAdministrator(false)
                 .ExecuteBufferedAsync();
 
             if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||

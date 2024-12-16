@@ -31,6 +31,7 @@ using System;
 
 using CliRunner.Commands.Abstractions;
 using CliRunner.Commands.Buffered;
+
 using CliRunner.Exceptions;
 
 // ReSharper disable RedundantBoolCompare
@@ -48,13 +49,13 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="processStartInfo"></param>
         /// <returns></returns>
-        #if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
         [UnsupportedOSPlatform("browser")]
-        #endif
+#endif
         public Process CreateProcess(ProcessStartInfo processStartInfo)
         {
             Process output = new Process
@@ -205,11 +206,7 @@ namespace CliRunner.Commands
             
             process.Start();
             
-#if NET6_0_OR_GREATER
             await process.WaitForExitAsync(cancellationToken);
-#else
-            await process.WaitForExitAsync(cancellationToken);
-#endif
 
             if (process.ExitCode != 0 && this.ResultValidation == CommandResultValidation.ExitCodeZero)
             {
@@ -225,11 +222,7 @@ namespace CliRunner.Commands
                 await PipeStandardErrorAsync(process);
             }
             
-#if NET6_0_OR_GREATER
             return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
-#else
-            return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
-#endif
         }
 
         /// <summary>
@@ -278,11 +271,7 @@ namespace CliRunner.Commands
             
             process.Start();
             
-#if NET5_0_OR_GREATER
             await process.WaitForExitAsync(cancellationToken);
-#else
-            await process.WaitForExitAsync(cancellationToken);
-#endif
             
             if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
             {
@@ -306,7 +295,7 @@ namespace CliRunner.Commands
 #else
             return new BufferedCommandResult(process.ExitCode, 
                 await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync(), 
-process.StartTime, process.ExitTime);
+            process.StartTime, process.ExitTime);
 #endif
         }
     }
