@@ -16,8 +16,10 @@ using System.Runtime.Versioning;
 #endif
 
 using System.Threading.Tasks;
+
 using CliRunner.Commands;
 using CliRunner.Commands.Extensions;
+
 using CliRunner.Urls.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -32,8 +34,9 @@ namespace CliRunner.Urls
 
 
         /// <summary>
-        /// Some code contained in this method is courtesy of https://github.com/dotnet/corefx/issues/10361
+        /// Asynchronously opens the Url in the default browser.
         /// </summary>
+        /// <remarks>Some code contained in this method is courtesy of https://github.com/dotnet/corefx/issues/10361</remarks>
         /// <returns></returns>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on a platform besides Windows, macOS, FreeBSD, or Linux.</exception>
 #if NET5_0_OR_GREATER
