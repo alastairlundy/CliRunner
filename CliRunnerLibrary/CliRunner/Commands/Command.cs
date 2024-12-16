@@ -22,7 +22,7 @@ using CliRunner.Commands.Abstractions;
 
 namespace CliRunner.Commands
 {
-    public partial class Command : ICommandConfiguration
+    public partial class Command : ICommandConfiguration, ICommandConfigurationBuilder
     {
         public bool RequiresAdministrator { get; protected set; }
         public string TargetFilePath { get; protected set; }
