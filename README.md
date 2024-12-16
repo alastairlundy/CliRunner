@@ -26,7 +26,9 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1 or .NET 8 supporte
 * [Nuget](https://nuget.org/packages/) or ``dotnet add package CliRunner``
 
 ## Usage
+CliRunner uses a builder style of syntax to easily configure and run Commands.
 
+The following example shows how to configure and build a Command that returns a BufferedCommandResult which contains redirected StandardOutput and StandardError.
 
 ```csharp
 using CliRunner.Commands;
