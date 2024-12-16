@@ -95,7 +95,7 @@ namespace CliRunner.Commands
             new Command(TargetFilePath,
                 string.Join(" ", arguments),
                 WorkingDirectoryPath,
-                RunAsAdministrator,
+                RequiresAdministrator,
                 EnvironmentVariables,
                 Credentials,
                 ResultValidation,
