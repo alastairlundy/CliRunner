@@ -48,16 +48,6 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="processStartInfo"></param>
         /// <returns></returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
-#endif
         public Process CreateProcess(ProcessStartInfo processStartInfo)
         {
             Process output = new Process
@@ -74,17 +64,6 @@ namespace CliRunner.Commands
         /// 
         /// </summary>
         /// <returns></returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
         public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, Encoding encoding = default)
         {
             ProcessStartInfo output = new ProcessStartInfo()
@@ -185,17 +164,6 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
         public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(
@@ -267,17 +235,6 @@ namespace CliRunner.Commands
         /// <param name="cancellationToken"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(
