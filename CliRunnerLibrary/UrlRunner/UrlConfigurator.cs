@@ -1,5 +1,5 @@
 ﻿/*
-    CliRunner 
+    UrlRunner 
     Copyright (C) 2024  Alastair Lundy
 
     This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,9 +7,9 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-using CliRunner.Urls.Abstractions;
+using UrlRunner.Abstractions;
 
-namespace CliRunner.Urls
+namespace UrlRunner
 {
     public partial class Url : IUrlConfigurationBuilder
     {

@@ -1,5 +1,5 @@
 ﻿/*
-    CliRunner 
+    UrlRunner 
     Copyright (C) 2024  Alastair Lundy
 
     This Source Code Form is subject to the terms of the Mozilla Public
@@ -8,11 +8,11 @@
    */
 
 using System;
-using CliRunner.Urls.Abstractions;
+using UrlRunner.Abstractions;
 
 // ReSharper disable RedundantIfElseBlock
 
-namespace CliRunner.Urls
+namespace UrlRunner
 {
     /// <summary>
     /// 

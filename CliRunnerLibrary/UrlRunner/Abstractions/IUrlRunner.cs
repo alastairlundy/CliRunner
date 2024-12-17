@@ -9,7 +9,7 @@
 
 using System.Threading.Tasks;
 
-namespace CliRunner.Urls.Abstractions
+namespace UrlRunner.Abstractions
 {
     public interface IUrlRunner
     {

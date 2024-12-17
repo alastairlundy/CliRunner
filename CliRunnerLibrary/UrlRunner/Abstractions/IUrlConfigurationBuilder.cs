@@ -8,7 +8,7 @@
    */
 
 
-namespace CliRunner.Urls.Abstractions
+namespace UrlRunner.Abstractions
 {
     public interface IUrlConfigurationBuilder
     {

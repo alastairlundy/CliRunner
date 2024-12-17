@@ -7,7 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-namespace CliRunner.Urls.Abstractions
+namespace UrlRunner.Abstractions
 {
     public interface IUrlConfiguration
     {

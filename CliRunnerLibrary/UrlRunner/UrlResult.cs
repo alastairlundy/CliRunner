@@ -1,5 +1,5 @@
 ﻿/*
-    CliRunner 
+    UrlRunner 
     Copyright (C) 2024  Alastair Lundy
 
     This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,7 +10,7 @@
 using System;
 using CliRunner.Commands;
 
-namespace CliRunner.Urls
+namespace UrlRunner
 {
     /// <summary>
     /// A class to represent a URL being opened as a result of a Command being executed.
