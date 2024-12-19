@@ -11,6 +11,7 @@
  */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Security;
 
 namespace CliRunner.Builders
@@ -38,6 +39,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="domain">The domain to set.</param>
         /// <returns>A new instance of the CredentialsBuilder with the updated domain.</returns>
+        [Pure]
         public CredentialsBuilder SetDomain(string domain) =>
             new CredentialsBuilder()
             {
@@ -52,6 +54,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="username">The username to set.</param>
         /// <returns>A new instance of the CredentialsBuilder with the updated username.</returns>
+        [Pure]
         public CredentialsBuilder SetUsername(string username) =>
             new CredentialsBuilder()
             {
@@ -66,6 +69,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="password">The password to set, as a SecureString.</param>
         /// <returns>A new instance of the CredentialsBuilder with the updated password.</returns>
+        [Pure]
         public CredentialsBuilder SetPassword(SecureString password) =>
             new CredentialsBuilder()
             {
@@ -80,6 +84,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="loadUserProfile">True to load the user profile, false otherwise.</param>
         /// <returns>A new instance of the CredentialsBuilder with the updated load user profile setting.</returns>
+        [Pure]
         public CredentialsBuilder LoadUserProfile(bool loadUserProfile) =>
             new CredentialsBuilder()
             {
@@ -93,6 +98,7 @@ namespace CliRunner.Builders
         /// Builds a new instance of UserCredentials using the current settings.
         /// </summary>
         /// <returns>The built UserCredentials.</returns>
+        [Pure]
         public UserCredentials Build() => 
             new UserCredentials(_domain, _username, _password, _loadUserProfile);
 

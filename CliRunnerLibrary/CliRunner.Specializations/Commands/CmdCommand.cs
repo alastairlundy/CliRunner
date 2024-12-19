@@ -12,6 +12,7 @@ using System.Runtime.Versioning;
 #endif
 
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -70,6 +71,11 @@ namespace CliRunner.Specializations.Commands
             base.TargetFilePath = TargetFilePath;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Pure]
         public static CmdCommand Create()
         {
             return new CmdCommand();

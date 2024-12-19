@@ -235,10 +235,6 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)

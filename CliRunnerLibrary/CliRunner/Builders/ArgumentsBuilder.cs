@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,7 @@ namespace CliRunner.Builders
         /// <param name="value">The string value to append.</param>
         /// <param name="escape">True to escape special characters in the value, false otherwise.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(string value, bool escape)
         {
             _buffer.Append(value);
@@ -68,6 +70,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="value">The string value to append.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(string value)
         {
             return Add(value, false);
@@ -79,6 +82,7 @@ namespace CliRunner.Builders
         /// <param name="values">The collection of string values to append.</param>
         /// <param name="escape">Whether to escape special characters in the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IEnumerable<string> values, bool escape)
         {
             string[] enumerable = values as string[] ?? values.ToArray();
@@ -101,6 +105,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="values">The collection of string values to append.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IEnumerable<string> values)
         {
             return Add(values, false);
@@ -113,6 +118,7 @@ namespace CliRunner.Builders
         /// <param name="formatProvider">The format provider to use for formatting the value.</param>
         /// <param name="escape">Whether to escape special characters in the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IFormattable value, IFormatProvider formatProvider, bool escape = true)
         {
            string val = (string)formatProvider.GetFormat(value.GetType());
@@ -127,6 +133,7 @@ namespace CliRunner.Builders
         /// <param name="cultureInfo">The culture to use for formatting the value.</param>
         /// <param name="escape">Whether to escape special characters in the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo, bool escape)
         {
             return Add(value.ToString((string)cultureInfo.GetFormat(value.GetType()), DefaultFormatProvider), escape);
@@ -138,6 +145,7 @@ namespace CliRunner.Builders
         /// <param name="value">The formattable value to append.</param>
         /// <param name="cultureInfo">The culture to use for formatting the value.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo)
         {
             return Add(value, cultureInfo, false);
@@ -149,6 +157,7 @@ namespace CliRunner.Builders
         /// <param name="value">The formattable value to append.</param>
         /// <param name="escape">Whether to escape special characters in the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IFormattable value, bool escape)
         {
             return Add(value, CultureInfo.CurrentCulture, escape);
@@ -159,6 +168,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="value">The formattable value to append.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IFormattable value)
         {
             return Add(value, false);
@@ -171,6 +181,7 @@ namespace CliRunner.Builders
         /// <param name="formatProvider">The format provider to use for formatting the values.</param>
         /// <param name="escape">Whether to escape special characters in the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escape = true)
         {
             foreach (var val in values)
@@ -197,6 +208,7 @@ namespace CliRunner.Builders
         /// <param name="cultureInfo">The culture to use for formatting the values.</param>
         /// <param name="escape">Whether to escape special characters in the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escape)
         {
             foreach (var val in values)
@@ -220,6 +232,7 @@ namespace CliRunner.Builders
         /// <param name="values">The collection of formattable values to append.</param>
         /// <param name="cultureInfo">The culture to use for formatting the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo)
         {
             return Add(values, cultureInfo, false);
@@ -231,6 +244,7 @@ namespace CliRunner.Builders
         /// <param name="values">The collection of formattable values to append.</param>
         /// <param name="escape">Whether to escape special characters in the values.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values, bool escape)
         {
             return Add(values, CultureInfo.CurrentCulture, escape);
@@ -241,6 +255,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="values">The collection of formattable values to append.</param>
         /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
+        [Pure]
         public ArgumentsBuilder Add(IEnumerable<IFormattable> values)
         {
             return Add(values, false);
@@ -260,6 +275,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="argument">The string to escape.</param>
         /// <returns>The escaped string.</returns>
+        [Pure]
         public static string Escape(string argument)
         {
             return argument.Replace("\\", "\\\\")

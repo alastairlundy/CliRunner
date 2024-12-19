@@ -12,6 +12,7 @@ using System.Runtime.Versioning;
 #endif
 
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,6 +73,7 @@ namespace CliRunner.Specializations.Commands
         /// 
         /// </summary>
         /// <returns></returns>
+        [Pure]
         public static Command Create()
         {
             return new ClassicPowershellCommand();

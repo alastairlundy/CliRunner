@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.Versioning;
 using CliRunner.Builders;
@@ -95,6 +96,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="arguments"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithArguments(IEnumerable<string> arguments) =>
             new Command(TargetFilePath,
                 string.Join(" ", arguments),
@@ -115,6 +117,7 @@ namespace CliRunner.Commands
         /// <param name="arguments"></param>
         /// <param name="escape"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithArguments(IEnumerable<string> arguments, bool escape)
         {
             string args = string.Join(" ", arguments);
@@ -143,6 +146,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="arguments"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithArguments(string arguments)=> 
             new Command(TargetFilePath,
                 arguments,
@@ -162,6 +166,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="targetFilePath"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithTargetFile(string targetFilePath) => 
             new Command(targetFilePath,
             Arguments,
@@ -182,6 +187,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="environmentVariables"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -201,6 +207,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
         {
             var environmentVariablesBuilder = new EnvironmentVariablesBuilder()
@@ -216,6 +223,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="runAsAdministrator"></param>
         /// <returns></returns>
+        [Pure]
         public Command RunAsAdministrator(bool runAsAdministrator) =>
             new Command(TargetFilePath,
             Arguments,
@@ -235,6 +243,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="workingDirectoryPath"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithWorkingDirectory(string workingDirectoryPath) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -255,6 +264,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="credentials"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithCredentials(UserCredentials credentials) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -274,6 +284,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithCredentials(Action<CredentialsBuilder> configure)
         {
             var credentialBuilder = new CredentialsBuilder().SetDomain(Credentials.Domain)
@@ -290,6 +301,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="validation"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithValidation(CommandResultValidation validation) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -309,6 +321,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithStandardInputPipe(StreamWriter source) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -328,6 +341,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithStandardOutputPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -347,6 +361,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithStandardErrorPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -366,6 +381,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="processorAffinity"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithProcessorAffinity(IntPtr processorAffinity) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -385,6 +401,7 @@ namespace CliRunner.Commands
         /// </summary>
         /// <param name="useShellExecute"></param>
         /// <returns></returns>
+        [Pure]
         public Command WithShellExecute(bool useShellExecute) =>
             new Command(TargetFilePath,
                 Arguments,

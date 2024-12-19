@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace CliRunner.Builders
@@ -42,6 +43,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="pairs">The new environment variables to add.</param>
         /// <returns>A dictionary containing the updated environment variables.</returns>
+        [Pure]
         private Dictionary<string, string> AddToExisting(KeyValuePair<string, string>[] pairs)
         {
             Dictionary<string, string> output = new Dictionary<string, string>();
@@ -68,6 +70,7 @@ namespace CliRunner.Builders
         /// <param name="name">The name of the environment variable to set.</param>
         /// <param name="value">The value of the environment variable to set.</param>
         /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
+        [Pure]
         public EnvironmentVariablesBuilder Set(string name, string value)
         {
             Dictionary<string, string> vars = AddToExisting(new KeyValuePair<string, string>[]
@@ -81,6 +84,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="variables">The environment variables to set.</param>
         /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
+        [Pure]
         public EnvironmentVariablesBuilder Set(IEnumerable<KeyValuePair<string, string>> variables)
         {
             Dictionary<string, string> vars = AddToExisting(variables.ToArray());
@@ -93,6 +97,7 @@ namespace CliRunner.Builders
         /// </summary>
         /// <param name="variables">The read-only dictionary of environment variables to set.</param>
         /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
+        [Pure]
         public EnvironmentVariablesBuilder Set(IReadOnlyDictionary<string, string> variables)
         {
             Dictionary<string, string> vars = AddToExisting(variables.ToArray());

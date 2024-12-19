@@ -23,10 +23,7 @@ namespace CliRunner.Commands.Abstractions
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
 #endif
         Process CreateProcess(ProcessStartInfo processStartInfo);
         
@@ -35,10 +32,7 @@ namespace CliRunner.Commands.Abstractions
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("watchos")]
-        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
 #endif
         ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, Encoding encoding = default);
         
