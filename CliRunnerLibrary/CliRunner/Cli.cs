@@ -13,6 +13,7 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+using System.Diagnostics.Contracts;
 using CliRunner.Commands;
 
 namespace CliRunner
@@ -28,7 +29,8 @@ namespace CliRunner
         /// <para>Don't forget to call .ExecuteAsync() or ExecuteBufferedAsync() when you're done!</para>
         /// </remarks>
         /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
-        /// <returns></returns>
+        /// <returns></returns>]
+        [Pure]
         public static Command Run(string targetFilePath) => new Command(targetFilePath);
         
         /// <summary>
@@ -36,6 +38,7 @@ namespace CliRunner
         /// </summary>
         /// <param name="command">The command to wrap</param>
         /// <returns></returns>
+        [Pure]
         public static Command Run(Command command) => new Command(command.TargetFilePath, command.Arguments,
             command.WorkingDirectoryPath, command.RequiresAdministrator, command.EnvironmentVariables,
             command.Credentials, command.ResultValidation, command.StandardInput,
