@@ -8,6 +8,7 @@
    */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,6 +70,16 @@ namespace CliRunner.Specializations.Commands
         public PowershellCommand() : base("")
         {
             base.TargetFilePath = TargetFilePath;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Pure]
+        public static PowershellCommand Create()
+        {
+            return new PowershellCommand();
         }
         
         /// <summary>
