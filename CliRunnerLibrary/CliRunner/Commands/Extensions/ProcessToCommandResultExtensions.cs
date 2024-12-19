@@ -18,6 +18,12 @@ namespace CliRunner.Commands.Extensions
 {
     public static class ProcessToCommandResultExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="process">The exited process to convert to a CommandResult object.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Thrown if a non-exited process is passed as a parameter.</exception>
         public static CommandResult ToCommandResult(this Process process)
         {
             if (process.HasExited == false)
@@ -31,7 +37,7 @@ namespace CliRunner.Commands.Extensions
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="process"></param>
+        /// <param name="process">The exited process to convert to a BufferedCommandResult object.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
         public static async Task<BufferedCommandResult> ToBufferedCommandResultAsync(this Process process)

@@ -12,12 +12,27 @@ using System.Threading.Tasks;
 
 namespace CliRunner.Extensibility
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISpecializedCommandInformation
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task<string> GetInstallLocationAsync();
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task<bool> IsInstalledAsync();
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task<Version> GetInstalledVersionAsync();
     }
 }
