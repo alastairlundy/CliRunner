@@ -25,7 +25,7 @@ namespace CliRunner.Commands.Abstractions
         Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables);
         Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure);
 
-        Command RunAsAdministrator(bool runAsAdministrator);
+        Command WithAdministratorPrivileges(bool runAsAdministrator);
 
         Command WithWorkingDirectory(string workingDirectoryPath);
         Command WithCredentials(UserCredentials credentials);

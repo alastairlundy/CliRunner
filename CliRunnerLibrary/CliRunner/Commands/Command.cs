@@ -224,7 +224,7 @@ namespace CliRunner.Commands
         /// <param name="runAsAdministrator"></param>
         /// <returns></returns>
         [Pure]
-        public Command RunAsAdministrator(bool runAsAdministrator) =>
+        public Command WithAdministratorPrivileges(bool runAsAdministrator) =>
             new Command(TargetFilePath,
             Arguments,
             WorkingDirectoryPath,
