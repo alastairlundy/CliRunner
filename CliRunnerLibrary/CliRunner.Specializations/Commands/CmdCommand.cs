@@ -148,7 +148,6 @@ namespace CliRunner.Specializations.Commands
                var result =  await Cli.Run(this)
                     .WithArguments("--version")
                     .WithWorkingDirectory(Environment.SystemDirectory)
-                    .RunAsAdministrator(false)
                     .ExecuteBufferedAsync();
 
 #if NET5_0_OR_GREATER

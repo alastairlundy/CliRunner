@@ -164,7 +164,6 @@ namespace CliRunner.Specializations.Commands
             {
                 var result = await Cli.Run(this)
                     .WithArguments("$PSVersionTable")
-                    .RunAsAdministrator(false)
                     .ExecuteBufferedAsync();
                
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
