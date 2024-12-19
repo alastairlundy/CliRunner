@@ -43,6 +43,16 @@ namespace CliRunner.Specializations.Commands
     public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
     {
 
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public new string TargetFilePath
         {
             get

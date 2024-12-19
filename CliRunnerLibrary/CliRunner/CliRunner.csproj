@@ -12,34 +12,19 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.3.0
+        <PackageReleaseNotes>## Changes since 0.4.0
 
 ### Additions
-* Added xml doc comments to ``ArgumentsBuilder``, ``CredentialsBuilder``, and ``EnvironmentVariablesBuilder``  builder classes
-* Added xml doc comments to ``CommandResultValidation``, ``CommandResult``, ``CommandPiping``, and ``BufferedCommandResult`` classes.
-* Added .NET 9 TFM to CliRunner
-* Added .NET Standard 2.0 support to CliRunner.Specializations library
-
+* Added guarding of some features to prevent use on unsupported platforms
 
 ### General Changes
-* Renamed Command class' ``RequiresAdministrator`` method to ``RunAsAdministrator``
-* Renamed Command class' ``RunAsAdministrator`` property to ``RequiresAdministrator``
-* Implement IDisposable in ``CredentialsBuilder``
-* Enhanced ``CommandNotSuccessfulException`` exception information.
-* Removed code that prevented an Exception being thrown when ``UseShellExecute`` was set to true and ``StandardInput`` was not set to Null - This is intended behaviour by .NET and the workaround is being removed
-
-
-### Removals
-* Removed ``UrlRunner`` and ``IUrlRunner`` - URL Opening code is being moved to a separate library that'll be published later.
-
-
-### Bug FIxes
-* Fixed an issue where the wrong localization string was used when throwing an exception
-* Fixed an issue where argument escaping was ignored in a builder method with the ``escape`` bool paramter.</PackageReleaseNotes>
+* Marked ``Command``, ``ArgumentsBuilder``, ``CredentialsBuilder`` and ``EnvironmentsBuilder`` fluent methods as ``[Pure]``
+* Renamed ``RunAsAdministrator`` fluent method to ``WithAdministratorPrivileges``
+* Renamed ``WithShellExecute`` fluent method to ``WithShellExecution``</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.4.0</PackageVersion>
+        <PackageVersion>0.5.0</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>

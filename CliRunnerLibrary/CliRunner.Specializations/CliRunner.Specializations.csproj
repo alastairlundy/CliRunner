@@ -10,14 +10,15 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.4.0</PackageVersion>
+        <PackageVersion>0.5.0</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>### Changes since 0.3.0
-* Updated CliRunner dependency to 0.4.0</PackageReleaseNotes>
+        <PackageReleaseNotes>### Changes since 0.4.0
+* Updated CliRunner dependency to 0.5.0
+* Added a missing ``Create`` static method to ``PowershellCommand`` class.</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
     </PropertyGroup>
 
@@ -31,7 +32,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <PackageReference Include="CliRunner" Version="[0.4.0, 1.0.0)" />
+      <PackageReference Include="CliRunner" Version="[0.5.0, 1.0.0)" />
     </ItemGroup>
 
     <ItemGroup>
