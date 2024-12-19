@@ -402,7 +402,7 @@ namespace CliRunner.Commands
         /// <param name="useShellExecute"></param>
         /// <returns></returns>
         [Pure]
-        public Command WithShellExecute(bool useShellExecute) =>
+        public Command WithShellExecution(bool useShellExecute) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
