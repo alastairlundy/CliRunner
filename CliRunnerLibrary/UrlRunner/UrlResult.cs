@@ -24,7 +24,7 @@ namespace UrlRunner
         /// <param name="startTime"></param>
         /// <param name="exitTime"></param>
         /// <param name="openedUrl"></param>
-        public UrlResult(int exitCode, DateTime startTime, DateTime exitTime, Url openedUrl) : base(exitCode, startTime, exitTime)
+        public UrlResult(int exitCode, DateTime startTime, DateTime exitTime, string openedUrl) : base(exitCode, startTime, exitTime)
         {
             OpenedUrl = openedUrl;
         }
@@ -32,6 +32,6 @@ namespace UrlRunner
         /// <summary>
         /// The URL that was opened.
         /// </summary>
-        public Url OpenedUrl { get; protected set; }
+        public string OpenedUrl { get; protected set; }
     }
 }
