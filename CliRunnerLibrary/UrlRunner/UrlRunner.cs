@@ -28,11 +28,10 @@ namespace UrlRunner
 
     public partial class Url : IUrlRunner
     {
-
-
         /// <summary>
         /// Asynchronously opens the Url in the default browser.
         /// </summary>
+        /// <param name="uri"></param>
         /// <remarks>Some code contained in this method is courtesy of https://github.com/dotnet/corefx/issues/10361</remarks>
         /// <returns></returns>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on a platform besides Windows, macOS, FreeBSD, or Linux.</exception>
@@ -47,7 +46,7 @@ namespace UrlRunner
         [UnsupportedOSPlatform("ios")]
         [UnsupportedOSPlatform("android")]
 #endif
-        public async Task<UrlResult> OpenWithDefaultBrowserAsync()
+        public async Task<UrlResult> OpenWithDefaultBrowserAsync(Uri uri)
         {
             CommandResult result;
 
