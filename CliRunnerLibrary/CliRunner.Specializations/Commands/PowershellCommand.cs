@@ -130,7 +130,7 @@ namespace CliRunner.Specializations.Commands
                      }
                  }
 
-                 var result = await Cli.Run(CmdCommand.Run())
+                 var result = await CmdCommand.Run()
                      .WithArguments("where pwsh.exe")
                      .ExecuteBufferedAsync();
                  
@@ -186,7 +186,7 @@ namespace CliRunner.Specializations.Commands
                 
                 if (OperatingSystem.IsWindows())
                 {
-                     result = await Cli.Run(CmdCommand.Run())
+                     result = await CmdCommand.Run()
                         .WithArguments("where pwsh.exe")
                         .ExecuteBufferedAsync();
                 }
