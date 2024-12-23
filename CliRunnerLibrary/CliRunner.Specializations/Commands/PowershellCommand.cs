@@ -77,7 +77,7 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns></returns>
         [Pure]
-        public static PowershellCommand Create()
+        public static PowershellCommand Run()
         {
             return new PowershellCommand();
         }
@@ -130,7 +130,7 @@ namespace CliRunner.Specializations.Commands
                      }
                  }
 
-                 var result = await Cli.Run(CmdCommand.Create())
+                 var result = await Cli.Run(CmdCommand.Run())
                      .WithArguments("where pwsh.exe")
                      .ExecuteBufferedAsync();
                  
@@ -186,7 +186,7 @@ namespace CliRunner.Specializations.Commands
                 
                 if (OperatingSystem.IsWindows())
                 {
-                     result = await Cli.Run(CmdCommand.Create())
+                     result = await Cli.Run(CmdCommand.Run())
                         .WithArguments("where pwsh.exe")
                         .ExecuteBufferedAsync();
                 }

@@ -82,9 +82,10 @@ namespace CliRunner.Specializations.Commands
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="arguments"></param>
         /// <returns></returns>
         [Pure]
-        public static Command Create()
+        public static ClassicPowershellCommand Run()
         {
             return new ClassicPowershellCommand();
         }

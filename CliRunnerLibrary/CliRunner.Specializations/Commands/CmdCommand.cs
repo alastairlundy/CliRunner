@@ -76,7 +76,7 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns></returns>
         [Pure]
-        public static CmdCommand Create()
+        public static CmdCommand Run()
         {
             return new CmdCommand();
         }
