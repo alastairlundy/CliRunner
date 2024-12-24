@@ -19,18 +19,20 @@ using CliRunner.Commands;
 
 namespace CliRunner
 {
+    /// <summary>
+    /// A static class to make creating a new Command object in a more pretty fashion.
+    /// </summary>
     public static class Cli
     {
         /// <summary>
-        /// Builds a Command
         /// Creates a Command object with the specified target file path. 
         /// </summary>
         /// <remarks>
-        /// <para>Chain appropriate Command methods as needed such as WithArguments("[your args]") and WithWorkingDirectory("[your directory]").</para>
-        /// <para>Don't forget to call .ExecuteAsync() or ExecuteBufferedAsync() when you're done!</para>
+        /// <para>Chain appropriate Command methods as needed such as <code>.WithArguments("[your args]")</code> and <code>.WithWorkingDirectory("[your directory]")</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
         /// </remarks>
         /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
-        /// <returns></returns>]
+        /// <returns>A new Command object with the configured Target File Path.</returns>]
         [Pure]
         public static Command Run(string targetFilePath) => new Command(targetFilePath);
         
@@ -38,7 +40,11 @@ namespace CliRunner
         /// Used to wrap an existing Command object when a modified version is desired.
         /// </summary>
         /// <param name="command">The command to wrap</param>
-        /// <returns></returns>
+        /// <returns>A new Command object with the configured Command information passed to it.</returns>
+        /// <remarks>
+        /// <para>Chain appropriate Command methods as needed such as <code>WithArguments("[your args]");</code> and <code>WithWorkingDirectory("[your directory]");</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
+        /// </remarks>
         [Pure]
         public static Command Run(Command command) => new Command(command.TargetFilePath, command.Arguments,
             command.WorkingDirectoryPath, command.RequiresAdministrator, command.EnvironmentVariables,
