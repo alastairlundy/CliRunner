@@ -206,6 +206,7 @@ namespace CliRunner.Commands
                 throw new CommandNotSuccesfulException(process.ExitCode, this);
             }
             
+            // Wait for process to exit before redirecting Standard Output and Standard Error.
             if (process.StartInfo.RedirectStandardOutput == true)
             {
                 await PipeStandardOutputAsync(process);
@@ -268,6 +269,7 @@ namespace CliRunner.Commands
             }
             
 
+            // Wait for Process to exit before Redirecting Standard Output and Standard Error.
             if (process.StartInfo.RedirectStandardOutput == true)
             {
                 await PipeStandardOutputAsync(process);
