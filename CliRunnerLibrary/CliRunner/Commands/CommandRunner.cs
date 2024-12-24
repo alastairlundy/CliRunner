@@ -88,7 +88,6 @@ namespace CliRunner.Commands
             {
                 FileName = TargetFilePath,
                 WorkingDirectory = WorkingDirectoryPath,
-                UseShellExecute = false,
                 UseShellExecute = UseShellExecution,
                 CreateNoWindow = createNoWindow,
                 RedirectStandardInput = redirectStandardInput,
