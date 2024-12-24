@@ -22,7 +22,7 @@ namespace CliRunner.Extensibility
         {
             
         }
-
+        
         public static Command Run(string targetFilePath) => new Command(targetFilePath);
         
         public abstract Task<string> GetInstallLocationAsync();

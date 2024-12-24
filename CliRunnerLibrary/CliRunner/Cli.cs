@@ -14,6 +14,7 @@
  */
 
 using System.Diagnostics.Contracts;
+
 using CliRunner.Commands;
 
 namespace CliRunner
