@@ -49,6 +49,9 @@ namespace CliRunner.Commands
         public StreamReader StandardOutput { get; protected set; }
         public StreamReader StandardError { get; protected set; }
         
+        /// <summary>
+        /// The processor threads to be used for executing the Command.
+        /// </summary>
 #if NET6_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -63,20 +66,21 @@ namespace CliRunner.Commands
         public bool UseShellExecution { get; protected set; }
 
         /// <summary>
-        /// 
+        /// Configures the Command to be wrapped and executed.
         /// </summary>
-        /// <param name="targetFilePath"></param>
-        /// <param name="arguments"></param>
-        /// <param name="workingDirectoryPath"></param>
-        /// <param name="runAsAdministrator"></param>
-        /// <param name="environmentVariables"></param>
-        /// <param name="credentials"></param>
-        /// <param name="commandResultValidation"></param>
-        /// <param name="standardInput"></param>
-        /// <param name="standardOutput"></param>
-        /// <param name="standardError"></param>
-        /// <param name="processorAffinity"></param>
-        /// <param name="useShellExecute"></param>
+        /// <param name="targetFilePath">The target file path of the command to be executed.</param>
+        /// <param name="arguments">The arguments to pass to the Command upon execution.</param>
+        /// <param name="workingDirectoryPath">The working directory to be used.</param>
+        /// <param name="runAsAdministrator">Whether to run the Command with Administrator Privileges.</param>
+        /// <param name="environmentVariables">The environment variables to be set (if specified).</param>
+        /// <param name="credentials">The credentials to be used (if specified).</param>
+        /// <param name="commandResultValidation">Enables or disables Result Validation and exception throwing if the task exits unsuccessfully.</param>
+        /// <param name="standardInput">The standard input source to be used (if specified).</param>
+        /// <param name="standardOutput">The standard output destination to be used (if specified).</param>
+        /// <param name="standardError">The standard error destination to be used (if specified).</param>
+        /// <param name="processorAffinity">The processor affinity to be used (if specified).</param>
+        /// <param name="windowCreation">Whether to enable or disable Window Creation by the Command's Process.</param>
+        /// <param name="useShellExecute">Whether to enable or disable executing the Command through Shell Execution.</param>
         public Command(string targetFilePath,
              string arguments = null, string workingDirectoryPath = null,
              bool runAsAdministrator = false,
@@ -263,10 +267,10 @@ namespace CliRunner.Commands
             UseShellExecution);
         
         /// <summary>
-        /// 
+        /// Sets the working directory to be used for the Command.
         /// </summary>
-        /// <param name="workingDirectoryPath"></param>
-        /// <returns></returns>
+        /// <param name="workingDirectoryPath">The working directory to be used.</param>
+        /// <returns>The new Command with the specified working directory.</returns>
         [Pure]
         public Command WithWorkingDirectory(string workingDirectoryPath) =>
             new Command(TargetFilePath,
@@ -313,11 +317,18 @@ namespace CliRunner.Commands
                 UseShellExecution);
 
         /// <summary>
-        /// 
+        /// Sets the credentials for the Command to be executed.
         /// </summary>
-        /// <param name="configure"></param>
-        /// <returns></returns>
+        /// <param name="configure">The CredentialsBuilder configuration.</param>
+        /// <returns>The new Command with the specified Credentials.</returns>
+        /// <remarks>Credentials are only supported with the Process class on Windows.</remarks>
         [Pure]
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("freebsd")]
+#endif
         public Command WithCredentials(Action<CredentialsBuilder> configure)
         {
             var credentialBuilder = new CredentialsBuilder().SetDomain(Credentials.Domain)
@@ -351,10 +362,12 @@ namespace CliRunner.Commands
                 UseShellExecution);
         
         /// <summary>
-        /// 
+        /// Sets the Standard Input Pipe source.
         /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
+        /// <param name="source">The source to use for the Standard Input pipe.</param>
+        /// <returns>The new Command with the specified Standard Input pipe source.</returns>
+        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
         [Pure]
         public Command WithStandardInputPipe(StreamWriter source) =>
             new Command(TargetFilePath,
