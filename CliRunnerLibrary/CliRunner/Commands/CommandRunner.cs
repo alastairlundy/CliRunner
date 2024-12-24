@@ -13,6 +13,7 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -153,7 +154,7 @@ namespace CliRunner.Commands
 
             if (EnvironmentVariables != null)
             {
-                foreach (var variable in EnvironmentVariables)
+                foreach (KeyValuePair<string, string> variable in EnvironmentVariables)
                 {
                     if (variable.Value != null)
                     {
@@ -285,7 +286,6 @@ namespace CliRunner.Commands
             {
                 throw new CommandNotSuccesfulException(process.ExitCode, this);
             }
-            
 
             // Wait for Process to exit before Redirecting Standard Output and Standard Error.
             if (process.StartInfo.RedirectStandardOutput == true)
