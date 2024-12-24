@@ -19,10 +19,10 @@ namespace CliRunner.Commands.Extensions
     public static class ProcessToCommandResultExtensions
     {
         /// <summary>
-        /// 
+        /// Converts an exited process object to a CommandResult.
         /// </summary>
         /// <param name="process">The exited process to convert to a CommandResult object.</param>
-        /// <returns></returns>
+        /// <returns>The resulting CommandResult</returns>
         /// <exception cref="ArgumentException">Thrown if a non-exited process is passed as a parameter.</exception>
         public static CommandResult ToCommandResult(this Process process)
         {
@@ -35,11 +35,11 @@ namespace CliRunner.Commands.Extensions
         }
         
         /// <summary>
-        /// 
+        /// Asynchronously converts an exited process to a BufferedCommandResult.
         /// </summary>
         /// <param name="process">The exited process to convert to a BufferedCommandResult object.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <returns>The resulting BufferedCommandResult as a Task.</returns>
+        /// <exception cref="ArgumentException">Thrown if a non-exited process is passed as a parameter.</exception>
         public static async Task<BufferedCommandResult> ToBufferedCommandResultAsync(this Process process)
         {
             if (process.HasExited == false)
