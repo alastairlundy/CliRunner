@@ -26,9 +26,24 @@ namespace CliRunner.Commands
 {
     public partial class Command : ICommandConfiguration, ICommandConfigurationBuilder
     {
+        /// <summary>
+        /// Whether administrator privileges are required when executing the Command.
+        /// </summary>
         public bool RequiresAdministrator { get; protected set; }
+        
+        /// <summary>
+        /// The file path of the executable to be run and wrapped.
+        /// </summary>
         public string TargetFilePath { get; protected set; }
+        
+        /// <summary>
+        /// The working directory path to be used when executing the Command.
+        /// </summary>
         public string WorkingDirectoryPath { get; protected set; }
+        
+        /// <summary>
+        /// The arguments to be provided to the executable to be run.
+        /// </summary>
         public string Arguments { get; protected set; }
         
         /// <summary>
@@ -37,16 +52,32 @@ namespace CliRunner.Commands
         public bool WindowCreation { get; protected set; }
         
         public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
+        
+        /// <summary>
+        /// The credentials to be used when executing the executable.
+        /// </summary>
         public UserCredentials Credentials { get; protected set; }
+        
+        /// <summary>
+        /// The result validation to apply to the Command when it is executed.
+        /// </summary>
         public CommandResultValidation ResultValidation { get; protected set;}
         
         /// <summary>
-        /// The piped Standard Input
+        /// The piped Standard Input.
         /// </summary>
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public StreamWriter StandardInput { get; protected set; }
+        
+        /// <summary>
+        /// The piped Standard Output.
+        /// </summary>
         public StreamReader StandardOutput { get; protected set; }
+        
+        /// <summary>
+        /// The piped Standard Error.
+        /// </summary>
         public StreamReader StandardError { get; protected set; }
         
         /// <summary>
@@ -118,10 +149,10 @@ namespace CliRunner.Commands
         }
         
         /// <summary>
-        /// 
+        /// Sets the arguments to pass to the executable.
         /// </summary>
-        /// <param name="arguments"></param>
-        /// <returns></returns>
+        /// <param name="arguments">The arguments to pass to the executable.</param>
+        /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
         public Command WithArguments(IEnumerable<string> arguments) =>
             new Command(TargetFilePath,
@@ -139,11 +170,11 @@ namespace CliRunner.Commands
                 UseShellExecution);
 
         /// <summary>
-        /// 
+        /// Sets the arguments to pass to the executable.
         /// </summary>
-        /// <param name="arguments"></param>
-        /// <param name="escape"></param>
-        /// <returns></returns>
+        /// <param name="arguments">The arguments to pass to the executable.</param>
+        /// <param name="escape">Whether to escape the arguments if escape characters are detected.</param>
+        /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
         public Command WithArguments(IEnumerable<string> arguments, bool escape)
         {
@@ -170,12 +201,12 @@ namespace CliRunner.Commands
         }
         
         /// <summary>
-        /// 
+        /// Sets the arguments to pass to the executable.
         /// </summary>
-        /// <param name="arguments"></param>
-        /// <returns></returns>
+        /// <param name="arguments">The arguments to pass to the executable.</param>
+        /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
-        public Command WithArguments(string arguments)=> 
+        public Command WithArguments(string arguments) => 
             new Command(TargetFilePath,
                 arguments,
                 WorkingDirectoryPath,
@@ -215,7 +246,7 @@ namespace CliRunner.Commands
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="environmentVariables"></param>
+        /// <param name="environmentVariables">The environment variables to be configured.</param>
         /// <returns></returns>
         [Pure]
         public Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
@@ -234,9 +265,9 @@ namespace CliRunner.Commands
                 UseShellExecution);
 
         /// <summary>
-        /// 
+        /// Sets the environment variables for the Command to be executed.
         /// </summary>
-        /// <param name="configure"></param>
+        /// <param name="configure">The environment variables to be configured</param>
         /// <returns></returns>
         [Pure]
         public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
