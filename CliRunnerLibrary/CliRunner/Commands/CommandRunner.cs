@@ -162,7 +162,7 @@ namespace CliRunner.Commands
                 }
             }
             
-            output.UseShellExecute = UseShellExecute;
+            output.UseShellExecute = UseShellExecution;
 
             if (redirectStandardInput)
             {
@@ -194,9 +194,9 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false));
             
-            if (UseShellExecute == true && process.StartInfo.RedirectStandardInput == true)
+            if (UseShellExecution == true && process.StartInfo.RedirectStandardInput == true)
             {
-                UseShellExecute = false;
+                UseShellExecution = false;
             }
             
             if (process.StartInfo.RedirectStandardInput == true)

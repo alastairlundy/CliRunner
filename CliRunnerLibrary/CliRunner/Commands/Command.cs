@@ -44,7 +44,7 @@ namespace CliRunner.Commands
 #endif
         public IntPtr ProcessorAffinity { get; protected set; }
         
-        public bool UseShellExecute { get; protected set; }
+        public bool UseShellExecution { get; protected set; }
 
         /// <summary>
         /// 
@@ -88,7 +88,7 @@ namespace CliRunner.Commands
             StandardError = standardError ?? StreamReader.Null;
             
             ProcessorAffinity = processorAffinity;
-            UseShellExecute = useShellExecute;
+            UseShellExecution = useShellExecute;
         }
         
         /// <summary>
@@ -109,7 +109,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
 
         /// <summary>
         /// 
@@ -138,7 +138,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         }
         
         /// <summary>
@@ -159,7 +159,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         
         /// <summary>
         /// 
@@ -179,7 +179,7 @@ namespace CliRunner.Commands
             StandardOutput,
             StandardError,
             ProcessorAffinity,
-            UseShellExecute);
+            UseShellExecution);
         
         
         /// <summary>
@@ -200,7 +200,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
 
         /// <summary>
         /// 
@@ -236,7 +236,7 @@ namespace CliRunner.Commands
             StandardOutput,
             StandardError,
             ProcessorAffinity,
-            UseShellExecute);
+            UseShellExecution);
         
         /// <summary>
         /// 
@@ -256,7 +256,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         
         
         /// <summary>
@@ -277,7 +277,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
 
         /// <summary>
         /// 
@@ -314,7 +314,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         
         /// <summary>
         /// 
@@ -334,7 +334,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         
         /// <summary>
         /// 
@@ -354,7 +354,7 @@ namespace CliRunner.Commands
                 target,
                 StandardError,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         
         /// <summary>
         /// 
@@ -374,7 +374,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 target,
                 ProcessorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         
         /// <summary>
         /// 
@@ -394,7 +394,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 processorAffinity,
-                UseShellExecute);
+                UseShellExecution);
         
         /// <summary>
         /// 
@@ -402,7 +402,7 @@ namespace CliRunner.Commands
         /// <param name="useShellExecute"></param>
         /// <returns></returns>
         [Pure]
-        public Command WithShellExecution(bool useShellExecute) =>
+        public Command WithShellExecution(bool useShellExecution) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -414,6 +414,6 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                useShellExecute);
+                useShellExecution);
     }
 }
