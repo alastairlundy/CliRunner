@@ -162,9 +162,7 @@ namespace CliRunner.Commands
                 }
             }
             
-            output.UseShellExecute = UseShellExecution;
-
-            if (redirectStandardInput)
+            if (redirectStandardInput == true)
             {
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
                 output.StandardInputEncoding = Encoding.Default;
