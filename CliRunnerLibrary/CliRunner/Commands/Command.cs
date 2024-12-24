@@ -90,7 +90,11 @@ namespace CliRunner.Commands
              StreamWriter standardInput = null,
              StreamReader standardOutput = null,
              StreamReader standardError = null,
+#if NET6_0_OR_GREATER
+             IntPtr processorAffinity = 0,
+#else
              IntPtr processorAffinity = default(IntPtr),
+#endif             
              bool windowCreation = false,
              bool useShellExecute = false
         )
