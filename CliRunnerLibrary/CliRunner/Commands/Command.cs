@@ -34,6 +34,11 @@ namespace CliRunner.Commands
         public UserCredentials Credentials { get; protected set; }
         public CommandResultValidation ResultValidation { get; protected set;}
         
+        /// <summary>
+        /// The piped Standard Input
+        /// </summary>
+        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public StreamWriter StandardInput { get; protected set; }
         public StreamReader StandardOutput { get; protected set; }
         public StreamReader StandardError { get; protected set; }
@@ -44,6 +49,11 @@ namespace CliRunner.Commands
 #endif
         public IntPtr ProcessorAffinity { get; protected set; }
         
+        /// <summary>
+        /// Whether to use Shell Execution or not.
+        /// </summary>
+        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public bool UseShellExecution { get; protected set; }
 
         /// <summary>
@@ -260,11 +270,18 @@ namespace CliRunner.Commands
         
         
         /// <summary>
-        /// 
+        /// Sets the specified Credentials to be used.
         /// </summary>
-        /// <param name="credentials"></param>
-        /// <returns></returns>
+        /// <param name="credentials">The credentials to be used.</param>
+        /// <returns>The new Command with the specified Credentials.</returns>
+        /// <remarks>Credentials are only supported with the Process class on Windows.</remarks>
         [Pure]
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("freebsd")]
+#endif
         public Command WithCredentials(UserCredentials credentials) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -377,11 +394,22 @@ namespace CliRunner.Commands
                 UseShellExecution);
         
         /// <summary>
-        /// 
+        /// Sets the Processor Affinity for this command.
         /// </summary>
-        /// <param name="processorAffinity"></param>
-        /// <returns></returns>
+        /// <param name="processorAffinity">The processor affinity to use.</param>
+        /// <returns>The new Command with the specified Processor Affinity.</returns>
         [Pure]
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("freebsd")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
         public Command WithProcessorAffinity(IntPtr processorAffinity) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -397,10 +425,12 @@ namespace CliRunner.Commands
                 UseShellExecution);
         
         /// <summary>
-        /// 
+        /// Enables or disables command execution via Shell Execution.
         /// </summary>
-        /// <param name="useShellExecute"></param>
-        /// <returns></returns>
+        /// <param name="useShellExecution">Whether to enable or disable shell execution.</param>
+        /// <returns>The new Command with the specified shell execution behaviour.</returns>
+        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
         [Pure]
         public Command WithShellExecution(bool useShellExecution) =>
             new Command(TargetFilePath,
