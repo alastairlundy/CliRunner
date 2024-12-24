@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.Versioning;
+
 using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
 
@@ -29,6 +30,11 @@ namespace CliRunner.Commands
         public string TargetFilePath { get; protected set; }
         public string WorkingDirectoryPath { get; protected set; }
         public string Arguments { get; protected set; }
+        
+        /// <summary>
+        /// Whether to enable window creation or not when the Command's Process is run.
+        /// </summary>
+        public bool WindowCreation { get; protected set; }
         
         public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
         public UserCredentials Credentials { get; protected set; }
@@ -81,6 +87,7 @@ namespace CliRunner.Commands
              StreamReader standardOutput = null,
              StreamReader standardError = null,
              IntPtr processorAffinity = default(IntPtr),
+             bool windowCreation = false,
              bool useShellExecute = false
         )
         {
@@ -99,6 +106,7 @@ namespace CliRunner.Commands
             
             ProcessorAffinity = processorAffinity;
             UseShellExecution = useShellExecute;
+            WindowCreation = windowCreation;
         }
         
         /// <summary>
@@ -119,6 +127,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
 
         /// <summary>
@@ -148,6 +157,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
         }
         
@@ -169,6 +179,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
         
         /// <summary>
@@ -189,6 +200,7 @@ namespace CliRunner.Commands
             StandardOutput,
             StandardError,
             ProcessorAffinity,
+            WindowCreation,
             UseShellExecution);
         
         
@@ -210,6 +222,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
 
         /// <summary>
@@ -246,6 +259,7 @@ namespace CliRunner.Commands
             StandardOutput,
             StandardError,
             ProcessorAffinity,
+            WindowCreation,
             UseShellExecution);
         
         /// <summary>
@@ -266,6 +280,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
         
         
@@ -294,6 +309,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
 
         /// <summary>
@@ -331,6 +347,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
         
         /// <summary>
@@ -351,6 +368,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
         
         /// <summary>
@@ -371,6 +389,7 @@ namespace CliRunner.Commands
                 target,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
         
         /// <summary>
@@ -391,6 +410,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 target,
                 ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
         
         /// <summary>
@@ -422,6 +442,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 processorAffinity,
+                WindowCreation,
                 UseShellExecution);
         
         /// <summary>
@@ -444,6 +465,22 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
+                WindowCreation,
+                useShellExecution);
+        
+        public Command WithWindowCreation(bool useShellExecution) =>
+            new Command(TargetFilePath,
+                Arguments,
+                WorkingDirectoryPath,
+                RequiresAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                ResultValidation,
+                StandardInput,
+                StandardOutput,
+                StandardError,
+                ProcessorAffinity,
+                WindowCreation,
                 useShellExecution);
     }
 }

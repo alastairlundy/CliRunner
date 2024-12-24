@@ -82,14 +82,15 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("macos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, Encoding encoding = default)
+        public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default)
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
                 FileName = TargetFilePath,
                 WorkingDirectory = WorkingDirectoryPath,
                 UseShellExecute = false,
-                CreateNoWindow = false,
+                UseShellExecute = UseShellExecution,
+                CreateNoWindow = createNoWindow,
                 RedirectStandardInput = redirectStandardInput,
                 RedirectStandardOutput = redirectStandardOutput,
                 RedirectStandardError = redirectStandardError,
@@ -192,7 +193,7 @@ namespace CliRunner.Commands
         public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(
-                CreateStartInfo(false, false, false));
+                CreateStartInfo(false, false, false, WindowCreation));
             
             if (process.StartInfo.RedirectStandardInput == true)
             {
@@ -253,7 +254,7 @@ namespace CliRunner.Commands
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(
-                CreateStartInfo(StandardInput != null, true, true, encoding));
+                CreateStartInfo(StandardInput != null, true, true, WindowCreation, encoding));
             
             if (process.StartInfo.RedirectStandardInput == true)
             {

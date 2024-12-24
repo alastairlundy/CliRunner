@@ -36,6 +36,6 @@ namespace CliRunner.Commands.Abstractions
         Command WithStandardErrorPipe(StreamReader target);
         Command WithProcessorAffinity(IntPtr processorAffinity);
         Command WithShellExecution(bool useShellExecute);
-
+        Command WithWindowCreation(bool useWindowCreation);
     }
 }

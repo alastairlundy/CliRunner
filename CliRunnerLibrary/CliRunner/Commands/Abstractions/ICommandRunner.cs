@@ -34,9 +34,11 @@ namespace CliRunner.Commands.Abstractions
         [SupportedOSPlatform("freebsd")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, Encoding encoding = default);
+        ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default);
         
         Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default);
+        Task<CommandResult> ExecuteAsync(Encoding encoding, CancellationToken cancellationToken = default);
+
         
         Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default);
         Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default);
