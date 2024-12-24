@@ -194,11 +194,6 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false));
             
-            if (UseShellExecution == true && process.StartInfo.RedirectStandardInput == true)
-            {
-                UseShellExecution = false;
-            }
-            
             if (process.StartInfo.RedirectStandardInput == true)
             {
                 await PipeStandardInputAsync(process);
