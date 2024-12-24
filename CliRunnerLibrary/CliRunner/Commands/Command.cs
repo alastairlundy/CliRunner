@@ -51,6 +51,9 @@ namespace CliRunner.Commands
         /// </summary>
         public bool WindowCreation { get; protected set; }
         
+        /// <summary>
+        /// The environment variables to be set.
+        /// </summary>
         public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
         
         /// <summary>
@@ -244,10 +247,10 @@ namespace CliRunner.Commands
         
         
         /// <summary>
-        /// 
+        /// Sets the environment variables to be configured.
         /// </summary>
         /// <param name="environmentVariables">The environment variables to be configured.</param>
-        /// <returns></returns>
+        /// <returns>The new Command with the specified environment variables.</returns>
         [Pure]
         public Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
             new Command(TargetFilePath,
@@ -268,7 +271,7 @@ namespace CliRunner.Commands
         /// Sets the environment variables for the Command to be executed.
         /// </summary>
         /// <param name="configure">The environment variables to be configured</param>
-        /// <returns></returns>
+        /// <returns>The new Command with the specified environment variables.</returns>
         [Pure]
         public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
         {
@@ -281,10 +284,10 @@ namespace CliRunner.Commands
         }
         
         /// <summary>
-        /// 
+        /// Sets whether to execute the Command with Administrator Privileges.
         /// </summary>
-        /// <param name="runAsAdministrator"></param>
-        /// <returns></returns>
+        /// <param name="runAsAdministrator">Whether to execute the Command with Administrator Privileges.</param>
+        /// <returns>The new Command with the specified Administrator Privileges settings.</returns>
         [Pure]
         public Command WithAdministratorPrivileges(bool runAsAdministrator) =>
             new Command(TargetFilePath,
@@ -376,7 +379,7 @@ namespace CliRunner.Commands
         }
 
         /// <summary>
-        /// 
+        /// Sets the Result Validation whether to throw an exception or not if the Command does not execute successfully.
         /// </summary>
         /// <param name="validation"></param>
         /// <returns></returns>
