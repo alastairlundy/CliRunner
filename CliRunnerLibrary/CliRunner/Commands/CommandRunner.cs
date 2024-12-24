@@ -189,6 +189,24 @@ namespace CliRunner.Commands
 #endif
         public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
         {
+            return await ExecuteAsync(Encoding.Default, cancellationToken);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="encoding"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
+        public async Task<CommandResult> ExecuteAsync(Encoding encoding, CancellationToken cancellationToken = default)
+        {
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false, WindowCreation));
             
