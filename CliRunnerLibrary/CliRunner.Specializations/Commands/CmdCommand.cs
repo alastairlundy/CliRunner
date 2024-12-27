@@ -14,12 +14,14 @@ using System.Runtime.Versioning;
 using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 using CliRunner.Commands;
 using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
 using CliRunner.Specializations.Internal.Localizations;
+// ReSharper disable MemberCanBePrivate.Global
 
 // ReSharper disable RedundantBoolCompare
 
@@ -48,6 +50,10 @@ namespace CliRunner.Specializations.Commands
 #endif
     public class CmdCommand : Command, ISpecializedCommandInformation
     {
+        /// <summary>
+        /// The target file path of Cmd.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException">Thrown if not run on a Windows based operating system.</exception>
         public new string TargetFilePath
         {
             get
@@ -59,6 +65,9 @@ namespace CliRunner.Specializations.Commands
             }
         }
         
+        /// <summary>
+        /// Sets up the CmdCommand class.
+        /// </summary>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [UnsupportedOSPlatform("macos")]
@@ -75,9 +84,9 @@ namespace CliRunner.Specializations.Commands
         }
 
         /// <summary>
-        /// 
+        /// Creates a new instance of the CmdCommand class.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The new CmdCommand instance.</returns>
         [Pure]
         public static CmdCommand Run()
         {
@@ -85,10 +94,11 @@ namespace CliRunner.Specializations.Commands
         }
         
         /// <summary>
-        /// 
+        /// Asynchronously gets the installation location of CMD, if it is installed.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <returns>The file path where CMD is installed if run on Windows.</returns>
+        /// <exception cref="ArgumentException">Thrown if CMD is not found on the current system.</exception>
+        /// <exception cref="PlatformNotSupportedException">Thrown if CMD is run on a non Windows based operating system.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [UnsupportedOSPlatform("macos")]
@@ -116,9 +126,9 @@ namespace CliRunner.Specializations.Commands
         }
 
         /// <summary>
-        /// 
+        /// Asynchronously returns whether CMD is installed on the current system.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A task that returns true if cmd.exe exists on Windows; returns false otherwise.</returns>
         public Task<bool> IsInstalledAsync()
         {
             if (OperatingSystem.IsWindows() == false)
@@ -130,10 +140,10 @@ namespace CliRunner.Specializations.Commands
         }
 
         /// <summary>
-        /// 
+        /// Asynchronously returns the installed version of CMD if the current OS is Windows.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="PlatformNotSupportedException"></exception>
+        /// <returns>The installed version of CMD if the current operating system is Windows based.</returns>
+        /// <exception cref="PlatformNotSupportedException">Thrown if run on an operating system that isn't based on Windows.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [UnsupportedOSPlatform("macos")]
