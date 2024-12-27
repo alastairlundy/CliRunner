@@ -222,15 +222,15 @@ namespace CliRunner.Specializations.Commands
 #endif
         public async Task<Version> GetInstalledVersionAsync()
         {
-            BufferedCommandResult result = await Cli.Run(this)
-                .WithArguments("$PSVersionTable")
-                .ExecuteBufferedAsync();
-
             if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||
                 OperatingSystem.IsIOS())
             {
                 throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
             }
+            
+            BufferedCommandResult result = await Cli.Run(this)
+                .WithArguments("$PSVersionTable")
+                .ExecuteBufferedAsync();
              
             string[] lines = result.StandardOutput.Split(Environment.NewLine.ToCharArray());
 
