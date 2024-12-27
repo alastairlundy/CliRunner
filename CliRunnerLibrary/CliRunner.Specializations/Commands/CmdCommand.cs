@@ -123,7 +123,7 @@ namespace CliRunner.Specializations.Commands
                 throw new ArgumentException(Resources.Exceptions_Cmd_NotInstalled);
             }
 
-            return await Task.FromResult(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe");
+            return await Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe");
         }
 
         /// <summary>
