@@ -108,6 +108,8 @@ namespace CliRunner.Specializations.Commands
              {
                  throw new ArgumentException(Resources.Exceptions_Powershell_NotInstalled);
              }
+
+             BufferedCommandResult result;
              
              if (OperatingSystem.IsWindows())
              {
@@ -133,37 +135,28 @@ namespace CliRunner.Specializations.Commands
                      }
                  }
 
-                 BufferedCommandResult result = await CmdCommand.Run()
+                 result = await CmdCommand.Run()
                      .WithArguments("where pwsh.exe")
                      .ExecuteBufferedAsync();
-                 
-                 if (result.StandardOutput.Split(Environment.NewLine.ToCharArray()).Any())
-                 {
-                     return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
-                 }
-                 
-                 throw new Exception(Resources.Exceptions_Powershell_NotInstalled);
              }
              else if (OperatingSystem.IsMacOS())
              {
-                 var result = await Cli.Run("/usr/bin/which")
+                 result = await Cli.Run("/usr/bin/which")
                      .WithArguments("pwsh")
                      .ExecuteBufferedAsync();
-                     
-                 return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
              else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
              {
-                 var result = await Cli.Run("/usr/bin/which")
+                 result = await Cli.Run("/usr/bin/which")
                      .WithArguments("pwsh")
                      .ExecuteBufferedAsync();
-                 
-                 return result.StandardOutput.Split(Environment.NewLine.ToCharArray())[0];
              }
              else
              {
                  throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
              }
+             
+             return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
          }
         
         /// <summary>
