@@ -22,11 +22,11 @@ using CliRunner.Specializations.Internal.Localizations;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
+// ReSharper disable MemberCanBePrivate.Global
 #endif
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
  using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
- // ReSharper disable RedundantBoolCompare
 #endif
 
 namespace CliRunner.Specializations.Commands
@@ -58,11 +58,11 @@ namespace CliRunner.Specializations.Commands
 
                 if (OperatingSystem.IsWindows())
                 {
-                    filePath += Path.DirectorySeparatorChar + "pwsh.exe";
+                    filePath = $"{filePath}{Path.DirectorySeparatorChar}pwsh.exe";
                 }
                 else if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
                 {
-                    filePath += Path.DirectorySeparatorChar + "pwsh";
+                    filePath = $"{filePath}{Path.DirectorySeparatorChar}pwsh";
                 }
 
                 return filePath;
