@@ -32,7 +32,7 @@ using System.Runtime.Versioning;
 namespace CliRunner.Specializations.Commands
 {
     /// <summary>
-    /// 
+    /// A class to make running commands through cross-platform Powershell easier.
     /// </summary>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
@@ -47,6 +47,10 @@ namespace CliRunner.Specializations.Commands
 #endif
     public class PowershellCommand : Command, ISpecializedCommandInformation
     {
+        /// <summary>
+        /// The target file path of cross-platform Powershell.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException">Thrown if run on an operating system besides Windows, macOS, Linux, and FreeBSD.</exception>
         public new string TargetFilePath
         {
             get
@@ -69,6 +73,9 @@ namespace CliRunner.Specializations.Commands
             }
         }
 
+        /// <summary>
+        /// Sets up the PowershellCommand class.
+        /// </summary>
         public PowershellCommand() : base("")
         {
             base.TargetFilePath = TargetFilePath;
@@ -85,12 +92,10 @@ namespace CliRunner.Specializations.Commands
         }
         
         /// <summary>
-         /// 
-         /// </summary>
-         /// <returns></returns>
-         /// <exception cref="ArgumentException"></exception>
-         /// <exception cref="Exception"></exception>
-         /// <exception cref="PlatformNotSupportedException">Thrown if run on an unsupported platform.</exception>
+        /// Gets the installation location for cross-platform Powershell.
+        /// </summary>
+        /// <returns>The file path of where cross-platform Powershell is installed to.</returns>
+        /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows, macOS, Linux, or FreeBSD.</exception>
 #if NET5_0_OR_GREATER
          [SupportedOSPlatform("windows")]
          [SupportedOSPlatform("macos")]
@@ -152,9 +157,9 @@ namespace CliRunner.Specializations.Commands
          }
         
         /// <summary>
-        /// 
+        /// Detects whether cross-platform modern Powershell is installed on a system.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if cross-platform Powershell is installed; returns false otherwise.</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -205,10 +210,12 @@ namespace CliRunner.Specializations.Commands
         }
 
         /// <summary>
-        ///
+        /// Gets the installed version of cross-platform Powershell.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <returns>The installed version of cross-platform Powershell.</returns>
+        /// <exception cref="Exception">Thrown if the installed version of cross-platform Powershell could not be detected.</exception>
+        /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows, macOS, Linux, or FreeBSD.</exception>
+        /// <exception cref="ArgumentException">Thrown if cross-platform Powershell is not installed on the system.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
