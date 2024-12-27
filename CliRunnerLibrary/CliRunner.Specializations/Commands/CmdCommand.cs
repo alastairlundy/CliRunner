@@ -158,7 +158,7 @@ namespace CliRunner.Specializations.Commands
                 .ExecuteBufferedAsync();
 
 #if NET5_0_OR_GREATER
-            string output = result.StandardOutput.Split(Environment.NewLine)[0]
+            string output = result.StandardOutput.Split(Environment.NewLine).First()
                 .Replace("Microsoft Windows [", string.Empty)
                 .Replace("]", string.Empty)
                 .Replace("Version",string.Empty)
