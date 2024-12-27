@@ -518,8 +518,13 @@ namespace CliRunner.Commands
                 ProcessorAffinity,
                 WindowCreation,
                 useShellExecution);
-        
-        public Command WithWindowCreation(bool useShellExecution) =>
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="enableWindowCreation"></param>
+        /// <returns></returns>
+        public Command WithWindowCreation(bool enableWindowCreation) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -531,7 +536,7 @@ namespace CliRunner.Commands
                 StandardOutput,
                 StandardError,
                 ProcessorAffinity,
-                WindowCreation,
-                useShellExecution);
+                enableWindowCreation,
+                UseShellExecution);
     }
 }

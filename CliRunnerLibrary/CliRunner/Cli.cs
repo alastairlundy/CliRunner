@@ -32,7 +32,7 @@ namespace CliRunner
         /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
         /// </remarks>
         /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
-        /// <returns>A new Command object with the configured Target File Path.</returns>]
+        /// <returns>A new Command object with the configured Target File Path.</returns>
         [Pure]
         public static Command Run(string targetFilePath) => new Command(targetFilePath);
         
