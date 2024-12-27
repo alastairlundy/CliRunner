@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 
 using CliRunner.Commands;
 using CliRunner.Extensibility;
+using CliRunner.Specializations.Internal.Localizations;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
  using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
@@ -114,7 +115,7 @@ namespace CliRunner.Specializations.Commands
             }
             else
             {
-                throw new PlatformNotSupportedException("WindowsPowerShell only supports Windows.");
+                throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
             }
         }
         
@@ -161,6 +162,11 @@ namespace CliRunner.Specializations.Commands
 #endif
         public async Task<Version> GetInstalledVersionAsync()
         {
+            if (OperatingSystem.IsWindows() == false)
+            {
+                throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
+            }
+            
             if (OperatingSystem.IsWindows() && await IsInstalledAsync())
             {
                 var result = await Cli.Run(this)
@@ -183,12 +189,10 @@ namespace CliRunner.Specializations.Commands
                     }
                 }
 
-                throw new Exception("Failed to get psversion");
+                throw new Exception(Resources.Exceptions_Powershell_VersionNotFound);
             }
-            else
-            {
-                throw new PlatformNotSupportedException();
-            }
+
+            throw new ArgumentException(Resources.Exceptions_ClassicPowershell_NotInstalled);
         }
     }
 }

@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 using CliRunner.Commands;
 
 using CliRunner.Extensibility;
+using CliRunner.Specializations.Internal.Localizations;
+
+// ReSharper disable RedundantBoolCompare
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
  using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
@@ -101,7 +104,7 @@ namespace CliRunner.Specializations.Commands
         {
             if (await IsInstalledAsync() == false)
             {
-                throw new ArgumentException("cmd.exe is not installed on this system. This may be because you are running a non-windows operating system.");
+                throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_OnlySupportedOnWindows);
             }
             else
             {

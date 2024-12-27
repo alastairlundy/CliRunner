@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using CliRunner.Commands;
 using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
+using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
 
 #if NET5_0_OR_GREATER
@@ -104,7 +105,7 @@ namespace CliRunner.Specializations.Commands
          {
              if (await IsInstalledAsync() == false)
              {
-                 throw new ArgumentException("Powershell is not installed");
+                 throw new ArgumentException(Resources.Exceptions_Powershell_NotInstalled);
              }
              
              if (OperatingSystem.IsWindows())
@@ -139,7 +140,7 @@ namespace CliRunner.Specializations.Commands
                      return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
                  }
                  
-                 throw new Exception("Could not find pwsh.exe");
+                 throw new Exception(Resources.Exceptions_Powershell_NotInstalled);
              }
              else if (OperatingSystem.IsMacOS())
              {
@@ -204,7 +205,7 @@ namespace CliRunner.Specializations.Commands
                 }
                 else
                 {
-                    throw new PlatformNotSupportedException();
+                    throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
                 }
 
                 if (result.StandardOutput.ToLower().Contains("error") ||
@@ -246,7 +247,7 @@ namespace CliRunner.Specializations.Commands
             if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||
                 OperatingSystem.IsIOS())
             {
-                throw new PlatformNotSupportedException();
+                throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
             }
              
             string[] lines = result.StandardOutput.Split(Environment.NewLine.ToCharArray());
@@ -261,7 +262,7 @@ namespace CliRunner.Specializations.Commands
                 }
             }
 
-            throw new Exception("Failed to get psversion");
+            throw new Exception(Resources.Exceptions_Powershell_VersionNotFound);
         }
     }
 }
