@@ -109,15 +109,13 @@ namespace CliRunner.Specializations.Commands
 #endif
         public Task<string> GetInstallLocationAsync()
         {
-            if (OperatingSystem.IsWindows())
-            {
-                return Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
-                                       $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0");
-            }
-            else
+            if (OperatingSystem.IsWindows() == false)
             {
                 throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
             }
+
+            return Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
+                                   $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0");
         }
         
         /// <summary>
@@ -133,14 +131,7 @@ namespace CliRunner.Specializations.Commands
 
             string installLocation = await GetInstallLocationAsync();
 
-            if (Directory.Exists(installLocation))
-            {
-                return Directory.GetFiles(installLocation).Contains("powershell.exe");
-            }
-            else
-            {
-                return false;
-            }
+            return Directory.Exists(installLocation) && Directory.GetFiles(installLocation).Contains("powershell.exe");
         }
         
         /// <summary>
