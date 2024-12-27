@@ -23,7 +23,7 @@ using System.Text;
 namespace CliRunner.Builders
 {
     /// <summary>
-    /// A class that provides builder methods for constructing Arguments to provide to a program.
+    /// A class that provides a fluent interface style builder for constructing Arguments to provide to a program.
     /// </summary>
     public class ArgumentsBuilder
     {

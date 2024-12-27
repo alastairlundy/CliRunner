@@ -46,6 +46,10 @@ namespace CliRunner.Specializations.Commands
     public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
     {
 
+        /// <summary>
+        /// The target file path of Windows Powershell.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException">Thrown if not run on a Windows based operating system.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [UnsupportedOSPlatform("macos")]
@@ -56,6 +60,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
+        // ReSharper disable once MemberCanBePrivate.Global
         public new string TargetFilePath
         {
             get
@@ -67,6 +72,9 @@ namespace CliRunner.Specializations.Commands
             }
         }
 
+        /// <summary>
+        /// Sets up ClassicPowershellCommand.
+        /// </summary>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [UnsupportedOSPlatform("macos")]
@@ -83,9 +91,9 @@ namespace CliRunner.Specializations.Commands
         }
 
         /// <summary>
-        /// 
+        /// Creates a new instance of the ClassicPowershellCommand class.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The new ClassicPowershellCommand instance.</returns>
         [Pure]
         public static ClassicPowershellCommand Run()
         {
@@ -121,7 +129,7 @@ namespace CliRunner.Specializations.Commands
         /// <summary>
         /// Detects whether Windows Powershell is installed on a system.
         /// </summary>
-        /// <returns>true if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
+        /// <returns>True if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
         public async Task<bool> IsInstalledAsync()
         {
             if (OperatingSystem.IsWindows() == false)
@@ -140,6 +148,7 @@ namespace CliRunner.Specializations.Commands
         /// <returns>the installed version of Windows Powershell.</returns>
         /// <exception cref="Exception">Thrown if the installed version of Windows Powershell could not be detected.</exception>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows based.</exception>
+        /// <exception cref="ArgumentException">Thrown if WindowsPowershell is not installed on the system.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [UnsupportedOSPlatform("macos")]

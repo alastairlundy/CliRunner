@@ -75,9 +75,9 @@ namespace CliRunner.Specializations.Commands
         }
 
         /// <summary>
-        /// 
+        /// Creates a new instance of the PowershellCommand class.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The new PowershellCommand instance.</returns>
         [Pure]
         public static PowershellCommand Run()
         {
