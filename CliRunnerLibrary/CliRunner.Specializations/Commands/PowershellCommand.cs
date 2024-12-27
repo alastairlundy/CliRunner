@@ -121,11 +121,12 @@ namespace CliRunner.Specializations.Commands
                      programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
                  }
                  
-                 string[] directories = Directory.GetDirectories(programFiles + Path.DirectorySeparatorChar + "Powershell");
+                 string[] directories = Directory.GetDirectories(
+                     $"{programFiles}{Path.DirectorySeparatorChar}Powershell");
 
                  foreach (string directory in directories)
                  {
-                     if (File.Exists(directory + Path.DirectorySeparatorChar + "pwsh.exe"))
+                     if (File.Exists($"{directory}{Path.DirectorySeparatorChar}pwsh.exe"))
                      {
                          return directory;
                      }
@@ -160,7 +161,7 @@ namespace CliRunner.Specializations.Commands
              }
              else
              {
-                 throw new PlatformNotSupportedException();
+                 throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
              }
          }
         
