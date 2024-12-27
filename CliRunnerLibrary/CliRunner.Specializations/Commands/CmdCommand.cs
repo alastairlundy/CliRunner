@@ -17,7 +17,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 using CliRunner.Commands;
-
+using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
 using CliRunner.Specializations.Internal.Localizations;
 
@@ -152,6 +152,11 @@ namespace CliRunner.Specializations.Commands
                     .WithArguments("--version")
                     .WithWorkingDirectory(Environment.SystemDirectory)
                     .ExecuteBufferedAsync();
+            
+            BufferedCommandResult result =  await Cli.Run(this)
+                .WithArguments("--version")
+                .WithWorkingDirectory(Environment.SystemDirectory)
+                .ExecuteBufferedAsync();
 
 #if NET5_0_OR_GREATER
                 string output = result.StandardOutput.Split(Environment.NewLine)[0]

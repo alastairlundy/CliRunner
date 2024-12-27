@@ -18,6 +18,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using CliRunner.Commands;
+using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
 using CliRunner.Specializations.Internal.Localizations;
 
@@ -169,7 +170,7 @@ namespace CliRunner.Specializations.Commands
             
             if (OperatingSystem.IsWindows() && await IsInstalledAsync())
             {
-                var result = await Cli.Run(this)
+                BufferedCommandResult result = await Cli.Run(this)
                     .WithArguments("$PSVersionTable")
                     .ExecuteBufferedAsync();
                

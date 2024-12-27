@@ -131,7 +131,7 @@ namespace CliRunner.Specializations.Commands
                      }
                  }
 
-                 var result = await CmdCommand.Run()
+                 BufferedCommandResult result = await CmdCommand.Run()
                      .WithArguments("where pwsh.exe")
                      .ExecuteBufferedAsync();
                  
@@ -240,7 +240,7 @@ namespace CliRunner.Specializations.Commands
 #endif
         public async Task<Version> GetInstalledVersionAsync()
         {
-            var result = await Cli.Run(this)
+            BufferedCommandResult result = await Cli.Run(this)
                 .WithArguments("$PSVersionTable")
                 .ExecuteBufferedAsync();
 
