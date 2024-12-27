@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 using CliRunner.Commands;
@@ -27,7 +28,24 @@ namespace CliRunner.Extensibility
         
         public abstract Task<string> GetInstallLocationAsync();
 
-        public abstract Task<bool> IsInstalledAsync();
+        /// <summary>
+        /// Detects whether the Command is installed on a system.
+        /// </summary>
+        /// <returns>True if the Command is installed; returns false otherwise.</returns>
+        public async Task<bool> IsInstalledAsync()
+        {
+            string installLocation = await GetInstallLocationAsync();
+
+            try
+            {
+                return Directory.Exists(installLocation) &&
+                       Directory.GetFiles(installLocation).Contains(TargetFilePath);
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         public abstract Task<Version> GetInstalledVersionAsync();
     }
