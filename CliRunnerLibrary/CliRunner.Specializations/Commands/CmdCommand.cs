@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using CliRunner.Commands;
 using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
+
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable MemberCanBePrivate.Global
 
