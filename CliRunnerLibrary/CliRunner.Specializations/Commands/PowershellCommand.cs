@@ -195,13 +195,8 @@ namespace CliRunner.Specializations.Commands
                     throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
                 }
 
-                if (result.StandardOutput.ToLower().Contains("error") ||
-                    result.StandardOutput.ToLower().Contains("not found"))
-                {
-                    return false;
-                }
-                 
-                return true;
+                return result.StandardOutput.ToLower().Contains("error") == false &&
+                       result.StandardOutput.ToLower().Contains("not found") == false;
             }
             catch
             {
