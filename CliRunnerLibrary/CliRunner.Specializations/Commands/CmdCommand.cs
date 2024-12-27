@@ -55,7 +55,7 @@ namespace CliRunner.Specializations.Commands
                 Task<string> task = GetInstallLocationAsync();
                 task.RunSynchronously();
 
-                return task.Result + Path.DirectorySeparatorChar + "cmd.exe";
+                return $"{task.Result}{Path.DirectorySeparatorChar}cmd.exe";
             }
         }
         
