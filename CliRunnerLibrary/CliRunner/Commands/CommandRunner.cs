@@ -35,6 +35,8 @@ using CliRunner.Commands.Buffered;
 
 using CliRunner.Exceptions;
 
+using CliRunner.Internal.Localizations;
+
 // ReSharper disable RedundantBoolCompare
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -176,6 +178,57 @@ namespace CliRunner.Commands
             return output;
         }
 
+        private void CheckTargetExecutableExists(ProcessStartInfo processStartInfo)
+        {
+            if (File.Exists(processStartInfo.FileName) == false)
+            {
+                throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", processStartInfo.FileName));
+            }
+        }
+
+        private async Task DoPipingInputWorkIfNeeded(Process process)
+        {
+            if (process.StartInfo.RedirectStandardInput == true)
+            {
+                await PipeStandardInputAsync(process);
+            }
+        }
+        
+        private async Task DoPipingOutputWorkIfNeeded(Process process)
+        {
+            if (process.StartInfo.RedirectStandardOutput == true)
+            {
+                await PipeStandardOutputAsync(process);
+            }
+            if (process.StartInfo.RedirectStandardError == true)
+            {
+                await PipeStandardErrorAsync(process);
+            }
+        }
+
+        private void CheckIfUnsuccessfulExecutionRequiresException(Process process)
+        {
+            if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
+            {
+                throw new CommandNotSuccesfulException(process.ExitCode, this);
+            }
+        }
+
+        private async Task DoCommonCommandExecutionWork(Process process, CancellationToken cancellationToken)
+        {
+            CheckTargetExecutableExists(process.StartInfo);
+            await DoPipingInputWorkIfNeeded(process);
+            
+            process.Start();
+            
+            // Wait for process to exit before redirecting Standard Output and Standard Error.
+            await process.WaitForExitAsync(cancellationToken);
+
+            CheckIfUnsuccessfulExecutionRequiresException(process);
+            
+            await DoPipingOutputWorkIfNeeded(process);
+        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -199,6 +252,7 @@ namespace CliRunner.Commands
         /// <param name="encoding"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -211,29 +265,7 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false, WindowCreation));
             
-            if (process.StartInfo.RedirectStandardInput == true)
-            {
-                await PipeStandardInputAsync(process);
-            }
-            
-            process.Start();
-            
-            await process.WaitForExitAsync(cancellationToken);
-
-            if (process.ExitCode != 0 && this.ResultValidation == CommandResultValidation.ExitCodeZero)
-            {
-                throw new CommandNotSuccesfulException(process.ExitCode, this);
-            }
-            
-            // Wait for process to exit before redirecting Standard Output and Standard Error.
-            if (process.StartInfo.RedirectStandardOutput == true)
-            {
-                await PipeStandardOutputAsync(process);
-            }
-            if (process.StartInfo.RedirectStandardError == true)
-            {
-                await PipeStandardErrorAsync(process);
-            }
+            await DoCommonCommandExecutionWork(process, cancellationToken);
             
             return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
         }
@@ -254,13 +286,14 @@ namespace CliRunner.Commands
         {
             return await ExecuteBufferedAsync(Encoding.Default, cancellationToken: cancellationToken);
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
+        /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -272,30 +305,8 @@ namespace CliRunner.Commands
         {
             Process process = CreateProcess(
                 CreateStartInfo(StandardInput != null, true, true, WindowCreation, encoding));
-            
-            if (process.StartInfo.RedirectStandardInput == true)
-            {
-                await PipeStandardInputAsync(process);
-            }
-            
-            process.Start();
-            
-            await process.WaitForExitAsync(cancellationToken);
-            
-            if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
-            {
-                throw new CommandNotSuccesfulException(process.ExitCode, this);
-            }
 
-            // Wait for Process to exit before Redirecting Standard Output and Standard Error.
-            if (process.StartInfo.RedirectStandardOutput == true)
-            {
-                await PipeStandardOutputAsync(process);
-            }
-            if (process.StartInfo.RedirectStandardError == true)
-            {
-                await PipeStandardErrorAsync(process);
-            }
+            await DoCommonCommandExecutionWork(process, cancellationToken);
             
 #if NET6_0_OR_GREATER
             return new BufferedCommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken),
