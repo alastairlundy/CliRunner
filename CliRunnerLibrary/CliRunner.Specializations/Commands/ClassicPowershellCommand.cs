@@ -126,18 +126,16 @@ namespace CliRunner.Specializations.Commands
         /// <returns>true if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
         public async Task<bool> IsInstalledAsync()
         {
-            if (OperatingSystem.IsWindows())
+            if (OperatingSystem.IsWindows() == false)
             {
-                string installLocation = await GetInstallLocationAsync();
+                return false;
+            }
 
-                if (Directory.Exists(installLocation))
-                {
-                    return Directory.GetFiles(installLocation).Contains("powershell.exe");
-                }
-                else
-                {
-                    return false;
-                }
+            string installLocation = await GetInstallLocationAsync();
+
+            if (Directory.Exists(installLocation))
+            {
+                return Directory.GetFiles(installLocation).Contains("powershell.exe");
             }
             else
             {

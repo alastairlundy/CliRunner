@@ -102,14 +102,17 @@ namespace CliRunner.Specializations.Commands
 #endif
         public async Task<string> GetInstallLocationAsync()
         {
-            if (await IsInstalledAsync() == false)
+            if (OperatingSystem.IsWindows() == false)
             {
                 throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_OnlySupportedOnWindows);
             }
-            else
+            
+            if (await IsInstalledAsync() == false)
             {
-                return await Task.FromResult(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe");
+                throw new ArgumentException(Resources.Exceptions_Cmd_NotInstalled);
             }
+
+            return await Task.FromResult(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe");
         }
 
         /// <summary>
@@ -118,14 +121,12 @@ namespace CliRunner.Specializations.Commands
         /// <returns></returns>
         public Task<bool> IsInstalledAsync()
         {
-            if (OperatingSystem.IsWindows())
-            {
-                return Task.FromResult(File.Exists(Environment.SystemDirectory + Path.DirectorySeparatorChar + "cmd.exe"));
-            }
-            else
+            if (OperatingSystem.IsWindows() == false)
             {
                 return Task.FromResult(false);
             }
+            
+            return Task.FromResult(File.Exists($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe"));
         }
 
         /// <summary>
@@ -146,12 +147,10 @@ namespace CliRunner.Specializations.Commands
 #endif
         public async Task<Version> GetInstalledVersionAsync()
         {
-            if (OperatingSystem.IsWindows())
+            if (OperatingSystem.IsWindows() == false)
             {
-               var result =  await Cli.Run(this)
-                    .WithArguments("--version")
-                    .WithWorkingDirectory(Environment.SystemDirectory)
-                    .ExecuteBufferedAsync();
+                throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_NotInstalled);
+            }
             
             BufferedCommandResult result =  await Cli.Run(this)
                 .WithArguments("--version")
@@ -159,26 +158,19 @@ namespace CliRunner.Specializations.Commands
                 .ExecuteBufferedAsync();
 
 #if NET5_0_OR_GREATER
-                string output = result.StandardOutput.Split(Environment.NewLine)[0]
-                    .Replace("Microsoft Windows [", string.Empty)
-                    .Replace("]", string.Empty)
-                    .Replace("Version",string.Empty)
-                    .Replace(" ", string.Empty);
+            string output = result.StandardOutput.Split(Environment.NewLine)[0]
+                .Replace("Microsoft Windows [", string.Empty)
+                .Replace("]", string.Empty)
+                .Replace("Version",string.Empty)
+                .Replace(" ", string.Empty);
 #else
-                string versionString = result.StandardOutput
+                string output = result.StandardOutput
                     .Replace("Microsoft Windows [", string.Empty)
                     .Replace("]", string.Empty)
-                    .Replace("Version", string.Empty);
-
-                string output = versionString.Split(' ').First();
+                    .Replace("Version", string.Empty).Split(' ').First();
 #endif
                    
-                return Version.Parse(output);
-            }
-            else
-            {
-                throw new PlatformNotSupportedException("cmd is not supported on Operating systems that are not based on Windows.");
-            }
+            return Version.Parse(output);
         }
     }
 }
