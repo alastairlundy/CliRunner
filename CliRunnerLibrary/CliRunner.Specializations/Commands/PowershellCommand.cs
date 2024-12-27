@@ -113,17 +113,9 @@ namespace CliRunner.Specializations.Commands
              
              if (OperatingSystem.IsWindows())
              {
-                 string programFiles;
+                 string programFiles = Environment.GetFolderPath(Environment.Is64BitOperatingSystem == true ?
+                     Environment.SpecialFolder.ProgramFiles : Environment.SpecialFolder.ProgramFilesX86);
 
-                 if (Environment.Is64BitOperatingSystem == true)
-                 {
-                     programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-                 }
-                 else
-                 {
-                     programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-                 }
-                 
                  string[] directories = Directory.GetDirectories(
                      $"{programFiles}{Path.DirectorySeparatorChar}Powershell");
 
