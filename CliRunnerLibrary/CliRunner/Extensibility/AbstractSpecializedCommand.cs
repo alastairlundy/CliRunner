@@ -19,12 +19,17 @@ namespace CliRunner.Extensibility
 {
     public abstract class AbstractSpecializedCommand : Command
     {
+        /// <summary>
+        /// The target file path of the Command.
+        /// </summary>
+        public static new string TargetFilePath { get; protected set; }
+        
         protected AbstractSpecializedCommand(string targetFilePath, string arguments = null, string workingDirectoryPath = null, bool runAsAdministrator = false, IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null, CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero, StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null, IntPtr processorAffinity = default(IntPtr), bool useShellExecute = false) : base(targetFilePath, arguments, workingDirectoryPath, runAsAdministrator, environmentVariables, credentials, commandResultValidation, standardInput, standardOutput, standardError, processorAffinity, useShellExecute)
         {
-            
+            TargetFilePath = targetFilePath;
         }
         
-        public static Command Run(string targetFilePath) => new Command(targetFilePath);
+        public static Command Run() => new Command(TargetFilePath);
         
         public abstract Task<string> GetInstallLocationAsync();
 
