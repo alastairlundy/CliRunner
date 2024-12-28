@@ -55,7 +55,7 @@ namespace CliRunner.Specializations.Commands
         /// The target file path of Cmd.
         /// </summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if not run on a Windows based operating system.</exception>
-        public new static string TargetFilePath
+        public new string TargetFilePath
         {
             get
             {
@@ -79,9 +79,9 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public CmdCommand() : base(targetFilePath: TargetFilePath)
+        public CmdCommand() : base("")
         {
-            
+            base.TargetFilePath = TargetFilePath;
         }
 
         /// <summary>
