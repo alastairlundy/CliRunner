@@ -86,7 +86,7 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns>The new PowershellCommand instance.</returns>
         [Pure]
-        public new static PowershellCommand Run()
+        public static PowershellCommand Run()
         {
             return new PowershellCommand();
         }
