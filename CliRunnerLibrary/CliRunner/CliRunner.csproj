@@ -12,23 +12,8 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.5.0
-
-### Additions
-* Added window creation property and relevant fluent builder method to ``Command`` class
-* Add missing xml doc comments
-* Add missing xml doc comments to ``CliRunner.Specializations``
-* Add ``ExecuteAsync`` method with Encoding parameter
-* Add ``Run`` extension methods for ``Command`` class
-* Added method implementation in ``AbstractSpecializedCommand`` class
-
-### General Changes
-* Removed unnecessary usage of Administrator privilege configuration in ``CliRunner.Specializations``
-* Renamed static ``Create()`` methods of ``CliRunner.Specializations`` Command classes with ``Run()``
-* Optimized CliRunner Specializations Command classes
-* Renamed ``UseShellExecute`` property to ``UseShellExecution`` in ``Command`` class
-* Increased code re-use across ``Command`` execution methods
-* Fixed some typos and xml doc comment mistakes</PackageReleaseNotes>
+        <PackageReleaseNotes>### Changes since 0.6.0
+* Fixed incompatibilities with CliRunner Specializations</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
