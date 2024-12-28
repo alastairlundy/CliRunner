@@ -129,7 +129,7 @@ namespace CliRunner.Specializations.Commands
         /// Asynchronously returns whether CMD is installed on the current system.
         /// </summary>
         /// <returns>A task that returns true if cmd.exe exists on Windows; returns false otherwise.</returns>
-        public Task<bool> IsInstalledAsync()
+        public new Task<bool> IsInstalledAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {

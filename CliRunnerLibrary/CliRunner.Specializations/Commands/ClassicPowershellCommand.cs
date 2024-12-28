@@ -129,7 +129,7 @@ namespace CliRunner.Specializations.Commands
         /// Detects whether Windows Powershell is installed on a system.
         /// </summary>
         /// <returns>True if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
-        public async Task<bool> IsInstalledAsync()
+        public new async Task<bool> IsInstalledAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {

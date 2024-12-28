@@ -170,7 +170,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public async Task<bool> IsInstalledAsync()
+        public new async Task<bool> IsInstalledAsync()
         {
             try
             {
