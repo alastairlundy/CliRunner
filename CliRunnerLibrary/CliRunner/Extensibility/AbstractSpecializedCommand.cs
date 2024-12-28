@@ -17,14 +17,17 @@ using CliRunner.Commands;
 
 namespace CliRunner.Extensibility
 {
-    public abstract class AbstractSpecializedCommand : Command
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class AbstractSpecializedCommand : Command, ISpecializedCommand
     {
-        /// <summary>
-        /// The target file path of the Command.
-        /// </summary>
-        public static new string TargetFilePath { get; protected set; }
+        public AbstractSpecializedCommand(string targetFilePath) : base(targetFilePath)
+        {
+            TargetFilePath = targetFilePath;
+        }
         
-        protected AbstractSpecializedCommand(string targetFilePath, string arguments = null, string workingDirectoryPath = null, bool requiresAdministrator = false, IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null, CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero, StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null, IntPtr processorAffinity = default(IntPtr), bool useShellExecute = false, bool windowCreation = false) : base(targetFilePath, arguments, workingDirectoryPath, requiresAdministrator, environmentVariables, credentials, commandResultValidation, standardInput, standardOutput, standardError, processorAffinity, windowCreation)
+        public AbstractSpecializedCommand(string targetFilePath, string arguments = null, string workingDirectoryPath = null, bool requiresAdministrator = false, IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null, CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero, StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null, IntPtr processorAffinity = default(IntPtr), bool useShellExecute = false, bool windowCreation = false) : base(targetFilePath, arguments, workingDirectoryPath, requiresAdministrator, environmentVariables, credentials, commandResultValidation, standardInput, standardOutput, standardError, processorAffinity, windowCreation)
         {
             TargetFilePath = targetFilePath;
             Arguments = arguments;
