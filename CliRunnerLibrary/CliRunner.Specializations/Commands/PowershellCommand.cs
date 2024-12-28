@@ -51,7 +51,7 @@ namespace CliRunner.Specializations.Commands
         /// The target file path of cross-platform Powershell.
         /// </summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an operating system besides Windows, macOS, Linux, and FreeBSD.</exception>
-        public new static string TargetFilePath
+        public new string TargetFilePath
         {
             get
             {
@@ -76,9 +76,9 @@ namespace CliRunner.Specializations.Commands
         /// <summary>
         /// Sets up the PowershellCommand class.
         /// </summary>
-        public PowershellCommand() : base(TargetFilePath)
+        public PowershellCommand() : base("")
         {
-            
+            base.TargetFilePath = TargetFilePath;
         }
 
         /// <summary>

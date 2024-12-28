@@ -61,7 +61,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("watchos")]
 #endif
         // ReSharper disable once MemberCanBePrivate.Global
-        public new static string TargetFilePath
+        public new string TargetFilePath
         {
             get
             {
@@ -85,9 +85,9 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public ClassicPowershellCommand() : base(TargetFilePath)
+        public ClassicPowershellCommand() : base("")
         {
-            
+            base.TargetFilePath = TargetFilePath;
         }
 
         /// <summary>
