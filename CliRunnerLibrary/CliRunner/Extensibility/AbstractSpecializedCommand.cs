@@ -24,11 +24,31 @@ namespace CliRunner.Extensibility
         /// </summary>
         public static new string TargetFilePath { get; protected set; }
         
-        protected AbstractSpecializedCommand(string targetFilePath, string arguments = null, string workingDirectoryPath = null, bool runAsAdministrator = false, IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null, CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero, StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null, IntPtr processorAffinity = default(IntPtr), bool useShellExecute = false) : base(targetFilePath, arguments, workingDirectoryPath, runAsAdministrator, environmentVariables, credentials, commandResultValidation, standardInput, standardOutput, standardError, processorAffinity, useShellExecute)
+        protected AbstractSpecializedCommand(string targetFilePath, string arguments = null, string workingDirectoryPath = null, bool requiresAdministrator = false, IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null, CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero, StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null, IntPtr processorAffinity = default(IntPtr), bool useShellExecute = false, bool windowCreation = false) : base(targetFilePath, arguments, workingDirectoryPath, requiresAdministrator, environmentVariables, credentials, commandResultValidation, standardInput, standardOutput, standardError, processorAffinity, windowCreation)
         {
             TargetFilePath = targetFilePath;
+            Arguments = arguments;
+            WorkingDirectoryPath = workingDirectoryPath;
+            RequiresAdministrator = requiresAdministrator;
+            EnvironmentVariables = environmentVariables;
+            Credentials = credentials;
+            ResultValidation = commandResultValidation;
+            UseShellExecution = useShellExecute;
+            WindowCreation = windowCreation;
+            StandardInput = standardInput;
+            StandardOutput = standardOutput;
+            StandardError = standardError;
+            ProcessorAffinity = processorAffinity;
         }
         
+        /// <summary>
+        /// Creates a Command object with the target file path. 
+        /// </summary>
+        /// <remarks>
+        /// <para>Chain appropriate Command methods as needed such as <code>.WithArguments("[your args]")</code> and <code>.WithWorkingDirectory("[your directory]")</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
+        /// </remarks>
+        /// <returns>A new Command object with the configured Target File Path.</returns>
         public static Command Run() => new Command(TargetFilePath);
         
         public abstract Task<string> GetInstallLocationAsync();
