@@ -44,16 +44,6 @@ namespace CliRunner.Extensibility
             ProcessorAffinity = processorAffinity;
         }
         
-        /// <summary>
-        /// Creates a Command object with the target file path. 
-        /// </summary>
-        /// <remarks>
-        /// <para>Chain appropriate Command methods as needed such as <code>.WithArguments("[your args]")</code> and <code>.WithWorkingDirectory("[your directory]")</code>.</para>
-        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
-        /// </remarks>
-        /// <returns>A new Command object with the configured Target File Path.</returns>
-        public static Command Run() => new Command(TargetFilePath);
-        
         public abstract Task<string> GetInstallLocationAsync();
 
         /// <summary>
