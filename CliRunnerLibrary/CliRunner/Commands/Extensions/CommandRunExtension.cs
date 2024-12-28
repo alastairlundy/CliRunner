@@ -12,21 +12,29 @@ namespace CliRunner.Commands.Extensions
     public static class CommandRunExtension
     {
         /// <summary>
-        /// 
+        /// Creates a Command object with the target file path. 
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// <para>Chain appropriate Command methods as needed such as <code>.WithArguments("[your args]")</code> and <code>.WithWorkingDirectory("[your directory]")</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
+        /// </remarks>
+        /// <param name="command">The command class to instantiate.</param>
+        /// <returns>A new Command object with the configured Target File Path.</returns>
         public static Command Run(this Command command)
         {
             return command;
         }
         
         /// <summary>
-        /// 
+        /// Creates a Command object with the specified target file path. 
         /// </summary>
-        /// <param name="command"></param>
-        /// <param name="targetFilePath"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// <para>Chain appropriate Command methods as needed such as <code>.WithArguments("[your args]")</code> and <code>.WithWorkingDirectory("[your directory]")</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
+        /// </remarks>
+        /// <param name="command">The command class to instantiate.</param>
+        /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
+        /// <returns>A new Command object with the configured Target File Path.</returns>
         public static Command Run(this Command command, string targetFilePath)
         {
             return new Command(targetFilePath);

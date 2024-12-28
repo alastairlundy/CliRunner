@@ -128,7 +128,7 @@ namespace CliRunner.Commands
              IntPtr processorAffinity = 0,
 #else
              IntPtr processorAffinity = default(IntPtr),
-#endif             
+#endif
              bool windowCreation = false,
              bool useShellExecute = false
         )
