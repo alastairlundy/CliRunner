@@ -9,7 +9,7 @@
 
 namespace CliRunner.Commands.Extensions
 {
-    public static class CommandRunExtension
+    public static class CommandRunExtensions
     {
         /// <summary>
         /// Creates a Command object with the target file path. 
