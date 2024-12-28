@@ -3,13 +3,13 @@
 ### Entry Point
 CliWrap's intended entrypoint is the ``Cli`` static class with the ``Wrap`` static method.
 
-CliRunner's intended entrypoint is the ``CliRunner`` static class with the ``Wrap`` static method.
+CliRunner's intended entrypoint is the ``CliRunner`` static class with the ``Run`` static method.
 
 ### Command
-In addition to what CliWrap provides in Command properties, CliRunner adds several properties for ``UseShellExecute``, ``
+In addition to what CliWrap provides in Command properties, CliRunner adds several properties for ``UseShellExecution``, ``ProcessorAffinity``, and ``WindowCreation``
 
 ### Credential Model
-To avoid naming conflicts with calling both a variable ``Credentials`` and the ``Credentials`` class, CliRunner calls the class ``UserCredentials``.
+To avoid naming conflicts with naming both a variable ``Credentials`` and the ``Credentials`` class, CliRunner calls the class ``UserCredentials``.
 
 ``UserCredentials`` also implements IDisposable to handle disposing of the SecureString Password when finished.
 
