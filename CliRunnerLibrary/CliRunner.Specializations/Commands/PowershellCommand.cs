@@ -45,13 +45,13 @@ namespace CliRunner.Specializations.Commands
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class PowershellCommand : Command, ISpecializedCommandInformation
+    public class PowershellCommand : AbstractSpecializedCommand
     {
         /// <summary>
         /// The target file path of cross-platform Powershell.
         /// </summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an operating system besides Windows, macOS, Linux, and FreeBSD.</exception>
-        public new string TargetFilePath
+        public new static string TargetFilePath
         {
             get
             {
@@ -76,9 +76,9 @@ namespace CliRunner.Specializations.Commands
         /// <summary>
         /// Sets up the PowershellCommand class.
         /// </summary>
-        public PowershellCommand() : base("")
+        public PowershellCommand() : base(TargetFilePath)
         {
-            base.TargetFilePath = TargetFilePath;
+            
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns>The new PowershellCommand instance.</returns>
         [Pure]
-        public static PowershellCommand Run()
+        public new static PowershellCommand Run()
         {
             return new PowershellCommand();
         }
@@ -107,7 +107,7 @@ namespace CliRunner.Specializations.Commands
          [UnsupportedOSPlatform("tvos")]
          [UnsupportedOSPlatform("watchos")]
 #endif
-         public async Task<string> GetInstallLocationAsync()
+         public override async Task<string> GetInstallLocationAsync()
          {
              if (await IsInstalledAsync() == false)
              {
@@ -227,7 +227,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public async Task<Version> GetInstalledVersionAsync()
+        public override async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||
                 OperatingSystem.IsIOS())

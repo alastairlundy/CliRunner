@@ -43,7 +43,7 @@ namespace CliRunner.Specializations.Commands
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class ClassicPowershellCommand : Command, ISpecializedCommandInformation
+    public class ClassicPowershellCommand : AbstractSpecializedCommand
     {
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("watchos")]
 #endif
         // ReSharper disable once MemberCanBePrivate.Global
-        public new string TargetFilePath
+        public new static string TargetFilePath
         {
             get
             {
@@ -71,7 +71,7 @@ namespace CliRunner.Specializations.Commands
                return task.Result + Path.DirectorySeparatorChar + "powershell.exe";
             }
         }
-
+        
         /// <summary>
         /// Sets up ClassicPowershellCommand.
         /// </summary>
@@ -85,9 +85,9 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public ClassicPowershellCommand() : base("")
+        public ClassicPowershellCommand() : base(TargetFilePath)
         {
-            base.TargetFilePath = TargetFilePath;
+            
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns>The new ClassicPowershellCommand instance.</returns>
         [Pure]
-        public static ClassicPowershellCommand Run()
+        public new static ClassicPowershellCommand Run()
         {
             return new ClassicPowershellCommand();
         }
@@ -115,14 +115,14 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public Task<string> GetInstallLocationAsync()
+        public override async Task<string> GetInstallLocationAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {
                 throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
             }
 
-            return Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
+            return await Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
                                    $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0");
         }
         
@@ -159,7 +159,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public async Task<Version> GetInstalledVersionAsync()
+        public override async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {

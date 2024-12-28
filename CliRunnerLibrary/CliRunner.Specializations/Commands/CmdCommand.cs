@@ -49,13 +49,13 @@ namespace CliRunner.Specializations.Commands
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class CmdCommand : Command, ISpecializedCommandInformation
+    public class CmdCommand : AbstractSpecializedCommand
     {
         /// <summary>
         /// The target file path of Cmd.
         /// </summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if not run on a Windows based operating system.</exception>
-        public new string TargetFilePath
+        public new static string TargetFilePath
         {
             get
             {
@@ -79,9 +79,9 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public CmdCommand() : base(targetFilePath: "")
+        public CmdCommand() : base(targetFilePath: TargetFilePath)
         {
-            base.TargetFilePath = TargetFilePath;
+            
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns>The new CmdCommand instance.</returns>
         [Pure]
-        public static CmdCommand Run()
+        public new static CmdCommand Run()
         {
             return new CmdCommand();
         }
@@ -111,7 +111,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public async Task<string> GetInstallLocationAsync()
+        public override async Task<string> GetInstallLocationAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {
@@ -156,7 +156,7 @@ namespace CliRunner.Specializations.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public async Task<Version> GetInstalledVersionAsync()
+        public override async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {
