@@ -49,6 +49,6 @@ namespace CliRunner
         public static Command Run(Command command) => new Command(command.TargetFilePath, command.Arguments,
             command.WorkingDirectoryPath, command.RequiresAdministrator, command.EnvironmentVariables,
             command.Credentials, command.ResultValidation, command.StandardInput,
-            command.StandardOutput, command.StandardError);
+            command.StandardOutput, command.StandardError, command.ProcessorAffinity, command.WindowCreation, command.UseShellExecution);
     }
 }
