@@ -13,7 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using CliRunner.Commands;
 using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
 
