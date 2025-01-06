@@ -222,7 +222,7 @@ namespace CliRunner.Commands
             
             process.Start();
             
-            var startTime = DateTime.UtcNow;
+            var startTime = DateTime.Now;
             
             // Wait for process to exit before redirecting Standard Output and Standard Error.
             await process.WaitForExitAsync(cancellationToken);
