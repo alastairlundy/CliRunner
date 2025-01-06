@@ -20,10 +20,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if NETSTANDARD2_0 || NETSTANDARD2_1
-using AlastairLundy.Extensions.Processes;
-#endif
-
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
 
@@ -65,7 +61,7 @@ namespace CliRunner.Commands
             {
                 StartInfo = processStartInfo,
             };
-
+            
             if (OperatingSystem.IsWindows() | OperatingSystem.IsLinux())
             {
                 output.ProcessorAffinity = ProcessorAffinity;
