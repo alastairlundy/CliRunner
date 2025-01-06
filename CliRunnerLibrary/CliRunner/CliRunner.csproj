@@ -13,12 +13,20 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>### Changes since 0.6.0
-* Fixed incompatibilities with CliRunner Specializations</PackageReleaseNotes>
+        <PackageReleaseNotes>## Changes since 0.6.1
+
+### Additions
+* Added support for Android - Support for this platform is untested but is thereotically usable now.
+
+### General Changes
+* Replaced ProcessExtensions dependency with Polyfill library dependency on .NET Standard 2.0 and 2.1
+* Clarified that IOS and tvOS are currently not supported due to .NET's Process class not supporting the ``Start()`` method on them.
+* Fixed a typo in an Exception name
+* Continued adding more xml doc comments</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.6.1</PackageVersion>
+        <PackageVersion>0.7.0</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
