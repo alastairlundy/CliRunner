@@ -24,6 +24,7 @@ using System.Runtime.Versioning;
 
 using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
+// ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
 namespace CliRunner.Commands
 {
