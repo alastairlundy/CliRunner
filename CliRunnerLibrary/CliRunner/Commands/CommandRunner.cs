@@ -13,6 +13,7 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -22,8 +23,6 @@ using System.Threading.Tasks;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
-
-using System;
 #endif
 
 using CliRunner.Commands.Abstractions;
@@ -53,6 +52,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [SupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public Process CreateProcess(ProcessStartInfo processStartInfo)
@@ -79,6 +81,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [SupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default)
@@ -210,12 +215,14 @@ namespace CliRunner.Commands
             }
         }
 
-        private async Task DoCommonCommandExecutionWork(Process process, CancellationToken cancellationToken)
+        private async Task<DateTime> DoCommonCommandExecutionWork(Process process, CancellationToken cancellationToken)
         {
             CheckTargetExecutableExists(process.StartInfo);
             await DoPipingInputWorkIfNeeded(process);
             
             process.Start();
+            
+            var startTime = DateTime.UtcNow;
             
             // Wait for process to exit before redirecting Standard Output and Standard Error.
             await process.WaitForExitAsync(cancellationToken);
@@ -223,6 +230,8 @@ namespace CliRunner.Commands
             CheckIfUnsuccessfulExecutionRequiresException(process);
             
             await DoPipingOutputWorkIfNeeded(process);
+            
+            return startTime;
         }
         
         /// <summary>
@@ -235,6 +244,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [SupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
@@ -254,6 +266,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [SupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<CommandResult> ExecuteAsync(Encoding encoding, CancellationToken cancellationToken = default)
@@ -261,9 +276,16 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false, WindowCreation));
             
-            await DoCommonCommandExecutionWork(process, cancellationToken);
-            
-            return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+            var startTime = await DoCommonCommandExecutionWork(process, cancellationToken);
+
+            if (OperatingSystem.IsIOS() || OperatingSystem.IsTvOS())
+            {
+                return new CommandResult(process.ExitCode, startTime, process.ExitTime);
+            }
+            else
+            {
+                return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+            }
         }
 
         /// <summary>
@@ -276,6 +298,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("android")]
+        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)
@@ -295,6 +320,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("android")]
+        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
@@ -302,16 +330,34 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(StandardInput != null, true, true, WindowCreation, encoding));
 
-            await DoCommonCommandExecutionWork(process, cancellationToken);
+           var startTime = await DoCommonCommandExecutionWork(process, cancellationToken);
             
 #if NET6_0_OR_GREATER
-            return new BufferedCommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken),
-                await process.StandardError.ReadToEndAsync(cancellationToken),
-                process.StartTime, process.ExitTime);
+            if (OperatingSystem.IsIOS() || OperatingSystem.IsTvOS())
+            {
+                return new BufferedCommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken),
+                    await process.StandardError.ReadToEndAsync(cancellationToken),
+                    startTime, process.ExitTime);
+            }
+            else
+            {
+                return new BufferedCommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken),
+                    await process.StandardError.ReadToEndAsync(cancellationToken),
+                    process.StartTime, process.ExitTime);
+            }
 #else
-            return new BufferedCommandResult(process.ExitCode, 
+            if(OperatingSystem.IsIOS() || OperatingSystem.IsTvOS())
+            {
+                return new BufferedCommandResult(process.ExitCode, 
                 await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync(), 
-            process.StartTime, process.ExitTime);
+                startTime, process.ExitTime);
+            }
+            else
+            {
+                return new BufferedCommandResult(process.ExitCode, 
+                await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync(), 
+                process.StartTime, process.ExitTime);
+            }
 #endif
         }
     }
