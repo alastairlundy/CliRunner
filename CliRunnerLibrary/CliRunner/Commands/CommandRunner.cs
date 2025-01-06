@@ -43,7 +43,7 @@ namespace CliRunner.Commands
     public partial class Command : ICommandRunner
     {
         /// <summary>
-        /// 
+        /// Creates a process with the specified process start information.
         /// </summary>
         /// <param name="processStartInfo"></param>
         /// <returns></returns>
@@ -52,6 +52,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("tvos")]
@@ -81,6 +82,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("tvos")]
@@ -188,6 +190,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("tvos")]
@@ -206,6 +209,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("tvos")]
@@ -224,6 +228,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("tvos")]
@@ -246,6 +251,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("tvos")]
@@ -264,6 +270,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("tvos")]
@@ -345,8 +352,8 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("android")]
-        [SupportedOSPlatform("ios")]
-        [SupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)
@@ -368,8 +375,8 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("maccatalyst")]
         [SupportedOSPlatform("android")]
-        [SupportedOSPlatform("ios")]
-        [SupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
@@ -377,34 +384,16 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(StandardInput != null, true, true, WindowCreation, encoding));
 
-           var startTime = await DoCommonCommandExecutionWork(process, cancellationToken);
+            await DoCommonCommandExecutionWork(process, cancellationToken);
             
 #if NET6_0_OR_GREATER
-            if (OperatingSystem.IsIOS() || OperatingSystem.IsTvOS())
-            {
-                return new BufferedCommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken),
-                    await process.StandardError.ReadToEndAsync(cancellationToken),
-                    startTime, process.ExitTime);
-            }
-            else
-            {
                 return new BufferedCommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken),
                     await process.StandardError.ReadToEndAsync(cancellationToken),
                     process.StartTime, process.ExitTime);
-            }
 #else
-            if(OperatingSystem.IsIOS() || OperatingSystem.IsTvOS())
-            {
-                return new BufferedCommandResult(process.ExitCode, 
-                await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync(), 
-                startTime, process.ExitTime);
-            }
-            else
-            {
                 return new BufferedCommandResult(process.ExitCode, 
                 await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync(), 
                 process.StartTime, process.ExitTime);
-            }
 #endif
         }
     }

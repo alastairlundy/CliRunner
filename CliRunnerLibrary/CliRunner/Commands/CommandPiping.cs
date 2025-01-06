@@ -11,6 +11,11 @@
  */
 
 using System.Diagnostics;
+
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+
 using System.Threading.Tasks;
 
 using CliRunner.Commands.Abstractions;
@@ -23,6 +28,17 @@ namespace CliRunner.Commands
         /// Asynchronously copies the process' Standard Input to the Command's Standard Input.
         /// </summary>
         /// <param name="process">The process to be copied from.</param>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif 
         public async Task PipeStandardInputAsync(Process process)
         {
             await StandardInput.FlushAsync();
@@ -34,6 +50,17 @@ namespace CliRunner.Commands
         /// Asynchronously copies the process' Standard Output to the Command's Standard Output.
         /// </summary>
         /// <param name="process">The process to be copied from.</param>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         public async Task PipeStandardOutputAsync(Process process)
         {
             StandardOutput.DiscardBufferedData();
@@ -45,6 +72,17 @@ namespace CliRunner.Commands
         /// Asynchronously copies the process' Standard Error to the Command's Standard Error.
         /// </summary>
         /// <param name="process">The process to be copied from.</param>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         public async Task PipeStandardErrorAsync(Process process)
         {
             StandardError.DiscardBufferedData();
