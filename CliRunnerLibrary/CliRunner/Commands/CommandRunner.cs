@@ -262,7 +262,7 @@ namespace CliRunner.Commands
         {
             if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
             {
-                throw new CommandNotSuccesfulException(process.ExitCode, this);
+                throw new CommandNotSuccessfulException(process.ExitCode, this);
             }
         }
 
