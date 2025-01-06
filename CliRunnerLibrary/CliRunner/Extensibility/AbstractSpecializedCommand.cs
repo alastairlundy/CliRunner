@@ -47,9 +47,9 @@ namespace CliRunner.Extensibility
         public abstract Task<string> GetInstallLocationAsync();
 
         /// <summary>
-        /// Detects whether the Command is installed on a system.
+        /// Detects whether the Command is installed on the current system.
         /// </summary>
-        /// <returns>True if the Command is installed; returns false otherwise.</returns>
+        /// <returns>true if the Command is installed; returns false otherwise.</returns>
         public virtual async Task<bool> IsInstalledAsync()
         {
             string installLocation = await GetInstallLocationAsync();
