@@ -17,7 +17,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+
+#if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
+#endif
 
 using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
