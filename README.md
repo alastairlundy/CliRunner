@@ -65,3 +65,10 @@ var result = await Cli.Run("Path/To/Exe")
 CliRunner is licensed under the MPL 2.0 license. If you modify any of CliRunner's files then the modified files must be licensed under the MPL 2.0 .
 
 If you use CliRunner in your project please make an exact copy of the contents of CliRunner's LICENSE.txt file available either in your third party licenses txt file or as a separate txt file.
+
+## Acknowledgements
+This project would like to thank the following projects for their work:
+* [CliWrap](https://github.com/Tyrrrz/CliWrap/) for inspiring this project
+* [Polyfill](https://github.com/SimonCropp/Polyfill) for simplifying .NET Standard 2.0 & 2.1 support
+
+For more information please see the [THIRD_PARTY_NOTICES file](https://github.com/alastairlundy/CliRunner/blob/main/THIRD_PARTY_NOTICES.txt).
