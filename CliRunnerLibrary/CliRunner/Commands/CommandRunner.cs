@@ -46,8 +46,8 @@ namespace CliRunner.Commands
         /// <summary>
         /// Creates a process with the specified process start information.
         /// </summary>
-        /// <param name="processStartInfo"></param>
-        /// <returns></returns>
+        /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
+        /// <returns>the newly created Process with the specified start information.</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -334,7 +334,9 @@ namespace CliRunner.Commands
         public async Task<CommandResult> ExecuteAsync(Encoding encoding, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(
-                CreateStartInfo(false, false, false, WindowCreation));
+                CreateStartInfo(StandardInput != StreamWriter.Null,
+                    StandardOutput != StreamReader.Null,
+                    StandardError != StreamReader.Null, WindowCreation));
             
             await DoCommonCommandExecutionWork(process, cancellationToken);
             

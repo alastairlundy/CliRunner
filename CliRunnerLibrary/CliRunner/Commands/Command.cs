@@ -524,10 +524,10 @@ namespace CliRunner.Commands
                 useShellExecution);
 
         /// <summary>
-        /// 
+        /// Enables or disables Windows creation for the wrapped executable.
         /// </summary>
-        /// <param name="enableWindowCreation"></param>
-        /// <returns></returns>
+        /// <param name="enableWindowCreation">Whether to enable or disable window creation for the wrapped executable.</param>
+        /// <returns>The new Command with the specified windows creation behaviour.</returns>
         public Command WithWindowCreation(bool enableWindowCreation) =>
             new Command(TargetFilePath,
                 Arguments,

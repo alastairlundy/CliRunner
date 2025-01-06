@@ -19,7 +19,7 @@ using CliRunner.Internal.Localizations;
 namespace CliRunner.Exceptions
 {
     /// <summary>
-    /// 
+    /// Represents errors that occur if a Command being executed by CliRunner is unsuccessful.
     /// </summary>
     public sealed class CommandNotSuccessfulException : Exception
     {
@@ -30,10 +30,10 @@ namespace CliRunner.Exceptions
         public int ExitCode { get; private set; }
         
         /// <summary>
-        /// 
+        /// Thrown when a Command that was executed exited with a non-zero exit code.
         /// </summary>
-        /// <param name="exitCode"></param>
-        public CommandNotSuccesfulException(int exitCode) : base(Resources.Exceptions_CommandNotSuccessful_Generic.Replace("{x}", exitCode.ToString()))
+        /// <param name="exitCode">The exit code of the Command that was executed.</param>
+        public CommandNotSuccessfulException(int exitCode) : base(Resources.Exceptions_CommandNotSuccessful_Generic.Replace("{x}", exitCode.ToString()))
         {
             ExitCode = exitCode;
             
