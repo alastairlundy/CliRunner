@@ -21,6 +21,7 @@ using CliRunner.Commands.Buffered;
 using CliRunner.Extensibility;
 
 using CliRunner.Specializations.Internal.Localizations;
+// ReSharper disable RedundantBoolCompare
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
  using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
@@ -131,14 +132,7 @@ namespace CliRunner.Specializations.Commands
         /// <returns>True if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
         public new async Task<bool> IsInstalledAsync()
         {
-            if (OperatingSystem.IsWindows() == false)
-            {
-                return false;
-            }
-
-            string installLocation = await GetInstallLocationAsync();
-
-            return Directory.Exists(installLocation) && Directory.GetFiles(installLocation).Contains("powershell.exe");
+            return OperatingSystem.IsWindows() == true && await base.IsInstalledAsync();
         }
         
         /// <summary>

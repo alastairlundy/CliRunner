@@ -131,12 +131,7 @@ namespace CliRunner.Specializations.Commands
         /// <returns>A task that returns true if cmd.exe exists on Windows; returns false otherwise.</returns>
         public new Task<bool> IsInstalledAsync()
         {
-            if (OperatingSystem.IsWindows() == false)
-            {
-                return Task.FromResult(false);
-            }
-            
-            return Task.FromResult(File.Exists($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe"));
+            return OperatingSystem.IsWindows() == false ? Task.FromResult(false) : base.IsInstalledAsync();
         }
 
         /// <summary>

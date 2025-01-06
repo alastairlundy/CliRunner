@@ -172,40 +172,7 @@ namespace CliRunner.Specializations.Commands
 #endif
         public new async Task<bool> IsInstalledAsync()
         {
-            try
-            {
-                BufferedCommandResult result;
-                
-                if (OperatingSystem.IsWindows())
-                {
-                     result = await CmdCommand.Run()
-                        .WithArguments("where pwsh.exe")
-                        .ExecuteBufferedAsync();
-                }
-                else if (OperatingSystem.IsMacOS())
-                {
-                    result = await Cli.Run("/usr/bin/which")
-                        .WithArguments("pwsh")
-                        .ExecuteBufferedAsync();
-                }
-                else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                {
-                    result = await Cli.Run("/usr/bin/which")
-                        .WithArguments("pwsh")
-                        .ExecuteBufferedAsync();
-                }
-                else
-                {
-                    throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
-                }
-
-                return result.StandardOutput.ToLower().Contains("error") == false &&
-                       result.StandardOutput.ToLower().Contains("not found") == false;
-            }
-            catch
-            {
-                return false;
-            }
+            return await base.IsInstalledAsync();
         }
 
         /// <summary>
