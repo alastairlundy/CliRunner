@@ -14,21 +14,40 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 * No hidden or additional licensing terms are required beyond the source code license
 * No imported C code - This library is entirely written in C#
 * No lock in regarding Piping support
+* Uses .NET's built in ``Process`` type.
 
-^1 - RuntimeExtensions dependency only required for .NET Standard 2.0 and 2.1 users
+^1 - RuntimeExtensions dependency and [Polyfill](https://github.com/SimonCropp/Polyfill) are only required for .NET Standard 2.0 and 2.1 users
 
 ^2 - Specialization library is distributed separately.
 
 ## Support 
-This can be added to any .NET Standard 2.0, .NET Standard 2.1 or .NET 8 supported project.
+This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9 supported project.
 
-**Note:** This library has not been tested on Android, IOS, or other non-desktop platforms!
+| Operating System | Support Status | Notes |
+|-|-|-|
+| Windows | Fully Supported :white_check_mark: | |
+| macOS | Fully Supported :white_check_mark: | |
+| Mac Catalyst | Fully Supported :white_check_mark: | |
+| Linux | Fully Supported :white_check_mark: | |
+| FreeBSD | Fully Supported :white_check_mark: | |
+| Android | Untested Platform :warning: | Support for this platform has not been tested but should theoretically work. |
+| IOS | Not Supported :x: | Not supported due to ``Process.Start()`` not supporting IOS. ^3 | 
+| tvOS | Not Supported :x: | Not supported due to ``Process.Start()`` not supporting tvOS ^3 |
+| watchOS | Not Supported :x: | Not supported due to ``Process.Start()`` not supporting watchOS ^4 |
+| Browser | Not Supported :x: | Not supported due to not being a valid target Platform for executing programs. |
+
+^3 - See the [Process class documentation](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=net-9.0#system-diagnostics-process-start) for more info.
+
+^4 - Lack of watchOS support is implied by lack of IOS support since watchOS is based on IOS.
+
+
+**Note:** This library has not been tested on Android or Tizen!
 
 ## Installation
 * [Nuget](https://nuget.org/packages/) or ``dotnet add package CliRunner``
 
 ## Usage
-CliRunner uses a builder style of syntax to easily configure and run Commands.
+CliRunner uses a fluent builder style of syntax to easily configure and run Commands.
 
 The following example shows how to configure and build a Command that returns a BufferedCommandResult which contains redirected StandardOutput and StandardError.
 
