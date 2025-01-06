@@ -131,27 +131,31 @@ namespace CliRunner.Commands
 
             if (Credentials != null)
             {
-                if (Credentials.Domain != null && OperatingSystem.IsWindows())
+                if (OperatingSystem.IsWindows())
                 {
-                    output.Domain = Credentials.Domain;
-                }
-                if (Credentials.UserName != null)
-                {
-                    output.UserName = Credentials.UserName;
-                }
-                if (Credentials.Password != null && OperatingSystem.IsWindows())
-                {
-                    output.Password = Credentials.Password;
-                }
+                    if (Credentials.Domain != null)
+                    {
+                        output.Domain = Credentials.Domain;
+                    }
+                    if (Credentials.UserName != null)
+                    {
+                        output.UserName = Credentials.UserName;
+                    }
+                    if (Credentials.Password != null)
+                    {
+                        output.Password = Credentials.Password;
+                    }
+                    
 #pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                if (Credentials.LoadUserProfile != null && OperatingSystem.IsWindows())
+                    if (Credentials.LoadUserProfile != null)
 #pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                {
+                    {
 #if NETSTANDARD2_0
                     output.LoadUserProfile = Credentials.LoadUserProfile;
 #else
-                   output.LoadUserProfile = (bool)Credentials.LoadUserProfile;
+                        output.LoadUserProfile = (bool)Credentials.LoadUserProfile;
 #endif
+                    }
                 }
             }
 
