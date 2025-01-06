@@ -4,6 +4,7 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <TargetFrameworks>net8.0;netstandard2.0;netstandard2.1;net9.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <LangVersion>latest</LangVersion>
         <Title>CliRunner</Title>
         <Authors>AlastairLundy</Authors>
         <Description>CliRunner is a library for interacting with Command Line Interfaces,</Description>
