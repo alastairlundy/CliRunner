@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 using System.Security;
 
@@ -17,6 +18,7 @@ using System.Security;
 
 namespace CliRunner
 {
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class UserCredentials : IDisposable
     {
         public UserCredentials()

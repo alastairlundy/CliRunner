@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
 
@@ -28,6 +29,7 @@ using CliRunner.Commands.Abstractions;
 
 namespace CliRunner.Commands
 {
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public partial class Command : ICommandConfiguration, ICommandConfigurationBuilder
     {
         /// <summary>

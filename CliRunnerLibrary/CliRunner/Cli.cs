@@ -13,6 +13,7 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
 using CliRunner.Commands;
@@ -22,6 +23,7 @@ namespace CliRunner
     /// <summary>
     /// A static class to make creating a new Command object in a more pretty fashion.
     /// </summary>
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public static class Cli
     {
         /// <summary>

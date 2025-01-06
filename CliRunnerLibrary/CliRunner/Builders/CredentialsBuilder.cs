@@ -11,14 +11,17 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Security;
+// ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
 namespace CliRunner.Builders
 {
     /// <summary>
     /// A class that provides builder methods for constructing UserCredentials.
     /// </summary>
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class CredentialsBuilder : IDisposable
     {
         private string _domain;
