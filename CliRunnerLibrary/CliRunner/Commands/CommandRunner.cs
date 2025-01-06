@@ -52,9 +52,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
-        [SupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public Process CreateProcess(ProcessStartInfo processStartInfo)
@@ -81,9 +81,9 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
-        [SupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default)
@@ -179,6 +179,16 @@ namespace CliRunner.Commands
             return output;
         }
 
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         private void CheckTargetExecutableExists(ProcessStartInfo processStartInfo)
         {
             if (File.Exists(processStartInfo.FileName) == false)
@@ -187,6 +197,16 @@ namespace CliRunner.Commands
             }
         }
 
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         private async Task DoPipingInputWorkIfNeeded(Process process)
         {
             if (process.StartInfo.RedirectStandardInput == true)
@@ -195,6 +215,16 @@ namespace CliRunner.Commands
             }
         }
         
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         private async Task DoPipingOutputWorkIfNeeded(Process process)
         {
             if (process.StartInfo.RedirectStandardOutput == true)
@@ -207,6 +237,16 @@ namespace CliRunner.Commands
             }
         }
 
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
         private void CheckIfUnsuccessfulExecutionRequiresException(Process process)
         {
             if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
@@ -215,14 +255,22 @@ namespace CliRunner.Commands
             }
         }
 
-        private async Task<DateTime> DoCommonCommandExecutionWork(Process process, CancellationToken cancellationToken)
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+#endif
+        private async Task DoCommonCommandExecutionWork(Process process, CancellationToken cancellationToken)
         {
             CheckTargetExecutableExists(process.StartInfo);
             await DoPipingInputWorkIfNeeded(process);
             
             process.Start();
-            
-            var startTime = DateTime.Now;
             
             // Wait for process to exit before redirecting Standard Output and Standard Error.
             await process.WaitForExitAsync(cancellationToken);
@@ -230,8 +278,6 @@ namespace CliRunner.Commands
             CheckIfUnsuccessfulExecutionRequiresException(process);
             
             await DoPipingOutputWorkIfNeeded(process);
-            
-            return startTime;
         }
         
         /// <summary>
@@ -244,9 +290,10 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("maccatalyst")]
+        [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
-        [SupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
@@ -266,9 +313,10 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("ios")]
+        [SupportedOSPlatform("maccatalyst")]
+        [UnsupportedOSPlatform("ios")]
         [SupportedOSPlatform("android")]
-        [SupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<CommandResult> ExecuteAsync(Encoding encoding, CancellationToken cancellationToken = default)
@@ -276,16 +324,9 @@ namespace CliRunner.Commands
             Process process = CreateProcess(
                 CreateStartInfo(false, false, false, WindowCreation));
             
-            var startTime = await DoCommonCommandExecutionWork(process, cancellationToken);
-
-            if (OperatingSystem.IsIOS() || OperatingSystem.IsTvOS())
-            {
-                return new CommandResult(process.ExitCode, startTime, process.ExitTime);
-            }
-            else
-            {
-                return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
-            }
+            await DoCommonCommandExecutionWork(process, cancellationToken);
+            
+            return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
         }
 
         /// <summary>
@@ -296,6 +337,7 @@ namespace CliRunner.Commands
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("android")]
@@ -320,6 +362,7 @@ namespace CliRunner.Commands
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
         [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [SupportedOSPlatform("android")]
         [SupportedOSPlatform("ios")]
         [SupportedOSPlatform("tvos")]
