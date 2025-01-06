@@ -33,7 +33,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <PackageReference Include="CliRunner" Version="[0.6.1, 0.7.0)" />
+      <PackageReference Include="CliRunner" Version="[0.7.0, 0.8.0)" />
     </ItemGroup>
 
     <ItemGroup>
