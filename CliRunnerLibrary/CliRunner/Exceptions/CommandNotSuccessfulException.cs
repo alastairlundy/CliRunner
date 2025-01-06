@@ -21,7 +21,6 @@ namespace CliRunner.Exceptions
     /// <summary>
     /// 
     /// </summary>
-    public sealed class CommandNotSuccesfulException : Exception
     {
 #if NET5_0_OR_GREATER
         public Command? ExecutedCommand { get; private set; }
