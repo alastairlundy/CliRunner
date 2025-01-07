@@ -12,10 +12,27 @@ using System.Threading.Tasks;
 
 namespace CliRunner.Commands.Abstractions
 {
+    /// <summary>
+    /// An interface to allow for a more standardized implementation of Command pipe handling.
+    /// </summary>
     public interface ICommandPipeHandler
     {
+        /// <summary>
+        /// An interface method to asynchronously copy the process' Standard Input to the Command's Standard Input.
+        /// </summary>
+        /// <param name="process">The process to be copied from.</param>
         Task PipeStandardInputAsync(Process process);
+        
+        /// <summary>
+        /// An interface method to asynchronously copy the process' Standard Output to the Command's Standard Output.
+        /// </summary>
+        /// <param name="process">The process to be copied from.</param>
         Task PipeStandardOutputAsync(Process process);
+        
+        /// <summary>
+        /// An interface method to asynchronously copy the process' Standard Error to the Command's Standard Error.
+        /// </summary>
+        /// <param name="process">The process to be copied from.</param>
         Task PipeStandardErrorAsync(Process process);
     }
 }
