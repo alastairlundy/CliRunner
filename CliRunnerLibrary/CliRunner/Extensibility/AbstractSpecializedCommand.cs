@@ -20,7 +20,7 @@ namespace CliRunner.Extensibility
     /// <summary>
     /// 
     /// </summary>
-    public abstract class AbstractSpecializedCommand : Command, ISpecializedCommand
+    public abstract class AbstractSpecializedCommand : Command
     {
         public AbstractSpecializedCommand(string targetFilePath) : base(targetFilePath)
         {
