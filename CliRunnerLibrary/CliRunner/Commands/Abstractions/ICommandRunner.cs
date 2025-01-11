@@ -16,6 +16,9 @@ using CliRunner.Commands.Buffered;
 
 namespace CliRunner.Commands.Abstractions
 {
+    /// <summary>
+    /// An interface to specify required Command Running functionality.
+    /// </summary>
     public interface ICommandRunner
     {
         Process CreateProcess(ProcessStartInfo processStartInfo);

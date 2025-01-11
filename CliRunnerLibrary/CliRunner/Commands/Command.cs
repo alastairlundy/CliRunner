@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Text;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
@@ -32,7 +33,7 @@ using CliRunner.Internal.Localizations;
 namespace CliRunner.Commands
 {
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public partial class Command : ICommandConfiguration, ICommandConfigurationBuilder
+    public partial class Command : ICommand
     {
         /// <summary>
         /// Whether administrator privileges are required when executing the Command.
