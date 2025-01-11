@@ -29,10 +29,10 @@ namespace CliRunner.Commands
         public CommandResult(int exitCode,
             DateTime startTime, DateTime exitTime)
         {
-            this.ExitCode = exitCode;
+            ExitCode = exitCode;
             
-            this.ExitTime = exitTime;
-            this.StartTime = startTime;
+            ExitTime = exitTime;
+            StartTime = startTime;
         }
          
         /// <summary>
