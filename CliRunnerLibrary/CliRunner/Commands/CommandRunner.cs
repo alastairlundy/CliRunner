@@ -185,7 +185,8 @@ namespace CliRunner.Commands
             
             return output;
         }
-        private void CheckTargetExecutableExists(ProcessStartInfo processStartInfo)
+        
+        private void TargetExecutablePathCheck(ProcessStartInfo processStartInfo)
         {
             if (File.Exists(processStartInfo.FileName) == false)
             {
@@ -267,7 +268,7 @@ namespace CliRunner.Commands
 #endif
         private async Task DoCommonCommandExecutionWork(Process process, CancellationToken cancellationToken)
         {
-            CheckTargetExecutableExists(process.StartInfo);
+            TargetExecutablePathCheck(process.StartInfo);
             await DoPipingInputWorkIfNeeded(process);
             
             process.Start();
