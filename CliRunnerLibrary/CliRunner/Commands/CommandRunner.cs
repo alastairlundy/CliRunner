@@ -32,6 +32,7 @@ using CliRunner.Commands.Buffered;
 using CliRunner.Exceptions;
 
 using CliRunner.Internal.Localizations;
+// ReSharper disable SuggestVarOrType_SimpleTypes
 
 // ReSharper disable RedundantBoolCompare
 
@@ -75,9 +76,9 @@ namespace CliRunner.Commands
         }
 
         /// <summary>
-        /// 
+        /// Creates Process Start Information based on specified parameters and Command object values.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values. .</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -282,10 +283,11 @@ namespace CliRunner.Commands
         }
         
         /// <summary>
-        /// 
+        /// Executes a command asynchronously and returns Command execution information as a CommandResult.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">A token to cancel the operation if required.</param>
+        /// <returns>A CommandResult object containing the execution information of the command.</returns>
+        /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -303,11 +305,11 @@ namespace CliRunner.Commands
         }
 
         /// <summary>
-        /// 
+        /// Executes a command asynchronously and returns Command execution information as a CommandResult.
         /// </summary>
-        /// <param name="encoding"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="encoding">The encoding to use for the command input (if applicable) and output.</param>
+        /// <param name="cancellationToken">A token to cancel the operation if required.</param>
+        /// <returns>A CommandResult object containing the execution information of the command.</returns>
         /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -333,10 +335,11 @@ namespace CliRunner.Commands
         }
 
         /// <summary>
-        /// 
+        /// Executes a command asynchronously and returns Command execution information and Command output as a BufferedCommandResult.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">A token to cancel the operation if required.</param>
+        /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
+        /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -354,11 +357,11 @@ namespace CliRunner.Commands
         }
         
         /// <summary>
-        /// 
+        /// Executes a command asynchronously and returns Command execution information and Command output as a BufferedCommandResult.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <param name="encoding"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">A token to cancel the operation if required.</param>
+        /// <param name="encoding">The encoding to use for the command input (if applicable) and output.</param>
+        /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
         /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
