@@ -7,6 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
@@ -21,15 +22,15 @@ namespace CliRunner.Commands.Abstractions
     /// </summary>
     public interface ICommandRunner
     {
-        Process CreateProcess(ProcessStartInfo processStartInfo);
+        Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default);
         
-        ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default);
+        ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default);
         
-        Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default);
-        Task<CommandResult> ExecuteAsync(Encoding encoding, CancellationToken cancellationToken = default);
+        Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
+        Task<CommandResult> ExecuteAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default);
 
         
-        Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default);
-        Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default);
+        Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
+        Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default);
     }
 }

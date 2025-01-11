@@ -13,6 +13,7 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -22,33 +23,36 @@ using System.Threading.Tasks;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
-
-using System;
 #endif
 
 using CliRunner.Commands.Abstractions;
 using CliRunner.Commands.Buffered;
-
 using CliRunner.Exceptions;
 
 using CliRunner.Internal.Localizations;
-// ReSharper disable SuggestVarOrType_SimpleTypes
-
-// ReSharper disable RedundantBoolCompare
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
 #endif
 
-namespace CliRunner.Commands
+
+namespace CliRunner.Commands;
+
+public class CommandRunner : ICommandRunner
 {
-    public partial class Command : ICommandRunner
+    private readonly ICommandPipeHandler _commandPipeHandler;
+
+    public CommandRunner(ICommandPipeHandler commandPipeHandler)
     {
-        /// <summary>
-        /// Creates a process with the specified process start information.
-        /// </summary>
-        /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
-        /// <returns>the newly created Process with the specified start information.</returns>
+        _commandPipeHandler = commandPipeHandler;
+    }
+
+    /// <summary>
+    /// Creates a process with the specified process start information.
+    /// </summary>
+    /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
+    /// <param name="processorAffinity"></param>
+    /// <returns>the newly created Process with the specified start information.</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -60,16 +64,16 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public Process CreateProcess(ProcessStartInfo processStartInfo)
+        public Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default)
         {
             Process output = new Process
             {
                 StartInfo = processStartInfo,
             };
             
-            if (OperatingSystem.IsWindows() | OperatingSystem.IsLinux())
+            if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
             {
-                output.ProcessorAffinity = ProcessorAffinity;
+                output.ProcessorAffinity = processorAffinity;
             }
             
             return output;
@@ -90,25 +94,25 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo(bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default)
+        public ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default)
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
-                FileName = TargetFilePath,
-                WorkingDirectory = WorkingDirectoryPath,
-                UseShellExecute = UseShellExecution,
+                FileName = command.TargetFilePath,
+                WorkingDirectory = command.WorkingDirectoryPath,
+                UseShellExecute = command.UseShellExecution,
                 CreateNoWindow = createNoWindow,
                 RedirectStandardInput = redirectStandardInput,
                 RedirectStandardOutput = redirectStandardOutput,
                 RedirectStandardError = redirectStandardError,
             };
 
-            if (string.IsNullOrEmpty(Arguments) == false)
+            if (string.IsNullOrEmpty(command.Arguments) == false)
             {
-                output.Arguments = Arguments;
+                output.Arguments = command.Arguments;
             }
 
-            if (RequiresAdministrator == true)
+            if (command.RequiresAdministrator == true)
             {
                 if (OperatingSystem.IsWindows())
                 {
@@ -120,52 +124,52 @@ namespace CliRunner.Commands
                 }
             }
 
-            if (StandardInput != StreamWriter.Null)
+            if (command.StandardInput != StreamWriter.Null)
             {
                 output.RedirectStandardInput = true;
             }
-            if (StandardOutput != StreamReader.Null)
+            if (command.StandardOutput != StreamReader.Null)
             {
                 output.RedirectStandardOutput = true;
             }
-            if (StandardError != StreamReader.Null)
+            if (command.StandardError != StreamReader.Null)
             {
                 output.RedirectStandardError = true;
             }
 
-            if (Credentials != null)
+            if (command.Credentials != null)
             {
                 if (OperatingSystem.IsWindows())
                 {
-                    if (Credentials.Domain != null)
+                    if (command.Credentials.Domain != null)
                     {
-                        output.Domain = Credentials.Domain;
+                        output.Domain = command.Credentials.Domain;
                     }
-                    if (Credentials.UserName != null)
+                    if (command.Credentials.UserName != null)
                     {
-                        output.UserName = Credentials.UserName;
+                        output.UserName = command.Credentials.UserName;
                     }
-                    if (Credentials.Password != null)
+                    if (command.Credentials.Password != null)
                     {
-                        output.Password = Credentials.Password;
+                        output.Password = command.Credentials.Password;
                     }
                     
 #pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                    if (Credentials.LoadUserProfile != null)
+                    if (command.Credentials.LoadUserProfile != null)
 #pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
                     {
 #if NETSTANDARD2_0
-                    output.LoadUserProfile = Credentials.LoadUserProfile;
+                    output.LoadUserProfile = command.Credentials.LoadUserProfile;
 #else
-                        output.LoadUserProfile = (bool)Credentials.LoadUserProfile;
+                        output.LoadUserProfile = (bool)command.Credentials.LoadUserProfile;
 #endif
                     }
                 }
             }
 
-            if (EnvironmentVariables != null)
+            if (command.EnvironmentVariables != null)
             {
-                foreach (KeyValuePair<string, string> variable in EnvironmentVariables)
+                foreach (KeyValuePair<string, string> variable in command.EnvironmentVariables)
                 {
                     if (variable.Value != null)
                     {
@@ -206,11 +210,11 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        private async Task DoPipingInputWorkIfNeeded(Process process)
+        private async Task DoPipingInputWorkIfNeeded(Command command, Process process)
         {
             if (process.StartInfo.RedirectStandardInput == true)
             {
-                await PipeStandardInputAsync(process);
+                await _commandPipeHandler.PipeStandardInputAsync(process, command);
             }
         }
         
@@ -225,15 +229,15 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        private async Task DoPipingOutputWorkIfNeeded(Process process)
+        private async Task DoPipingOutputWorkIfNeeded(Command command, Process process)
         {
             if (process.StartInfo.RedirectStandardOutput == true)
             {
-                await PipeStandardOutputAsync(process);
+                await _commandPipeHandler.PipeStandardOutputAsync(process, command);
             }
             if (process.StartInfo.RedirectStandardError == true)
             {
-                await PipeStandardErrorAsync(process);
+                await _commandPipeHandler.PipeStandardErrorAsync(process, command);
             }
         }
 
@@ -248,11 +252,11 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        private void CheckIfUnsuccessfulExecutionRequiresException(Process process)
+        private void CheckIfUnsuccessfulExecutionRequiresException(Command command, Process process)
         {
-            if (process.ExitCode != 0 && ResultValidation == CommandResultValidation.ExitCodeZero)
+            if (process.ExitCode != 0 && command.ResultValidation == CommandResultValidation.ExitCodeZero)
             {
-                throw new CommandNotSuccessfulException(process.ExitCode, this);
+                throw new CommandNotSuccessfulException(process.ExitCode, command);
             }
         }
 
@@ -267,24 +271,25 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        private async Task DoCommonCommandExecutionWork(Process process, CancellationToken cancellationToken)
+        private async Task DoCommonCommandExecutionWork(Command command, Process process, CancellationToken cancellationToken)
         {
             TargetExecutablePathCheck(process.StartInfo);
-            await DoPipingInputWorkIfNeeded(process);
+            await DoPipingInputWorkIfNeeded(command, process);
             
             process.Start();
             
             // Wait for process to exit before redirecting Standard Output and Standard Error.
             await process.WaitForExitAsync(cancellationToken);
 
-            CheckIfUnsuccessfulExecutionRequiresException(process);
+            CheckIfUnsuccessfulExecutionRequiresException(command, process);
             
-            await DoPipingOutputWorkIfNeeded(process);
+            await DoPipingOutputWorkIfNeeded(command, process);
         }
-        
+
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information as a CommandResult.
         /// </summary>
+        /// <param name="command">The command to be executed.</param>
         /// <param name="cancellationToken">A token to cancel the operation if required.</param>
         /// <returns>A CommandResult object containing the execution information of the command.</returns>
         /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
@@ -299,14 +304,15 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<CommandResult> ExecuteAsync(CancellationToken cancellationToken = default)
+        public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
         {
-            return await ExecuteAsync(Encoding.Default, cancellationToken);
+            return await ExecuteAsync(command, Encoding.Default, cancellationToken);
         }
 
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information as a CommandResult.
         /// </summary>
+        /// <param name="command">The command to be executed.</param>
         /// <param name="encoding">The encoding to use for the command input (if applicable) and output.</param>
         /// <param name="cancellationToken">A token to cancel the operation if required.</param>
         /// <returns>A CommandResult object containing the execution information of the command.</returns>
@@ -322,14 +328,13 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<CommandResult> ExecuteAsync(Encoding encoding, CancellationToken cancellationToken = default)
+        public async Task<CommandResult> ExecuteAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default)
         {
-            Process process = CreateProcess(
-                CreateStartInfo(StandardInput != StreamWriter.Null,
-                    StandardOutput != StreamReader.Null,
-                    StandardError != StreamReader.Null, WindowCreation));
+            Process process = CreateProcess(CreateStartInfo(command, command.StandardInput != StreamWriter.Null,
+                command.StandardOutput != StreamReader.Null,
+                command.StandardError != StreamReader.Null, command.WindowCreation));
             
-            await DoCommonCommandExecutionWork(process, cancellationToken);
+            await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
             return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
         }
@@ -337,6 +342,7 @@ namespace CliRunner.Commands
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information and Command output as a BufferedCommandResult.
         /// </summary>
+        /// <param name="command">The command to be executed.</param>
         /// <param name="cancellationToken">A token to cancel the operation if required.</param>
         /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
         /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
@@ -351,14 +357,15 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<BufferedCommandResult> ExecuteBufferedAsync(CancellationToken cancellationToken = default)
+        public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default)
         {
-            return await ExecuteBufferedAsync(Encoding.Default, cancellationToken: cancellationToken);
+            return await ExecuteBufferedAsync(command, Encoding.Default, cancellationToken: cancellationToken);
         }
-        
+
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information and Command output as a BufferedCommandResult.
         /// </summary>
+        /// <param name="command">The command to be executed.</param>
         /// <param name="cancellationToken">A token to cancel the operation if required.</param>
         /// <param name="encoding">The encoding to use for the command input (if applicable) and output.</param>
         /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
@@ -374,22 +381,25 @@ namespace CliRunner.Commands
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<BufferedCommandResult> ExecuteBufferedAsync(Encoding encoding, CancellationToken cancellationToken = default)
+        public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default)
         {
-            Process process = CreateProcess(
-                CreateStartInfo(StandardInput != null, true, true, WindowCreation, encoding));
+            Process process = CreateProcess(CreateStartInfo(command,
+                command.StandardInput != null,
+                true, true,
+                command.WindowCreation, encoding));
 
-            await DoCommonCommandExecutionWork(process, cancellationToken);
+            await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
 #if NET6_0_OR_GREATER
-                return new BufferedCommandResult(process.ExitCode, await process.StandardOutput.ReadToEndAsync(cancellationToken),
+                return new BufferedCommandResult(process.ExitCode,
+ await process.StandardOutput.ReadToEndAsync(cancellationToken),
                     await process.StandardError.ReadToEndAsync(cancellationToken),
                     process.StartTime, process.ExitTime);
 #else
                 return new BufferedCommandResult(process.ExitCode, 
-                await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync(), 
+                await process.StandardOutput.ReadToEndAsync(),
+                await process.StandardError.ReadToEndAsync(), 
                 process.StartTime, process.ExitTime);
 #endif
         }
-    }
 }
