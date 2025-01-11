@@ -185,18 +185,6 @@ namespace CliRunner.Commands
             
             return output;
         }
-
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
         private void CheckTargetExecutableExists(ProcessStartInfo processStartInfo)
         {
             if (File.Exists(processStartInfo.FileName) == false)
