@@ -2,7 +2,7 @@
 This readme covers the **CliRunner Specializations** library. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
 
 ## Usage
-CliRunner.Specializations comes with 3 specializations as of 0.3.0: 
+CliRunner.Specializations comes with 3 specializations as of 0.8.0: 
 - [CmdCommand](#cmdcommand) - An easier way to execute processes and commands through cmd.exe (Only supported on Windows)
 - [ClassicPowershellCommand](#classicpower-shellcommand) - An easier way to execute processes and commands through Windows Powershell (Only supported on Windows)
 - [PowershellCommand](#powershellcommand) - An easier way to execute processes and commands through the modern Cross-Platform open source Powershell (Powershell is not installed by CliRunner and is expected to be installed if you plan to use it.)
