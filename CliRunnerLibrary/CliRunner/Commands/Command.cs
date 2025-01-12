@@ -26,6 +26,7 @@ using System.Runtime.Versioning;
 using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
 using CliRunner.Internal.Localizations;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
@@ -169,7 +170,7 @@ namespace CliRunner.Commands
         /// </remarks>
         /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
         /// <returns>A new Command object with the configured Target File Path.</returns>
-        public static Command Create(string targetFilePath)
+        public static Command CreateInstance(string targetFilePath)
         {
             return new Command(targetFilePath);
         }
