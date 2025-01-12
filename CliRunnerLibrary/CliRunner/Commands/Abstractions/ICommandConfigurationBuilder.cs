@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Text;
 using CliRunner.Builders;
 
 namespace CliRunner.Commands.Abstractions
@@ -37,5 +37,9 @@ namespace CliRunner.Commands.Abstractions
         Command WithProcessorAffinity(IntPtr processorAffinity);
         Command WithShellExecution(bool useShellExecute);
         Command WithWindowCreation(bool useWindowCreation);
+
+        Command WithEncoding(Encoding standardInputEncoding = default,
+            Encoding standardOutputEncoding = default,
+            Encoding standardErrorEncoding = default);
     }
 }
