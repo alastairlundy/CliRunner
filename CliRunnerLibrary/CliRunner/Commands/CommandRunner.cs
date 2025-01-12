@@ -213,7 +213,7 @@ public class CommandRunner : ICommandRunner
             // Handle input piping if needed.
             if (process.StartInfo.RedirectStandardInput == true)
             {
-                await commandPipeHandler.PipeStandardInputAsync(command, process);
+                await _commandPipeHandler.PipeStandardInputAsync(command, process);
             }
             
             process.Start();
@@ -230,11 +230,11 @@ public class CommandRunner : ICommandRunner
             // Handle output piping if needed.
             if (process.StartInfo.RedirectStandardOutput == true)
             {
-                await commandPipeHandler.PipeStandardOutputAsync(process, command);
+                await _commandPipeHandler.PipeStandardOutputAsync(process, command);
             }
             if (process.StartInfo.RedirectStandardError == true)
             {
-                await commandPipeHandler.PipeStandardErrorAsync(process, command);
+                await _commandPipeHandler.PipeStandardErrorAsync(process, command);
             }
         }
 
