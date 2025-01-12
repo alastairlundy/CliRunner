@@ -32,7 +32,7 @@ using CliRunner.Specializations.Internal.Localizations;
  using System.Linq;
 #endif
 
-namespace CliRunner.Specializations.Commands
+namespace CliRunner.Specializations
 {
     /// <summary>
     /// A class to make running commands through Windows CMD easier.

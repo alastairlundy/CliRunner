@@ -28,7 +28,7 @@ using CliRunner.Specializations.Internal.Localizations;
  // ReSharper disable RedundantBoolCompare
 #endif
 
-namespace CliRunner.Specializations.Commands
+namespace CliRunner.Specializations
 {
     /// <summary>
     /// A class to make running commands through Windows Powershell easier.

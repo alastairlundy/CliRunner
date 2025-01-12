@@ -28,7 +28,7 @@ using System.Runtime.Versioning;
  using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
 #endif
 
-namespace CliRunner.Specializations.Commands
+namespace CliRunner.Specializations
 {
     /// <summary>
     /// A class to make running commands through cross-platform Powershell easier.
