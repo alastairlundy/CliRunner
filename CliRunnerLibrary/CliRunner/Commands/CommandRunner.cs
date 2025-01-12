@@ -285,7 +285,7 @@ public class CommandRunner : ICommandRunner
         {
             Process process = CreateProcess(CreateStartInfo(command, command.StandardInput != StreamWriter.Null,
                 command.StandardOutput != StreamReader.Null,
-                command.StandardError != StreamReader.Null, command.WindowCreation));
+                command.StandardError != StreamReader.Null, command.WindowCreation, encoding));
             
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
