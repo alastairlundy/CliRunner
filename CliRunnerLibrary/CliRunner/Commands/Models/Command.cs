@@ -158,6 +158,7 @@ namespace CliRunner.Commands
             ProcessorAffinity = processorAffinity;
             UseShellExecution = useShellExecute;
             WindowCreation = windowCreation;
+            
         }
 
                 
