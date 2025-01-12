@@ -33,6 +33,7 @@
     SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -57,5 +58,11 @@ namespace CliRunner.Commands.Abstractions
         StreamWriter StandardInput { get; }
         StreamReader StandardOutput { get; }
         StreamReader StandardError { get; }
+        
+        bool UseShellExecution { get; }
+
+        bool WindowCreation { get; }
+
+        IntPtr ProcessorAffinity { get; }
     }
 }
