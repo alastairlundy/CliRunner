@@ -16,11 +16,10 @@ using System.Runtime.Versioning;
 
 using System.Threading;
 using System.Threading.Tasks;
+using CliRunner.Abstractions;
+using CliRunner.Buffered;
 
-using CliRunner.Commands.Abstractions;
-using CliRunner.Commands.Buffered;
-
-namespace CliRunner.Commands.Extensions;
+namespace CliRunner.Extensions;
 
 public static class CommandExecuteExtensions
 {

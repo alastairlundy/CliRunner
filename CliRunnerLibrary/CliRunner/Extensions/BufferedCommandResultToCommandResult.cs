@@ -7,9 +7,9 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-using CliRunner.Commands.Buffered;
+using CliRunner.Buffered;
 
-namespace CliRunner.Commands.Extensions
+namespace CliRunner.Extensions
 {
     public static class BufferedCommandResultToCommandResult
     {

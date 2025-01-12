@@ -14,8 +14,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using CliRunner.Commands;
-
 namespace CliRunner.Extensibility
 {
     /// <summary>

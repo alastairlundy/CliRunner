@@ -13,6 +13,14 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+
+// ReSharper disable RedundantBoolCompare
+// ReSharper disable ConvertToPrimaryConstructor
+// ReSharper disable SuggestVarOrType_SimpleTypes
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,25 +29,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
-
-using CliRunner.Commands.Abstractions;
-using CliRunner.Commands.Buffered;
+using CliRunner.Abstractions;
+using CliRunner.Buffered;
 using CliRunner.Exceptions;
-
 using CliRunner.Internal.Localizations;
-// ReSharper disable RedundantBoolCompare
-// ReSharper disable ConvertToPrimaryConstructor
-// ReSharper disable SuggestVarOrType_SimpleTypes
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
 #endif
 
 
-namespace CliRunner.Commands;
+namespace CliRunner;
 
 public class CommandRunner : ICommandRunner
 {

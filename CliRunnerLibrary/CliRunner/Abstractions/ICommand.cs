@@ -7,7 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-namespace CliRunner.Commands.Abstractions;
+namespace CliRunner.Abstractions;
 
 /// <summary>
 /// An interface representing a more complete Command object without any static operators.

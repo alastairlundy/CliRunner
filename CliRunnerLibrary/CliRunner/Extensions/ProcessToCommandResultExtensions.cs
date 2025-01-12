@@ -10,11 +10,11 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using CliRunner.Buffered;
 
-using CliRunner.Commands.Buffered;
 // ReSharper disable RedundantBoolCompare
 
-namespace CliRunner.Commands.Extensions
+namespace CliRunner.Extensions
 {
     public static class ProcessToCommandResultExtensions
     {

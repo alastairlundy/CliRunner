@@ -17,7 +17,7 @@ using System;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace CliRunner.Commands
+namespace CliRunner
 {
     /// <summary>
     /// A class that represents the results from an asynchronously executed Command.

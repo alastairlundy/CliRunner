@@ -19,20 +19,19 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
-
+using CliRunner.Abstractions;
+using CliRunner.Builders;
+using CliRunner.Internal.Localizations;
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
 #endif
 
-using CliRunner.Builders;
-using CliRunner.Commands.Abstractions;
-using CliRunner.Internal.Localizations;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
 
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
-namespace CliRunner.Commands
+namespace CliRunner
 {
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class Command : ICommand, IEquatable<Command>

@@ -15,7 +15,7 @@
 
 using System;
 
-namespace CliRunner.Commands.Buffered
+namespace CliRunner.Buffered
 {
     /// <summary>
     /// A buffered CommandResult containing a Command's StandardOutput and StandardError information.

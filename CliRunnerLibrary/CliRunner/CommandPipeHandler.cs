@@ -16,10 +16,9 @@ using System.Runtime.Versioning;
 
 using System.Diagnostics;
 using System.Threading.Tasks;
+using CliRunner.Abstractions;
 
-using CliRunner.Commands.Abstractions;
-
-namespace CliRunner.Commands;
+namespace CliRunner;
 
 public class CommandPipeHandler : ICommandPipeHandler
 {

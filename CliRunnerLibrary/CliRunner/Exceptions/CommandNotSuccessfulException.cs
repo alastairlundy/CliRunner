@@ -12,8 +12,6 @@
 #endif
 
 using System;
-
-using CliRunner.Commands;
 using CliRunner.Internal.Localizations;
 
 namespace CliRunner.Exceptions

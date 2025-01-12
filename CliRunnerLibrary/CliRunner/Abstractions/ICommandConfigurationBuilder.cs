@@ -13,7 +13,7 @@ using System.IO;
 using System.Text;
 using CliRunner.Builders;
 
-namespace CliRunner.Commands.Abstractions
+namespace CliRunner.Abstractions
 {
     public interface ICommandConfigurationBuilder
     {

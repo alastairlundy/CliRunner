@@ -41,7 +41,7 @@ using System.Text;
 using System.Runtime.Versioning;
 #endif
 
-namespace CliRunner.Commands.Abstractions
+namespace CliRunner.Abstractions
 {
     /// <summary>
     /// 
