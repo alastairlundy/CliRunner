@@ -298,7 +298,7 @@ namespace CliRunner.Commands
         [Pure]
         public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
         {
-            var environmentVariablesBuilder = new EnvironmentVariablesBuilder()
+            EnvironmentVariablesBuilder environmentVariablesBuilder = new EnvironmentVariablesBuilder()
                 .Set(EnvironmentVariables);
 
             configure(environmentVariablesBuilder);
@@ -392,7 +392,8 @@ namespace CliRunner.Commands
 #endif
         public Command WithCredentials(Action<CredentialsBuilder> configure)
         {
-            var credentialBuilder = new CredentialsBuilder().SetDomain(Credentials.Domain)
+            CredentialsBuilder credentialBuilder = new CredentialsBuilder()
+                .SetDomain(Credentials.Domain)
                 .SetPassword(Credentials.Password)
                 .SetUsername(Credentials.UserName);
 
