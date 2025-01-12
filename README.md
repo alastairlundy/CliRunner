@@ -52,10 +52,10 @@ CliRunner uses a fluent builder style of syntax to easily configure and run Comm
 The following example shows how to configure and build a Command that returns a BufferedCommandResult which contains redirected StandardOutput and StandardError.
 
 ```csharp
-using CliRunner.Commands;
-using CliRunner.Commands.Buffered;
+using CliRunner;
+using CliRunner.Buffered;
 
-var result = await Cli.Run("Path/To/Exe")
+var result = await Command.CreateInstance("Path/To/Exe")
               .WithArguments(["arg1", "arg2"])
               .WithWorkingDirectory("/Path/To/Directory")
               .ExecuteBufferedAsync();

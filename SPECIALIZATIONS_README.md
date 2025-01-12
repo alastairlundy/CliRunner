@@ -12,13 +12,13 @@ All Command specialization classes come with an already configured TargetFilePat
 ### CmdCommand
 The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 
-Usage is identical to using ``Cli.Run`` except that the entrypoint is ``CmdCommand.Run()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
+Usage is identical to using ``Cli.Wrap`` except that the entrypoint is ``CmdCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
 
 ```csharp
-using CliRunner.Commands;
-using CliRunner.Commands.Buffered;
+using CliRunner;
+using CliRunner.Buffered;
 
-  var result = await CmdCommand.Run()
+  var result = await CmdCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
                 .ExecuteBufferedAsync();
@@ -26,7 +26,7 @@ using CliRunner.Commands.Buffered;
 
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
 ```csharp
-using CliRunner.Commands;
+using CliRunner;
 
 await CmdCommand.Run()
                 .WithArguments("Your arguments go here")
