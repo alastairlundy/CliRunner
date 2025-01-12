@@ -81,6 +81,27 @@ public class CommandRunner : ICommandRunner
             return output;
         }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
+    public ProcessStartInfo CreateStartInfo(Command command)
+    {
+        return CreateStartInfo(command, command.StandardOutput != null, command.StandardError != null);
+    }
+
         /// <summary>
         /// Creates Process Start Information based on specified parameters and Command object values.
         /// </summary>
@@ -283,9 +304,7 @@ public class CommandRunner : ICommandRunner
 #endif
         public async Task<CommandResult> ExecuteAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default)
         {
-            Process process = CreateProcess(CreateStartInfo(command, command.StandardInput != StreamWriter.Null,
-                command.StandardOutput != StreamReader.Null,
-                command.StandardError != StreamReader.Null, command.WindowCreation, encoding));
+            Process process = CreateProcess(CreateStartInfo(command));
             
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             

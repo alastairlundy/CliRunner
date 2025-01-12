@@ -23,6 +23,9 @@ namespace CliRunner.Commands.Abstractions
     public interface ICommandRunner
     {
         Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default);
+
+        ProcessStartInfo CreateStartInfo(Command command);
+
         ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput, bool redirectStandardError);
         
         Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
