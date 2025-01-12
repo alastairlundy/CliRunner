@@ -26,8 +26,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         /// <summary>
         /// Asynchronously copies the process' Standard Input to the Command's Standard Input.
         /// </summary>
-        /// <param name="source">The process to be copied from.</param>
-        /// <param name="source"></param>
+        /// <param name="source">The command to be copied from.</param>
         /// <param name="destination"></param>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
