@@ -19,9 +19,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
+
 using CliRunner.Abstractions;
 using CliRunner.Builders;
 using CliRunner.Internal.Localizations;
+
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
 #endif
@@ -199,6 +201,25 @@ namespace CliRunner
         public static Command CreateInstance(string targetFilePath)
         {
             return new Command(targetFilePath);
+        }
+
+        /// <summary>
+        /// Used to wrap an existing Command object when a modified version is desired.
+        /// </summary>
+        /// <param name="command">The command to wrap</param>
+        /// <returns>A new Command object with the configured Command information passed to it.</returns>
+        /// <remarks>
+        /// <para>Chain appropriate Command methods as needed such as <code>WithArguments("[your args]");</code> and <code>WithWorkingDirectory("[your directory]");</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
+        /// </remarks>
+        public static Command CreateInstance(Command command)
+        {
+           return new Command(command.TargetFilePath, command.Arguments,
+                command.WorkingDirectoryPath, command.RequiresAdministrator,
+                command.EnvironmentVariables, command.Credentials, command.ResultValidation,
+                command.StandardInput, command.StandardOutput, command.StandardError,
+                Encoding.Default, Encoding.Default, Encoding.Default, command.ProcessorAffinity,
+                command.WindowCreation, command.UseShellExecution);
         }
         
         /// <summary>

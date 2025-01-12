@@ -24,6 +24,7 @@ namespace CliRunner
     /// A static class to enable creating a new Command object in a more pretty fashion.
     /// </summary>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
+    [Obsolete("This method is obsolete and will be removed in future versions. Use Command's static CreateInstance methods directly instead.")]
     public static class Cli
     {
         /// <summary>
@@ -37,19 +38,7 @@ namespace CliRunner
         /// <returns>A new Command object with the configured Target File Path.</returns>
         [Pure]
         [Obsolete("This method is obsolete and will be removed in future versions. Use Wrap instead.")]
-        public static Command Run(string targetFilePath) => Wrap(targetFilePath);
-        
-        /// <summary>
-        /// Creates a Command object with the specified target file path. 
-        /// </summary>
-        /// <remarks>
-        /// <para>Chain appropriate Command methods as needed such as <code>.WithArguments("[your args]")</code> and <code>.WithWorkingDirectory("[your directory]")</code>.</para>
-        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
-        /// </remarks>
-        /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
-        /// <returns>A new Command object with the configured Target File Path.</returns>
-        [Pure]
-        public static Command Wrap(string targetFilePath) => Command.CreateInstance(targetFilePath);
+        public static Command Run(string targetFilePath) => Command.CreateInstance(targetFilePath);
         
         /// <summary>
         /// Used to wrap an existing Command object when a modified version is desired.
@@ -62,20 +51,6 @@ namespace CliRunner
         /// </remarks>
         [Pure]
         [Obsolete("This method is obsolete and will be removed in future versions. Use Wrap instead.")]
-        public static Command Run(Command command) => Wrap(command);
-        /// <summary>
-        /// Used to wrap an existing Command object when a modified version is desired.
-        /// </summary>
-        /// <param name="command">The command to wrap</param>
-        /// <returns>A new Command object with the configured Command information passed to it.</returns>
-        /// <remarks>
-        /// <para>Chain appropriate Command methods as needed such as <code>WithArguments("[your args]");</code> and <code>WithWorkingDirectory("[your directory]");</code>.</para>
-        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
-        /// </remarks>
-        [Pure]
-        public static Command Wrap(Command command) => new Command(command.TargetFilePath, command.Arguments,
-            command.WorkingDirectoryPath, command.RequiresAdministrator, command.EnvironmentVariables,
-            command.Credentials, command.ResultValidation, command.StandardInput,
-            command.StandardOutput, command.StandardError, Encoding.Default, Encoding.Default, Encoding.Default, command.ProcessorAffinity, command.WindowCreation, command.UseShellExecution);
+        public static Command Run(Command command) => Command.CreateInstance(command);
     }
 }
