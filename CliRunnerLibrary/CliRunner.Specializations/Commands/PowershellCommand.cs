@@ -85,7 +85,7 @@ namespace CliRunner.Specializations.Commands
         /// </summary>
         /// <returns>The new PowershellCommand instance.</returns>
         [Pure]
-        public static PowershellCommand Run()
+        public static PowershellCommand CreateInstance()
         {
             return new PowershellCommand();
         }
@@ -131,7 +131,7 @@ namespace CliRunner.Specializations.Commands
                      }
                  }
 
-                 result = await CmdCommand.Run()
+                 result = await CmdCommand.CreateInstance()
                      .WithArguments("where pwsh.exe")
                      .ExecuteBufferedAsync();
              }
