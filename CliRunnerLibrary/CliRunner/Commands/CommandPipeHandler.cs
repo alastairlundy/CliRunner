@@ -27,6 +27,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         /// Asynchronously copies the process' Standard Input to the Command's Standard Input.
         /// </summary>
         /// <param name="source">The process to be copied from.</param>
+        /// <param name="source"></param>
         /// <param name="destination"></param>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -39,7 +40,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif 
-        public async Task PipeStandardInputAsync(Process source, Command destination)
+        public async Task PipeStandardInputAsync(Command source, Process destination)
         {
             await destination.StandardInput.FlushAsync();
             destination.StandardInput.BaseStream.Position = 0;

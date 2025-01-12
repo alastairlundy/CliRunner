@@ -20,22 +20,22 @@ namespace CliRunner.Commands.Abstractions
         /// <summary>
         /// An interface method to asynchronously copy the process' Standard Input to the Command's Standard Input.
         /// </summary>
-        /// <param name="process">The process to be copied from.</param>
-        /// <param name="command"></param>
-        Task PipeStandardInputAsync(Process process, Command command);
+        /// <param name="source">The process to be copied from.</param>
+        /// <param name="destination"></param>
+        Task PipeStandardInputAsync(Command source, Process destination);
 
         /// <summary>
         /// An interface method to asynchronously copy the process' Standard Output to the Command's Standard Output.
         /// </summary>
-        /// <param name="process">The process to be copied from.</param>
-        /// <param name="command"></param>
-        Task PipeStandardOutputAsync(Process process, Command command);
+        /// <param name="source">The process to be copied from.</param>
+        /// <param name="destination"></param>
+        Task PipeStandardOutputAsync(Process source, Command destination);
 
         /// <summary>
         /// An interface method to asynchronously copy the process' Standard Error to the Command's Standard Error.
         /// </summary>
-        /// <param name="process">The process to be copied from.</param>
-        /// <param name="command"></param>
-        Task PipeStandardErrorAsync(Process process, Command command);
+        /// <param name="source">The process to be copied from.</param>
+        /// <param name="destination"></param>
+        Task PipeStandardErrorAsync(Process source, Command destination);
     }
 }
