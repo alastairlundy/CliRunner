@@ -36,7 +36,6 @@ namespace CliRunner
             LoadUserProfile = loadUserProfile;
         }
         
-#if NET6_0_OR_GREATER || NETSTANDARD2_1
 #if NET6_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
@@ -50,12 +49,7 @@ namespace CliRunner
         [SupportedOSPlatform("windows")]
 #endif
         public bool? LoadUserProfile { get; set; }
-#else
-        public string Domain { get; set; }
-        public string UserName { get; set; }
-        public SecureString Password { get; set; }
-        public bool LoadUserProfile { get; set; }
-#endif
+
         
         public static UserCredentials Default { get; } = new UserCredentials();
 

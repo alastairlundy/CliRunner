@@ -192,11 +192,7 @@ public class CommandRunner : ICommandRunner
                     if (command.Credentials.LoadUserProfile != null)
 #pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
                     {
-#if NETSTANDARD2_0
-                    output.LoadUserProfile = command.Credentials.LoadUserProfile;
-#else
                         output.LoadUserProfile = (bool)command.Credentials.LoadUserProfile;
-#endif
                     }
                 }
             }
