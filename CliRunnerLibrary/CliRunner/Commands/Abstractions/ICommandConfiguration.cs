@@ -37,6 +37,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+
 namespace CliRunner.Commands.Abstractions
 {
     /// <summary>
@@ -63,6 +67,10 @@ namespace CliRunner.Commands.Abstractions
 
         bool WindowCreation { get; }
 
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+#endif
         IntPtr ProcessorAffinity { get; }
     }
 }
