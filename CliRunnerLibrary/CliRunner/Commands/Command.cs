@@ -28,6 +28,7 @@ using CliRunner.Builders;
 using CliRunner.Commands.Abstractions;
 using CliRunner.Internal.Localizations;
 // ReSharper disable NonReadonlyMemberInGetHashCode
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
 
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
