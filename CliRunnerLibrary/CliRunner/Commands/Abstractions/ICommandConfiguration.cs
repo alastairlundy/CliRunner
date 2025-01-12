@@ -66,7 +66,11 @@ namespace CliRunner.Commands.Abstractions
         bool UseShellExecution { get; }
 
         bool WindowCreation { get; }
-
+        
+        System.Text.Encoding StandardInputEncoding { get; }
+        System.Text.Encoding StandardOutputEncoding { get; }
+        System.Text.Encoding StandardErrorEncoding { get; }
+        
 #if NET6_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Text;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
@@ -107,6 +108,21 @@ namespace CliRunner.Commands
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public bool UseShellExecution { get; protected set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Text.Encoding StandardInputEncoding { get; protected set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Text.Encoding StandardOutputEncoding { get; protected set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Text.Encoding StandardErrorEncoding { get; protected set; }
 
         /// <summary>
         /// Configures the Command to be wrapped and executed.
@@ -121,9 +137,12 @@ namespace CliRunner.Commands
         /// <param name="standardInput">The standard input source to be used (if specified).</param>
         /// <param name="standardOutput">The standard output destination to be used (if specified).</param>
         /// <param name="standardError">The standard error destination to be used (if specified).</param>
+        /// <param name="standardErrorEncoding"></param>
         /// <param name="processorAffinity">The processor affinity to be used (if specified).</param>
         /// <param name="windowCreation">Whether to enable or disable Window Creation by the Command's Process.</param>
         /// <param name="useShellExecute">Whether to enable or disable executing the Command through Shell Execution.</param>
+        /// <param name="standardInputEncoding"></param>
+        /// <param name="standardOutputEncoding"></param>
         public Command(string targetFilePath,
             string arguments = null, string workingDirectoryPath = null,
             bool runAsAdministrator = false,
@@ -133,6 +152,9 @@ namespace CliRunner.Commands
             StreamWriter standardInput = null,
             StreamReader standardOutput = null,
             StreamReader standardError = null,
+            Encoding standardInputEncoding = default,
+            Encoding standardOutputEncoding = default,
+            Encoding standardErrorEncoding = default,
 #if NET6_0_OR_GREATER
             IntPtr processorAffinity = 0,
 #else
@@ -159,6 +181,9 @@ namespace CliRunner.Commands
             UseShellExecution = useShellExecute;
             WindowCreation = windowCreation;
             
+            StandardInputEncoding = standardInputEncoding ?? Encoding.Default;
+            StandardOutputEncoding = standardOutputEncoding ?? Encoding.Default;
+            StandardErrorEncoding = standardErrorEncoding ?? Encoding.Default;
         }
 
                 
@@ -193,6 +218,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -223,6 +251,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -245,6 +276,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -266,6 +300,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -288,6 +325,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -325,6 +365,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -346,6 +389,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -375,6 +421,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -421,6 +470,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -444,6 +496,9 @@ namespace CliRunner.Commands
                 source,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -465,6 +520,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 target,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -486,6 +544,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 target,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -518,6 +579,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 processorAffinity,
                 WindowCreation,
                 UseShellExecution);
@@ -541,6 +605,9 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 WindowCreation,
                 useShellExecution);
@@ -561,8 +628,38 @@ namespace CliRunner.Commands
                 StandardInput,
                 StandardOutput,
                 StandardError,
+                StandardInputEncoding,
+                StandardOutputEncoding,
+                StandardErrorEncoding,
                 ProcessorAffinity,
                 enableWindowCreation,
+                UseShellExecution);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="standardInputEncoding"></param>
+        /// <param name="standardOutputEncoding"></param>
+        /// <param name="standardErrorEncoding"></param>
+        /// <returns></returns>
+        public Command WithEncoding(Encoding standardInputEncoding = default,
+            Encoding standardOutputEncoding = default,
+            Encoding standardErrorEncoding = default) =>
+            new Command(TargetFilePath,
+                Arguments,
+                WorkingDirectoryPath,
+                RequiresAdministrator,
+                EnvironmentVariables,
+                Credentials,
+                ResultValidation,
+                StandardInput,
+                StandardOutput,
+                StandardError,
+                standardInputEncoding,
+                standardOutputEncoding,
+                standardErrorEncoding,
+                ProcessorAffinity,
+                WindowCreation,
                 UseShellExecution);
 
 
