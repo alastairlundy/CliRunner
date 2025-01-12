@@ -260,6 +260,7 @@ public class CommandRunner : ICommandRunner
                 await _commandPipeHandler.PipeStandardErrorAsync(process, command);
             }
         }
+    
 
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information as a CommandResult.
@@ -281,30 +282,6 @@ public class CommandRunner : ICommandRunner
 #endif
         public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
         {
-            return await ExecuteAsync(command, Encoding.Default, cancellationToken);
-        }
-
-        /// <summary>
-        /// Executes a command asynchronously and returns Command execution information as a CommandResult.
-        /// </summary>
-        /// <param name="command">The command to be executed.</param>
-        /// <param name="encoding">The encoding to use for the command input (if applicable) and output.</param>
-        /// <param name="cancellationToken">A token to cancel the operation if required.</param>
-        /// <returns>A CommandResult object containing the execution information of the command.</returns>
-        /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        public async Task<CommandResult> ExecuteAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default)
-        {
             Process process = CreateProcess(CreateStartInfo(command));
             
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
@@ -321,40 +298,16 @@ public class CommandRunner : ICommandRunner
         /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
         [SupportedOSPlatform("android")]
         [UnsupportedOSPlatform("ios")]
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default)
-        {
-            return await ExecuteBufferedAsync(command, Encoding.Default, cancellationToken: cancellationToken);
-        }
-
-        /// <summary>
-        /// Executes a command asynchronously and returns Command execution information and Command output as a BufferedCommandResult.
-        /// </summary>
-        /// <param name="command">The command to be executed.</param>
-        /// <param name="cancellationToken">A token to cancel the operation if required.</param>
-        /// <param name="encoding">The encoding to use for the command input (if applicable) and output.</param>
-        /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
-        /// <exception cref="FileNotFoundException">Thrown if the executable's specified file path is not found.</exception>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(CreateStartInfo(command,
                 true, true));

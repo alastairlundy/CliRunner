@@ -29,10 +29,7 @@ namespace CliRunner.Commands.Abstractions
         ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput, bool redirectStandardError);
         
         Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
-        Task<CommandResult> ExecuteAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default);
-
         
         Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
-        Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default);
     }
 }
