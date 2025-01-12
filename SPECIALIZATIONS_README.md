@@ -12,7 +12,7 @@ All Command specialization classes come with an already configured TargetFilePat
 ### CmdCommand
 The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 
-Usage is identical to using ``Cli.Wrap`` except that the entrypoint is ``CmdCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
+Usage is very similar to using ``Cli.Wrap`` except that the entrypoint is ``CmdCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
 
 ```csharp
 using CliRunner;
@@ -28,7 +28,7 @@ If the result of the command being run is not of concern you can call ``ExecuteA
 ```csharp
 using CliRunner;
 
-await CmdCommand.Run()
+await CmdCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
                 .ExecuteAsync();
@@ -37,13 +37,13 @@ await CmdCommand.Run()
 ### ClassicPowershellCommand
 The ClassicPowershellCommand is a specialized Command class with an already configured TargetFilePath that points to Windows' copy of powershell.exe .
 
-Usage is identical to using ``Cli.Run`` except that the entrypoint is ``ClassicPowershellCommand.Run()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
+Usage is identical to using ``Command.CreateInstance`` except that the entrypoint is ``ClassicPowershellCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
 
 ```csharp
-using CliRunner.Commands;
-using CliRunner.Commands.Buffered;
+using CliRunner;
+using CliRunner.Buffered;
 
- var task = await ClassicPowershellCommand.Run()
+ var task = await ClassicPowershellCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
                 .ExecuteBufferedAsync();
 ```
@@ -51,13 +51,13 @@ using CliRunner.Commands.Buffered;
 ### PowershellCommand
 The PowershellCommand's TargetFilePath points to the installed copy of cross-platform Powershell if it is installed.
 
-Usage is identical to using ``Cli.Run`` except that the entrypoint is ``PowershellCommand.Run()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
+Usage is identical to using ``Command.CreateInstance`` except that the entrypoint is ``PowershellCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
 
 ```csharp
-using CliRunner.Commands;
-using CliRunner.Commands.Buffered;
+using CliRunner;
+using CliRunner.Buffered;
 
-  var result = await PowershellCommand.Run()
+  var result = await PowershellCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
                 .ExecuteBufferedAsync();

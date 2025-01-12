@@ -11,9 +11,11 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 * SourceLink support
 
 ## Why use CliRunner over [CliWrap](https://github.com/Tyrrrz/CliWrap/)?
-* No hidden or additional licensing terms are required beyond the source code license
-* No imported C code - This library is entirely written in C#
-* No lock in regarding Piping support
+* Greater separation of concerns with the Command class (v0.8.0 and newer) - Command Running and Pipe handling are moved to separate classes.
+* Supports Dependency Injection workflows for Pipe Handling (through ICommandPipeHandler) and Command Execution (through ICommandRunner).
+* No hidden or additional licensing terms are required beyond the source code license.
+* No imported C code - This library is entirely written in C#.
+* No lock in regarding Piping support - Use .NET's StreamWriter and StreamReader classes as inputs and outputs respectively.
 * Uses .NET's built in ``Process`` type.
 
 ^1 - RuntimeExtensions dependency and [Polyfill](https://github.com/SimonCropp/Polyfill) are only required for .NET Standard 2.0 and 2.1 users

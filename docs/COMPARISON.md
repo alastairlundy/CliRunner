@@ -3,10 +3,12 @@
 ### Entry Point
 CliWrap's intended entrypoint is the ``Cli`` static class with the ``Wrap`` static method.
 
-CliRunner's intended entrypoint is the ``CliRunner`` static class with the ``Run`` static method.
+CliRunner's intended entrypoint, as of v0.8.0,  is the ``CreateInstance`` static method in the ``Command`` class.
 
 ### Command
-In addition to what CliWrap provides in Command properties, CliRunner adds several properties for ``UseShellExecution``, ``ProcessorAffinity``, and ``WindowCreation``
+In addition to what CliWrap provides in Command properties, CliRunner adds several properties for ``UseShellExecution``, ``ProcessorAffinity``, and ``WindowCreation``.
+
+As of v0.8.0 CliRunner differs by moving business logic out of the Command class and into separate classes, whilst providing extension methods for the Command class for ease of use.
 
 ### Credential Model
 To avoid naming conflicts with naming both a variable ``Credentials`` and the ``Credentials`` class, CliRunner calls the class ``UserCredentials``.
