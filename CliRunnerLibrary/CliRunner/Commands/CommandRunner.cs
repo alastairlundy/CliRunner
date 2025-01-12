@@ -30,6 +30,7 @@ using CliRunner.Commands.Buffered;
 using CliRunner.Exceptions;
 
 using CliRunner.Internal.Localizations;
+// ReSharper disable RedundantBoolCompare
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
@@ -190,75 +191,6 @@ public class CommandRunner : ICommandRunner
             
             return output;
         }
-        
-        private void TargetExecutablePathCheck(ProcessStartInfo processStartInfo)
-        {
-            if (File.Exists(processStartInfo.FileName) == false)
-            {
-                throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", processStartInfo.FileName));
-            }
-        }
-
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        private async Task DoPipingInputWorkIfNeeded(Command command, Process process)
-        {
-            if (process.StartInfo.RedirectStandardInput == true)
-            {
-                await _commandPipeHandler.PipeStandardInputAsync(process, command);
-            }
-        }
-        
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        private async Task DoPipingOutputWorkIfNeeded(Command command, Process process)
-        {
-            if (process.StartInfo.RedirectStandardOutput == true)
-            {
-                await _commandPipeHandler.PipeStandardOutputAsync(process, command);
-            }
-            if (process.StartInfo.RedirectStandardError == true)
-            {
-                await _commandPipeHandler.PipeStandardErrorAsync(process, command);
-            }
-        }
-
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        private void CheckIfUnsuccessfulExecutionRequiresException(Command command, Process process)
-        {
-            if (process.ExitCode != 0 && command.ResultValidation == CommandResultValidation.ExitCodeZero)
-            {
-                throw new CommandNotSuccessfulException(process.ExitCode, command);
-            }
-        }
 
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -273,17 +205,37 @@ public class CommandRunner : ICommandRunner
 #endif
         private async Task DoCommonCommandExecutionWork(Command command, Process process, CancellationToken cancellationToken)
         {
-            TargetExecutablePathCheck(process.StartInfo);
-            await DoPipingInputWorkIfNeeded(command, process);
+            if (File.Exists(process.StartInfo.FileName) == false)
+            {
+                throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
+            }
+            
+            // Handle input piping if needed.
+            if (process.StartInfo.RedirectStandardInput == true)
+            {
+                await commandPipeHandler.PipeStandardInputAsync(command, process);
+            }
             
             process.Start();
             
             // Wait for process to exit before redirecting Standard Output and Standard Error.
             await process.WaitForExitAsync(cancellationToken);
 
-            CheckIfUnsuccessfulExecutionRequiresException(command, process);
+            // Throw a CommandNotSuccessful exception if required.
+            if (process.ExitCode != 0 && command.ResultValidation == CommandResultValidation.ExitCodeZero)
+            {
+                throw new CommandNotSuccessfulException(process.ExitCode, command);
+            }
             
-            await DoPipingOutputWorkIfNeeded(command, process);
+            // Handle output piping if needed.
+            if (process.StartInfo.RedirectStandardOutput == true)
+            {
+                await commandPipeHandler.PipeStandardOutputAsync(process, command);
+            }
+            if (process.StartInfo.RedirectStandardError == true)
+            {
+                await commandPipeHandler.PipeStandardErrorAsync(process, command);
+            }
         }
 
         /// <summary>
