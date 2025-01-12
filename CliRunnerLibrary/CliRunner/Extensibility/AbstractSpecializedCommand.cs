@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using CliRunner.Commands;
@@ -27,7 +28,18 @@ namespace CliRunner.Extensibility
             TargetFilePath = targetFilePath;
         }
         
-        public AbstractSpecializedCommand(string targetFilePath, string arguments = null, string workingDirectoryPath = null, bool requiresAdministrator = false, IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null, CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero, StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null, IntPtr processorAffinity = default(IntPtr), bool useShellExecute = false, bool windowCreation = false) : base(targetFilePath, arguments, workingDirectoryPath, requiresAdministrator, environmentVariables, credentials, commandResultValidation, standardInput, standardOutput, standardError, processorAffinity, windowCreation)
+        public AbstractSpecializedCommand(string targetFilePath, string arguments = null,
+            string workingDirectoryPath = null, bool requiresAdministrator = false,
+            IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null,
+            CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
+            StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
+            Encoding standardInputEncoding = default, Encoding standardOutputEncoding = default,
+            Encoding standardErrorEncoding = default, IntPtr processorAffinity = default(IntPtr),
+            bool useShellExecute = false, bool windowCreation = false)
+            : base(targetFilePath, arguments,
+            workingDirectoryPath, requiresAdministrator, environmentVariables, credentials, commandResultValidation,
+            standardInput, standardOutput, standardError, standardInputEncoding, standardOutputEncoding,
+            standardErrorEncoding, processorAffinity, windowCreation)
         {
             TargetFilePath = targetFilePath;
             Arguments = arguments;
