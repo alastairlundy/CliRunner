@@ -33,7 +33,7 @@ using CliRunner.Internal.Localizations;
 namespace CliRunner.Commands
 {
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public class Command : ICommand
+    public class Command : ICommand, IEquatable<Command>
     {
         /// <summary>
         /// Whether administrator privileges are required when executing the Command.
@@ -576,6 +576,107 @@ namespace CliRunner.Commands
             string shellExecution = UseShellExecution ? $"\n {Resources.Command_ToString_ShellExecution}" : "";
 
             return $"{commandString}{workingDirectory}{adminPrivileges}{shellExecution}";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(Command other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+            
+            return RequiresAdministrator == other.RequiresAdministrator
+                   && TargetFilePath == other.TargetFilePath
+                   && WorkingDirectoryPath == other.WorkingDirectoryPath
+                   && Arguments == other.Arguments
+                   && WindowCreation == other.WindowCreation
+                   && Equals(EnvironmentVariables, other.EnvironmentVariables)
+                   && Equals(Credentials, other.Credentials)
+                   && ResultValidation == other.ResultValidation
+                   && Equals(StandardInput, other.StandardInput)
+                   && Equals(StandardOutput, other.StandardOutput)
+                   && Equals(StandardError, other.StandardError)
+                   && ProcessorAffinity == other.ProcessorAffinity
+                   && UseShellExecution == other.UseShellExecution;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is null)
+            {
+                return false;
+            }
+
+            if (obj is Command command)
+            {
+                return Equals(command);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = RequiresAdministrator.GetHashCode();
+                hashCode = (hashCode * 397) ^ (TargetFilePath != null ? TargetFilePath.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (WorkingDirectoryPath != null ? WorkingDirectoryPath.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Arguments != null ? Arguments.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ WindowCreation.GetHashCode();
+                hashCode = (hashCode * 397) ^ (EnvironmentVariables != null ? EnvironmentVariables.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Credentials != null ? Credentials.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (int)ResultValidation;
+                hashCode = (hashCode * 397) ^ (StandardInput != null ? StandardInput.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (StandardOutput != null ? StandardOutput.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (StandardError != null ? StandardError.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ ProcessorAffinity.GetHashCode();
+                hashCode = (hashCode * 397) ^ UseShellExecution.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        /// <summary>
+        /// Determines if a Command is equal to another command.
+        /// </summary>
+        /// <param name="left">A command to be compared.</param>
+        /// <param name="right">The other command to be compared.</param>
+        /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
+        public static bool Equals(Command left, Command right)
+        {
+            return left.Equals(right);
+        }
+        
+        /// <summary>
+        /// Determines if a Command is equal to another command.
+        /// </summary>
+        /// <param name="left">A command to be compared.</param>
+        /// <param name="right">The other command to be compared.</param>
+        /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
+        public static bool operator ==(Command left, Command right)
+        {
+            return Equals(left, right);
+        }
+
+        /// <summary>
+        /// Determines if a Command is not equal to another command.
+        /// </summary>
+        /// <param name="left">A command to be compared.</param>
+        /// <param name="right">The other command to be compared.</param>
+        /// <returns>True if both Commands are not equal to each other; false otherwise.</returns>
+        public static bool operator !=(Command left, Command right)
+        {
+            return Equals(left, right) == false;
         }
     }
 }
