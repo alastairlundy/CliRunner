@@ -64,7 +64,7 @@ namespace CliRunner
         /// </remarks>
         [Pure]
         [Obsolete("This method is obsolete and will be removed in future versions. Use Wrap instead.")]
-        public static Command Run(Command command) => Run(command);
+        public static Command Run(Command command) => Wrap(command);
         /// <summary>
         /// Used to wrap an existing Command object when a modified version is desired.
         /// </summary>
