@@ -20,26 +20,22 @@ namespace CliRunner.Commands.Buffered
     /// <summary>
     /// A buffered CommandResult containing a Command's StandardOutput and StandardError information.
     /// </summary>
-    public class BufferedCommandResult : CommandResult
+    public class BufferedCommandResult(
+        int exitCode,
+        string standardOutput,
+        string standardError,
+        DateTime startTime,
+        DateTime exitTime)
+        : CommandResult(exitCode, startTime, exitTime)
     {
         /// <summary>
         /// The Standard Output from the Command represented as a string.
         /// </summary>
-        public string StandardOutput { get; }
-        
+        public string StandardOutput { get; } = standardOutput;
+
         /// <summary>
         /// The Standard Error from the Command represented as a string.
         /// </summary>
-        public string StandardError { get; }
-        
-        // Don't switch to Primary Constructor because .NET Standard 2.0 & 2.1 don't support this.
-        // ReSharper disable once ConvertToPrimaryConstructor
-        public BufferedCommandResult(int exitCode, string standardOutput, string standardError,
-            DateTime startTime, DateTime exitTime)
-            : base(exitCode, startTime, exitTime)
-        {
-            StandardOutput = standardOutput;
-            StandardError = standardError;
-        }
+        public string StandardError { get; } = standardError;
     }
 }

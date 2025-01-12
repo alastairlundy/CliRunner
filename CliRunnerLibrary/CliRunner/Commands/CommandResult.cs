@@ -22,19 +22,11 @@ namespace CliRunner.Commands
     /// <summary>
     /// A class that represents the results from an asynchronously executed Command.
     /// </summary>
-    public class CommandResult
+    public class CommandResult(
+        int exitCode,
+        DateTime startTime,
+        DateTime exitTime)
     {
-        // Don't switch to Primary Constructor because .NET Standard 2.0 & 2.1 don't support this.
-        // ReSharper disable once ConvertToPrimaryConstructor
-        public CommandResult(int exitCode,
-            DateTime startTime, DateTime exitTime)
-        {
-            ExitCode = exitCode;
-            
-            ExitTime = exitTime;
-            StartTime = startTime;
-        }
-         
         /// <summary>
         /// Whether the Command successfully exited.
         /// </summary>
@@ -42,15 +34,18 @@ namespace CliRunner.Commands
         /// <summary>
         /// The exit code from the Command that was executed.
         /// </summary>
-        public int ExitCode { get; }
+        public int ExitCode { get; } = exitCode;
+
         /// <summary>
         /// The Date and Time that the Command's execution started.
         /// </summary>
-        public DateTime StartTime { get; }
+        public DateTime StartTime { get; } = startTime;
+
         /// <summary>
         /// The Date and Time that the Command's execution finished.
         /// </summary>
-        public DateTime ExitTime { get; }
+        public DateTime ExitTime { get; } = exitTime;
+
         /// <summary>
         /// How long the Command took to execute represented as a TimeSpan.
         /// </summary>
