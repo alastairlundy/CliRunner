@@ -15,7 +15,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-
+using System.Text;
 using CliRunner.Commands;
 
 namespace CliRunner
@@ -51,6 +51,6 @@ namespace CliRunner
         public static Command Run(Command command) => new Command(command.TargetFilePath, command.Arguments,
             command.WorkingDirectoryPath, command.RequiresAdministrator, command.EnvironmentVariables,
             command.Credentials, command.ResultValidation, command.StandardInput,
-            command.StandardOutput, command.StandardError, command.ProcessorAffinity, command.WindowCreation, command.UseShellExecution);
+            command.StandardOutput, command.StandardError, Encoding.Default, Encoding.Default, Encoding.Default, command.ProcessorAffinity, command.WindowCreation, command.UseShellExecution);
     }
 }
