@@ -96,15 +96,15 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardInput, bool redirectStandardOutput, bool redirectStandardError, bool createNoWindow = false, Encoding encoding = default)
+        public ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput, bool redirectStandardError)
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
                 FileName = command.TargetFilePath,
                 WorkingDirectory = command.WorkingDirectoryPath,
                 UseShellExecute = command.UseShellExecution,
-                CreateNoWindow = createNoWindow,
-                RedirectStandardInput = redirectStandardInput,
+                CreateNoWindow = command.WindowCreation,
+                RedirectStandardInput = command.StandardInput != null,
                 RedirectStandardOutput = redirectStandardOutput,
                 RedirectStandardError = redirectStandardError,
             };
@@ -180,15 +180,15 @@ public class CommandRunner : ICommandRunner
                 }
             }
             
-            if (redirectStandardInput == true)
+            if (output.RedirectStandardInput == true)
             {
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
-                output.StandardInputEncoding = Encoding.Default;
+                output.StandardInputEncoding = command.StandardInputEncoding ?? Encoding.Default;
 #endif
             }
             
-            output.StandardOutputEncoding = encoding ?? Encoding.Default;
-            output.StandardErrorEncoding = encoding ?? Encoding.Default;
+            output.StandardOutputEncoding = command.StandardOutputEncoding ?? Encoding.Default;
+            output.StandardErrorEncoding = command.StandardErrorEncoding ?? Encoding.Default;
             
             return output;
         }
@@ -337,9 +337,7 @@ public class CommandRunner : ICommandRunner
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, Encoding encoding, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(CreateStartInfo(command,
-                command.StandardInput != null,
-                true, true,
-                command.WindowCreation, encoding));
+                true, true));
 
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
