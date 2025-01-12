@@ -13,9 +13,11 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Text;
+
 using CliRunner.Commands;
 
 namespace CliRunner
@@ -36,7 +38,20 @@ namespace CliRunner
         /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
         /// <returns>A new Command object with the configured Target File Path.</returns>
         [Pure]
-        public static Command Run(string targetFilePath) => new Command(targetFilePath);
+        [Obsolete("This method is obsolete and will be removed in future versions. Use Wrap instead.")]
+        public static Command Run(string targetFilePath) => Wrap(targetFilePath);
+        
+        /// <summary>
+        /// Creates a Command object with the specified target file path. 
+        /// </summary>
+        /// <remarks>
+        /// <para>Chain appropriate Command methods as needed such as <code>.WithArguments("[your args]")</code> and <code>.WithWorkingDirectory("[your directory]")</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
+        /// </remarks>
+        /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
+        /// <returns>A new Command object with the configured Target File Path.</returns>
+        [Pure]
+        public static Command Wrap(string targetFilePath) => Command.CreateInstance(targetFilePath);
         
         /// <summary>
         /// Used to wrap an existing Command object when a modified version is desired.
@@ -48,7 +63,19 @@ namespace CliRunner
         /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
         /// </remarks>
         [Pure]
-        public static Command Run(Command command) => new Command(command.TargetFilePath, command.Arguments,
+        [Obsolete("This method is obsolete and will be removed in future versions. Use Wrap instead.")]
+        public static Command Run(Command command) => Run(command);
+        /// <summary>
+        /// Used to wrap an existing Command object when a modified version is desired.
+        /// </summary>
+        /// <param name="command">The command to wrap</param>
+        /// <returns>A new Command object with the configured Command information passed to it.</returns>
+        /// <remarks>
+        /// <para>Chain appropriate Command methods as needed such as <code>WithArguments("[your args]");</code> and <code>WithWorkingDirectory("[your directory]");</code>.</para>
+        /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
+        /// </remarks>
+        [Pure]
+        public static Command Wrap(Command command) => new Command(command.TargetFilePath, command.Arguments,
             command.WorkingDirectoryPath, command.RequiresAdministrator, command.EnvironmentVariables,
             command.Credentials, command.ResultValidation, command.StandardInput,
             command.StandardOutput, command.StandardError, Encoding.Default, Encoding.Default, Encoding.Default, command.ProcessorAffinity, command.WindowCreation, command.UseShellExecution);
