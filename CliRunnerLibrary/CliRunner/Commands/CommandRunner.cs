@@ -361,16 +361,9 @@ public class CommandRunner : ICommandRunner
 
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
-#if NET6_0_OR_GREATER
-                return new BufferedCommandResult(process.ExitCode,
+            return new BufferedCommandResult(process.ExitCode,
  await process.StandardOutput.ReadToEndAsync(cancellationToken),
                     await process.StandardError.ReadToEndAsync(cancellationToken),
                     process.StartTime, process.ExitTime);
-#else
-                return new BufferedCommandResult(process.ExitCode, 
-                await process.StandardOutput.ReadToEndAsync(),
-                await process.StandardError.ReadToEndAsync(), 
-                process.StartTime, process.ExitTime);
-#endif
         }
 }
