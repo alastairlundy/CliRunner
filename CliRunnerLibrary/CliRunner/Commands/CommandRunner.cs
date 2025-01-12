@@ -51,6 +51,16 @@ public class CommandRunner : ICommandRunner
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="commandPipeHandler"></param>
+    /// <returns></returns>
+    public static CommandRunner CreateInstance(ICommandPipeHandler commandPipeHandler)
+    {
+        return new CommandRunner(commandPipeHandler);
+    } 
+
+    /// <summary>
     /// Creates a process with the specified process start information.
     /// </summary>
     /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
