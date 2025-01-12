@@ -113,17 +113,17 @@ namespace CliRunner.Commands
         /// <summary>
         /// 
         /// </summary>
-        public System.Text.Encoding StandardInputEncoding { get; protected set; }
+        public Encoding StandardInputEncoding { get; protected set; }
         
         /// <summary>
         /// 
         /// </summary>
-        public System.Text.Encoding StandardOutputEncoding { get; protected set; }
+        public Encoding StandardOutputEncoding { get; protected set; }
         
         /// <summary>
         /// 
         /// </summary>
-        public System.Text.Encoding StandardErrorEncoding { get; protected set; }
+        public Encoding StandardErrorEncoding { get; protected set; }
 
         /// <summary>
         /// Configures the Command to be wrapped and executed.
