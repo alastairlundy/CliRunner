@@ -117,6 +117,17 @@ namespace CliRunner.Specializations
         }
         
         /// <summary>
+        /// Creates a new instance of the CmdCommand class.
+        /// </summary>
+        /// <returns>The new CmdCommand instance.</returns>
+        /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
+        [Pure]
+        public static CmdCommand CreateInstance(ICommandRunner commandRunner)
+        {
+            return new CmdCommand(commandRunner);
+        }
+        
+        /// <summary>
         /// Asynchronously gets the installation location of CMD, if it is installed.
         /// </summary>
         /// <returns>The file path where CMD is installed if run on Windows.</returns>

@@ -123,6 +123,18 @@ namespace CliRunner.Specializations
         }
 
         /// <summary>
+        /// Creates a new instance of the ClassicPowershellCommand class.
+        /// </summary>
+        /// <returns>The new ClassicPowershellCommand instance.</returns>
+        /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
+        [Pure]
+        public static ClassicPowershellCommand CreateInstance(ICommandRunner commandRunner)
+        {
+            return new ClassicPowershellCommand(commandRunner);
+        }
+
+        
+        /// <summary>
         /// Gets the installation location for Windows Powershell.
         /// </summary>
         /// <returns>the file path of where Windows Powershell is installed to.</returns>

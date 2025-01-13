@@ -101,6 +101,17 @@ namespace CliRunner.Specializations
         }
         
         /// <summary>
+        /// Creates a new instance of the PowershellCommand class.
+        /// </summary>
+        /// <returns>The new PowershellCommand instance.</returns>
+        /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
+        [Pure]
+        public static PowershellCommand CreateInstance(ICommandRunner commandRunner)
+        {
+            return new PowershellCommand(commandRunner);
+        }
+        
+        /// <summary>
         /// Gets the installation location for cross-platform Powershell.
         /// </summary>
         /// <returns>The file path of where cross-platform Powershell is installed to.</returns>
@@ -141,7 +152,7 @@ namespace CliRunner.Specializations
                      }
                  }
 
-                 result = await CmdCommand.CreateInstance()
+                 result = await CmdCommand.CreateInstance(_commandRunner)
                      .WithArguments("where pwsh.exe")
                      .ExecuteBufferedAsync(_commandRunner);
              }
