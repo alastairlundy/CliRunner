@@ -10,15 +10,17 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.7.0</PackageVersion>
+        <PackageVersion>0.8.0</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>### Changes since 0.6.0
-* Updated CliRunner dependency to 0.7.0
-        * Simplified Specialization installation detection code</PackageReleaseNotes>
+        <PackageReleaseNotes>### Changes since 0.7.0
+* Updated CliRunner dependency to 0.8.0 
+            * Updated Specialization classes to make use of CliRunner's 0.8.0 changes
+            * Added constructor overload to each Specialization that accepts an ICommandRunner object.
+* Renamed Run methods to CreateInstance to follow CliRunner's new entrypoint convention.</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
     </PropertyGroup>
 
