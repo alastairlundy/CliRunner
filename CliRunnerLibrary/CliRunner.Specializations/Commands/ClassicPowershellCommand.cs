@@ -14,11 +14,12 @@ using System.Runtime.Versioning;
 using System;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
-using CliRunner.Commands.Buffered;
+using CliRunner.Abstractions;
+using CliRunner.Buffered;
 using CliRunner.Extensibility;
+using CliRunner.Extensions;
 
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
@@ -45,7 +46,8 @@ namespace CliRunner.Specializations
 #endif
     public class ClassicPowershellCommand : AbstractSpecializedCommand
     {
-
+        private readonly ICommandRunner _commandRunner;
+        
         /// <summary>
         /// The target file path of Windows Powershell.
         /// </summary>
@@ -88,6 +90,26 @@ namespace CliRunner.Specializations
         public ClassicPowershellCommand() : base("")
         {
             base.TargetFilePath = TargetFilePath;
+            _commandRunner = new CommandRunner(new CommandPipeHandler());
+        }
+
+        /// <summary>
+        /// Sets up ClassicPowershellCommand.
+        /// </summary>
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [UnsupportedOSPlatform("macos")]
+        [UnsupportedOSPlatform("linux")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("watchos")]
+#endif
+        public ClassicPowershellCommand(ICommandRunner commandRunner) : base("")
+        {
+            base.TargetFilePath = TargetFilePath;
+            _commandRunner = commandRunner;
         }
 
         /// <summary>
@@ -161,9 +183,9 @@ namespace CliRunner.Specializations
             
             if (OperatingSystem.IsWindows() && await IsInstalledAsync())
             {
-                BufferedCommandResult result = await Cli.Run(this)
+                BufferedCommandResult result = await Command.CreateInstance(this)
                     .WithArguments("$PSVersionTable")
-                    .ExecuteBufferedAsync();
+                    .ExecuteBufferedAsync(_commandRunner);
                
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
                 string[] lines = result.StandardOutput.Split(Environment.NewLine);

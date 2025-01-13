@@ -13,9 +13,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using CliRunner.Commands.Buffered;
+using CliRunner.Abstractions;
+using CliRunner.Buffered;
 using CliRunner.Extensibility;
-
+using CliRunner.Extensions;
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
 
@@ -46,6 +47,8 @@ namespace CliRunner.Specializations
 #endif
     public class PowershellCommand : AbstractSpecializedCommand
     {
+        private readonly ICommandRunner _commandRunner;
+        
         /// <summary>
         /// The target file path of cross-platform Powershell.
         /// </summary>
@@ -78,6 +81,13 @@ namespace CliRunner.Specializations
         public PowershellCommand() : base("")
         {
             base.TargetFilePath = TargetFilePath;
+            _commandRunner = new CommandRunner(new CommandPipeHandler());
+        }
+
+        public PowershellCommand(ICommandRunner commandRunner) : base("")
+        {
+            base.TargetFilePath = TargetFilePath;
+            _commandRunner = commandRunner;
         }
 
         /// <summary>
@@ -133,19 +143,19 @@ namespace CliRunner.Specializations
 
                  result = await CmdCommand.CreateInstance()
                      .WithArguments("where pwsh.exe")
-                     .ExecuteBufferedAsync();
+                     .ExecuteBufferedAsync(_commandRunner);
              }
              else if (OperatingSystem.IsMacOS())
              {
-                 result = await Cli.Run("/usr/bin/which")
+                 result = await Command.CreateInstance("/usr/bin/which")
                      .WithArguments("pwsh")
-                     .ExecuteBufferedAsync();
+                     .ExecuteBufferedAsync(_commandRunner);
              }
              else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
              {
-                 result = await Cli.Run("/usr/bin/which")
+                 result = await Command.CreateInstance("/usr/bin/which")
                      .WithArguments("pwsh")
-                     .ExecuteBufferedAsync();
+                     .ExecuteBufferedAsync(_commandRunner);
              }
              else
              {
@@ -201,9 +211,9 @@ namespace CliRunner.Specializations
                 throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
             }
             
-            BufferedCommandResult result = await Cli.Run(this)
+            BufferedCommandResult result = await Command.CreateInstance(this)
                 .WithArguments("$PSVersionTable")
-                .ExecuteBufferedAsync();
+                .ExecuteBufferedAsync(_commandRunner);
              
             string[] lines = result.StandardOutput.Split(Environment.NewLine.ToCharArray());
 
