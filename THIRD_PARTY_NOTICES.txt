@@ -1,4 +1,4 @@
-CliRunner makes use of some 3rd party open source code code.
+CliRunner makes use of some 3rd party open source code.
 
 --------------------------------------------------------------------------
 CliRunner's ProcessResult class is based off of CliWrap's CommandResult class
