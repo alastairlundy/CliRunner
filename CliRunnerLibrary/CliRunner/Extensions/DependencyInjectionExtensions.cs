@@ -25,7 +25,6 @@ public static class DependencyInjectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddCliRunner(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
-        services.Add(lifetime, typeof(ICommand), typeof(Command));
         services.Add(lifetime, typeof(ICommandPipeHandler), typeof(CommandPipeHandler));
         services.Add(lifetime, typeof(ICommandRunner), typeof(CommandRunner));
         return services;
