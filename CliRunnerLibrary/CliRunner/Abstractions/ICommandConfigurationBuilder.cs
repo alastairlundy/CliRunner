@@ -17,28 +17,28 @@ namespace CliRunner.Abstractions
 {
     public interface ICommandConfigurationBuilder
     {
-        Command WithArguments(IEnumerable<string> arguments);
-        Command WithArguments(IEnumerable<string> arguments, bool escape);
+        ICommand WithArguments(IEnumerable<string> arguments);
+        ICommand WithArguments(IEnumerable<string> arguments, bool escape);
 
-        Command WithArguments(string arguments);
-        Command WithTargetFile(string targetFilePath);
-        Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables);
-        Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure);
+        ICommand WithArguments(string arguments);
+        ICommand WithTargetFile(string targetFilePath);
+        ICommand WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables);
+        ICommand WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure);
 
-        Command WithAdministratorPrivileges(bool runAsAdministrator);
+        ICommand WithAdministratorPrivileges(bool runAsAdministrator);
 
-        Command WithWorkingDirectory(string workingDirectoryPath);
-        Command WithCredentials(UserCredentials credentials);
-        Command WithCredentials(Action<CredentialsBuilder> configure);
-        Command WithValidation(CommandResultValidation validation);
-        Command WithStandardInputPipe(StreamWriter source);
-        Command WithStandardOutputPipe(StreamReader target);
-        Command WithStandardErrorPipe(StreamReader target);
-        Command WithProcessorAffinity(IntPtr processorAffinity);
-        Command WithShellExecution(bool useShellExecute);
-        Command WithWindowCreation(bool useWindowCreation);
+        ICommand WithWorkingDirectory(string workingDirectoryPath);
+        ICommand WithCredentials(UserCredentials credentials);
+        ICommand WithCredentials(Action<CredentialsBuilder> configure);
+        ICommand WithValidation(CommandResultValidation validation);
+        ICommand WithStandardInputPipe(StreamWriter source);
+        ICommand WithStandardOutputPipe(StreamReader target);
+        ICommand WithStandardErrorPipe(StreamReader target);
+        ICommand WithProcessorAffinity(IntPtr processorAffinity);
+        ICommand WithShellExecution(bool useShellExecute);
+        ICommand WithWindowCreation(bool useWindowCreation);
 
-        Command WithEncoding(Encoding standardInputEncoding = default,
+        ICommand WithEncoding(Encoding standardInputEncoding = default,
             Encoding standardOutputEncoding = default,
             Encoding standardErrorEncoding = default);
     }

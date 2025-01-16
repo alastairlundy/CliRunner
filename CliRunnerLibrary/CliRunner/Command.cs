@@ -228,7 +228,7 @@ namespace CliRunner
         /// <param name="arguments">The arguments to pass to the executable.</param>
         /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
-        public Command WithArguments(IEnumerable<string> arguments) =>
+        public ICommand WithArguments(IEnumerable<string> arguments) =>
             new Command(TargetFilePath,
                 string.Join(" ", arguments),
                 WorkingDirectoryPath,
@@ -253,7 +253,7 @@ namespace CliRunner
         /// <param name="escape">Whether to escape the arguments if escape characters are detected.</param>
         /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
-        public Command WithArguments(IEnumerable<string> arguments, bool escape)
+        public ICommand WithArguments(IEnumerable<string> arguments, bool escape)
         {
             string args = string.Join(" ", arguments);
 
@@ -286,7 +286,7 @@ namespace CliRunner
         /// <param name="arguments">The arguments to pass to the executable.</param>
         /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
-        public Command WithArguments(string arguments) =>
+        public ICommand WithArguments(string arguments) =>
             new Command(TargetFilePath,
                 arguments,
                 WorkingDirectoryPath,
@@ -310,7 +310,7 @@ namespace CliRunner
         /// <param name="targetFilePath"></param>
         /// <returns></returns>
         [Pure]
-        public Command WithTargetFile(string targetFilePath) =>
+        public ICommand WithTargetFile(string targetFilePath) =>
             new Command(targetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -335,7 +335,7 @@ namespace CliRunner
         /// <param name="environmentVariables">The environment variables to be configured.</param>
         /// <returns>The new Command with the specified environment variables.</returns>
         [Pure]
-        public Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
+        public ICommand WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -359,7 +359,7 @@ namespace CliRunner
         /// <param name="configure">The environment variables to be configured</param>
         /// <returns>The new Command with the specified environment variables.</returns>
         [Pure]
-        public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
+        public ICommand WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
         {
             EnvironmentVariablesBuilder environmentVariablesBuilder = new EnvironmentVariablesBuilder()
                 .Set(EnvironmentVariables);
@@ -375,7 +375,7 @@ namespace CliRunner
         /// <param name="runAsAdministrator">Whether to execute the Command with Administrator Privileges.</param>
         /// <returns>The new Command with the specified Administrator Privileges settings.</returns>
         [Pure]
-        public Command WithAdministratorPrivileges(bool runAsAdministrator) =>
+        public ICommand WithAdministratorPrivileges(bool runAsAdministrator) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -399,7 +399,7 @@ namespace CliRunner
         /// <param name="workingDirectoryPath">The working directory to be used.</param>
         /// <returns>The new Command with the specified working directory.</returns>
         [Pure]
-        public Command WithWorkingDirectory(string workingDirectoryPath) =>
+        public ICommand WithWorkingDirectory(string workingDirectoryPath) =>
             new Command(TargetFilePath,
                 Arguments,
                 workingDirectoryPath,
@@ -431,7 +431,7 @@ namespace CliRunner
         [UnsupportedOSPlatform("linux")]
         [UnsupportedOSPlatform("freebsd")]
 #endif
-        public Command WithCredentials(UserCredentials credentials) =>
+        public ICommand WithCredentials(UserCredentials credentials) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -462,7 +462,7 @@ namespace CliRunner
         [UnsupportedOSPlatform("linux")]
         [UnsupportedOSPlatform("freebsd")]
 #endif
-        public Command WithCredentials(Action<CredentialsBuilder> configure)
+        public ICommand WithCredentials(Action<CredentialsBuilder> configure)
         {
             CredentialsBuilder credentialBuilder = new CredentialsBuilder()
                 .SetDomain(Credentials.Domain)
@@ -480,7 +480,7 @@ namespace CliRunner
         /// <param name="validation"></param>
         /// <returns></returns>
         [Pure]
-        public Command WithValidation(CommandResultValidation validation) =>
+        public ICommand WithValidation(CommandResultValidation validation) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -506,7 +506,7 @@ namespace CliRunner
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
         [Pure]
-        public Command WithStandardInputPipe(StreamWriter source) =>
+        public ICommand WithStandardInputPipe(StreamWriter source) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -530,7 +530,7 @@ namespace CliRunner
         /// <param name="target"></param>
         /// <returns></returns>
         [Pure]
-        public Command WithStandardOutputPipe(StreamReader target) =>
+        public ICommand WithStandardOutputPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -554,7 +554,7 @@ namespace CliRunner
         /// <param name="target"></param>
         /// <returns></returns>
         [Pure]
-        public Command WithStandardErrorPipe(StreamReader target) =>
+        public ICommand WithStandardErrorPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -589,7 +589,7 @@ namespace CliRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public Command WithProcessorAffinity(IntPtr processorAffinity) =>
+        public ICommand WithProcessorAffinity(IntPtr processorAffinity) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -615,7 +615,7 @@ namespace CliRunner
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
         [Pure]
-        public Command WithShellExecution(bool useShellExecution) =>
+        public ICommand WithShellExecution(bool useShellExecution) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -638,7 +638,7 @@ namespace CliRunner
         /// </summary>
         /// <param name="enableWindowCreation">Whether to enable or disable window creation for the wrapped executable.</param>
         /// <returns>The new Command with the specified windows creation behaviour.</returns>
-        public Command WithWindowCreation(bool enableWindowCreation) =>
+        public ICommand WithWindowCreation(bool enableWindowCreation) =>
             new Command(TargetFilePath,
                 Arguments,
                 WorkingDirectoryPath,
@@ -663,7 +663,7 @@ namespace CliRunner
         /// <param name="standardOutputEncoding"></param>
         /// <param name="standardErrorEncoding"></param>
         /// <returns></returns>
-        public Command WithEncoding(Encoding standardInputEncoding = default,
+        public ICommand WithEncoding(Encoding standardInputEncoding = default,
             Encoding standardOutputEncoding = default,
             Encoding standardErrorEncoding = default) =>
             new Command(TargetFilePath,
