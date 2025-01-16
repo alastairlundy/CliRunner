@@ -22,12 +22,12 @@ namespace CliRunner.Abstractions
     {
         Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default);
 
-        ProcessStartInfo CreateStartInfo(Command command);
+        ProcessStartInfo CreateStartInfo(ICommand command);
 
-        ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput, bool redirectStandardError);
+        ProcessStartInfo CreateStartInfo(ICommand command, bool redirectStandardOutput, bool redirectStandardError);
         
-        Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
+        Task<CommandResult> ExecuteAsync(ICommand command, CancellationToken cancellationToken = default);
         
-        Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
+        Task<BufferedCommandResult> ExecuteBufferedAsync(ICommand command, CancellationToken cancellationToken = default);
     }
 }

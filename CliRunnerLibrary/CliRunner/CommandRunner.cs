@@ -108,7 +108,7 @@ public class CommandRunner : ICommandRunner
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public ProcessStartInfo CreateStartInfo(Command command)
+    public ProcessStartInfo CreateStartInfo(ICommand command)
     {
         return CreateStartInfo(command, command.StandardOutput != null, command.StandardError != null);
     }
@@ -128,7 +128,8 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput, bool redirectStandardError)
+        public ProcessStartInfo CreateStartInfo(ICommand command, bool redirectStandardOutput,
+            bool redirectStandardError)
         {
             ProcessStartInfo output = new ProcessStartInfo()
             {
@@ -232,7 +233,7 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        private async Task DoCommonCommandExecutionWork(Command command, Process process, CancellationToken cancellationToken)
+        private async Task DoCommonCommandExecutionWork(ICommand command, Process process, CancellationToken cancellationToken)
         {
             if (File.Exists(process.StartInfo.FileName) == false)
             {
@@ -266,7 +267,7 @@ public class CommandRunner : ICommandRunner
                 await _commandPipeHandler.PipeStandardErrorAsync(process, command);
             }
         }
-    
+
 
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information as a CommandResult.
@@ -286,7 +287,7 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
+        public async Task<CommandResult> ExecuteAsync(ICommand command, CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(CreateStartInfo(command));
             
@@ -313,7 +314,8 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default)
+        public async Task<BufferedCommandResult> ExecuteBufferedAsync(ICommand command,
+            CancellationToken cancellationToken = default)
         {
             Process process = CreateProcess(CreateStartInfo(command,
                 true, true));
