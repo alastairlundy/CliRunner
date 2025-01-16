@@ -38,7 +38,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif 
-        public async Task PipeStandardInputAsync(Command source, Process destination)
+        public async Task PipeStandardInputAsync(ICommand source, Process destination)
         {
             await destination.StandardInput.FlushAsync();
             destination.StandardInput.BaseStream.Position = 0;
@@ -61,7 +61,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task PipeStandardOutputAsync(Process source, Command destination)
+        public async Task PipeStandardOutputAsync(Process source, ICommand destination)
         {
             destination.StandardOutput.DiscardBufferedData();
             destination.StandardOutput.BaseStream.Position = 0;
@@ -84,7 +84,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task PipeStandardErrorAsync(Process source, Command destination)
+        public async Task PipeStandardErrorAsync(Process source, ICommand destination)
         {
             destination.StandardError.DiscardBufferedData();
             destination.StandardError.BaseStream.Position = 0;
