@@ -42,7 +42,7 @@ public static class CommandExecuteExtensions
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public static async Task<CommandResult> ExecuteAsync(this Command command, ICommandRunner commandRunner,  CancellationToken cancellationToken = default)
+    public static async Task<CommandResult> ExecuteAsync(this ICommand command, ICommandRunner commandRunner,  CancellationToken cancellationToken = default)
     {
         return await commandRunner.ExecuteAsync(command, cancellationToken);
     }
