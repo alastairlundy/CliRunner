@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,14 +20,14 @@ namespace CliRunner.Extensibility
     /// <summary>
     /// 
     /// </summary>
-    public abstract class AbstractSpecializedCommand : Command
+    public abstract class AbstractInstallableCommand : Command, IInstallableCommand
     {
-        public AbstractSpecializedCommand(string targetFilePath) : base(targetFilePath)
+        public AbstractInstallableCommand(string targetFilePath) : base(targetFilePath)
         {
             TargetFilePath = targetFilePath;
         }
         
-        public AbstractSpecializedCommand(string targetFilePath, string arguments = null,
+        public AbstractInstallableCommand(string targetFilePath, string arguments = null,
             string workingDirectoryPath = null, bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null,
             CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
