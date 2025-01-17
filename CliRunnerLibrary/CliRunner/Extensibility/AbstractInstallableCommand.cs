@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
+
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace CliRunner.Extensibility
     /// <summary>
     /// 
     /// </summary>
-    public abstract class AbstractInstallableCommand : Command, IInstallableCommand
+    public abstract class AbstractInstallableCommand : Command
     {
         public AbstractInstallableCommand(string targetFilePath) : base(targetFilePath)
         {
