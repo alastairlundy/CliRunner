@@ -49,10 +49,13 @@ public static class ProcessToCommandResultExtensions
             throw new ArgumentException(Resources.CommandResult_ToBuffered_ExitedProcess);
         }
 
-        if (process.StartInfo.RedirectStandardOutput == true && process.StartInfo.RedirectStandardError == true)
+        if (process.StartInfo.RedirectStandardOutput == true 
+            && process.StartInfo.RedirectStandardError == true)
         {
-            return new BufferedCommandResult(process.ExitCode,await process.StandardOutput.ReadToEndAsync(),
-                await process.StandardError.ReadToEndAsync(), process.StartTime, process.ExitTime);
+            return new BufferedCommandResult(process.ExitCode,
+                await process.StandardOutput.ReadToEndAsync(),
+                await process.StandardError.ReadToEndAsync(), 
+                process.StartTime, process.ExitTime);
         }
             
         throw new ArgumentException(Resources.CommandResult_ToStandardOutError);
