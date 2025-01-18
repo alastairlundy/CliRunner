@@ -16,112 +16,114 @@ using System.Diagnostics.Contracts;
 using System.Security;
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
-namespace CliRunner.Builders
+namespace CliRunner.Builders;
+
+/// <summary>
+/// A class that provides builder methods for constructing UserCredentials.
+/// </summary>
+[SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
+public class CredentialsBuilder : IDisposable
 {
+    private string _domain;
+    private string _username;
+    private SecureString _password;
+    private bool _loadUserProfile;
+
     /// <summary>
-    /// A class that provides builder methods for constructing UserCredentials.
+    /// 
     /// </summary>
-    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public class CredentialsBuilder : IDisposable
+    public CredentialsBuilder()
     {
-        private string _domain;
-        private string _username;
-        private SecureString _password;
-        private bool _loadUserProfile;
-
-        public CredentialsBuilder()
+        _domain = string.Empty;
+        _username = string.Empty;
+        _password = new SecureString();
+        _loadUserProfile = false;
+    }
+        
+    /// <summary>
+    /// Sets the domain for the credential to be created.
+    /// </summary>
+    /// <param name="domain">The domain to set.</param>
+    /// <returns>A new instance of the CredentialsBuilder with the updated domain.</returns>
+    [Pure]
+    public CredentialsBuilder SetDomain(string domain) =>
+        new CredentialsBuilder
         {
-            _domain = string.Empty;
-            _username = string.Empty;
-            _password = new SecureString();
-            _loadUserProfile = false;
-        }
-        
-        /// <summary>
-        /// Sets the domain for the credential to be created.
-        /// </summary>
-        /// <param name="domain">The domain to set.</param>
-        /// <returns>A new instance of the CredentialsBuilder with the updated domain.</returns>
-        [Pure]
-        public CredentialsBuilder SetDomain(string domain) =>
-            new CredentialsBuilder()
-            {
-                _domain = domain,
-                _loadUserProfile = _loadUserProfile,
-                _password = _password,
-                _username = _username,
-            };
+            _domain = domain,
+            _loadUserProfile = _loadUserProfile,
+            _password = _password,
+            _username = _username,
+        };
 
-        /// <summary>
-        /// Sets the username for the credential to be created.
-        /// </summary>
-        /// <param name="username">The username to set.</param>
-        /// <returns>A new instance of the CredentialsBuilder with the updated username.</returns>
-        [Pure]
-        public CredentialsBuilder SetUsername(string username) =>
-            new CredentialsBuilder()
-            {
-                _domain = _domain,
-                _loadUserProfile = _loadUserProfile,
-                _password = _password,
-                _username = username,
-            };
-
-        /// <summary>
-        /// Sets the password for the credential to be created.
-        /// </summary>
-        /// <param name="password">The password to set, as a SecureString.</param>
-        /// <returns>A new instance of the CredentialsBuilder with the updated password.</returns>
-        [Pure]
-        public CredentialsBuilder SetPassword(SecureString password) =>
-            new CredentialsBuilder()
-            {
-                _domain = _domain,
-                _loadUserProfile = _loadUserProfile,
-                _password = password,
-                _username = _username,
-            };
-        
-        /// <summary>
-        /// Specifies whether to load the user profile.
-        /// </summary>
-        /// <param name="loadUserProfile">True to load the user profile, false otherwise.</param>
-        /// <returns>A new instance of the CredentialsBuilder with the updated load user profile setting.</returns>
-        [Pure]
-        public CredentialsBuilder LoadUserProfile(bool loadUserProfile) =>
-            new CredentialsBuilder()
-            {
-                _domain = _domain,
-                _loadUserProfile = loadUserProfile,
-                _password = _password,
-                _username = _username,
-            };
-        
-        /// <summary>
-        /// Builds a new instance of UserCredentials using the current settings.
-        /// </summary>
-        /// <returns>The built UserCredentials.</returns>
-        [Pure]
-        public UserCredentials Build() => 
-            new UserCredentials(_domain, _username, _password, _loadUserProfile);
-
-        /// <summary>
-        /// Deletes the values of the provided settings.
-        /// </summary>
-        public void Clear()
+    /// <summary>
+    /// Sets the username for the credential to be created.
+    /// </summary>
+    /// <param name="username">The username to set.</param>
+    /// <returns>A new instance of the CredentialsBuilder with the updated username.</returns>
+    [Pure]
+    public CredentialsBuilder SetUsername(string username) =>
+        new CredentialsBuilder
         {
-            _domain = string.Empty;
-            _username = string.Empty;
-            _password.Clear();
-        }
-        
-        /// <summary>
-        /// Disposes of the provided settings.
-        /// </summary>
-        public void Dispose()
+            _domain = _domain,
+            _loadUserProfile = _loadUserProfile,
+            _password = _password,
+            _username = username,
+        };
+
+    /// <summary>
+    /// Sets the password for the credential to be created.
+    /// </summary>
+    /// <param name="password">The password to set, as a SecureString.</param>
+    /// <returns>A new instance of the CredentialsBuilder with the updated password.</returns>
+    [Pure]
+    public CredentialsBuilder SetPassword(SecureString password) =>
+        new CredentialsBuilder
         {
-           Clear();
-           _password?.Dispose();
-        }
+            _domain = _domain,
+            _loadUserProfile = _loadUserProfile,
+            _password = password,
+            _username = _username,
+        };
+        
+    /// <summary>
+    /// Specifies whether to load the user profile.
+    /// </summary>
+    /// <param name="loadUserProfile">True to load the user profile, false otherwise.</param>
+    /// <returns>A new instance of the CredentialsBuilder with the updated load user profile setting.</returns>
+    [Pure]
+    public CredentialsBuilder LoadUserProfile(bool loadUserProfile) =>
+        new CredentialsBuilder
+        {
+            _domain = _domain,
+            _loadUserProfile = loadUserProfile,
+            _password = _password,
+            _username = _username,
+        };
+        
+    /// <summary>
+    /// Builds a new instance of UserCredentials using the current settings.
+    /// </summary>
+    /// <returns>The built UserCredentials.</returns>
+    [Pure]
+    public UserCredentials Build() => 
+        new UserCredentials(_domain, _username, _password, _loadUserProfile);
+
+    /// <summary>
+    /// Deletes the values of the provided settings.
+    /// </summary>
+    public void Clear()
+    {
+        _domain = string.Empty;
+        _username = string.Empty;
+        _password.Clear();
+    }
+        
+    /// <summary>
+    /// Disposes of the provided settings.
+    /// </summary>
+    public void Dispose()
+    {
+        Clear();
+        _password?.Dispose();
     }
 }

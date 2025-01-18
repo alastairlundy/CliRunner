@@ -41,40 +41,39 @@ using System.Text;
 using System.Runtime.Versioning;
 #endif
 
-namespace CliRunner.Abstractions
+namespace CliRunner.Abstractions;
+
+/// <summary>
+/// 
+/// </summary>
+public interface ICommandConfiguration
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface ICommandConfiguration
-    {
-        bool RequiresAdministrator { get; }
-        string TargetFilePath { get; }
-        string WorkingDirectoryPath { get; }
+    bool RequiresAdministrator { get; }
+    string TargetFilePath { get; }
+    string WorkingDirectoryPath { get; }
 
-        string Arguments { get; }
+    string Arguments { get; }
 
-        IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
+    IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
 
-        UserCredentials Credentials { get;  } 
-        CommandResultValidation ResultValidation { get;}
+    UserCredentials Credentials { get;  } 
+    CommandResultValidation ResultValidation { get;}
 
-        StreamWriter StandardInput { get; }
-        StreamReader StandardOutput { get; }
-        StreamReader StandardError { get; }
+    StreamWriter StandardInput { get; }
+    StreamReader StandardOutput { get; }
+    StreamReader StandardError { get; }
         
-        bool UseShellExecution { get; }
+    bool UseShellExecution { get; }
 
-        bool WindowCreation { get; }
+    bool WindowCreation { get; }
         
-        Encoding StandardInputEncoding { get; }
-        Encoding StandardOutputEncoding { get; }
-        Encoding StandardErrorEncoding { get; }
+    Encoding StandardInputEncoding { get; }
+    Encoding StandardOutputEncoding { get; }
+    Encoding StandardErrorEncoding { get; }
         
 #if NET6_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
 #endif
-        IntPtr ProcessorAffinity { get; }
-    }
+    IntPtr ProcessorAffinity { get; }
 }

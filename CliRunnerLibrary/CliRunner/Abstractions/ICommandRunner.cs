@@ -11,23 +11,23 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+
 using CliRunner.Buffered;
 
-namespace CliRunner.Abstractions
+namespace CliRunner.Abstractions;
+
+/// <summary>
+/// An interface to specify required Command Running functionality.
+/// </summary>
+public interface ICommandRunner
 {
-    /// <summary>
-    /// An interface to specify required Command Running functionality.
-    /// </summary>
-    public interface ICommandRunner
-    {
-        Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default);
+    Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default);
 
-        ProcessStartInfo CreateStartInfo(Command command);
+    ProcessStartInfo CreateStartInfo(Command command);
 
-        ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput, bool redirectStandardError);
+    ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput, bool redirectStandardError);
         
-        Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
+    Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
         
-        Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
-    }
+    Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
 }

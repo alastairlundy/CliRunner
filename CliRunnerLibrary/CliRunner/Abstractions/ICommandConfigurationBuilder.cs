@@ -13,33 +13,35 @@ using System.IO;
 using System.Text;
 using CliRunner.Builders;
 
-namespace CliRunner.Abstractions
+namespace CliRunner.Abstractions;
+
+/// <summary>
+/// 
+/// </summary>
+public interface ICommandConfigurationBuilder
 {
-    public interface ICommandConfigurationBuilder
-    {
-        Command WithArguments(IEnumerable<string> arguments);
-        Command WithArguments(IEnumerable<string> arguments, bool escape);
+    Command WithArguments(IEnumerable<string> arguments);
+    Command WithArguments(IEnumerable<string> arguments, bool escape);
 
-        Command WithArguments(string arguments);
-        Command WithTargetFile(string targetFilePath);
-        Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables);
-        Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure);
+    Command WithArguments(string arguments);
+    Command WithTargetFile(string targetFilePath);
+    Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables);
+    Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure);
 
-        Command WithAdministratorPrivileges(bool runAsAdministrator);
+    Command WithAdministratorPrivileges(bool runAsAdministrator);
 
-        Command WithWorkingDirectory(string workingDirectoryPath);
-        Command WithCredentials(UserCredentials credentials);
-        Command WithCredentials(Action<CredentialsBuilder> configure);
-        Command WithValidation(CommandResultValidation validation);
-        Command WithStandardInputPipe(StreamWriter source);
-        Command WithStandardOutputPipe(StreamReader target);
-        Command WithStandardErrorPipe(StreamReader target);
-        Command WithProcessorAffinity(IntPtr processorAffinity);
-        Command WithShellExecution(bool useShellExecute);
-        Command WithWindowCreation(bool useWindowCreation);
+    Command WithWorkingDirectory(string workingDirectoryPath);
+    Command WithCredentials(UserCredentials credentials);
+    Command WithCredentials(Action<CredentialsBuilder> configure);
+    Command WithValidation(CommandResultValidation validation);
+    Command WithStandardInputPipe(StreamWriter source);
+    Command WithStandardOutputPipe(StreamReader target);
+    Command WithStandardErrorPipe(StreamReader target);
+    Command WithProcessorAffinity(IntPtr processorAffinity);
+    Command WithShellExecution(bool useShellExecute);
+    Command WithWindowCreation(bool useWindowCreation);
 
-        Command WithEncoding(Encoding standardInputEncoding = default,
-            Encoding standardOutputEncoding = default,
-            Encoding standardErrorEncoding = default);
-    }
+    Command WithEncoding(Encoding standardInputEncoding = default,
+        Encoding standardOutputEncoding = default,
+        Encoding standardErrorEncoding = default);
 }
