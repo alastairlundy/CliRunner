@@ -27,10 +27,7 @@ using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
- using OperatingSystem = AlastairLundy.Extensions.Runtime.OperatingSystemExtensions;
- // ReSharper disable RedundantBoolCompare
-
- using System.Linq;
+using OperatingSystem = AlastairLundy.OSCompatibilityLib.Polyfills.OperatingSystem;
 #endif
 
 namespace CliRunner.Specializations
