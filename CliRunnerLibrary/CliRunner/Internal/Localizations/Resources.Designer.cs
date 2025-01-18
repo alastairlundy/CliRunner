@@ -87,6 +87,24 @@ namespace CliRunner.Internal.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot convert an non-exited process to a CommandResult.
+        /// </summary>
+        internal static string CommandResult_ToBuffered_ExitedProcess {
+            get {
+                return ResourceManager.GetString("CommandResult.ToBuffered.ExitedProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot convert a process without StandardOutput/StandardError to a BufferedCommandResult..
+        /// </summary>
+        internal static string CommandResult_ToStandardOutError {
+            get {
+                return ResourceManager.GetString("CommandResult.ToStandardOutError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The executed command was not succesful and returned an exit code of {x}..
         /// </summary>
         internal static string Exceptions_CommandNotSuccessful_Generic {

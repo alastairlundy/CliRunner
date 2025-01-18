@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using CliRunner.Buffered;
+using CliRunner.Internal.Localizations;
 
 // ReSharper disable RedundantBoolCompare
 
@@ -45,7 +46,7 @@ public static class ProcessToCommandResultExtensions
     {
         if (process.HasExited == false)
         {
-            throw new ArgumentException("Cannot convert an non-exited process to a CommandResult");
+            throw new ArgumentException(Resources.CommandResult_ToBuffered_ExitedProcess);
         }
 
         if (process.StartInfo.RedirectStandardOutput == true && process.StartInfo.RedirectStandardError == true)
@@ -54,6 +55,6 @@ public static class ProcessToCommandResultExtensions
                 await process.StandardError.ReadToEndAsync(), process.StartTime, process.ExitTime);
         }
             
-        throw new ArgumentException("Cannot convert a process without StandardOutput/StandardError to a BufferedCommandResult.");
+        throw new ArgumentException(Resources.CommandResult_ToStandardOutError);
     }
 }

@@ -36,4 +36,10 @@
     <data name="Command.ToString.WorkingDirectory" xml:space="preserve">
         <value>Working Directory</value>
     </data>
+    <data name="CommandResult.ToBuffered.ExitedProcess" xml:space="preserve">
+        <value>Cannot convert an non-exited process to a CommandResult</value>
+    </data>
+    <data name="CommandResult.ToStandardOutError" xml:space="preserve">
+        <value>Cannot convert a process without StandardOutput/StandardError to a BufferedCommandResult.</value>
+    </data>
 </root>
