@@ -8,48 +8,31 @@
         <Title>CliRunner</Title>
         <Authors>AlastairLundy</Authors>
         <Description>CliRunner is a library for interacting with Command Line Interfaces,</Description>
-        <Copyright>Copyright (c) Alastair Lundy 2024</Copyright>
+        <Copyright>Copyright (c) Alastair Lundy 2024-2025</Copyright>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.7.0
+        <PackageReleaseNotes>## Changes since 0.8.0
 
 ### Breaking Changes
-* ``CommandRunner`` is once again a standalone class implementing the ICommandRunner interface and is separate from the Command class
-* Command Pipe Handling has been moved from ``CommandRunner`` to the newly created ``CommandPipeHandler`` as the default ``ICommandPipeHandler`` implementation
-* ``CommandRunner`` now requires a ``ICommandPipeHandler`` compatible implementer to be passed to it in the constructor
-* The ``Command`` class now no longer implements ``ICommandRunner``
-* Added extension methods to ``Command`` to make it easy to fluently Execute Commands whilst passing through an ``ICommandRunner`` instance.
-* Simplified ``CommandRunner``'s ``CreateStartInfo`` method
-* Namespace changes for CliRunner Command related code to be in the base CliRunner namespace.
+* Removed ``ICommand`` - Users of the library should use the ``Command`` class directly instead.
+* Renamed ``AbstractSpecializedCommand`` to ``AbstractInstallableCommand``
+* Added ``IsCurrentOperatingSystemSupported`` method to ``AbstractInstallableCommand``
 
 ### Non-Breaking Changes
 
 #### Additions
-* Clarified support for Mac Catalyst
-* Implemented ``Command``'s  ``ToString()`method
-* Implemented ``IEquatable`` in ``Command``
-* Added ``CreateInstance`` static method to ``Command`` class - This is the new intended entrypoint in CliRunner.
-* Added properties in ``Command`` to ``ICommandConfiguration`` that were missing.
-* Added Encoding properties to store the Encoding types of Standard Input, Standard Output, and Standard Error
+* Added ``AddCliRunner`` Dependency Injection extension to make it easier to use CliRunner with Dependency Injection,
 
 #### General Changes
-* Merged some private CommandRunner methods
-* Deprecated ``Cli.Run()`` - Please use ``Command.CreateInstance()`` instead.
-
-### Bug Fixes
-* Fixed a bug in Standard Input piping that resulted in unexpected behaviour
-* Fixed a bug in ``CreateStartInfo`` method in CommandRunner with preventing code from running on unsupported platforms
-* Fixed a typo in a xml doc comment
-
-### Removals
-* Removed the ``ISpecializedCommand`` interface
-* Removed some unnecessary code now that Polyfill is being used on .NET Standard 2.0 &amp; 2.1</PackageReleaseNotes>
+* Updated minimum Polyfill version from 7.11.0 to 7.12.0
+* Replaced ``RuntimeExtensions`` dependency on .NET Standard 2.0 and 2.1 with ``OSCompatibilityLib``
+* Optimized EnvironmentVariableBuilder for .NET 8 and .NET 9 users</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.8.0</PackageVersion>
+        <PackageVersion>0.9.0</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>

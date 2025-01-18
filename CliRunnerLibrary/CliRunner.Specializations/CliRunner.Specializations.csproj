@@ -6,7 +6,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CliRunner.Specializations</Title>
         <Authors>AlastairLundy</Authors>
-        <Copyright>Copyright (c) 2024 Alastair Lundy</Copyright>
+        <Copyright>Copyright (c) 2024-2025 Alastair Lundy</Copyright>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
