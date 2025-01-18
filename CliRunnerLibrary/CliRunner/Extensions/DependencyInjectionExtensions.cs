@@ -35,13 +35,13 @@ public static class DependencyInjectionExtensions
         switch (lifetime)
         {
             case ServiceLifetime.Singleton:
-                services.AddSingleton(serviceType, implementationType);
+                services = services.AddSingleton(serviceType, implementationType);
                 break;
             case ServiceLifetime.Scoped:
-                services.AddScoped(serviceType, implementationType);
+                services = services.AddScoped(serviceType, implementationType);
                 break;
             case ServiceLifetime.Transient:
-                services.AddTransient(serviceType, implementationType);
+                services = services.AddTransient(serviceType, implementationType);
                 break;
         }
         return services;
