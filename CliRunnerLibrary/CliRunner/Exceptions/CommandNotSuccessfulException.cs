@@ -12,7 +12,7 @@
 #endif
 
 using System;
-using CliRunner.Abstractions;
+
 using CliRunner.Internal.Localizations;
 
 namespace CliRunner.Exceptions
@@ -22,6 +22,9 @@ namespace CliRunner.Exceptions
     /// </summary>
     public sealed class CommandNotSuccessfulException : Exception
     {
+        /// <summary>
+        /// The command that was executed.
+        /// </summary>
 #if NET5_0_OR_GREATER
         public Command? ExecutedCommand { get; private set; }
 #endif
