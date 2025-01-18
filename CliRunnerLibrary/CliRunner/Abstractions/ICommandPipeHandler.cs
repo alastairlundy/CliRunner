@@ -18,6 +18,7 @@ namespace CliRunner.Abstractions;
 public interface ICommandPipeHandler
 {
     /// <summary>
+    /// An interface method to asynchronously copy the Command's Standard Input to the process' standard input.
     /// </summary>
     /// <param name="source">The command to be copied from.</param>
     /// <param name="destination">The process to be copied to</param>
