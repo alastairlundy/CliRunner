@@ -23,7 +23,7 @@ public static class DependencyInjectionExtensions
     /// <param name="services">The service collection to add to.</param>
     /// <param name="lifetime">The service lifetime to use if specified; Singleton otherwise.</param>
     /// <returns>the updated service collection with the added CliRunner dependency injection.</returns>
-    public static IServiceCollection AddCliRunner(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+    public static IServiceCollection UseCliRunner(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
         services = services.Add(lifetime, typeof(ICommandPipeHandler), typeof(CommandPipeHandler));
         services = services.Add(lifetime, typeof(ICommandRunner), typeof(CommandRunner));
