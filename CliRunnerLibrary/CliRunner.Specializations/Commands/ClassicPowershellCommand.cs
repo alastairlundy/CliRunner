@@ -43,7 +43,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class ClassicPowershellCommand : AbstractSpecializedCommand
+    public class ClassicPowershellCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
         
@@ -167,7 +167,16 @@ namespace CliRunner.Specializations
         {
             return OperatingSystem.IsWindows() == true && await base.IsInstalledAsync();
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override bool IsCurrentOperatingSystemSupported()
+        {
+            return OperatingSystem.IsWindows() == true;
+        }
+
         /// <summary>
         /// Gets the installed version of Windows Powershell.
         /// </summary>

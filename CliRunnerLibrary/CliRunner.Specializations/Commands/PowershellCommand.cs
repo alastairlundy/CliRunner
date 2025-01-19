@@ -45,7 +45,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class PowershellCommand : AbstractSpecializedCommand
+    public class PowershellCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
         
@@ -171,29 +171,15 @@ namespace CliRunner.Specializations
              else
              {
                  throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
-             }
+             }             return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
+
              
-             return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
          }
-        
-        /// <summary>
-        /// Detects whether cross-platform modern Powershell is installed on a system.
-        /// </summary>
-        /// <returns>True if cross-platform Powershell is installed; returns false otherwise.</returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [UnsupportedOSPlatform("browser")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("watchos")]
-#endif
-        public new async Task<bool> IsInstalledAsync()
+
+        public override bool IsCurrentOperatingSystemSupported()
         {
-            return await base.IsInstalledAsync();
+            return OperatingSystem.IsWindows() || OperatingSystem.IsMacOS() ||
+                   OperatingSystem.IsFreeBSD() || OperatingSystem.IsLinux();
         }
 
         /// <summary>

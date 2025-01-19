@@ -46,7 +46,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class CmdCommand : AbstractSpecializedCommand
+    public class CmdCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
         
@@ -156,13 +156,9 @@ namespace CliRunner.Specializations
             return await Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe");
         }
 
-        /// <summary>
-        /// Asynchronously returns whether CMD is installed on the current system.
-        /// </summary>
-        /// <returns>A task that returns true if cmd.exe exists on Windows; returns false otherwise.</returns>
-        public new Task<bool> IsInstalledAsync()
+        public override bool IsCurrentOperatingSystemSupported()
         {
-            return OperatingSystem.IsWindows() == false ? Task.FromResult(false) : base.IsInstalledAsync();
+            return OperatingSystem.IsWindows() == true;
         }
 
         /// <summary>
