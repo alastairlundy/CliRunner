@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 // ReSharper disable MemberCanBeProtected.Global
+// ReSharper disable PublicConstructorInAbstractClass
 
 namespace CliRunner.Extensibility;
 
@@ -80,9 +81,9 @@ public abstract class AbstractInstallableCommand : Command
     }
         
     /// <summary>
-    /// 
+    /// Asynchronously retrieves the location where the command is installed.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The task result containing the path to the installation location of the software.</returns>
     public abstract Task<string> GetInstallLocationAsync();
 
     /// <summary>
@@ -106,14 +107,14 @@ public abstract class AbstractInstallableCommand : Command
     }
 
     /// <summary>
-    /// 
+    /// Determines whether the current operating system is supported by the application.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>true if the current operating system is supported; otherwise, false.</returns>
     public abstract bool IsCurrentOperatingSystemSupported();
 
     /// <summary>
-    /// 
+    /// Asynchronously retrieves the version of the installed command.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The task result containing the version of the installed software.</returns>
     public abstract Task<Version> GetInstalledVersionAsync();
 }
