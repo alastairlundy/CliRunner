@@ -12,6 +12,7 @@ using System;
 using CliRunner.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
+// ReSharper disable RedundantAssignment
 
 namespace CliRunner.Extensions;
 
@@ -30,7 +31,8 @@ public static class DependencyInjectionExtensions
         return services;
     }
 
-    private static IServiceCollection Add(this IServiceCollection services, ServiceLifetime lifetime, Type serviceType, Type implementationType)
+    private static void Add(this IServiceCollection services, ServiceLifetime lifetime, Type serviceType,
+        Type implementationType)
     {
         switch (lifetime)
         {
@@ -44,6 +46,5 @@ public static class DependencyInjectionExtensions
                 services = services.AddTransient(serviceType, implementationType);
                 break;
         }
-        return services;
     }
 }
