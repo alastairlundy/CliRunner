@@ -39,10 +39,17 @@ using System.Runtime.Versioning;
 
 namespace CliRunner;
 
+/// <summary>
+/// 
+/// </summary>
 public class CommandRunner : ICommandRunner
 {
     private readonly ICommandPipeHandler _commandPipeHandler;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="commandPipeHandler"></param>
     public CommandRunner(ICommandPipeHandler commandPipeHandler)
     {
         _commandPipeHandler = commandPipeHandler;
