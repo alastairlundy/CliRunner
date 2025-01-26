@@ -83,12 +83,6 @@ public abstract class AbstractInstallableCommand : Command
         ProcessorAffinity = processorAffinity;
 #pragma warning restore CA1416
     }
-        
-    /// <summary>
-    /// Asynchronously retrieves the location where the command is installed.
-    /// </summary>
-    /// <returns>The task result containing the path to the installation location of the software.</returns>
-    public abstract Task<string> GetInstallLocationAsync();
 
     /// <summary>
     /// Detects whether the Command is installed on the current system.
