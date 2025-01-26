@@ -170,7 +170,7 @@ namespace CliRunner.Specializations
                 throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
             }
             
-            if (OperatingSystem.IsWindows() && await IsInstalledAsync())
+            if (OperatingSystem.IsWindows() && IsInstalledAsync())
             {
                 BufferedCommandResult result = await Command.CreateInstance(this)
                     .WithArguments("$PSVersionTable")

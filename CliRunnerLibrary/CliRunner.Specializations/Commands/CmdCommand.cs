@@ -63,7 +63,7 @@ namespace CliRunner.Specializations
                     throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_OnlySupportedOnWindows);
                 }
             
-                if (IsInstalled() == false)
+                if (IsInstalledAsync() == false)
                 {
                     throw new ArgumentException(Resources.Exceptions_Cmd_NotInstalled);
                 }

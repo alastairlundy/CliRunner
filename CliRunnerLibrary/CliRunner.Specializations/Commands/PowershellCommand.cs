@@ -59,6 +59,8 @@ namespace CliRunner.Specializations
             {
                 Task<string> task = GetInstallLocationAsync();
                 task.RunSynchronously();
+                
+                task.Wait();
 
                 string filePath = task.Result;
 
@@ -127,9 +129,9 @@ namespace CliRunner.Specializations
          [UnsupportedOSPlatform("tvos")]
          [UnsupportedOSPlatform("watchos")]
 #endif
-         public override async Task<string> GetInstallLocationAsync()
+         private async Task<string> GetInstallLocationAsync()
          {
-             if (await IsInstalledAsync() == false)
+             if (IsInstalledAsync() == false)
              {
                  throw new ArgumentException(Resources.Exceptions_Powershell_NotInstalled);
              }
@@ -171,9 +173,9 @@ namespace CliRunner.Specializations
              else
              {
                  throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
-             }             return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
-
+             }
              
+             return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
          }
 
         public override bool IsCurrentOperatingSystemSupported()
