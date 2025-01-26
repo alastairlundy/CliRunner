@@ -12,9 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 using System.Security;
 
-#if NETSTANDARD2_1 || NET5_0_OR_GREATER
-    #nullable enable
-#endif
+#nullable enable
 
 namespace CliRunner
 {
