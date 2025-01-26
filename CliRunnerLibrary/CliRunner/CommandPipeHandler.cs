@@ -26,7 +26,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         /// Asynchronously copies the process' Standard Input to the Command's Standard Input.
         /// </summary>
         /// <param name="source">The command to be copied from.</param>
-        /// <param name="destination"></param>
+        /// <param name="destination">The process to be copied to.</param>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -49,7 +49,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         /// Asynchronously copies the process' Standard Output to the Command's Standard Output.
         /// </summary>
         /// <param name="source">The process to be copied from.</param>
-        /// <param name="destination"></param>
+        /// <param name="destination">The command to have Standard Output copied to."></param>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -72,7 +72,7 @@ public class CommandPipeHandler : ICommandPipeHandler
         /// Asynchronously copies the process' Standard Error to the Command's Standard Error.
         /// </summary>
         /// <param name="source">The process to be copied from.</param>
-        /// <param name="destination"></param>
+        /// <param name="destination">The command to have Standard Error copied to."></param>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
