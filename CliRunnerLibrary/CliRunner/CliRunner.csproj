@@ -13,26 +13,25 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.8.0
+        <PackageReleaseNotes>## Changes since 0.9.0
 
 ### Breaking Changes
-* Removed ``ICommand`` - Users of the library should use the ``Command`` class directly instead.
-* Renamed ``AbstractSpecializedCommand`` to ``AbstractInstallableCommand``
-* Added ``IsCurrentOperatingSystemSupported`` method to ``AbstractInstallableCommand``
+* Renamed ``AddCliRunner`` Dependency Injection extension method to ``UseCliRunner``
+* Removed deprecated static ``Cli`` class - Use ``Command.CreateInstance`` static class instead.
+* Removed destructive BufferedCommandResult to CommandResult extension method.
+* Removed ``GetInstallLocationAsync`` method from ``AbstractInstallableCommand`` as redundant - Use the Command's ``TargetFilePath`` property for the file path.
 
 ### Non-Breaking Changes
 
-#### Additions
-* Added ``AddCliRunner`` Dependency Injection extension to make it easier to use CliRunner with Dependency Injection,
-
 #### General Changes
-* Updated minimum Polyfill version from 7.11.0 to 7.12.0
-* Replaced ``RuntimeExtensions`` dependency on .NET Standard 2.0 and 2.1 with ``OSCompatibilityLib``
-* Optimized EnvironmentVariableBuilder for .NET 8 and .NET 9 users</PackageReleaseNotes>
+* Added some missing xml doc comments
+* [.NET Standard 2.0 only] Updated OSCompatibilityLib dependency from 3.0.0 to 3.0.1
+* [.NET Standard 2.0 only] Updated Polyfill dependency from 7.12.0 to 7.14.0
+* [Specializations Library only] Fixed a bug with CmdCommand that would cause the wrong file path to be used.</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.9.0</PackageVersion>
+        <PackageVersion>0.10.0</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>

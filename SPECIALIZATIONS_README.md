@@ -16,6 +16,7 @@ Usage is very similar to using ``Cli.Wrap`` except that the entrypoint is ``CmdC
 
 ```csharp
 using CliRunner;
+using CliRunner.Specializations;
 using CliRunner.Buffered;
 
   var result = await CmdCommand.CreateInstance()
@@ -27,11 +28,21 @@ using CliRunner.Buffered;
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
 ```csharp
 using CliRunner;
+using CliRunner.Specializations;
+using CliRunner.Buffered;
+using CliRunner.Extensions;
+
+  /// Initialize CommandRunner with Dependency Injection.
+  ServiceCollection services = new ServiceCollection();
+  services.UseCliRunner();
+
+  ServiceProvider sp = services.Build();
+  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
 await CmdCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
-                .ExecuteAsync();
+                .ExecuteAsync(_commandRunner);
 ```
 
 ### ClassicPowershellCommand
@@ -41,11 +52,20 @@ Usage is identical to using ``Command.CreateInstance`` except that the entrypoin
 
 ```csharp
 using CliRunner;
+using CliRunner.Specializations;
 using CliRunner.Buffered;
+using CliRunner.Extensions;
+
+  /// Initialize CommandRunner with Dependency Injection.
+  ServiceCollection services = new ServiceCollection();
+  services.UseCliRunner();
+
+  ServiceProvider sp = services.Build();
+  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
  var task = await ClassicPowershellCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
-                .ExecuteBufferedAsync();
+                .ExecuteBufferedAsync(_commandRunner);
 ```
 
 ### PowershellCommand
@@ -55,12 +75,21 @@ Usage is identical to using ``Command.CreateInstance`` except that the entrypoin
 
 ```csharp
 using CliRunner;
+using CliRunner.Specializations;
 using CliRunner.Buffered;
+using CliRunner.Extensions;
+
+  /// Initialize CommandRunner with Dependency Injection.
+  ServiceCollection services = new ServiceCollection();
+  services.UseCliRunner();
+
+  ServiceProvider sp = services.Build();
+  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
   var result = await PowershellCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
                 .WithWorkingDirectory(Environment.SystemDirectory)
-                .ExecuteBufferedAsync();
+                .ExecuteBufferedAsync(_commandRunner);
 ```
 
 ## Licensing
