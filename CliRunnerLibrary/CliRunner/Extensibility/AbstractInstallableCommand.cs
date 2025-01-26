@@ -88,7 +88,7 @@ public abstract class AbstractInstallableCommand : Command
     /// Detects whether the Command is installed on the current system.
     /// </summary>
     /// <returns>true if the Command is installed; returns false otherwise.</returns>
-    public bool IsInstalledAsync()
+    public bool IsInstalled()
     {
         string installLocation = Path.GetFullPath(TargetFilePath);
 
