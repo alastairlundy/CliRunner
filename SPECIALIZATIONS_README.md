@@ -18,6 +18,14 @@ Usage is very similar to using ``Cli.Wrap`` except that the entrypoint is ``CmdC
 using CliRunner;
 using CliRunner.Specializations;
 using CliRunner.Buffered;
+using CliRunner.Extensions;
+
+  /// Initialize CommandRunner with Dependency Injection.
+  ServiceCollection services = new ServiceCollection();
+  services.UseCliRunner();
+
+  ServiceProvider sp = services.Build();
+  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
   var result = await CmdCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
@@ -63,7 +71,7 @@ using CliRunner.Extensions;
   ServiceProvider sp = services.Build();
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
- var task = await ClassicPowershellCommand.CreateInstance()
+ var result = await ClassicPowershellCommand.CreateInstance()
                 .WithArguments("Your arguments go here")
                 .ExecuteBufferedAsync(_commandRunner);
 ```
