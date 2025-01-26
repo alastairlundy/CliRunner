@@ -66,12 +66,15 @@ namespace CliRunner.Specializations
         {
             get
             {
-               Task<string> task = GetInstallLocationAsync();
-               task.RunSynchronously();
-               
-               task.Wait();
+                if (OperatingSystem.IsWindows() == false)
+                {
+                    throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
+                }
+
+                string location = $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
+                                             $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0";
                        
-               return $"{task.Result}{Path.DirectorySeparatorChar}powershell.exe";
+                return $"{location}{Path.DirectorySeparatorChar}powershell.exe";
             }
         }
         
@@ -132,42 +135,6 @@ namespace CliRunner.Specializations
         public static ClassicPowershellCommand CreateInstance(ICommandRunner commandRunner)
         {
             return new ClassicPowershellCommand(commandRunner);
-        }
-
-        
-        /// <summary>
-        /// Gets the installation location for Windows Powershell.
-        /// </summary>
-        /// <returns>the file path of where Windows Powershell is installed to.</returns>
-        /// <exception cref="PlatformNotSupportedException">Thrown if run on an Operating System that is not Windows based.</exception>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [UnsupportedOSPlatform("macos")]
-        [UnsupportedOSPlatform("linux")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("browser")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("watchos")]
-#endif
-        public override async Task<string> GetInstallLocationAsync()
-        {
-            if (OperatingSystem.IsWindows() == false)
-            {
-                throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
-            }
-
-            return await Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
-                                   $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0");
-        }
-        
-        /// <summary>
-        /// Detects whether Windows Powershell is installed on a system.
-        /// </summary>
-        /// <returns>True if running on Windows and Windows Powershell is installed; returns false otherwise.</returns>
-        public new async Task<bool> IsInstalledAsync()
-        {
-            return OperatingSystem.IsWindows() == true && await base.IsInstalledAsync();
         }
 
         /// <summary>

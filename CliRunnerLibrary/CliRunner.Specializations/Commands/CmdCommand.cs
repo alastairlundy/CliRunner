@@ -58,10 +58,17 @@ namespace CliRunner.Specializations
         {
             get
             {
-                Task<string> task = GetInstallLocationAsync();
-                task.RunSynchronously();
+                if (OperatingSystem.IsWindows() == false)
+                {
+                    throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_OnlySupportedOnWindows);
+                }
+            
+                if (IsInstalled() == false)
+                {
+                    throw new ArgumentException(Resources.Exceptions_Cmd_NotInstalled);
+                }
 
-                return $"{task.Result}{Path.DirectorySeparatorChar}cmd.exe";
+                return $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe"; ;
             }
         }
         
@@ -122,38 +129,6 @@ namespace CliRunner.Specializations
         public static CmdCommand CreateInstance(ICommandRunner commandRunner)
         {
             return new CmdCommand(commandRunner);
-        }
-        
-        /// <summary>
-        /// Asynchronously gets the installation location of CMD, if it is installed.
-        /// </summary>
-        /// <returns>The file path where CMD is installed if run on Windows.</returns>
-        /// <exception cref="ArgumentException">Thrown if CMD is not found on the current system.</exception>
-        /// <exception cref="PlatformNotSupportedException">Thrown if CMD is run on a non Windows based operating system.</exception>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [UnsupportedOSPlatform("macos")]
-        [UnsupportedOSPlatform("linux")]
-        [UnsupportedOSPlatform("browser")]
-        [UnsupportedOSPlatform("ios")]
-        [UnsupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("browser")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("watchos")]
-#endif
-        public override async Task<string> GetInstallLocationAsync()
-        {
-            if (OperatingSystem.IsWindows() == false)
-            {
-                throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_OnlySupportedOnWindows);
-            }
-            
-            if (await IsInstalledAsync() == false)
-            {
-                throw new ArgumentException(Resources.Exceptions_Cmd_NotInstalled);
-            }
-
-            return await Task.FromResult($"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe");
         }
 
         public override bool IsCurrentOperatingSystemSupported()
