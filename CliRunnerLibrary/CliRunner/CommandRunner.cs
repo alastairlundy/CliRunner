@@ -91,10 +91,10 @@ public class CommandRunner : ICommandRunner
         }
 
     /// <summary>
-    /// 
+    /// Creates Process Start Information based on specified Command object values.
     /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
+    /// <param name="command">The command object to specify Process info.</param>
+    /// <returns>A new ProcessStartInfo object configured with the specified Command object values. .</returns>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]
@@ -111,10 +111,13 @@ public class CommandRunner : ICommandRunner
         return CreateStartInfo(command, command.StandardOutput != null, command.StandardError != null);
     }
 
-        /// <summary>
-        /// Creates Process Start Information based on specified parameters and Command object values.
-        /// </summary>
-        /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values. .</returns>
+    /// <summary>
+    /// Creates Process Start Information based on specified parameters and Command object values.
+    /// </summary>
+    /// <param name="command">The command object to specify Process info.</param>
+    /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
+    /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
+    /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values. .</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
