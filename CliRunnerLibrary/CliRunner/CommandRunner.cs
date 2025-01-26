@@ -13,10 +13,6 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
-
 // ReSharper disable RedundantBoolCompare
 // ReSharper disable ConvertToPrimaryConstructor
 // ReSharper disable SuggestVarOrType_SimpleTypes
@@ -36,6 +32,8 @@ using CliRunner.Internal.Localizations;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = AlastairLundy.OSCompatibilityLib.Polyfills.OperatingSystem;
+#else
+using System.Runtime.Versioning;
 #endif
 
 
