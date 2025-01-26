@@ -68,8 +68,10 @@ namespace CliRunner.Specializations
             {
                Task<string> task = GetInstallLocationAsync();
                task.RunSynchronously();
+               
+               task.Wait();
                        
-               return task.Result + Path.DirectorySeparatorChar + "powershell.exe";
+               return $"{task.Result}{Path.DirectorySeparatorChar}powershell.exe";
             }
         }
         
