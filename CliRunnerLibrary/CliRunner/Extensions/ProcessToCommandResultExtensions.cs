@@ -30,7 +30,7 @@ public static class ProcessToCommandResultExtensions
     {
         if (process.HasExited == false)
         {
-            throw new ArgumentException("Cannot convert an non-exited process to a CommandResult");
+            throw new ArgumentException(Resources.CommandResult_ToBuffered_ExitedProcess);
         }
             
         return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
