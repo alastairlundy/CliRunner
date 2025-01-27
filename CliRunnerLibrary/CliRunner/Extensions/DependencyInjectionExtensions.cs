@@ -13,6 +13,7 @@ using CliRunner.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
 // ReSharper disable RedundantAssignment
+// ReSharper disable UnusedMember.Global
 
 namespace CliRunner.Extensions;
 
@@ -44,6 +45,9 @@ public static class DependencyInjectionExtensions
                 break;
             case ServiceLifetime.Transient:
                 services = services.AddTransient(serviceType, implementationType);
+                break;
+            default:
+                services = services.AddSingleton(serviceType, implementationType);
                 break;
         }
     }
