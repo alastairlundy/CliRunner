@@ -20,6 +20,9 @@ using CliRunner.Abstractions;
 
 namespace CliRunner;
 
+/// <summary>
+/// The default implementation of ICommandPipeHandler for Command Pipe Handling.
+/// </summary>
 public class CommandPipeHandler : ICommandPipeHandler
 {
         /// <summary>

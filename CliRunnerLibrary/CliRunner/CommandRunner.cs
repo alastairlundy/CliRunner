@@ -34,13 +34,15 @@ using CliRunner.Internal.Localizations;
 using OperatingSystem = AlastairLundy.OSCompatibilityLib.Polyfills.OperatingSystem;
 #else
 using System.Runtime.Versioning;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedMember.Global
 #endif
 
 
 namespace CliRunner;
 
 /// <summary>
-/// 
+/// The default implementation of the CliRunner command running mechanism, ICommandRunner.
 /// </summary>
 public class CommandRunner : ICommandRunner
 {

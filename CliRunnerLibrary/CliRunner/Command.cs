@@ -28,9 +28,10 @@ using CliRunner.Internal.Localizations;
 using System.Runtime.Versioning;
 #endif
 
+// ReSharper disable UnusedMember.Global
+// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable NonReadonlyMemberInGetHashCode
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
-
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
 namespace CliRunner
@@ -250,14 +251,14 @@ namespace CliRunner
         /// Sets the arguments to pass to the executable.
         /// </summary>
         /// <param name="arguments">The arguments to pass to the executable.</param>
-        /// <param name="escape">Whether to escape the arguments if escape characters are detected.</param>
+        /// <param name="escapeArguments">Whether to escape the arguments if escape characters are detected.</param>
         /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
-        public Command WithArguments(IEnumerable<string> arguments, bool escape)
+        public Command WithArguments(IEnumerable<string> arguments, bool escapeArguments)
         {
             string args = string.Join(" ", arguments);
 
-            if (escape)
+            if (escapeArguments)
             {
                 args = ArgumentsBuilder.Escape(args);
             }
@@ -305,10 +306,11 @@ namespace CliRunner
                 UseShellExecution);
 
         /// <summary>
-        /// 
+        /// Sets the Target File Path of the Command Executable.
         /// </summary>
-        /// <param name="targetFilePath"></param>
-        /// <returns></returns>
+        /// <param name="targetFilePath">The target file path of the Command.</param>
+        /// <remarks>Usage of this builder method is usually unnecessary as Command's constructor requires the Target File Path to be passed to it. </remarks>
+        /// <returns>The Command with the updated Target File Path.</returns>
         [Pure]
         public Command WithTargetFile(string targetFilePath) =>
             new Command(targetFilePath,
@@ -423,7 +425,7 @@ namespace CliRunner
         /// </summary>
         /// <param name="credentials">The credentials to be used.</param>
         /// <returns>The new Command with the specified Credentials.</returns>
-        /// <remarks>Credentials are only supported with the Process class on Windows.</remarks>
+        /// <remarks>Credentials are only supported with the Process class on Windows. This is a limitation of .NET's Process class.</remarks>
         [Pure]
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -454,7 +456,7 @@ namespace CliRunner
         /// </summary>
         /// <param name="configure">The CredentialsBuilder configuration.</param>
         /// <returns>The new Command with the specified Credentials.</returns>
-        /// <remarks>Credentials are only supported with the Process class on Windows.</remarks>
+        /// <remarks>Credentials are only supported with the Process class on Windows. This is a limitation of .NET's Process class.</remarks>
         [Pure]
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -477,8 +479,8 @@ namespace CliRunner
         /// <summary>
         /// Sets the Result Validation whether to throw an exception or not if the Command does not execute successfully.
         /// </summary>
-        /// <param name="validation"></param>
-        /// <returns></returns>
+        /// <param name="validation">The result validation behaviour to be used.</param>
+        /// <returns>The new Command object with the configured Result Validation behaviour.</returns>
         [Pure]
         public Command WithValidation(CommandResultValidation validation) =>
             new Command(TargetFilePath,
@@ -525,10 +527,10 @@ namespace CliRunner
                 UseShellExecution);
 
         /// <summary>
-        /// 
+        /// Sets the Standard Output Pipe target.
         /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
+        /// <param name="target">The target to send the Standard Output to.</param>
+        /// <returns>The new Command with the specified Standard Output Pipe Target.</returns>
         [Pure]
         public Command WithStandardOutputPipe(StreamReader target) =>
             new Command(TargetFilePath,
@@ -549,10 +551,10 @@ namespace CliRunner
                 UseShellExecution);
 
         /// <summary>
-        /// 
+        /// Sets the Standard Error Pipe target.
         /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
+        /// <param name="target">The target to send the Standard Error to.</param>
+        /// <returns>The new Command with the specified Standard Error Pipe Target.</returns>
         [Pure]
         public Command WithStandardErrorPipe(StreamReader target) =>
             new Command(TargetFilePath,
@@ -634,10 +636,10 @@ namespace CliRunner
                 useShellExecution);
 
         /// <summary>
-        /// Enables or disables Windows creation for the wrapped executable.
+        /// Enables or disables Window creation for the wrapped executable.
         /// </summary>
         /// <param name="enableWindowCreation">Whether to enable or disable window creation for the wrapped executable.</param>
-        /// <returns>The new Command with the specified windows creation behaviour.</returns>
+        /// <returns>The new Command with the specified window creation behaviour.</returns>
         public Command WithWindowCreation(bool enableWindowCreation) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -657,12 +659,12 @@ namespace CliRunner
                 UseShellExecution);
 
         /// <summary>
-        /// 
+        /// Sets the Encoding types to be used for Standard Input, Output, and Error.
         /// </summary>
-        /// <param name="standardInputEncoding"></param>
-        /// <param name="standardOutputEncoding"></param>
-        /// <param name="standardErrorEncoding"></param>
-        /// <returns></returns>
+        /// <param name="standardInputEncoding">The encoding type to be used for the Standard Input.</param>
+        /// <param name="standardOutputEncoding">The encoding type to be used for the Standard Output.</param>
+        /// <param name="standardErrorEncoding">The encoding type to be used for the Standard Error.</param>
+        /// <returns>The new Command with the specified Pipe Encoding types.</returns>
         public Command WithEncoding(Encoding standardInputEncoding = default,
             Encoding standardOutputEncoding = default,
             Encoding standardErrorEncoding = default) =>
@@ -699,10 +701,10 @@ namespace CliRunner
         }
 
         /// <summary>
-        /// 
+        /// Returns whether this Command object is equal to another Command object.
         /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
+        /// <param name="other">The other Command object to be compared.</param>
+        /// <returns>true if both Command objects are the same; false otherwise.</returns>
         public bool Equals(Command other)
         {
             if (other is null)
@@ -726,10 +728,10 @@ namespace CliRunner
         }
 
         /// <summary>
-        /// 
+        /// Returns whether this Command object is equal to another object.
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">The other object to be compared.</param>
+        /// <returns>true if both objects are Command objects and the same; false otherwise.</returns>
         public override bool Equals(object obj)
         {
             if (obj is null)
@@ -745,6 +747,10 @@ namespace CliRunner
             return false;
         }
 
+        /// <summary>
+        /// Returns the hashcode of this Command object.
+        /// </summary>
+        /// <returns>the hashcode of this Command object.</returns>
         public override int GetHashCode()
         {
             unchecked
