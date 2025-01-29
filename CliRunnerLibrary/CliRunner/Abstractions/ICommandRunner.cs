@@ -12,8 +12,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-using CliRunner.Buffered;
-
 namespace CliRunner.Abstractions;
 
 /// <summary>

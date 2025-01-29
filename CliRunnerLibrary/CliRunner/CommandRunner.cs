@@ -26,7 +26,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
-using CliRunner.Buffered;
 using CliRunner.Exceptions;
 using CliRunner.Internal.Localizations;
 

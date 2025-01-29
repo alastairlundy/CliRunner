@@ -16,9 +16,8 @@ using System.Runtime.Versioning;
 
 using System.Threading;
 using System.Threading.Tasks;
-using CliRunner.Abstractions;
 
-using CliRunner.Buffered;
+using CliRunner.Abstractions;
 
 namespace CliRunner.Extensions;
 

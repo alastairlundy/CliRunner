@@ -10,8 +10,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
-using CliRunner.Buffered;
 using CliRunner.Internal.Localizations;
 
 // ReSharper disable RedundantBoolCompare
