@@ -41,6 +41,7 @@
     </PropertyGroup>
     
     <ItemGroup>
+        <PackageReference Include="AlastairLundy.Extensions.Collections" Version="[6.0.0-alpha.1, 6.0.0)"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[9.0.1, 10.0.0)" />
     </ItemGroup>
     

@@ -14,6 +14,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+
+using AlastairLundy.Extensions.Collections.Dictionaries;
+
 // ReSharper disable UseCollectionExpression
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 // ReSharper disable RedundantExplicitArrayCreation
@@ -27,6 +30,9 @@ public class EnvironmentVariablesBuilder
 {
     private readonly Dictionary<string, string> _environmentVariables;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public EnvironmentVariablesBuilder()
     {
       _environmentVariables  = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -57,17 +63,11 @@ public class EnvironmentVariablesBuilder
         
         if (_environmentVariables.Any())
         {
-            foreach (KeyValuePair<string, string> pair in _environmentVariables)
-            {
-                output.Add(pair.Key, pair.Value);
-            }
+            output.AddRange(_environmentVariables);
         }
         
 #if NETSTANDARD2_0 || NETSTANDARD2_1
-        foreach (KeyValuePair<string, string> pair in pairs)
-        {
-            output.Add(pair.Key, pair.Value);
-        }        
+        output.AddRange(pairs);
 #endif
 
         return output;
