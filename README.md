@@ -23,7 +23,7 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 
 ^2 - Specialization library is distributed separately.
 
-## Support 
+## Supported Platforms 
 This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9 supported project.
 
 | Operating System | Support Status | Notes |
