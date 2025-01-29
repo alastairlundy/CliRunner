@@ -55,7 +55,7 @@ public class EnvironmentVariablesBuilder
     [Pure]
     private Dictionary<string, string> AddToExisting(IEnumerable<KeyValuePair<string, string>> pairs)
     {
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         Dictionary<string, string> output = new Dictionary<string, string>(pairs);
 #else
         Dictionary<string, string> output = new Dictionary<string, string>();
