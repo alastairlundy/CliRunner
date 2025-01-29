@@ -16,6 +16,8 @@
 // ReSharper disable RedundantBoolCompare
 // ReSharper disable ConvertToPrimaryConstructor
 // ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedMember.Global
 
 using System;
 using System.Collections.Generic;
@@ -29,12 +31,8 @@ using CliRunner.Abstractions;
 using CliRunner.Exceptions;
 using CliRunner.Internal.Localizations;
 
-#if NETSTANDARD2_0 || NETSTANDARD2_1
-using OperatingSystem = AlastairLundy.OSCompatibilityLib.Polyfills.OperatingSystem;
-#else
+#if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
-// ReSharper disable MemberCanBePrivate.Global
-// ReSharper disable UnusedMember.Global
 #endif
 
 
@@ -89,8 +87,11 @@ public class CommandRunner : ICommandRunner
             {
                 StartInfo = processStartInfo,
             };
-            
+#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
+            if (OperatingSystemPolyfill.IsWindows() || OperatingSystemPolyfill.IsLinux())
+#else
             if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
+#endif
             {
                 output.ProcessorAffinity = processorAffinity;
             }
@@ -158,11 +159,19 @@ public class CommandRunner : ICommandRunner
 
             if (command.RequiresAdministrator == true)
             {
+#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
+                if (OperatingSystemPolyfill.IsWindows())
+#else
                 if (OperatingSystem.IsWindows())
+#endif
                 {
                     output.Verb = "runas";
                 }
+#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
+                else if (OperatingSystemPolyfill.IsLinux() || OperatingSystemPolyfill.IsMacOS() ||  OperatingSystemPolyfill.IsFreeBSD())
+#else
                 else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
+#endif
                 {
                     output.Verb = "sudo";
                 }
@@ -183,7 +192,11 @@ public class CommandRunner : ICommandRunner
 
             if (command.Credentials != null)
             {
+#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
+                if (OperatingSystemPolyfill.IsWindows())
+#else
                 if (OperatingSystem.IsWindows())
+#endif
                 {
                     if (command.Credentials.Domain != null)
                     {
