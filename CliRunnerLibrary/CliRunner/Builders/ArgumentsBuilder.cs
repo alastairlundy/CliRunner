@@ -183,7 +183,7 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escape = true)
     {
-        foreach (var val in values)
+        foreach (IFormattable val in values)
         {
             string newVal = (string)formatProvider.GetFormat(val.GetType());
            
@@ -210,7 +210,7 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escape)
     {
-        foreach (var val in values)
+        foreach (IFormattable val in values)
         {
             string newVal = val.ToString((string)cultureInfo.GetFormat(val.GetType()), DefaultFormatProvider);
                 
