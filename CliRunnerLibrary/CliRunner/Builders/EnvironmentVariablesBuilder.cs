@@ -55,7 +55,7 @@ public class EnvironmentVariablesBuilder
         Dictionary<string, string> output = new Dictionary<string, string>();
 #endif
         
-        if (_environmentVariables.Count > 0)
+        if (_environmentVariables.Any())
         {
             foreach (KeyValuePair<string, string> pair in _environmentVariables)
             {
