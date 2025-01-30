@@ -16,8 +16,9 @@ Usage is very similar to using ``Cli.Wrap`` except that the entrypoint is ``CmdC
 
 ```csharp
 using CliRunner;
+using CliRunner.Builders;
+using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
-using CliRunner.Buffered;
 using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
@@ -27,10 +28,14 @@ using CliRunner.Extensions;
   ServiceProvider sp = services.Build();
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
-  var result = await CmdCommand.CreateInstance()
-                .WithArguments("Your arguments go here")
-                .WithWorkingDirectory(Environment.SystemDirectory)
-                .ExecuteBufferedAsync();
+  //Build your command fluently
+  ICommandBuilder builder = new CommandBuilder(CmdCommandConfiguration)
+                    .WithArguments("Your arguments go here")
+                .WithWorkingDirectory(Environment.SystemDirectory);
+  
+  Command command = builder.ToCommand();
+  
+  var result = await command.ExecuteBufferedAsync(command);
 ```
 
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
@@ -61,7 +66,6 @@ Usage is identical to using ``Command.CreateInstance`` except that the entrypoin
 ```csharp
 using CliRunner;
 using CliRunner.Specializations;
-using CliRunner.Buffered;
 using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
@@ -84,7 +88,6 @@ Usage is identical to using ``Command.CreateInstance`` except that the entrypoin
 ```csharp
 using CliRunner;
 using CliRunner.Specializations;
-using CliRunner.Buffered;
 using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
