@@ -13,25 +13,30 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.9.0
+        <PackageReleaseNotes>## Changes since 0.10.0
+
+### Additions
+* Added .NET 9 TFM
+* Added additional xml doc comments
+* Added dependency on CollectionsExtensions and reduced technical debt
+* Added ``ICommandBuilder`` interface and ``CommandBuilder`` class - CommandBuilder is now the expected way to build Commands fluently with builder methods. Non Builder usage of ``Command`` continues to be supported by ``Command``
 
 ### Breaking Changes
-* Renamed ``AddCliRunner`` Dependency Injection extension method to ``UseCliRunner``
-* Removed deprecated static ``Cli`` class - Use ``Command.CreateInstance`` static class instead.
-* Removed destructive BufferedCommandResult to CommandResult extension method.
-* Removed ``GetInstallLocationAsync`` method from ``AbstractInstallableCommand`` as redundant - Use the Command's ``TargetFilePath`` property for the file path.
+* Removed ``ICommandConfigurationBuilder`` interface and removed ``Command`` class's inheritance of it.
 
 ### Non-Breaking Changes
+* Deprecated use of ``Command``'s ``CreateInstance`` static methods - Use suggested alternatives where appropriate. These methods will be removed in a future version.
+* Deprecated use of ``Command``'s Builder methods - Use the new ``CommandBuilder`` builder class instead. ``Command``'s builder methods will be removed in a future version.
+* ``BufferedCommandResult`` is now part of the base ``CliRunner`` namespace. No extra using namespace required.
+* Clarified usages of 2 types in ``ArgumentsBuilder`` with explicit typing
+* [.NET Standard 2.0 and 2.1 only] Updated Polyfill requirement from 7.14.0 to 7.15.0
 
-#### General Changes
-* Added some missing xml doc comments
-* [.NET Standard 2.0 only] Updated OSCompatibilityLib dependency from 3.0.0 to 3.0.1
-* [.NET Standard 2.0 only] Updated Polyfill dependency from 7.12.0 to 7.14.0
-* [Specializations Library only] Fixed a bug with CmdCommand that would cause the wrong file path to be used.</PackageReleaseNotes>
+### Removals
+* [.NET Standard 2.0 and 2.1 only] Removed dependency on OSCompatibilityLib for CliRunner (Not for Specializations library)</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.10.0</PackageVersion>
+        <PackageVersion>0.11.0</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>

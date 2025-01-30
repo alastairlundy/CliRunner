@@ -4,6 +4,7 @@
 ### Pre-release versions
 | Version | Release Date | Changelog |
 |-|-|-|
+| 0.11.0 | January 30th 2025 | https://github.com/alastairlundy/CliRunner/releases/0.11.0 |
 | 0.10.0 | January 25th 2025 | https://github.com/alastairlundy/CliRunner/releases/0.10.0 |
 | 0.9.0 | January 18th 2025 | https://github.com/alastairlundy/CliRunner/releases/0.9.0 |
 | 0.8.0 | January 12th 2025 | https://github.com/alastairlundy/CliRunner/releases/0.8.0 |
