@@ -46,6 +46,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
+    [Obsolete("This class is deprecated and will be removed in a future version.")]
     public class PowershellCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
