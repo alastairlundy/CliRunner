@@ -104,7 +104,7 @@ namespace CliRunner.Specializations
             }
             else if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
-                installLocationBuilder = new CommandBuilder(new CmdCommandConfiguration("/usr/bin/which"))
+                installLocationBuilder = new CommandBuilder("/usr/bin/which")
                     .WithArguments("pwsh");
             }
             else
