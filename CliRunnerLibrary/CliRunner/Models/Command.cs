@@ -158,7 +158,7 @@ namespace CliRunner
             Encoding standardInputEncoding = default,
             Encoding standardOutputEncoding = default,
             Encoding standardErrorEncoding = default,
-#if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER && !NET9_0_OR_GREATER
             IntPtr processorAffinity = 0,
 #else
              IntPtr processorAffinity = default(IntPtr),
