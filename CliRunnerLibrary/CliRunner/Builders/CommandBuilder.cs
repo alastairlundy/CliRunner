@@ -22,6 +22,9 @@ using System.Runtime.Versioning;
 
 namespace CliRunner.Builders;
 
+/// <summary>
+/// A class to build Commands with a Fluent configuration interface. 
+/// </summary>
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class CommandBuilder : ICommandBuilder
 {
@@ -63,11 +66,11 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the arguments to pass to the executable.
     /// </summary>
-    /// <param name="arguments"></param>
-    /// <param name="escapeArguments"></param>
-    /// <returns></returns>
+    /// <param name="arguments">The arguments to pass to the executable.</param>
+    /// <param name="escapeArguments">Whether to escape the arguments if escape characters are detected.</param>
+    /// <returns>The new ICommandBuilder object with the specified arguments.</returns>
     [Pure]
     public ICommandBuilder WithArguments(IEnumerable<string> arguments, bool escapeArguments)
     {
@@ -98,10 +101,10 @@ public class CommandBuilder : ICommandBuilder
     }
     
     /// <summary>
-    /// 
+    /// Sets the arguments to pass to the executable.
     /// </summary>
-    /// <param name="arguments"></param>
-    /// <returns></returns>
+    /// <param name="arguments">The arguments to pass to the executable.</param>
+    /// <returns>The new ICommandBuilder object with the specified arguments.</returns>
     [Pure]
     public ICommandBuilder WithArguments(string arguments) =>
         new CommandBuilder(
@@ -123,10 +126,10 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the Target File Path of the Command Executable.
     /// </summary>
-    /// <param name="targetFilePath"></param>
-    /// <returns></returns>
+    /// <param name="targetFilePath">The target file path of the Command.</param>
+    /// <returns>The Command with the updated Target File Path.</returns>
     [Pure]
     public ICommandBuilder WithTargetFile(string targetFilePath) =>
         new CommandBuilder(
@@ -148,10 +151,10 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the environment variables to be configured.
     /// </summary>
-    /// <param name="environmentVariables"></param>
-    /// <returns></returns>
+    /// <param name="environmentVariables">The environment variables to be configured.</param>
+    /// <returns>The new CommandBuilder with the specified environment variables.</returns>
     [Pure]
     public ICommandBuilder WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
         new CommandBuilder(
@@ -173,10 +176,10 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the environment variables for the Command to be executed.
     /// </summary>
-    /// <param name="configure"></param>
-    /// <returns></returns>
+    /// <param name="configure">The environment variables to be configured</param>
+    /// <returns>The new CommandBuilder with the specified environment variables.</returns>
     [Pure]
     public ICommandBuilder WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
     {
@@ -189,10 +192,10 @@ public class CommandBuilder : ICommandBuilder
     }
 
     /// <summary>
-    /// 
+    /// Sets whether to execute the Command with Administrator Privileges.
     /// </summary>
-    /// <param name="runAsAdministrator"></param>
-    /// <returns></returns>
+    /// <param name="runAsAdministrator">Whether to execute the Command with Administrator Privileges.</param>
+    /// <returns>The new CommandBuilder with the specified Administrator Privileges settings.</returns>
     [Pure]
     public ICommandBuilder WithAdministratorPrivileges(bool runAsAdministrator) =>
         new CommandBuilder(
@@ -214,10 +217,10 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the working directory to be used for the Command.
     /// </summary>
-    /// <param name="workingDirectoryPath"></param>
-    /// <returns></returns>
+    /// <param name="workingDirectoryPath">The working directory to be used.</param>
+    /// <returns>The new CommandBuilder with the specified working directory.</returns>
     [Pure]
     public ICommandBuilder WithWorkingDirectory(string workingDirectoryPath) =>
         new CommandBuilder(
@@ -239,10 +242,18 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the specified Credentials to be used.
     /// </summary>
-    /// <param name="credentials"></param>
-    /// <returns></returns>
+    /// <param name="credentials">The credentials to be used.</param>
+    /// <returns>The new CommandBuilder with the specified Credentials.</returns>
+    /// <remarks>Credentials are only supported with the Process class on Windows. This is a limitation of .NET's Process class.</remarks>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [UnsupportedOSPlatform("macos")]
+    [UnsupportedOSPlatform("linux")]
+    [UnsupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("android")]
+#endif
     [Pure]
     public ICommandBuilder WithCredentials(UserCredentials credentials) =>
         new CommandBuilder(
@@ -264,11 +275,19 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the credentials for the Command to be executed.
     /// </summary>
-    /// <param name="configure"></param>
-    /// <returns></returns>
+    /// <param name="configure">The CredentialsBuilder configuration.</param>
+    /// <returns>The new CommandBuilder with the specified Credentials.</returns>
+    /// <remarks>Credentials are only supported with the Process class on Windows. This is a limitation of .NET's Process class.</remarks>
     [Pure]
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [UnsupportedOSPlatform("macos")]
+    [UnsupportedOSPlatform("linux")]
+    [UnsupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("android")]
+#endif
     public ICommandBuilder WithCredentials(Action<CredentialsBuilder> configure)
     {
         CredentialsBuilder credentialBuilder = new CredentialsBuilder()
@@ -282,10 +301,10 @@ public class CommandBuilder : ICommandBuilder
     }
 
     /// <summary>
-    /// 
+    /// Sets the Result Validation whether to throw an exception or not if the Command does not execute successfully.
     /// </summary>
-    /// <param name="validation"></param>
-    /// <returns></returns>
+    /// <param name="validation">The result validation behaviour to be used.</param>
+    /// <returns>The new CommandBuilder object with the configured Result Validation behaviour.</returns>
     [Pure]
     public ICommandBuilder WithValidation(CommandResultValidation validation) =>
         new CommandBuilder(
@@ -307,10 +326,12 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the Standard Input Pipe source.
     /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
+    /// <param name="source">The source to use for the Standard Input pipe.</param>
+    /// <returns>The new CommandBuilder with the specified Standard Input pipe source.</returns>
+    /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+    /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
     [Pure]
     public ICommandBuilder WithStandardInputPipe(StreamWriter source) =>
         new CommandBuilder(
@@ -333,10 +354,10 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the Standard Output Pipe target.
     /// </summary>
-    /// <param name="target"></param>
-    /// <returns></returns>
+    /// <param name="target">The target to send the Standard Output to.</param>
+    /// <returns>The new CommandBuilder with the specified Standard Output Pipe Target.</returns>
     [Pure]
     public ICommandBuilder WithStandardOutputPipe(StreamReader target) =>
         new CommandBuilder(
@@ -359,10 +380,10 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the Standard Error Pipe target.
     /// </summary>
-    /// <param name="target"></param>
-    /// <returns></returns>
+    /// <param name="target">The target to send the Standard Error to.</param>
+    /// <returns>The new CommandBuilder with the specified Standard Error Pipe Target.</returns>
     [Pure]
     public ICommandBuilder WithStandardErrorPipe(StreamReader target) =>
         new CommandBuilder(
@@ -385,20 +406,16 @@ public class CommandBuilder : ICommandBuilder
                 _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Sets the Processor Affinity for this command.
     /// </summary>
-    /// <param name="processorAffinity"></param>
-    /// <returns></returns>
+    /// <param name="processorAffinity">The processor affinity to use.</param>
+    /// <returns>The new CommandBuilder with the specified Processor Affinity.</returns>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]
     [UnsupportedOSPlatform("macos")]
     [UnsupportedOSPlatform("freebsd")]
-    [UnsupportedOSPlatform("browser")]
-    [UnsupportedOSPlatform("ios")]
     [UnsupportedOSPlatform("android")]
-    [UnsupportedOSPlatform("tvos")]
-    [UnsupportedOSPlatform("watchos")]
 #endif
     [Pure]
     public ICommandBuilder WithProcessorAffinity(IntPtr processorAffinity) =>
@@ -422,10 +439,12 @@ public class CommandBuilder : ICommandBuilder
     
 
     /// <summary>
-    /// 
+    /// Enables or disables command execution via Shell Execution.
     /// </summary>
-    /// <param name="useShellExecution"></param>
-    /// <returns></returns>
+    /// <param name="useShellExecution">Whether to enable or disable shell execution.</param>
+    /// <returns>The new CommandBuilder with the specified shell execution behaviour.</returns>
+    /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+    /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
     [Pure]
     public ICommandBuilder WithShellExecution(bool useShellExecution) =>
         new CommandBuilder(
@@ -447,10 +466,10 @@ public class CommandBuilder : ICommandBuilder
                 useShellExecution));
 
     /// <summary>
-    /// 
+    /// Enables or disables Window creation for the wrapped executable.
     /// </summary>
-    /// <param name="enableWindowCreation"></param>
-    /// <returns></returns>
+    /// <param name="enableWindowCreation">Whether to enable or disable window creation for the wrapped executable.</param>
+    /// <returns>The new CommandBuilder with the specified window creation behaviour.</returns>
     [Pure]
     public ICommandBuilder WithWindowCreation(bool enableWindowCreation) =>
         new CommandBuilder(new Command(_command.TargetFilePath,
@@ -472,12 +491,12 @@ public class CommandBuilder : ICommandBuilder
     
     
     /// <summary>
-    /// 
+    /// Sets the Encoding types to be used for Standard Input, Output, and Error.
     /// </summary>
-    /// <param name="standardInputEncoding"></param>
-    /// <param name="standardOutputEncoding"></param>
-    /// <param name="standardErrorEncoding"></param>
-    /// <returns></returns>
+    /// <param name="standardInputEncoding">The encoding type to be used for the Standard Input.</param>
+    /// <param name="standardOutputEncoding">The encoding type to be used for the Standard Output.</param>
+    /// <param name="standardErrorEncoding">The encoding type to be used for the Standard Error.</param>
+    /// <returns>The new CommandBuilder with the specified Pipe Encoding types.</returns>
     [Pure]
     public ICommandBuilder WithEncoding(Encoding standardInputEncoding = default,
         Encoding standardOutputEncoding = default,
@@ -500,9 +519,9 @@ public class CommandBuilder : ICommandBuilder
             _command.UseShellExecution));
 
     /// <summary>
-    /// 
+    /// Builds the Command with the configured parameters.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The new Command that has been configured.</returns>
     [Pure]
     public Command Build() => _command;
 }
