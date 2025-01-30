@@ -57,7 +57,7 @@ namespace CliRunner.Specializations.Configurations
         /// <param name="standardOutputEncoding"></param>
         /// <param name="standardErrorEncoding"></param>
         /// <param name="processorAffinity"></param>
-        public CmdCommandConfiguration(string arguments,
+        public CmdCommandConfiguration(string arguments = null,
             string workingDirectoryPath = null, bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null,
             CommandResultValidation resultValidation = CommandResultValidation.ExitCodeZero,
