@@ -37,7 +37,7 @@ using System.Runtime.Versioning;
 namespace CliRunner
 {
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public class Command : ICommandConfiguration, ICommandConfigurationBuilder, IEquatable<Command>
+    public class Command : ICommandConfiguration, IEquatable<Command>
     {
         /// <summary>
         /// Whether administrator privileges are required when executing the Command.
