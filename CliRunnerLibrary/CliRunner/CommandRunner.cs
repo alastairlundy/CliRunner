@@ -198,24 +198,28 @@ public class CommandRunner : ICommandRunner
                 if (OperatingSystem.IsWindows())
 #endif
                 {
-                    if (command.Credentials.Domain != null)
-                    {
-                        output.Domain = command.Credentials.Domain;
-                    }
-                    if (command.Credentials.UserName != null)
-                    {
-                        output.UserName = command.Credentials.UserName;
-                    }
-                    if (command.Credentials.Password != null)
-                    {
-                        output.Password = command.Credentials.Password;
-                    }
                     
 #pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
                     if (command.Credentials.LoadUserProfile != null)
 #pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
                     {
                         output.LoadUserProfile = (bool)command.Credentials.LoadUserProfile;
+                        
+                        if (output.LoadUserProfile == true)
+                        {
+                            if (command.Credentials.Domain != null)
+                            {
+                                output.Domain = command.Credentials.Domain;
+                            }
+                            if (command.Credentials.UserName != null)
+                            {
+                                output.UserName = command.Credentials.UserName;
+                            }
+                            if (command.Credentials.Password != null)
+                            {
+                                output.Password = command.Credentials.Password;
+                            }
+                        }
                     }
                 }
             }
