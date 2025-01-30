@@ -50,7 +50,7 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9
 * [Nuget](https://nuget.org/packages/) or ``dotnet add package CliRunner``
 
 ## Usage
-CliRunner uses a fluent builder style of syntax to easily configure and run Commands.
+CliRunner enables use of a fluent builder style of syntax to easily configure and run Commands.
 
 The following example shows how to configure and build a Command that returns a BufferedCommandResult which contains redirected StandardOutput and StandardError.
 

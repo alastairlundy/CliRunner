@@ -12,14 +12,13 @@ All Command specialization classes come with an already configured TargetFilePat
 ### CmdCommand
 The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 
-Usage is very similar to using ``Cli.Wrap`` except that the entrypoint is ``CmdCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
+Usage is veryre also supported with Command Specializations
 
 ```csharp
 using CliRunner;
 using CliRunner.Builders;
 using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
-using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
   ServiceCollection services = new ServiceCollection();
@@ -29,8 +28,8 @@ using CliRunner.Extensions;
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
   //Build your command fluently
-  ICommandBuilder builder = new CommandBuilder(CmdCommandConfiguration)
-                    .WithArguments("Your arguments go here")
+  ICommandBuilder builder = new CommandBuilder(
+          new CmdCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
   Command command = builder.ToCommand();
@@ -41,9 +40,9 @@ using CliRunner.Extensions;
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
 ```csharp
 using CliRunner;
+using CliRunner.Builders;
+using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
-using CliRunner.Buffered;
-using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
   ServiceCollection services = new ServiceCollection();
@@ -52,19 +51,22 @@ using CliRunner.Extensions;
   ServiceProvider sp = services.Build();
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
-await CmdCommand.CreateInstance()
-                .WithArguments("Your arguments go here")
-                .WithWorkingDirectory(Environment.SystemDirectory)
-                .ExecuteAsync(_commandRunner);
+  //Build your command fluently
+  ICommandBuilder builder = new CommandBuilder(
+          new CmdCommandConfiguration("Your arguments go here"))
+                .WithWorkingDirectory(Environment.SystemDirectory);
+  
+  Command command = builder.ToCommand();
+  
+  var result = await command.ExecuteAsync(command);
 ```
 
 ### ClassicPowershellCommand
 The ClassicPowershellCommand is a specialized Command class with an already configured TargetFilePath that points to Windows' copy of powershell.exe .
 
-Usage is identical to using ``Command.CreateInstance`` except that the entrypoint is ``ClassicPowershellCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
-
 ```csharp
 using CliRunner;
+using CliRunner.Builders;
 using CliRunner.Specializations;
 using CliRunner.Extensions;
 
@@ -75,18 +77,22 @@ using CliRunner.Extensions;
   ServiceProvider sp = services.Build();
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
- var result = await ClassicPowershellCommand.CreateInstance()
-                .WithArguments("Your arguments go here")
-                .ExecuteBufferedAsync(_commandRunner);
+   //Build your command fluently
+  ICommandBuilder builder = new CommandBuilder(
+          new ClassicPowershellCommandConfiguration("Your arguments go here"))
+                .WithWorkingDirectory(Environment.SystemDirectory);
+  
+  Command command = builder.ToCommand();
+  
+ var result = await _commandRunner.ExecuteBufferedAsync(command);
 ```
 
 ### PowershellCommand
 The PowershellCommand's TargetFilePath points to the installed copy of cross-platform Powershell if it is installed.
 
-Usage is identical to using ``Command.CreateInstance`` except that the entrypoint is ``PowershellCommand.CreateInstance()`` - This is a static method that instantiates the Command for use with the usual Command builder methods that are also supported with Command Specializations
-
 ```csharp
 using CliRunner;
+using CliRunner.Builders;
 using CliRunner.Specializations;
 using CliRunner.Extensions;
 
@@ -97,10 +103,14 @@ using CliRunner.Extensions;
   ServiceProvider sp = services.Build();
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
-  var result = await PowershellCommand.CreateInstance()
-                .WithArguments("Your arguments go here")
-                .WithWorkingDirectory(Environment.SystemDirectory)
-                .ExecuteBufferedAsync(_commandRunner);
+   //Build your command fluently
+  ICommandBuilder builder = new CommandBuilder(
+          new PowershellCommandConfiguration("Your arguments go here"))
+                .WithWorkingDirectory(Environment.SystemDirectory);
+  
+  Command command = builder.ToCommand();
+  
+ var result = await _commandRunner.ExecuteBufferedAsync(command);
 ```
 
 ## Licensing
