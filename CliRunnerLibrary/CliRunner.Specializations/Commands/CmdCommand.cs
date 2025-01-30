@@ -7,18 +7,12 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
-
 using System;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
-using CliRunner.Buffered;
 using CliRunner.Extensibility;
 using CliRunner.Extensions;
 using CliRunner.Specializations.Internal.Localizations;
@@ -28,10 +22,13 @@ using CliRunner.Specializations.Internal.Localizations;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = AlastairLundy.OSCompatibilityLib.Polyfills.OperatingSystem;
+#else
+using System.Runtime.Versioning;
 #endif
 
 namespace CliRunner.Specializations
 {
+
     /// <summary>
     /// A class to make running commands through Windows CMD easier.
     /// </summary>
@@ -63,7 +60,7 @@ namespace CliRunner.Specializations
                     throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_OnlySupportedOnWindows);
                 }
             
-                if (IsInstalledAsync() == false)
+                if (IsInstalled() == false)
                 {
                     throw new ArgumentException(Resources.Exceptions_Cmd_NotInstalled);
                 }
@@ -114,7 +111,6 @@ namespace CliRunner.Specializations
         /// Creates a new instance of the CmdCommand class.
         /// </summary>
         /// <returns>The new CmdCommand instance.</returns>
-        [Pure]
         public static CmdCommand CreateInstance()
         {
             return new CmdCommand();
@@ -125,7 +121,6 @@ namespace CliRunner.Specializations
         /// </summary>
         /// <returns>The new CmdCommand instance.</returns>
         /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
-        [Pure]
         public static CmdCommand CreateInstance(ICommandRunner commandRunner)
         {
             return new CmdCommand(commandRunner);
@@ -158,6 +153,8 @@ namespace CliRunner.Specializations
             {
                 throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_NotInstalled);
             }
+            
+            
             
             BufferedCommandResult result =  await Command.CreateInstance(this)
                 .WithArguments("--version")

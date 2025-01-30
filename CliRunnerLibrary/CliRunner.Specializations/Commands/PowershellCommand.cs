@@ -14,9 +14,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
-using CliRunner.Buffered;
 using CliRunner.Extensibility;
 using CliRunner.Extensions;
+
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
 
@@ -131,7 +131,7 @@ namespace CliRunner.Specializations
 #endif
          private async Task<string> GetInstallLocationAsync()
          {
-             if (IsInstalledAsync() == false)
+             if (IsInstalled() == false)
              {
                  throw new ArgumentException(Resources.Exceptions_Powershell_NotInstalled);
              }

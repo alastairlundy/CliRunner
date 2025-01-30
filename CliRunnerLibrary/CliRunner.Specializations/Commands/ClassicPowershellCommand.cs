@@ -17,7 +17,6 @@ using System.IO;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
-using CliRunner.Buffered;
 using CliRunner.Extensibility;
 using CliRunner.Extensions;
 
@@ -170,7 +169,7 @@ namespace CliRunner.Specializations
                 throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
             }
             
-            if (OperatingSystem.IsWindows() && IsInstalledAsync())
+            if (OperatingSystem.IsWindows() && IsInstalled())
             {
                 BufferedCommandResult result = await Command.CreateInstance(this)
                     .WithArguments("$PSVersionTable")
