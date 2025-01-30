@@ -44,9 +44,50 @@ namespace CliRunner.Specializations.Configurations
     {
         private readonly ICommandRunner _commandRunner;
 
-        public PowershellCommandConfiguration(ICommandRunner commandRunner)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requiresAdministrator"></param>
+        /// <param name="workingDirectoryPath"></param>
+        /// <param name="commandRunner"></param>
+        /// <param name="arguments"></param>
+        /// <param name="environmentVariables"></param>
+        /// <param name="credentials"></param>
+        /// <param name="resultValidation"></param>
+        /// <param name="standardInput"></param>
+        /// <param name="standardOutput"></param>
+        /// <param name="standardError"></param>
+        /// <param name="useShellExecution"></param>
+        /// <param name="windowCreation"></param>
+        /// <param name="standardInputEncoding"></param>
+        /// <param name="standardOutputEncoding"></param>
+        /// <param name="standardErrorEncoding"></param>
+        /// <param name="processorAffinity"></param>
+        public PowershellCommandConfiguration(ICommandRunner commandRunner, string arguments = null,
+            string workingDirectoryPath = null, bool requiresAdministrator = false,
+            IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null,
+            CommandResultValidation resultValidation = CommandResultValidation.ExitCodeZero,
+            StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
+            Encoding standardInputEncoding = default, Encoding standardOutputEncoding = default,
+            Encoding standardErrorEncoding = default, IntPtr processorAffinity = default(IntPtr),
+            bool useShellExecution = false, bool windowCreation = false)
         {
             _commandRunner = commandRunner;
+            RequiresAdministrator = requiresAdministrator;
+            WorkingDirectoryPath = workingDirectoryPath;
+            Arguments = arguments;
+            EnvironmentVariables = environmentVariables;
+            Credentials = credentials;
+            ResultValidation = resultValidation;
+            StandardInput = standardInput;
+            StandardOutput = standardOutput;
+            StandardError = standardError;
+            UseShellExecution = useShellExecution;
+            WindowCreation = windowCreation;
+            StandardInputEncoding = standardInputEncoding;
+            StandardOutputEncoding = standardOutputEncoding;
+            StandardErrorEncoding = standardErrorEncoding;
+            ProcessorAffinity = processorAffinity;
         }
         
         /// <summary>
