@@ -92,7 +92,7 @@ namespace CliRunner.Specializations.Configurations
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]        
 #endif
-        public new string TargetFilePath
+        public string TargetFilePath
         {
             get
             {
