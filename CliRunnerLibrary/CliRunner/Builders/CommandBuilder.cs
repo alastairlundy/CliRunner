@@ -23,7 +23,7 @@ using System.Runtime.Versioning;
 namespace CliRunner.Builders;
 
 /// <summary>
-/// A class to build Commands with a Fluent configuration interface. 
+/// A class to build Command Configurations and Commands with a Fluent configuration interface. 
 /// </summary>
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class CommandBuilder : ICommandBuilder
@@ -31,14 +31,23 @@ public class CommandBuilder : ICommandBuilder
     private readonly ICommandConfiguration _commandConfiguration;
 
     /// <summary>
-    /// 
+    /// Instantiates the CommandBuilder with a specified target file path of an ICommandConfiguration.
     /// </summary>
-    /// <param name="targetFilePath"></param>
+    /// <param name="targetFilePath">The target file path of a Command to be executed.</param>
     public CommandBuilder(string targetFilePath)
     {
         _commandConfiguration = new Command(targetFilePath);
     }
 
+    /// <summary>
+    /// Instantiates the CommandBuilder with a specified ICommandConfiguration configuration
+    /// </summary>
+    /// <param name="commandConfiguration">The configuration to be used when building the Command.</param>
+    public CommandBuilder(ICommandConfiguration commandConfiguration)
+    {
+        _commandConfiguration = commandConfiguration;
+    }
+    
     private CommandBuilder(Command command)
     {
         _commandConfiguration = command;
