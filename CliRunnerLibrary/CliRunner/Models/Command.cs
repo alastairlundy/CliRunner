@@ -214,6 +214,7 @@ namespace CliRunner
         /// <para>Chain appropriate Command methods as needed such as <code>WithArguments("[your args]");</code> and <code>WithWorkingDirectory("[your directory]");</code>.</para>
         /// <para>Don't forget to call <code>.ExecuteAsync();</code> or <code>.ExecuteBufferedAsync();</code> when you're ready to execute the Command!</para>
         /// </remarks>
+        [Obsolete("Command's static CreateInstance methods are deprecated and will be removed in a future version.")]
         public static Command CreateInstance(Command command)
         {
            return new Command(command.TargetFilePath, command.Arguments,
@@ -230,6 +231,7 @@ namespace CliRunner
         /// <param name="arguments">The arguments to pass to the executable.</param>
         /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithArguments(IEnumerable<string> arguments) =>
             new Command(TargetFilePath,
                 string.Join(" ", arguments),
