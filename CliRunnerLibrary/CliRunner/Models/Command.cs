@@ -192,19 +192,19 @@ namespace CliRunner
         /// <summary>
         /// Creates a new Command with the specified Command Configuration.
         /// </summary>
-        /// <param name="commandConfiguration"></param>
+        /// <param name="commandConfiguration">The command configuration to be used to for the Command.</param>
         public Command(ICommandConfiguration commandConfiguration)
         {
             TargetFilePath = commandConfiguration.TargetFilePath;
             Arguments = commandConfiguration.Arguments; 
-            WorkingDirectoryPath = commandConfiguration.WorkingDirectoryPath;
+            WorkingDirectoryPath = commandConfiguration.WorkingDirectoryPath ?? Directory.GetCurrentDirectory();
             RequiresAdministrator = commandConfiguration.RequiresAdministrator;
-            EnvironmentVariables = commandConfiguration.EnvironmentVariables;
-            Credentials = commandConfiguration.Credentials;
+            EnvironmentVariables = commandConfiguration.EnvironmentVariables  ?? new Dictionary<string, string>();
+            Credentials = commandConfiguration.Credentials ?? UserCredentials.Default;
             ResultValidation = commandConfiguration.ResultValidation;
-            StandardInput = commandConfiguration.StandardInput;
-            StandardOutput = commandConfiguration.StandardOutput;
-            StandardError = commandConfiguration.StandardError;
+            StandardInput = commandConfiguration.StandardInput ?? StreamWriter.Null;
+            StandardOutput = commandConfiguration.StandardOutput ?? StreamReader.Null;
+            StandardError = commandConfiguration.StandardError ?? StreamReader.Null;
             
             StandardInputEncoding = commandConfiguration.StandardInputEncoding ?? Encoding.Default;
             StandardOutputEncoding = commandConfiguration.StandardOutputEncoding ?? Encoding.Default;
