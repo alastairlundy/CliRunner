@@ -56,7 +56,7 @@ The following example shows how to configure and build a Command that returns a 
 
 ```csharp
 using CliRunner;
-using CliRunner.Buffered;
+using CliRunner.Builders;
 using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
@@ -66,10 +66,14 @@ using CliRunner.Extensions;
   ServiceProvider sp = services.Build();
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
 
-var result = await Command.CreateInstance("Path/To/Exe")
-              .WithArguments(["arg1", "arg2"])
-              .WithWorkingDirectory("/Path/To/Directory")
-              .ExecuteBufferedAsync(_commandRunner);
+  // Build your Command fluently 
+  ICommandBuilder builder = new CommandBuilder("Path/To/Executable")
+                            .WithArguments(["arg1", "arg2"])
+                            .WithWorkingDirectory("/Path/To/Directory");
+  
+  Command command = builder.ToCommand();
+  
+var result = await _commandRunner.ExecuteBufferedAsync(command);
 ```
 
 ## License
