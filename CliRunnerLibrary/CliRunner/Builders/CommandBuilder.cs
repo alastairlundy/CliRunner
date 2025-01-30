@@ -28,16 +28,20 @@ namespace CliRunner.Builders;
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class CommandBuilder : ICommandBuilder
 {
-    private readonly Command _command;
+    private readonly ICommandConfiguration _commandConfiguration;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="targetFilePath"></param>
     public CommandBuilder(string targetFilePath)
     {
-        _command = new Command(targetFilePath);
+        _commandConfiguration = new Command(targetFilePath);
     }
 
     private CommandBuilder(Command command)
     {
-        _command = command;
+        _commandConfiguration = command;
     }
     
     /// <summary>
@@ -48,22 +52,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithArguments(IEnumerable<string> arguments) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
+            new Command(_commandConfiguration.TargetFilePath,
                 string.Join(" ", arguments),
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the arguments to pass to the executable.
@@ -82,22 +86,22 @@ public class CommandBuilder : ICommandBuilder
         }
 
         return new CommandBuilder(
-            new Command(_command.TargetFilePath,
+            new Command(_commandConfiguration.TargetFilePath,
             args,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
+            _commandConfiguration.WorkingDirectoryPath,
+            _commandConfiguration.RequiresAdministrator,
+            _commandConfiguration.EnvironmentVariables,
+            _commandConfiguration.Credentials,
+            _commandConfiguration.ResultValidation,
+            _commandConfiguration.StandardInput,
+            _commandConfiguration.StandardOutput,
+            _commandConfiguration.StandardError,
+            _commandConfiguration.StandardInputEncoding,
+            _commandConfiguration.StandardOutputEncoding,
+            _commandConfiguration.StandardErrorEncoding,
+            _commandConfiguration.ProcessorAffinity,
+            _commandConfiguration.WindowCreation,
+            _commandConfiguration.UseShellExecution));
     }
     
     /// <summary>
@@ -108,22 +112,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithArguments(string arguments) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
+            new Command(_commandConfiguration.TargetFilePath,
                 arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the Target File Path of the Command Executable.
@@ -134,21 +138,21 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithTargetFile(string targetFilePath) =>
         new CommandBuilder(
             new Command(targetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the environment variables to be configured.
@@ -158,22 +162,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
+            new Command(_commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
                 environmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the environment variables for the Command to be executed.
@@ -184,7 +188,7 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
     {
         EnvironmentVariablesBuilder environmentVariablesBuilder = new EnvironmentVariablesBuilder()
-            .Set(_command.EnvironmentVariables);
+            .Set(_commandConfiguration.EnvironmentVariables);
 
         configure(environmentVariablesBuilder);
 
@@ -199,22 +203,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithAdministratorPrivileges(bool runAsAdministrator) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
+            new Command(_commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
                 runAsAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the working directory to be used for the Command.
@@ -224,22 +228,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithWorkingDirectory(string workingDirectoryPath) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
-                _command.Arguments,
+            new Command(_commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
                 workingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the specified Credentials to be used.
@@ -257,22 +261,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithCredentials(UserCredentials credentials) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
+            new Command(_commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
                 credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the credentials for the Command to be executed.
@@ -291,9 +295,9 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithCredentials(Action<CredentialsBuilder> configure)
     {
         CredentialsBuilder credentialBuilder = new CredentialsBuilder()
-            .SetDomain(_command.Credentials.Domain)
-            .SetPassword(_command.Credentials.Password)
-            .SetUsername(_command.Credentials.UserName);
+            .SetDomain(_commandConfiguration.Credentials.Domain)
+            .SetPassword(_commandConfiguration.Credentials.Password)
+            .SetUsername(_commandConfiguration.Credentials.UserName);
 
         configure(credentialBuilder);
 
@@ -308,22 +312,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithValidation(CommandResultValidation validation) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
+            new Command(_commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
                 validation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the Standard Input Pipe source.
@@ -336,22 +340,22 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithStandardInputPipe(StreamWriter source) =>
         new CommandBuilder(
             new Command(
-                _command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
+                _commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
                 source,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the Standard Output Pipe target.
@@ -362,22 +366,22 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithStandardOutputPipe(StreamReader target) =>
         new CommandBuilder(
             new Command(
-                _command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
+                _commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
                 target,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the Standard Error Pipe target.
@@ -388,22 +392,22 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithStandardErrorPipe(StreamReader target) =>
         new CommandBuilder(
             new Command(
-                _command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
+                _commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
                 target,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
 
     /// <summary>
     /// Sets the Processor Affinity for this command.
@@ -420,22 +424,22 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithProcessorAffinity(IntPtr processorAffinity) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
+            new Command(_commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
                 processorAffinity,
-                _command.WindowCreation,
-                _command.UseShellExecution));
+                _commandConfiguration.WindowCreation,
+                _commandConfiguration.UseShellExecution));
     
 
     /// <summary>
@@ -448,21 +452,21 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithShellExecution(bool useShellExecution) =>
         new CommandBuilder(
-            new Command(_command.TargetFilePath,
-                _command.Arguments,
-                _command.WorkingDirectoryPath,
-                _command.RequiresAdministrator,
-                _command.EnvironmentVariables,
-                _command.Credentials,
-                _command.ResultValidation,
-                _command.StandardInput,
-                _command.StandardOutput,
-                _command.StandardError,
-                _command.StandardInputEncoding,
-                _command.StandardOutputEncoding,
-                _command.StandardErrorEncoding,
-                _command.ProcessorAffinity,
-                _command.WindowCreation,
+            new Command(_commandConfiguration.TargetFilePath,
+                _commandConfiguration.Arguments,
+                _commandConfiguration.WorkingDirectoryPath,
+                _commandConfiguration.RequiresAdministrator,
+                _commandConfiguration.EnvironmentVariables,
+                _commandConfiguration.Credentials,
+                _commandConfiguration.ResultValidation,
+                _commandConfiguration.StandardInput,
+                _commandConfiguration.StandardOutput,
+                _commandConfiguration.StandardError,
+                _commandConfiguration.StandardInputEncoding,
+                _commandConfiguration.StandardOutputEncoding,
+                _commandConfiguration.StandardErrorEncoding,
+                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.WindowCreation,
                 useShellExecution));
 
     /// <summary>
@@ -472,22 +476,22 @@ public class CommandBuilder : ICommandBuilder
     /// <returns>The new CommandBuilder with the specified window creation behaviour.</returns>
     [Pure]
     public ICommandBuilder WithWindowCreation(bool enableWindowCreation) =>
-        new CommandBuilder(new Command(_command.TargetFilePath,
-           _command.Arguments,
-           _command.WorkingDirectoryPath,
-           _command.RequiresAdministrator,
-           _command.EnvironmentVariables,
-           _command.Credentials,
-           _command.ResultValidation,
-           _command.StandardInput,
-           _command.StandardOutput,
-           _command.StandardError,
-           _command.StandardInputEncoding,
-           _command.StandardOutputEncoding,
-           _command.StandardErrorEncoding,
-           _command.ProcessorAffinity,
+        new CommandBuilder(new Command(_commandConfiguration.TargetFilePath,
+           _commandConfiguration.Arguments,
+           _commandConfiguration.WorkingDirectoryPath,
+           _commandConfiguration.RequiresAdministrator,
+           _commandConfiguration.EnvironmentVariables,
+           _commandConfiguration.Credentials,
+           _commandConfiguration.ResultValidation,
+           _commandConfiguration.StandardInput,
+           _commandConfiguration.StandardOutput,
+           _commandConfiguration.StandardError,
+           _commandConfiguration.StandardInputEncoding,
+           _commandConfiguration.StandardOutputEncoding,
+           _commandConfiguration.StandardErrorEncoding,
+           _commandConfiguration.ProcessorAffinity,
             enableWindowCreation,
-           _command.UseShellExecution));
+           _commandConfiguration.UseShellExecution));
     
     
     /// <summary>
@@ -501,27 +505,30 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithEncoding(Encoding standardInputEncoding = default,
         Encoding standardOutputEncoding = default,
         Encoding standardErrorEncoding = default) =>
-        new CommandBuilder(new Command(_command.TargetFilePath,
-            _command.Arguments,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
+        new CommandBuilder(new Command(_commandConfiguration.TargetFilePath,
+            _commandConfiguration.Arguments,
+            _commandConfiguration.WorkingDirectoryPath,
+            _commandConfiguration.RequiresAdministrator,
+            _commandConfiguration.EnvironmentVariables,
+            _commandConfiguration.Credentials,
+            _commandConfiguration.ResultValidation,
+            _commandConfiguration.StandardInput,
+            _commandConfiguration.StandardOutput,
+            _commandConfiguration.StandardError,
             standardInputEncoding,
             standardOutputEncoding,
             standardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
+            _commandConfiguration.ProcessorAffinity,
+            _commandConfiguration.WindowCreation,
+            _commandConfiguration.UseShellExecution));
+
+    /// <summary>
+    /// Builds the ICommandConfiguration with the configured parameters.
+    /// </summary>
+    /// <returns>The new ICommandConfiguration.</returns>
+    public ICommandConfiguration Build() => _commandConfiguration;
 
     /// <summary>
     /// Builds the Command with the configured parameters.
     /// </summary>
-    /// <returns>The new Command that has been configured.</returns>
-    [Pure]
-    public Command Build() => _command;
 }
