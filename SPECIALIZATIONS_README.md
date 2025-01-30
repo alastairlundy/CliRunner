@@ -12,8 +12,6 @@ All Command specialization classes come with an already configured TargetFilePat
 ### CmdCommand
 The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 
-Usage is veryre also supported with Command Specializations
-
 ```csharp
 using CliRunner;
 using CliRunner.Builders;
