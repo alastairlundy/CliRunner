@@ -24,6 +24,7 @@ namespace CliRunner.Extensibility;
 /// <summary>
 /// Represents an installable Command.
 /// </summary>
+[Obsolete("This class is deprecated and will be removed in a future version.")]
 public abstract class AbstractInstallableCommand : Command
 {
     /// <summary>
