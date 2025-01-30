@@ -199,6 +199,7 @@ namespace CliRunner
         /// </remarks>
         /// <param name="targetFilePath">The target file path of the executable to wrap.</param>
         /// <returns>A new Command object with the configured Target File Path.</returns>
+        [Obsolete("Command's static CreateInstance methods are deprecated and will be removed in a future version. Use Command Builder instead.")]
         public static Command CreateInstance(string targetFilePath)
         {
             return new Command(targetFilePath);
@@ -254,6 +255,7 @@ namespace CliRunner
         /// <param name="escapeArguments">Whether to escape the arguments if escape characters are detected.</param>
         /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithArguments(IEnumerable<string> arguments, bool escapeArguments)
         {
             string args = string.Join(" ", arguments);
@@ -287,6 +289,7 @@ namespace CliRunner
         /// <param name="arguments">The arguments to pass to the executable.</param>
         /// <returns>The new Command object with the specified arguments.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithArguments(string arguments) =>
             new Command(TargetFilePath,
                 arguments,
@@ -312,6 +315,7 @@ namespace CliRunner
         /// <remarks>Usage of this builder method is usually unnecessary as Command's constructor requires the Target File Path to be passed to it. </remarks>
         /// <returns>The Command with the updated Target File Path.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithTargetFile(string targetFilePath) =>
             new Command(targetFilePath,
                 Arguments,
@@ -337,6 +341,7 @@ namespace CliRunner
         /// <param name="environmentVariables">The environment variables to be configured.</param>
         /// <returns>The new Command with the specified environment variables.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -361,6 +366,7 @@ namespace CliRunner
         /// <param name="configure">The environment variables to be configured</param>
         /// <returns>The new Command with the specified environment variables.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
         {
             EnvironmentVariablesBuilder environmentVariablesBuilder = new EnvironmentVariablesBuilder()
@@ -377,6 +383,7 @@ namespace CliRunner
         /// <param name="runAsAdministrator">Whether to execute the Command with Administrator Privileges.</param>
         /// <returns>The new Command with the specified Administrator Privileges settings.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithAdministratorPrivileges(bool runAsAdministrator) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -401,6 +408,7 @@ namespace CliRunner
         /// <param name="workingDirectoryPath">The working directory to be used.</param>
         /// <returns>The new Command with the specified working directory.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithWorkingDirectory(string workingDirectoryPath) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -433,6 +441,7 @@ namespace CliRunner
         [UnsupportedOSPlatform("linux")]
         [UnsupportedOSPlatform("freebsd")]
 #endif
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithCredentials(UserCredentials credentials) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -464,6 +473,7 @@ namespace CliRunner
         [UnsupportedOSPlatform("linux")]
         [UnsupportedOSPlatform("freebsd")]
 #endif
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithCredentials(Action<CredentialsBuilder> configure)
         {
             CredentialsBuilder credentialBuilder = new CredentialsBuilder()
@@ -482,6 +492,7 @@ namespace CliRunner
         /// <param name="validation">The result validation behaviour to be used.</param>
         /// <returns>The new Command object with the configured Result Validation behaviour.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithValidation(CommandResultValidation validation) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -508,6 +519,7 @@ namespace CliRunner
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithStandardInputPipe(StreamWriter source) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -532,6 +544,7 @@ namespace CliRunner
         /// <param name="target">The target to send the Standard Output to.</param>
         /// <returns>The new Command with the specified Standard Output Pipe Target.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithStandardOutputPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -556,6 +569,7 @@ namespace CliRunner
         /// <param name="target">The target to send the Standard Error to.</param>
         /// <returns>The new Command with the specified Standard Error Pipe Target.</returns>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithStandardErrorPipe(StreamReader target) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -591,6 +605,7 @@ namespace CliRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithProcessorAffinity(IntPtr processorAffinity) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -617,6 +632,7 @@ namespace CliRunner
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
         [Pure]
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithShellExecution(bool useShellExecution) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -640,6 +656,8 @@ namespace CliRunner
         /// </summary>
         /// <param name="enableWindowCreation">Whether to enable or disable window creation for the wrapped executable.</param>
         /// <returns>The new Command with the specified window creation behaviour.</returns>
+        [Pure] 
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithWindowCreation(bool enableWindowCreation) =>
             new Command(TargetFilePath,
                 Arguments,
@@ -665,6 +683,8 @@ namespace CliRunner
         /// <param name="standardOutputEncoding">The encoding type to be used for the Standard Output.</param>
         /// <param name="standardErrorEncoding">The encoding type to be used for the Standard Error.</param>
         /// <returns>The new Command with the specified Pipe Encoding types.</returns>
+        [Pure] 
+        [Obsolete("Command's Builder methods are deprecated and will be removed in a future version. Use CommandBuilder instead.")]
         public Command WithEncoding(Encoding standardInputEncoding = default,
             Encoding standardOutputEncoding = default,
             Encoding standardErrorEncoding = default) =>
