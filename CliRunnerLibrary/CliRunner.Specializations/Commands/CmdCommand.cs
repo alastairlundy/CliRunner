@@ -111,6 +111,7 @@ namespace CliRunner.Specializations
         /// Creates a new instance of the CmdCommand class.
         /// </summary>
         /// <returns>The new CmdCommand instance.</returns>
+        [Obsolete("This method is deprecated and will be removed in a future version.")]
         public static CmdCommand CreateInstance()
         {
             return new CmdCommand();
@@ -121,6 +122,7 @@ namespace CliRunner.Specializations
         /// </summary>
         /// <returns>The new CmdCommand instance.</returns>
         /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
+        [Obsolete("This method is deprecated and will be removed in a future version.")]
         public static CmdCommand CreateInstance(ICommandRunner commandRunner)
         {
             return new CmdCommand(commandRunner);
