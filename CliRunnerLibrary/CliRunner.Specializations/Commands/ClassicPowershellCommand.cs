@@ -17,8 +17,8 @@ using System.IO;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
+using CliRunner.Builders;
 using CliRunner.Extensibility;
-using CliRunner.Extensions;
 
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
@@ -45,6 +45,8 @@ namespace CliRunner.Specializations
     public class ClassicPowershellCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
+
+        private readonly Command _psVersionCommand;
         
         /// <summary>
         /// The target file path of Windows Powershell.
@@ -94,6 +96,11 @@ namespace CliRunner.Specializations
         {
             base.TargetFilePath = TargetFilePath;
             _commandRunner = new CommandRunner(new CommandPipeHandler());
+
+            ICommandBuilder commandBuilder = new CommandBuilder(this)
+                .WithArguments("$PSVersionTable");
+            
+            _psVersionCommand = commandBuilder.ToCommand();
         }
 
         /// <summary>
@@ -113,6 +120,11 @@ namespace CliRunner.Specializations
         {
             base.TargetFilePath = TargetFilePath;
             _commandRunner = commandRunner;
+            
+            ICommandBuilder commandBuilder = new CommandBuilder(this)
+                .WithArguments("$PSVersionTable");
+            
+            _psVersionCommand = commandBuilder.ToCommand();
         }
 
         /// <summary>
@@ -120,6 +132,7 @@ namespace CliRunner.Specializations
         /// </summary>
         /// <returns>The new ClassicPowershellCommand instance.</returns>
         [Pure]
+        [Obsolete("This method is deprecated and will be removed in a future version.")]
         public static ClassicPowershellCommand CreateInstance()
         {
             return new ClassicPowershellCommand();
@@ -131,6 +144,7 @@ namespace CliRunner.Specializations
         /// <returns>The new ClassicPowershellCommand instance.</returns>
         /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
         [Pure]
+        [Obsolete("This method is deprecated and will be removed in a future version.")]
         public static ClassicPowershellCommand CreateInstance(ICommandRunner commandRunner)
         {
             return new ClassicPowershellCommand(commandRunner);
@@ -171,9 +185,7 @@ namespace CliRunner.Specializations
             
             if (OperatingSystem.IsWindows() && IsInstalled())
             {
-                BufferedCommandResult result = await Command.CreateInstance(this)
-                    .WithArguments("$PSVersionTable")
-                    .ExecuteBufferedAsync(_commandRunner);
+                BufferedCommandResult result = await _commandRunner.ExecuteBufferedAsync(_psVersionCommand);
                
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER
                 string[] lines = result.StandardOutput.Split(Environment.NewLine);

@@ -14,9 +14,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
+using CliRunner.Builders;
 using CliRunner.Extensibility;
-using CliRunner.Extensions;
 
+using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
 
@@ -48,6 +49,10 @@ namespace CliRunner.Specializations
     public class PowershellCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
+
+        private readonly Command _psVersionCommand;
+
+        private readonly Command _psInstallLocationCommand;
         
         /// <summary>
         /// The target file path of cross-platform Powershell.
@@ -84,12 +89,41 @@ namespace CliRunner.Specializations
         {
             base.TargetFilePath = TargetFilePath;
             _commandRunner = new CommandRunner(new CommandPipeHandler());
+
+            ICommandBuilder versionBuilder = new CommandBuilder(this)
+                .WithArguments("$PSVersionTable");
+
+            _psVersionCommand = versionBuilder.ToCommand();
+
+            ICommandBuilder installLocationBuilder;
+
+            if (OperatingSystem.IsWindows())
+            {
+                installLocationBuilder = new CommandBuilder(new CmdCommandConfiguration("where"))
+                    .WithArguments("pwsh.exe");
+            }
+            else if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+            {
+                installLocationBuilder = new CommandBuilder(new CmdCommandConfiguration("/usr/bin/which"))
+                    .WithArguments("pwsh");
+            }
+            else
+            {
+                throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
+            }
+            
+            _psInstallLocationCommand = installLocationBuilder.ToCommand();
         }
 
         public PowershellCommand(ICommandRunner commandRunner) : base("")
         {
             base.TargetFilePath = TargetFilePath;
             _commandRunner = commandRunner;
+            
+            ICommandBuilder versionBuilder = new CommandBuilder(this)
+                .WithArguments("$PSVersionTable");
+
+            _psVersionCommand = versionBuilder.ToCommand();
         }
 
         /// <summary>
@@ -97,6 +131,7 @@ namespace CliRunner.Specializations
         /// </summary>
         /// <returns>The new PowershellCommand instance.</returns>
         [Pure]
+        [Obsolete("This method is deprecated and will be removed in a future version.")]
         public static PowershellCommand CreateInstance()
         {
             return new PowershellCommand();
@@ -108,6 +143,7 @@ namespace CliRunner.Specializations
         /// <returns>The new PowershellCommand instance.</returns>
         /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
         [Pure]
+        [Obsolete("This method is deprecated and will be removed in a future version.")]
         public static PowershellCommand CreateInstance(ICommandRunner commandRunner)
         {
             return new PowershellCommand(commandRunner);
@@ -154,21 +190,11 @@ namespace CliRunner.Specializations
                      }
                  }
 
-                 result = await CmdCommand.CreateInstance(_commandRunner)
-                     .WithArguments("where pwsh.exe")
-                     .ExecuteBufferedAsync(_commandRunner);
+                 result = await _commandRunner.ExecuteBufferedAsync(_psInstallLocationCommand);
              }
-             else if (OperatingSystem.IsMacOS())
+             else if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
              {
-                 result = await Command.CreateInstance("/usr/bin/which")
-                     .WithArguments("pwsh")
-                     .ExecuteBufferedAsync(_commandRunner);
-             }
-             else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-             {
-                 result = await Command.CreateInstance("/usr/bin/which")
-                     .WithArguments("pwsh")
-                     .ExecuteBufferedAsync(_commandRunner);
+                 result = await _commandRunner.ExecuteBufferedAsync(_psInstallLocationCommand);
              }
              else
              {
@@ -210,9 +236,7 @@ namespace CliRunner.Specializations
                 throw new PlatformNotSupportedException(Resources.Exceptions_Powershell_OnlySupportedOnDesktop);
             }
             
-            BufferedCommandResult result = await Command.CreateInstance(this)
-                .WithArguments("$PSVersionTable")
-                .ExecuteBufferedAsync(_commandRunner);
+            BufferedCommandResult result = await _commandRunner.ExecuteBufferedAsync(_psVersionCommand);
              
             string[] lines = result.StandardOutput.Split(Environment.NewLine.ToCharArray());
 

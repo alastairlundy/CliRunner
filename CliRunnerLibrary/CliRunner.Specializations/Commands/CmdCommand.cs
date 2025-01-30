@@ -13,8 +13,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
+using CliRunner.Builders;
 using CliRunner.Extensibility;
-using CliRunner.Extensions;
+
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -46,6 +47,8 @@ namespace CliRunner.Specializations
     public class CmdCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
+
+        private readonly Command _cmdVersionCommand;
         
         /// <summary>
         /// The target file path of Cmd.
@@ -86,6 +89,12 @@ namespace CliRunner.Specializations
         {
             base.TargetFilePath = TargetFilePath;
             _commandRunner = new CommandRunner(new CommandPipeHandler());
+
+            ICommandBuilder commandBuilder = new CommandBuilder(this)
+                .WithWorkingDirectory(Environment.SystemDirectory)
+                .WithArguments("--version");
+
+            _cmdVersionCommand = commandBuilder.ToCommand();
         }
 
         /// <summary>
@@ -105,6 +114,12 @@ namespace CliRunner.Specializations
         {
             base.TargetFilePath = TargetFilePath;
             _commandRunner = commandRunner;
+            
+            ICommandBuilder commandBuilder = new CommandBuilder(this)
+                .WithWorkingDirectory(Environment.SystemDirectory)
+                .WithArguments("--version");
+
+            _cmdVersionCommand = commandBuilder.ToCommand();
         }
 
         /// <summary>
@@ -156,12 +171,7 @@ namespace CliRunner.Specializations
                 throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_NotInstalled);
             }
             
-            
-            
-            BufferedCommandResult result =  await Command.CreateInstance(this)
-                .WithArguments("--version")
-                .WithWorkingDirectory(Environment.SystemDirectory)
-                .ExecuteBufferedAsync(_commandRunner);
+            BufferedCommandResult result =  await _commandRunner.ExecuteBufferedAsync(_cmdVersionCommand);
 
 #if NET5_0_OR_GREATER
             string output = result.StandardOutput.Split(Environment.NewLine).First()
