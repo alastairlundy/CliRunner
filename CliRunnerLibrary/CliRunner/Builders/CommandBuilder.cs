@@ -532,14 +532,15 @@ public class CommandBuilder : ICommandBuilder
             _commandConfiguration.UseShellExecution));
 
     /// <summary>
-    /// Builds the ICommandConfiguration with the configured parameters.
-    /// </summary>
-    /// <returns>The new ICommandConfiguration.</returns>
-    public ICommandConfiguration Build() => _commandConfiguration;
-
-    /// <summary>
     /// Builds the Command with the configured parameters.
     /// </summary>
     /// <returns>The newly configured Command.</returns>
-    public Command BuildCommand() => new Command(_commandConfiguration);
+    [Pure]
+    public Command ToCommand() => new Command(_commandConfiguration);
+
+    /// <summary>
+    /// Builds the ICommandConfiguration with the configured parameters.
+    /// </summary>
+    /// <returns>The new ICommandConfiguration.</returns>
+    public ICommandConfiguration ToConfiguration() => _commandConfiguration;
 }

@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
+using System.Windows.Input;
 using CliRunner.Builders;
 
 namespace CliRunner.Abstractions;
@@ -45,8 +45,8 @@ public interface ICommandBuilder
     ICommandBuilder WithEncoding(Encoding standardInputEncoding = default,
         Encoding standardOutputEncoding = default,
         Encoding standardErrorEncoding = default);
-    
-    ICommandConfiguration Build();
 
-    Command BuildCommand();
+    Command ToCommand();
+
+    ICommandConfiguration ToConfiguration();
 }
