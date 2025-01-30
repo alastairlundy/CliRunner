@@ -531,4 +531,6 @@ public class CommandBuilder : ICommandBuilder
     /// <summary>
     /// Builds the Command with the configured parameters.
     /// </summary>
+    /// <returns>The newly configured Command.</returns>
+    public Command BuildCommand() => new Command(_commandConfiguration);
 }

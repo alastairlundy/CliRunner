@@ -47,4 +47,6 @@ public interface ICommandBuilder
         Encoding standardErrorEncoding = default);
     
     ICommandConfiguration Build();
+
+    Command BuildCommand();
 }
