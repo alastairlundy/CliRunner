@@ -14,6 +14,7 @@
 using System.Runtime.Versioning;
 #endif
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,6 +42,7 @@ public static class CommandExecuteExtensions
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
+    [Obsolete("This method is deprecated and will be removed in a future version.")]
     public static async Task<CommandResult> ExecuteAsync(this Command command, ICommandRunner commandRunner,  CancellationToken cancellationToken = default)
     {
         return await commandRunner.ExecuteAsync(command, cancellationToken);
@@ -64,6 +66,7 @@ public static class CommandExecuteExtensions
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
+    [Obsolete("This method is deprecated and will be removed in a future version.")]
     public static async Task<BufferedCommandResult> ExecuteBufferedAsync(this Command command, ICommandRunner commandRunner, CancellationToken cancellationToken = default)
     {
        return await commandRunner.ExecuteBufferedAsync(command, cancellationToken);
