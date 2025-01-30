@@ -42,6 +42,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
+    [Obsolete("This class is deprecated and will be removed in a future version.")]
     public class ClassicPowershellCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
@@ -125,29 +126,6 @@ namespace CliRunner.Specializations
                 .WithArguments("$PSVersionTable");
             
             _psVersionCommand = commandBuilder.ToCommand();
-        }
-
-        /// <summary>
-        /// Creates a new instance of the ClassicPowershellCommand class.
-        /// </summary>
-        /// <returns>The new ClassicPowershellCommand instance.</returns>
-        [Pure]
-        [Obsolete("This method is deprecated and will be removed in a future version.")]
-        public static ClassicPowershellCommand CreateInstance()
-        {
-            return new ClassicPowershellCommand();
-        }
-
-        /// <summary>
-        /// Creates a new instance of the ClassicPowershellCommand class.
-        /// </summary>
-        /// <returns>The new ClassicPowershellCommand instance.</returns>
-        /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
-        [Pure]
-        [Obsolete("This method is deprecated and will be removed in a future version.")]
-        public static ClassicPowershellCommand CreateInstance(ICommandRunner commandRunner)
-        {
-            return new ClassicPowershellCommand(commandRunner);
         }
 
         /// <summary>

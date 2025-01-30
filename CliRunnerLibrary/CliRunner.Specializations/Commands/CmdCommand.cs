@@ -44,6 +44,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
+    [Obsolete("This class is deprecated and will be removed in a future version.")]
     public class CmdCommand : AbstractInstallableCommand
     {
         private readonly ICommandRunner _commandRunner;
@@ -110,6 +111,7 @@ namespace CliRunner.Specializations
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
+        [Obsolete("This class is deprecated and will be removed in a future version.")]
         public CmdCommand(ICommandRunner commandRunner) : base("")
         {
             base.TargetFilePath = TargetFilePath;
@@ -121,28 +123,8 @@ namespace CliRunner.Specializations
 
             _cmdVersionCommand = commandBuilder.ToCommand();
         }
-
-        /// <summary>
-        /// Creates a new instance of the CmdCommand class.
-        /// </summary>
-        /// <returns>The new CmdCommand instance.</returns>
-        [Obsolete("This method is deprecated and will be removed in a future version.")]
-        public static CmdCommand CreateInstance()
-        {
-            return new CmdCommand();
-        }
         
-        /// <summary>
-        /// Creates a new instance of the CmdCommand class.
-        /// </summary>
-        /// <returns>The new CmdCommand instance.</returns>
-        /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
         [Obsolete("This method is deprecated and will be removed in a future version.")]
-        public static CmdCommand CreateInstance(ICommandRunner commandRunner)
-        {
-            return new CmdCommand(commandRunner);
-        }
-
         public override bool IsCurrentOperatingSystemSupported()
         {
             return OperatingSystem.IsWindows() == true;
@@ -164,6 +146,8 @@ namespace CliRunner.Specializations
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
+        [Obsolete("This method is deprecated and will be removed in a future version.")]
+
         public override async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsWindows() == false)
