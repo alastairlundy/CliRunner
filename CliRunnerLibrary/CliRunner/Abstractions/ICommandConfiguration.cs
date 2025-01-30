@@ -37,6 +37,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
 #endif
@@ -44,7 +45,7 @@ using System.Runtime.Versioning;
 namespace CliRunner.Abstractions;
 
 /// <summary>
-/// 
+/// This interface details the properties expected of a Command.
 /// </summary>
 public interface ICommandConfiguration
 {

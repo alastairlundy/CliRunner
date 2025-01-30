@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace CliRunner.Abstractions;
 
 /// <summary>
-/// An interface to allow for a more standardized implementation of Command pipe handling.
+/// An interface to allow for a standardized way of Command pipe handling.
 /// </summary>
 public interface ICommandPipeHandler
 {

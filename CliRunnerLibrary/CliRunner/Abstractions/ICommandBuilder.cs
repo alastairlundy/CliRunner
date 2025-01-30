@@ -17,7 +17,7 @@ using CliRunner.Builders;
 namespace CliRunner.Abstractions;
 
 /// <summary>
-/// 
+/// This interface details the fluent builder methods all CommandBuilders must implement. 
 /// </summary>
 public interface ICommandBuilder
 {
