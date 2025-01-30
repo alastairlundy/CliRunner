@@ -25,7 +25,7 @@ using System.Runtime.Versioning;
 namespace CliRunner.Specializations.Configurations
 {
     /// <summary>
-    /// 
+    /// A class to make running commands through Windows Powershell easier.
     /// </summary>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
