@@ -189,6 +189,31 @@ namespace CliRunner
             StandardErrorEncoding = standardErrorEncoding ?? Encoding.Default;
         }
 
+        /// <summary>
+        /// Creates a new Command with the specified Command Configuration.
+        /// </summary>
+        /// <param name="commandConfiguration"></param>
+        public Command(ICommandConfiguration commandConfiguration)
+        {
+            TargetFilePath = commandConfiguration.TargetFilePath;
+            Arguments = commandConfiguration.Arguments; 
+            WorkingDirectoryPath = commandConfiguration.WorkingDirectoryPath;
+            RequiresAdministrator = commandConfiguration.RequiresAdministrator;
+            EnvironmentVariables = commandConfiguration.EnvironmentVariables;
+            Credentials = commandConfiguration.Credentials;
+            ResultValidation = commandConfiguration.ResultValidation;
+            StandardInput = commandConfiguration.StandardInput;
+            StandardOutput = commandConfiguration.StandardOutput;
+            StandardError = commandConfiguration.StandardError;
+            
+            StandardInputEncoding = commandConfiguration.StandardInputEncoding ?? Encoding.Default;
+            StandardOutputEncoding = commandConfiguration.StandardOutputEncoding ?? Encoding.Default;
+            StandardErrorEncoding = commandConfiguration.StandardErrorEncoding ?? Encoding.Default;
+            
+            ProcessorAffinity = commandConfiguration.ProcessorAffinity;
+            WindowCreation = commandConfiguration.WindowCreation;
+            UseShellExecution = commandConfiguration.UseShellExecution;
+        }
                 
         /// <summary>
         /// Creates a Command object with the specified target file path. 
