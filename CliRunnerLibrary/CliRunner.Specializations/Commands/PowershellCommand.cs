@@ -125,29 +125,6 @@ namespace CliRunner.Specializations
 
             _psVersionCommand = versionBuilder.ToCommand();
         }
-
-        /// <summary>
-        /// Creates a new instance of the PowershellCommand class.
-        /// </summary>
-        /// <returns>The new PowershellCommand instance.</returns>
-        [Pure]
-        [Obsolete("This method is deprecated and will be removed in a future version.")]
-        public static PowershellCommand CreateInstance()
-        {
-            return new PowershellCommand();
-        }
-        
-        /// <summary>
-        /// Creates a new instance of the PowershellCommand class.
-        /// </summary>
-        /// <returns>The new PowershellCommand instance.</returns>
-        /// <param name="commandRunner">The command runner to be used for getting information about this Specialized Command.</param>
-        [Pure]
-        [Obsolete("This method is deprecated and will be removed in a future version.")]
-        public static PowershellCommand CreateInstance(ICommandRunner commandRunner)
-        {
-            return new PowershellCommand(commandRunner);
-        }
         
         /// <summary>
         /// Gets the installation location for cross-platform Powershell.
