@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
 using CliRunner.Builders;
-using CliRunner.Extensibility;
 
 using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations.Internal.Localizations;
@@ -47,7 +46,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("watchos")]
 #endif
     [Obsolete("This class is deprecated and will be removed in a future version.")]
-    public class PowershellCommand : AbstractInstallableCommand
+    public class PowershellCommand : Command
     {
         private readonly ICommandRunner _commandRunner;
 
@@ -73,10 +72,6 @@ namespace CliRunner.Specializations
                 if (OperatingSystem.IsWindows())
                 {
                     filePath = $"{filePath}{Path.DirectorySeparatorChar}pwsh.exe";
-                }
-                else if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                {
-                    filePath = $"{filePath}{Path.DirectorySeparatorChar}pwsh";
                 }
 
                 return filePath;
@@ -145,11 +140,6 @@ namespace CliRunner.Specializations
 #endif
          private async Task<string> GetInstallLocationAsync()
          {
-             if (IsInstalled() == false)
-             {
-                 throw new ArgumentException(Resources.Exceptions_Powershell_NotInstalled);
-             }
-
              BufferedCommandResult result;
              
              if (OperatingSystem.IsWindows())
@@ -182,7 +172,7 @@ namespace CliRunner.Specializations
              return result.StandardOutput.Split(Environment.NewLine.ToCharArray()).First();
          }
 
-        public override bool IsCurrentOperatingSystemSupported()
+        public bool IsCurrentOperatingSystemSupported()
         {
             return OperatingSystem.IsWindows() || OperatingSystem.IsMacOS() ||
                    OperatingSystem.IsFreeBSD() || OperatingSystem.IsLinux();
@@ -206,7 +196,7 @@ namespace CliRunner.Specializations
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public override async Task<Version> GetInstalledVersionAsync()
+        public async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS() || OperatingSystem.IsAndroid() ||
                 OperatingSystem.IsIOS())

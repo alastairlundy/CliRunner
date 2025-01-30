@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
 using CliRunner.Builders;
-using CliRunner.Extensibility;
 
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable MemberCanBePrivate.Global
@@ -45,7 +44,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("watchos")]
 #endif
     [Obsolete("This class is deprecated and will be removed in a future version.")]
-    public class CmdCommand : AbstractInstallableCommand
+    public class CmdCommand : Command
     {
         private readonly ICommandRunner _commandRunner;
 
@@ -62,11 +61,6 @@ namespace CliRunner.Specializations
                 if (OperatingSystem.IsWindows() == false)
                 {
                     throw new PlatformNotSupportedException(Resources.Exceptions_Cmd_OnlySupportedOnWindows);
-                }
-            
-                if (IsInstalled() == false)
-                {
-                    throw new ArgumentException(Resources.Exceptions_Cmd_NotInstalled);
                 }
 
                 return $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe"; ;
@@ -125,7 +119,7 @@ namespace CliRunner.Specializations
         }
         
         [Obsolete("This method is deprecated and will be removed in a future version.")]
-        public override bool IsCurrentOperatingSystemSupported()
+        public bool IsCurrentOperatingSystemSupported()
         {
             return OperatingSystem.IsWindows() == true;
         }
@@ -148,7 +142,7 @@ namespace CliRunner.Specializations
 #endif
         [Obsolete("This method is deprecated and will be removed in a future version.")]
 
-        public override async Task<Version> GetInstalledVersionAsync()
+        public async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {

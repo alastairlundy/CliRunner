@@ -12,13 +12,12 @@ using System.Runtime.Versioning;
 #endif
 
 using System;
-using System.Diagnostics.Contracts;
+
 using System.IO;
 using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
 using CliRunner.Builders;
-using CliRunner.Extensibility;
 
 using CliRunner.Specializations.Internal.Localizations;
 // ReSharper disable RedundantBoolCompare
@@ -43,7 +42,7 @@ namespace CliRunner.Specializations
     [UnsupportedOSPlatform("watchos")]
 #endif
     [Obsolete("This class is deprecated and will be removed in a future version.")]
-    public class ClassicPowershellCommand : AbstractInstallableCommand
+    public class ClassicPowershellCommand : Command
     {
         private readonly ICommandRunner _commandRunner;
 
@@ -132,7 +131,7 @@ namespace CliRunner.Specializations
         /// 
         /// </summary>
         /// <returns></returns>
-        public override bool IsCurrentOperatingSystemSupported()
+        public bool IsCurrentOperatingSystemSupported()
         {
             return OperatingSystem.IsWindows() == true;
         }
@@ -154,14 +153,14 @@ namespace CliRunner.Specializations
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("watchos")]
 #endif
-        public override async Task<Version> GetInstalledVersionAsync()
+        public async Task<Version> GetInstalledVersionAsync()
         {
             if (OperatingSystem.IsWindows() == false)
             {
                 throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
             }
             
-            if (OperatingSystem.IsWindows() && IsInstalled())
+            if (OperatingSystem.IsWindows())
             {
                 BufferedCommandResult result = await _commandRunner.ExecuteBufferedAsync(_psVersionCommand);
                

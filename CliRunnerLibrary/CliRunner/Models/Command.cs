@@ -21,7 +21,6 @@ using System.IO;
 using System.Text;
 
 using CliRunner.Abstractions;
-using CliRunner.Builders;
 using CliRunner.Internal.Localizations;
 
 #if NET5_0_OR_GREATER
