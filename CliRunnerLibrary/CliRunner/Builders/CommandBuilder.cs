@@ -36,12 +36,6 @@ public class CommandBuilder : ICommandBuilder
     {
         _command = command;
     }
-
-    
-    public static ICommandBuilder Create(string targetFilePath)
-    {
-        return new CommandBuilder(targetFilePath);
-    }
     
     /// <summary>
     /// Sets the arguments to pass to the executable.
