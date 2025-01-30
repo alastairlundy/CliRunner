@@ -43,27 +43,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="arguments">The arguments to pass to the Command.</param>
     /// <returns>The updated ICommandBuilder object with the specified arguments.</returns>
     [Pure]
-    public ICommandBuilder WithArguments(IEnumerable<string> arguments)
-    {
-       Command command = new(_command.TargetFilePath,
-            string.Join(" ", arguments),
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution);
-       
-       return new CommandBuilder(command);
-    }
+    public ICommandBuilder WithArguments(IEnumerable<string> arguments) =>
+        new CommandBuilder(
+            new Command(_command.TargetFilePath,
+                string.Join(" ", arguments),
+                _command.WorkingDirectoryPath,
+                _command.RequiresAdministrator,
+                _command.EnvironmentVariables,
+                _command.Credentials,
+                _command.ResultValidation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -106,26 +103,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="arguments"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithArguments(string arguments)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithArguments(string arguments) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
-            arguments,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                arguments,
+                _command.WorkingDirectoryPath,
+                _command.RequiresAdministrator,
+                _command.EnvironmentVariables,
+                _command.Credentials,
+                _command.ResultValidation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -133,26 +128,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="targetFilePath"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithTargetFile(string targetFilePath)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithTargetFile(string targetFilePath) =>
+        new CommandBuilder(
             new Command(targetFilePath,
-            _command.Arguments,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                _command.Arguments,
+                _command.WorkingDirectoryPath,
+                _command.RequiresAdministrator,
+                _command.EnvironmentVariables,
+                _command.Credentials,
+                _command.ResultValidation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -160,26 +153,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="environmentVariables"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
-            _command.Arguments,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            environmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                _command.Arguments,
+                _command.WorkingDirectoryPath,
+                _command.RequiresAdministrator,
+                environmentVariables,
+                _command.Credentials,
+                _command.ResultValidation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -203,26 +194,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="runAsAdministrator"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithAdministratorPrivileges(bool runAsAdministrator)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithAdministratorPrivileges(bool runAsAdministrator) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
-            _command.Arguments,
-            _command.WorkingDirectoryPath,
-            runAsAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                _command.Arguments,
+                _command.WorkingDirectoryPath,
+                runAsAdministrator,
+                _command.EnvironmentVariables,
+                _command.Credentials,
+                _command.ResultValidation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -230,26 +219,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="workingDirectoryPath"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithWorkingDirectory(string workingDirectoryPath)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithWorkingDirectory(string workingDirectoryPath) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
-            _command.Arguments,
-            workingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                _command.Arguments,
+                workingDirectoryPath,
+                _command.RequiresAdministrator,
+                _command.EnvironmentVariables,
+                _command.Credentials,
+                _command.ResultValidation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -257,26 +244,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="credentials"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithCredentials(UserCredentials credentials)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithCredentials(UserCredentials credentials) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
-            _command.Arguments,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            credentials,
-            _command.ResultValidation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                _command.Arguments,
+                _command.WorkingDirectoryPath,
+                _command.RequiresAdministrator,
+                _command.EnvironmentVariables,
+                credentials,
+                _command.ResultValidation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -302,26 +287,24 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="validation"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithValidation(CommandResultValidation validation)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithValidation(CommandResultValidation validation) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
-            _command.Arguments,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            validation,
-            _command.StandardInput,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                _command.Arguments,
+                _command.WorkingDirectoryPath,
+                _command.RequiresAdministrator,
+                _command.EnvironmentVariables,
+                _command.Credentials,
+                validation,
+                _command.StandardInput,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -329,27 +312,25 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="source"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithStandardInputPipe(StreamWriter source)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithStandardInputPipe(StreamWriter source) =>
+        new CommandBuilder(
             new Command(
-            _command.TargetFilePath,
-            _command.Arguments,
-            _command.WorkingDirectoryPath,
-            _command.RequiresAdministrator,
-            _command.EnvironmentVariables,
-            _command.Credentials,
-            _command.ResultValidation,
-            source,
-            _command.StandardOutput,
-            _command.StandardError,
-            _command.StandardInputEncoding,
-            _command.StandardOutputEncoding,
-            _command.StandardErrorEncoding,
-            _command.ProcessorAffinity,
-            _command.WindowCreation,
-            _command.UseShellExecution));
-    }
+                _command.TargetFilePath,
+                _command.Arguments,
+                _command.WorkingDirectoryPath,
+                _command.RequiresAdministrator,
+                _command.EnvironmentVariables,
+                _command.Credentials,
+                _command.ResultValidation,
+                source,
+                _command.StandardOutput,
+                _command.StandardError,
+                _command.StandardInputEncoding,
+                _command.StandardOutputEncoding,
+                _command.StandardErrorEncoding,
+                _command.ProcessorAffinity,
+                _command.WindowCreation,
+                _command.UseShellExecution));
 
     /// <summary>
     /// 
@@ -357,9 +338,8 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="target"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithStandardOutputPipe(StreamReader target)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithStandardOutputPipe(StreamReader target) =>
+        new CommandBuilder(
             new Command(
                 _command.TargetFilePath,
                 _command.Arguments,
@@ -377,7 +357,6 @@ public class CommandBuilder : ICommandBuilder
                 _command.ProcessorAffinity,
                 _command.WindowCreation,
                 _command.UseShellExecution));
-    }
 
     /// <summary>
     /// 
@@ -385,9 +364,8 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="target"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithStandardErrorPipe(StreamReader target)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithStandardErrorPipe(StreamReader target) =>
+        new CommandBuilder(
             new Command(
                 _command.TargetFilePath,
                 _command.Arguments,
@@ -405,7 +383,6 @@ public class CommandBuilder : ICommandBuilder
                 _command.ProcessorAffinity,
                 _command.WindowCreation,
                 _command.UseShellExecution));
-    }
 
     /// <summary>
     /// 
@@ -424,9 +401,8 @@ public class CommandBuilder : ICommandBuilder
     [UnsupportedOSPlatform("watchos")]
 #endif
     [Pure]
-    public ICommandBuilder WithProcessorAffinity(IntPtr processorAffinity)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithProcessorAffinity(IntPtr processorAffinity) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
                 _command.Arguments,
                 _command.WorkingDirectoryPath,
@@ -443,7 +419,7 @@ public class CommandBuilder : ICommandBuilder
                 processorAffinity,
                 _command.WindowCreation,
                 _command.UseShellExecution));
-    }
+    
 
     /// <summary>
     /// 
@@ -451,9 +427,8 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="useShellExecution"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithShellExecution(bool useShellExecution)
-    {
-        return new CommandBuilder(
+    public ICommandBuilder WithShellExecution(bool useShellExecution) =>
+        new CommandBuilder(
             new Command(_command.TargetFilePath,
                 _command.Arguments,
                 _command.WorkingDirectoryPath,
@@ -469,18 +444,16 @@ public class CommandBuilder : ICommandBuilder
                 _command.StandardErrorEncoding,
                 _command.ProcessorAffinity,
                 _command.WindowCreation,
-            useShellExecution));
-    }
-    
+                useShellExecution));
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="enableWindowCreation"></param>
     /// <returns></returns>
     [Pure]
-    public ICommandBuilder WithWindowCreation(bool enableWindowCreation)
-    {
-       Command command = new(_command.TargetFilePath,
+    public ICommandBuilder WithWindowCreation(bool enableWindowCreation) =>
+        new CommandBuilder(new Command(_command.TargetFilePath,
            _command.Arguments,
            _command.WorkingDirectoryPath,
            _command.RequiresAdministrator,
@@ -495,10 +468,8 @@ public class CommandBuilder : ICommandBuilder
            _command.StandardErrorEncoding,
            _command.ProcessorAffinity,
             enableWindowCreation,
-           _command.UseShellExecution);
-
-       return new CommandBuilder(command);
-    }
+           _command.UseShellExecution));
+    
     
     /// <summary>
     /// 
@@ -510,9 +481,8 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithEncoding(Encoding standardInputEncoding = default,
         Encoding standardOutputEncoding = default,
-        Encoding standardErrorEncoding = default)
-    {
-        Command command = new (_command.TargetFilePath,
+        Encoding standardErrorEncoding = default) =>
+        new CommandBuilder(new Command(_command.TargetFilePath,
             _command.Arguments,
             _command.WorkingDirectoryPath,
             _command.RequiresAdministrator,
@@ -527,10 +497,7 @@ public class CommandBuilder : ICommandBuilder
             standardErrorEncoding,
             _command.ProcessorAffinity,
             _command.WindowCreation,
-            _command.UseShellExecution);
-        
-        return new CommandBuilder(command);
-    }
+            _command.UseShellExecution));
 
     /// <summary>
     /// 
