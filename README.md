@@ -20,7 +20,7 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 * No lock in regarding Piping support - Use .NET's StreamWriter and StreamReader classes as inputs and outputs respectively.
 * Uses .NET's built in ``Process`` type.
 
-^1 - OSCompatibilityLib dependency and [Polyfill](https://github.com/SimonCropp/Polyfill) are only required for .NET Standard 2.0 and 2.1 users
+^1 - [Polyfill](https://github.com/SimonCropp/Polyfill) is only required for .NET Standard 2.0 and 2.1 users.
 
 ^2 - Specialization library is distributed separately.
 
