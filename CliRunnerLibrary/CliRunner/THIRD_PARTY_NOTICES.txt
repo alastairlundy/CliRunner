@@ -28,15 +28,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
- CliRunner uses OSCompatibilityLib to enable easier usage of platform
-  specific code by this library on .NET Standard 2.0
-   and .NET Standard 2.1 compatible platforms.
+ CliRunner uses CollectionExtensions to enable easier manipulation of Dictionaries.
  
- OSCompatibilityLib is licensed under the MIT license.
+ CollectionExtensions is licensed under the MIT license.
 -----------------------------------------------------
 MIT License
 
-Copyright (c) 2024 Alastair Lundy
+Copyright (c) 2024-2025 Alastair Lundy
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
