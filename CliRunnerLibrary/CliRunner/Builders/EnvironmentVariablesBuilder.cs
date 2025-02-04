@@ -42,35 +42,9 @@ public class EnvironmentVariablesBuilder
     /// Initializes a new instance of the EnvironmentVariablesBuilder class.
     /// </summary>
     /// <param name="vars">The initial environment variables to use.</param>
-    private EnvironmentVariablesBuilder(Dictionary<string, string> vars)
+    private EnvironmentVariablesBuilder(IDictionary<string, string> vars)
     {
-        _environmentVariables = AddToExisting(vars.ToArray());
-    }
-
-    /// <summary>
-    /// Adds new environment variables to the existing ones.
-    /// </summary>
-    /// <param name="pairs">The new environment variables to add.</param>
-    /// <returns>A dictionary containing the updated environment variables.</returns>
-    [Pure]
-    private Dictionary<string, string> AddToExisting(IEnumerable<KeyValuePair<string, string>> pairs)
-    {
-#if NET5_0_OR_GREATER
-        Dictionary<string, string> output = new Dictionary<string, string>(pairs);
-#else
-        Dictionary<string, string> output = new Dictionary<string, string>();
-#endif
-        
-        if (_environmentVariables.Any())
-        {
-            output.AddRange(_environmentVariables);
-        }
-        
-#if NETSTANDARD2_0 || NETSTANDARD2_1
-        output.AddRange(pairs);
-#endif
-
-        return output;
+        _environmentVariables = new Dictionary<string, string>(vars, StringComparer.Ordinal);
     }
         
     /// <summary>
@@ -81,14 +55,10 @@ public class EnvironmentVariablesBuilder
     /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
     [Pure]
     public EnvironmentVariablesBuilder Set(string name, string value){
-#if NET8_0_OR_GREATER
-        Dictionary<string, string> vars = AddToExisting([
-            new KeyValuePair<string, string>(name, value) ]);
-#else
-        Dictionary<string, string> vars = AddToExisting(new KeyValuePair<string, string>[]
-            { new KeyValuePair<string, string>(name, value) });
-#endif
-        return new EnvironmentVariablesBuilder(vars);
+        Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal);
+        output.Add(name, value);
+        
+        return new EnvironmentVariablesBuilder(output);
     }
 
     /// <summary>
@@ -99,9 +69,10 @@ public class EnvironmentVariablesBuilder
     [Pure]
     public EnvironmentVariablesBuilder Set(IEnumerable<KeyValuePair<string, string>> variables)
     {
-        Dictionary<string, string> vars = AddToExisting(variables);
-
-        return new EnvironmentVariablesBuilder(vars);
+        Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal);
+        output.AddRange(variables);
+        
+        return new EnvironmentVariablesBuilder(output);
     }
 
     /// <summary>
@@ -112,9 +83,10 @@ public class EnvironmentVariablesBuilder
     [Pure]
     public EnvironmentVariablesBuilder Set(IReadOnlyDictionary<string, string> variables)
     {
-        Dictionary<string, string> vars = AddToExisting(variables);
+        Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal);
+        output.AddRange(variables);
 
-        return new EnvironmentVariablesBuilder(vars);
+        return new EnvironmentVariablesBuilder(output);
     }
 
     /// <summary>
