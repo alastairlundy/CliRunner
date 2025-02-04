@@ -47,8 +47,8 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
         CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
         StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
-        Encoding standardInputEncoding = default, Encoding standardOutputEncoding = default,
-        Encoding standardErrorEncoding = default, IntPtr processorAffinity = default(IntPtr),
+        Encoding standardInputEncoding = null, Encoding standardOutputEncoding = null,
+        Encoding standardErrorEncoding = null, IntPtr processorAffinity = default(IntPtr),
         bool useShellExecute = false, bool windowCreation = false)
     {
         TargetFilePath = targetFilePath;

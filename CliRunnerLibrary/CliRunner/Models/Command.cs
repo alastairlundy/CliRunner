@@ -78,19 +78,19 @@ namespace CliRunner
         public CommandResultValidation ResultValidation { get; protected set; }
 
         /// <summary>
-        /// The piped Standard Input.
+        /// The Standard Input source.
         /// </summary>
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public StreamWriter StandardInput { get; protected set; }
 
         /// <summary>
-        /// The piped Standard Output.
+        /// The Standard Output target.
         /// </summary>
         public StreamReader StandardOutput { get; protected set; }
 
         /// <summary>
-        /// The piped Standard Error.
+        /// The Standard Error target.
         /// </summary>
         public StreamReader StandardError { get; protected set; }
 
@@ -111,17 +111,17 @@ namespace CliRunner
         public bool UseShellExecution { get; protected set; }
         
         /// <summary>
-        /// 
+        /// The encoding to use for the Standard Input.
         /// </summary>
         public Encoding StandardInputEncoding { get; protected set; }
         
         /// <summary>
-        /// 
+        /// The encoding to use for the Standard Output.
         /// </summary>
         public Encoding StandardOutputEncoding { get; protected set; }
         
         /// <summary>
-        /// 
+        /// The encoding to use for the Standard Error.
         /// </summary>
         public Encoding StandardErrorEncoding { get; protected set; }
 
