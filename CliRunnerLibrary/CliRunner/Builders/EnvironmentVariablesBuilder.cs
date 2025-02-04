@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-using AlastairLundy.Extensions.Collections.Dictionaries;
+using AlastairLundy.Extensions.Collections.Generics;
 
 // ReSharper disable UseCollectionExpression
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
