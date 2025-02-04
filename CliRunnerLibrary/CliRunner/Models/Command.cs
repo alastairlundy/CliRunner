@@ -9,18 +9,23 @@
     Based on Tyrrrz's CliWrap Command.cs
     https://github.com/Tyrrrz/CliWrap/blob/master/CliWrap/Command.cs
 
-     Constructor signature from CliWrap licensed under the MIT License except where considered Copyright Fair Use By Law.
+     Constructor signature and field declarations from CliWrap licensed under the MIT License except where considered Copyright Fair Use by law.
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
 
 using CliRunner.Abstractions;
 using CliRunner.Internal.Localizations;
+
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -30,65 +35,154 @@ using CliRunner.Internal.Localizations;
 
 namespace CliRunner
 {
-    /// <summary>
-    /// A class to represent a Command to be run.
-    /// </summary>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public class Command : AbstractCommandConfiguration, IEquatable<Command>
+    public class Command : ICommandConfiguration, IEquatable<Command>
     {
+        /// <summary>
+        /// Whether administrator privileges are required when executing the Command.
+        /// </summary>
+        public bool RequiresAdministrator { get; protected set; }
 
         /// <summary>
-        /// Instantiates a Command to be executed.
+        /// The file path of the executable to be run and wrapped.
+        /// </summary>
+        public string TargetFilePath { get; protected set; }
+
+        /// <summary>
+        /// The working directory path to be used when executing the Command.
+        /// </summary>
+        public string WorkingDirectoryPath { get; protected set; }
+
+        /// <summary>
+        /// The arguments to be provided to the executable to be run.
+        /// </summary>
+        public string Arguments { get; protected set; }
+
+        /// <summary>
+        /// Whether to enable window creation or not when the Command's Process is run.
+        /// </summary>
+        public bool WindowCreation { get; protected set; }
+
+        /// <summary>
+        /// The environment variables to be set.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
+
+        /// <summary>
+        /// The credentials to be used when executing the executable.
+        /// </summary>
+        public UserCredentials Credentials { get; protected set; }
+
+        /// <summary>
+        /// The result validation to apply to the Command when it is executed.
+        /// </summary>
+        public CommandResultValidation ResultValidation { get; protected set; }
+
+        /// <summary>
+        /// The piped Standard Input.
+        /// </summary>
+        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
+        public StreamWriter StandardInput { get; protected set; }
+
+        /// <summary>
+        /// The piped Standard Output.
+        /// </summary>
+        public StreamReader StandardOutput { get; protected set; }
+
+        /// <summary>
+        /// The piped Standard Error.
+        /// </summary>
+        public StreamReader StandardError { get; protected set; }
+
+        /// <summary>
+        /// The processor threads to be used for executing the Command.
+        /// </summary>
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+#endif
+        public IntPtr ProcessorAffinity { get; protected set; }
+
+        /// <summary>
+        /// Whether to use Shell Execution or not.
+        /// </summary>
+        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
+        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
+        public bool UseShellExecution { get; protected set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public Encoding StandardInputEncoding { get; protected set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public Encoding StandardOutputEncoding { get; protected set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public Encoding StandardErrorEncoding { get; protected set; }
+
+        /// <summary>
+        /// Configures the Command to be wrapped and executed.
         /// </summary>
         /// <param name="targetFilePath">The target file path of the command to be executed.</param>
         /// <param name="arguments">The arguments to pass to the Command upon execution.</param>
         /// <param name="workingDirectoryPath">The working directory to be used.</param>
-        /// <param name="requiresAdministrator">Whether to run the Command with Administrator Privileges.</param>
+        /// <param name="runAsAdministrator">Whether to run the Command with Administrator Privileges.</param>
         /// <param name="environmentVariables">The environment variables to be set (if specified).</param>
         /// <param name="credentials">The credentials to be used (if specified).</param>
         /// <param name="commandResultValidation">Enables or disables Result Validation and exception throwing if the task exits unsuccessfully.</param>
         /// <param name="standardInput">The standard input source to be used (if specified).</param>
         /// <param name="standardOutput">The standard output destination to be used (if specified).</param>
         /// <param name="standardError">The standard error destination to be used (if specified).</param>
+        /// <param name="standardErrorEncoding"></param>
         /// <param name="processorAffinity">The processor affinity to be used (if specified).</param>
-        /// <param name="standardInputEncoding">The encoding to be used for the Standard Input.</param>
-        /// <param name="standardOutputEncoding">The encoding to be used for the Standard Output.</param>
-        /// <param name="standardErrorEncoding">The encoding to be used for the Standard Error.</param>
-        /// <param name="useShellExecution">Whether to enable or disable executing the Command through Shell Execution.</param>
         /// <param name="windowCreation">Whether to enable or disable Window Creation by the Command's Process.</param>
+        /// <param name="useShellExecute">Whether to enable or disable executing the Command through Shell Execution.</param>
+        /// <param name="standardInputEncoding"></param>
+        /// <param name="standardOutputEncoding"></param>
         public Command(string targetFilePath,
             string arguments = null, string workingDirectoryPath = null,
-            bool requiresAdministrator = false,
+            bool runAsAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             UserCredentials credentials = null,
             CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
             StreamWriter standardInput = null,
             StreamReader standardOutput = null,
             StreamReader standardError = null,
-            Encoding standardInputEncoding = null,
-            Encoding standardOutputEncoding = null,
-            Encoding standardErrorEncoding = null,
+            Encoding standardInputEncoding = default,
+            Encoding standardOutputEncoding = default,
+            Encoding standardErrorEncoding = default,
 #if NET6_0_OR_GREATER && !NET9_0_OR_GREATER
             IntPtr processorAffinity = 0,
 #else
              IntPtr processorAffinity = default(IntPtr),
 #endif
             bool windowCreation = false,
-            bool useShellExecution = false
-        ) : base(targetFilePath, arguments, workingDirectoryPath, requiresAdministrator, environmentVariables,
-            credentials,
-            commandResultValidation, standardInput, standardOutput, standardError, standardInputEncoding,
-            standardOutputEncoding, standardErrorEncoding, processorAffinity,  useShellExecution, windowCreation)
+            bool useShellExecute = false
+        )
         {
+            TargetFilePath = targetFilePath;
+            RequiresAdministrator = runAsAdministrator;
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
             Credentials = credentials ?? UserCredentials.Default;
-            
+
+            ResultValidation = commandResultValidation;
+
             StandardInput = standardInput ?? StreamWriter.Null;
             StandardOutput = standardOutput ?? StreamReader.Null;
             StandardError = standardError ?? StreamReader.Null;
 
+            ProcessorAffinity = processorAffinity;
+            UseShellExecution = useShellExecute;
+            WindowCreation = windowCreation;
+            
             StandardInputEncoding = standardInputEncoding ?? Encoding.Default;
             StandardOutputEncoding = standardOutputEncoding ?? Encoding.Default;
             StandardErrorEncoding = standardErrorEncoding ?? Encoding.Default;
@@ -98,21 +192,15 @@ namespace CliRunner
         /// Creates a new Command with the specified Command Configuration.
         /// </summary>
         /// <param name="commandConfiguration">The command configuration to be used to for the Command.</param>
-        public Command(ICommandConfiguration commandConfiguration) : base(commandConfiguration.TargetFilePath, 
-            commandConfiguration.Arguments, commandConfiguration.WorkingDirectoryPath,
-            commandConfiguration.RequiresAdministrator, 
-            commandConfiguration.EnvironmentVariables, commandConfiguration.Credentials,
-            commandConfiguration.ResultValidation, commandConfiguration.StandardInput,
-            commandConfiguration.StandardOutput, commandConfiguration.StandardError,
-            commandConfiguration.StandardInputEncoding,
-            commandConfiguration.StandardOutputEncoding, commandConfiguration.StandardErrorEncoding,
-            commandConfiguration.ProcessorAffinity, commandConfiguration.UseShellExecution,
-            commandConfiguration.WindowCreation)
+        public Command(ICommandConfiguration commandConfiguration)
         {
+            TargetFilePath = commandConfiguration.TargetFilePath;
+            Arguments = commandConfiguration.Arguments; 
             WorkingDirectoryPath = commandConfiguration.WorkingDirectoryPath ?? Directory.GetCurrentDirectory();
+            RequiresAdministrator = commandConfiguration.RequiresAdministrator;
             EnvironmentVariables = commandConfiguration.EnvironmentVariables  ?? new Dictionary<string, string>();
             Credentials = commandConfiguration.Credentials ?? UserCredentials.Default;
-
+            ResultValidation = commandConfiguration.ResultValidation;
             StandardInput = commandConfiguration.StandardInput ?? StreamWriter.Null;
             StandardOutput = commandConfiguration.StandardOutput ?? StreamReader.Null;
             StandardError = commandConfiguration.StandardError ?? StreamReader.Null;
@@ -120,6 +208,10 @@ namespace CliRunner
             StandardInputEncoding = commandConfiguration.StandardInputEncoding ?? Encoding.Default;
             StandardOutputEncoding = commandConfiguration.StandardOutputEncoding ?? Encoding.Default;
             StandardErrorEncoding = commandConfiguration.StandardErrorEncoding ?? Encoding.Default;
+            
+            ProcessorAffinity = commandConfiguration.ProcessorAffinity;
+            WindowCreation = commandConfiguration.WindowCreation;
+            UseShellExecution = commandConfiguration.UseShellExecution;
         }
 
         /// <summary>
