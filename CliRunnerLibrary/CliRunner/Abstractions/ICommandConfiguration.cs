@@ -57,12 +57,12 @@ public interface ICommandConfiguration
 
     IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
 
-    UserCredentials Credentials { get;  } 
     CommandResultValidation ResultValidation { get;}
 
     StreamWriter StandardInput { get; }
     StreamReader StandardOutput { get; }
     StreamReader StandardError { get; }
+        public UserCredential Credentials { get; }
         
     bool UseShellExecution { get; }
 

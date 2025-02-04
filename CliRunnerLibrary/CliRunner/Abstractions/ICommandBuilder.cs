@@ -32,7 +32,7 @@ public interface ICommandBuilder
     ICommandBuilder WithAdministratorPrivileges(bool runAsAdministrator);
 
     ICommandBuilder WithWorkingDirectory(string workingDirectoryPath);
-    ICommandBuilder WithCredentials(UserCredentials credentials);
+    ICommandBuilder WithCredentials(UserCredential credentials);
     ICommandBuilder WithCredentials(Action<CredentialsBuilder> configure);
     ICommandBuilder WithValidation(CommandResultValidation validation);
     ICommandBuilder WithStandardInputPipe(StreamWriter source);

@@ -44,7 +44,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
     /// <remarks>Do not use directly unless you are creating a specialized Command, such as one that will be run through an intermediary like Powershell or Cmd.</remarks>
     public SpecializedCommandConfiguration(string targetFilePath, string arguments = null,
         string workingDirectoryPath = null, bool requiresAdministrator = false,
-        IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null,
+        IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
         CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
         StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
         Encoding standardInputEncoding = default, Encoding standardOutputEncoding = default,
@@ -79,7 +79,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
     public string WorkingDirectoryPath { get; }
     public string Arguments { get; }
     public IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
-    public UserCredentials Credentials { get; }
+    public UserCredential Credentials { get; }
     public CommandResultValidation ResultValidation { get; }
     public StreamWriter StandardInput { get; }
     public StreamReader StandardOutput { get; }

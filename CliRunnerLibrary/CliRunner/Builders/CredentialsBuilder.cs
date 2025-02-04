@@ -105,8 +105,8 @@ public class CredentialsBuilder : IDisposable
     /// </summary>
     /// <returns>The built UserCredentials.</returns>
     [Pure]
-    public UserCredentials Build() => 
-        new UserCredentials(_domain, _username, _password, _loadUserProfile);
+    public UserCredential Build() => 
+        new UserCredential(_domain, _username, _password, _loadUserProfile);
 
     /// <summary>
     /// Deletes the values of the provided settings.

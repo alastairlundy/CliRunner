@@ -70,7 +70,7 @@ namespace CliRunner
         /// <summary>
         /// The credentials to be used when executing the executable.
         /// </summary>
-        public UserCredentials Credentials { get; protected set; }
+        public UserCredential Credentials { get; protected set; }
 
         /// <summary>
         /// The result validation to apply to the Command when it is executed.
@@ -148,7 +148,7 @@ namespace CliRunner
             string arguments = null, string workingDirectoryPath = null,
             bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
-            UserCredentials credentials = null,
+            UserCredential credentials = null,
             CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
             StreamWriter standardInput = null,
             StreamReader standardOutput = null,
@@ -170,7 +170,7 @@ namespace CliRunner
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
-            Credentials = credentials ?? UserCredentials.Default;
+            Credentials = credentials ?? UserCredential.Null;
 
             ResultValidation = commandResultValidation;
 
@@ -198,7 +198,7 @@ namespace CliRunner
             WorkingDirectoryPath = commandConfiguration.WorkingDirectoryPath ?? Directory.GetCurrentDirectory();
             RequiresAdministrator = commandConfiguration.RequiresAdministrator;
             EnvironmentVariables = commandConfiguration.EnvironmentVariables  ?? new Dictionary<string, string>();
-            Credentials = commandConfiguration.Credentials ?? UserCredentials.Default;
+            Credentials = commandConfiguration.Credentials ?? UserCredential.Null;
             ResultValidation = commandConfiguration.ResultValidation;
             StandardInput = commandConfiguration.StandardInput ?? StreamWriter.Null;
             StandardOutput = commandConfiguration.StandardOutput ?? StreamReader.Null;
