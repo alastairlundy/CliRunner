@@ -13,30 +13,29 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.10.0
-
-### Additions
-* Added .NET 9 TFM
-* Added additional xml doc comments
-* Added dependency on CollectionsExtensions and reduced technical debt
-* Added ``ICommandBuilder`` interface and ``CommandBuilder`` class - CommandBuilder is now the expected way to build Commands fluently with builder methods. Non Builder usage of ``Command`` continues to be supported by ``Command``
+        <PackageReleaseNotes>## Changes since 0.11.0
 
 ### Breaking Changes
-* Removed ``ICommandConfigurationBuilder`` interface and removed ``Command`` class's inheritance of it.
+* Removed ``Command``'s ``CreateInstance`` static methods
+* Removed ``Command``'s builder methods
+* Removed ``CommandExecuteExtensions`` class
+* Removed ``AbstractInstallablerCommand`` class
+* Removed ``CommandRunner``'s ``CreateInstance`` static methods
+* Renamed ``UserCredentials`` class to ``UserCredential``
+* Renamed ``UserCredentials.Default`` to ``UserCredential.Null``
 
 ### Non-Breaking Changes
-* Deprecated use of ``Command``'s ``CreateInstance`` static methods - Use suggested alternatives where appropriate. These methods will be removed in a future version.
-* Deprecated use of ``Command``'s Builder methods - Use the new ``CommandBuilder`` builder class instead. ``Command``'s builder methods will be removed in a future version.
-* ``BufferedCommandResult`` is now part of the base ``CliRunner`` namespace. No extra using namespace required.
-* Clarified usages of 2 types in ``ArgumentsBuilder`` with explicit typing
-* [.NET Standard 2.0 and 2.1 only] Updated Polyfill requirement from 7.14.0 to 7.15.0
-
-### Removals
-* [.NET Standard 2.0 and 2.1 only] Removed dependency on OSCompatibilityLib for CliRunner (Not for Specializations library)</PackageReleaseNotes>
+* Updated CollectionsExtensions dependency from 6.0.0 Alpha 1 to 6.0.0 Alpha 2
+* Updated Polyfill dependency from 7.15.0 to 7.16.1
+* Added dependency on Microsoft.Bcl.HashCode for .NET Standard 2.0 users.
+* Corrected usage of ``LoadUserProfile`` property
+* Cleaned up EnvironmentVariablesBuilder
+* Created ``SpecializedCommandConfiguration`` abstract class to assist in creating Specializations and simplifying ``Command`` class code.
+* Other improvements and tweaks</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.11.0</PackageVersion>
+        <PackageVersion>0.12.0</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
