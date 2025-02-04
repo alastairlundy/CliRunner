@@ -7,22 +7,26 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 
 ## Features
 * Promotes the single responsibility principle and separation of concerns
-* For .NET 8 and newer TFMs CliRunner has few dependencies ^1
+* For .NET 8 and newer TFMs CliRunner has few dependencies.
+* Compatible with .NET Standard 2.0 and 2.1 ^1
 * Dependency Injection extensions to make using it easier.
 * Support for specific specializations such as running executables or commands via Windows Powershell or CMD on Windows ^2
-* SourceLink support
+* [SourceLink](https://learn.microsoft.com/en-us/dotnet/standard/library-guidance/sourcelink) support
+
+^1 - [Polyfill](https://github.com/SimonCropp/Polyfill) is a dependency only required for .NET Standard 2.0 and 2.1 users. [Microsoft.Bcl.HashCode](https://www.nuget.org/packages/Microsoft.Bcl.HashCode) is a dependency only required for .NET Standard 2.0 users.
+
+^2 - The Specialization library is distributed separately.
 
 ## Why use CliRunner over [CliWrap](https://github.com/Tyrrrz/CliWrap/)?
-* Greater separation of concerns with the Command class (v0.8.0 and newer) - Command Running and Pipe handling are moved to separate classes.
-* Supports Dependency Injection and promotes the Single Responsibility Principle
+* Greater separation of concerns with the Command class - Command Building, Command Running, andCommand Pipe handling are moved to separate classes.
+* Supports Dependency Injection
+* Classes and code follow the Single Responsibility Principle
 * No hidden or additional licensing terms are required beyond the source code license.
 * No imported C code - This library is entirely written in C#.
 * No lock in regarding Piping support - Use .NET's StreamWriter and StreamReader classes as inputs and outputs respectively.
 * Uses .NET's built in ``Process`` type.
 
-^1 - [Polyfill](https://github.com/SimonCropp/Polyfill) is only required for .NET Standard 2.0 and 2.1 users.
 
-^2 - Specialization library is distributed separately.
 
 ## Supported Platforms 
 This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9 supported project.
@@ -42,7 +46,7 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9
 
 ^3 - See the [Process class documentation](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=net-9.0#system-diagnostics-process-start) for more info.
 
-^4 - Lack of watchOS support is implied by lack of IOS support since watchOS is based on IOS.
+^4 - Lack of watchOS support is implied by lack of IOS support since [watchOS is based on IOS](https://en.wikipedia.org/wiki/WatchOS).
 
 
 **Note:** This library has not been tested on Android or Tizen!
