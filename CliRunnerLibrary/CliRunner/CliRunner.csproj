@@ -7,7 +7,7 @@
         <LangVersion>latest</LangVersion>
         <Title>CliRunner</Title>
         <Authors>AlastairLundy</Authors>
-        <Description>CliRunner is a library for interacting with Command Line Interfaces,</Description>
+        <Description>CliRunner is a .NET Library for interacting with Command Line Interfaces, CliRunner is a library for interacting with Command Line Interfaces and wrapping around executables.</Description>
         <Copyright>Copyright (c) Alastair Lundy 2024-2025</Copyright>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
