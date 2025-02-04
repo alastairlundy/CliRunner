@@ -49,13 +49,10 @@
         <PackageReference Include="AlastairLundy.Extensions.Collections" Version="[6.0.0-alpha.2, 6.0.0)"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[9.0.1, 10.0.0)" />
     </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="Microsoft.Bcl.HashCode" Version="[6.0.0, 7.0.0)"/>
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
-        <PackageReference Include="PolyFill" Version="[7.16.1, 8.0.0)"/>
+    
+    <ItemGroup >
+        <PackageReference Include="Microsoft.Bcl.HashCode" Version="[6.0.0, 7.0.0)" Condition="'$(TargetFramework)' == 'netstandard2.0'"/>
+        <PackageReference Include="PolyFill" Version="[7.16.1, 8.0.0)" Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'"/>
     </ItemGroup>
 
     <ItemGroup>
