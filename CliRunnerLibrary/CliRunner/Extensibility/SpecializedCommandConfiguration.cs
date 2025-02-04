@@ -15,6 +15,11 @@ using CliRunner.Abstractions;
 
 namespace CliRunner.Extensibility;
 
+/// <summary>
+/// An abstract class that implements ICommandConfiguration and adds a default constructor.
+/// </summary>
+/// /// <remarks>Do not use this class directly unless you are creating a specialized Command,
+/// such as one that will be run through an intermediary process like Powershell or Cmd.</remarks>
 public abstract class SpecializedCommandConfiguration : ICommandConfiguration
 {
     /// <summary>
@@ -36,6 +41,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
     /// <param name="processorAffinity">The processor affinity for the command.</param>
     /// <param name="useShellExecute">Indicates whether to use the shell to execute the command.</param>
     /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
+    /// <remarks>Do not use directly unless you are creating a specialized Command, such as one that will be run through an intermediary like Powershell or Cmd.</remarks>
     public SpecializedCommandConfiguration(string targetFilePath, string arguments = null,
         string workingDirectoryPath = null, bool requiresAdministrator = false,
         IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null,
