@@ -103,10 +103,8 @@ namespace CliRunner.Specializations.Configurations
                     throw new PlatformNotSupportedException(Resources.Exceptions_ClassicPowershell_OnlySupportedOnWindows);
                 }
 
-                string location = $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
-                                  $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0";
-                       
-                return $"{location}{Path.DirectorySeparatorChar}powershell.exe";
+                return $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}" +
+                                  $"System32{Path.DirectorySeparatorChar}WindowsPowerShell{Path.DirectorySeparatorChar}v1.0{Path.DirectorySeparatorChar}powershell.exe";
             }
         }
         
