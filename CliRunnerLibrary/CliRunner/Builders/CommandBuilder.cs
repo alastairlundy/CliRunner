@@ -162,7 +162,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.ProcessorAffinity,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
-
+    
     /// <summary>
     /// Sets the environment variables to be configured.
     /// </summary>
@@ -511,9 +511,9 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="standardErrorEncoding">The encoding type to be used for the Standard Error.</param>
     /// <returns>The new CommandBuilder with the specified Pipe Encoding types.</returns>
     [Pure]
-    public ICommandBuilder WithEncoding(Encoding standardInputEncoding = default,
-        Encoding standardOutputEncoding = default,
-        Encoding standardErrorEncoding = default) =>
+    public ICommandBuilder WithEncoding(Encoding standardInputEncoding = null,
+        Encoding standardOutputEncoding = null,
+        Encoding standardErrorEncoding = null) =>
         new CommandBuilder(new Command(_commandConfiguration.TargetFilePath,
             _commandConfiguration.Arguments,
             _commandConfiguration.WorkingDirectoryPath,
