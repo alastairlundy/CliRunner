@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 
 using CliRunner.Abstractions;
+using CliRunner.Extensibility;
 using CliRunner.Specializations.Internal.Localizations;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -37,7 +38,7 @@ namespace CliRunner.Specializations.Configurations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class CmdCommandConfiguration : ICommandConfiguration
+    public class CmdCommandConfiguration : SpecializedCommandConfiguration
     {
         /// <summary>
         /// 
@@ -59,31 +60,21 @@ namespace CliRunner.Specializations.Configurations
         /// <param name="processorAffinity"></param>
         public CmdCommandConfiguration(string arguments = null,
             string workingDirectoryPath = null, bool requiresAdministrator = false,
-            IReadOnlyDictionary<string, string> environmentVariables = null, UserCredentials credentials = null,
+            IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
             CommandResultValidation resultValidation = CommandResultValidation.ExitCodeZero,
             StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
             Encoding standardInputEncoding = default, Encoding standardOutputEncoding = default,
             Encoding standardErrorEncoding = default, IntPtr processorAffinity = default(IntPtr),
-            bool useShellExecution = false, bool windowCreation = false)
+            bool useShellExecution = false, bool windowCreation = false) : 
+            base("", arguments,
+            workingDirectoryPath,
+            requiresAdministrator, environmentVariables, credentials, resultValidation, standardInput, standardOutput,
+            standardError, standardInputEncoding, standardOutputEncoding, standardErrorEncoding, processorAffinity,
+            useShellExecution, windowCreation)
         {
-            RequiresAdministrator = requiresAdministrator;
-            WorkingDirectoryPath = workingDirectoryPath;
-            Arguments = arguments;
-            EnvironmentVariables = environmentVariables;
-            Credentials = credentials;
-            ResultValidation = resultValidation;
-            StandardInput = standardInput;
-            StandardOutput = standardOutput;
-            StandardError = standardError;
-            UseShellExecution = useShellExecution;
-            WindowCreation = windowCreation;
-            StandardInputEncoding = standardInputEncoding;
-            StandardOutputEncoding = standardOutputEncoding;
-            StandardErrorEncoding = standardErrorEncoding;
-            ProcessorAffinity = processorAffinity;
+            
         }
 
-        public bool RequiresAdministrator { get; }
         
         /// <summary>
         /// The target file path of Cmd.
@@ -92,7 +83,7 @@ namespace CliRunner.Specializations.Configurations
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]        
 #endif
-        public string TargetFilePath
+        public new string TargetFilePath
         {
             get
             {
@@ -104,20 +95,5 @@ namespace CliRunner.Specializations.Configurations
                 return $"{Environment.SystemDirectory}{Path.DirectorySeparatorChar}cmd.exe"; ;
             }
         }
-        
-        public string WorkingDirectoryPath { get; }
-        public string Arguments { get; }
-        public IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
-        public UserCredentials Credentials { get; }
-        public CommandResultValidation ResultValidation { get; }
-        public StreamWriter StandardInput { get; }
-        public StreamReader StandardOutput { get; }
-        public StreamReader StandardError { get; }
-        public bool UseShellExecution { get; }
-        public bool WindowCreation { get; }
-        public Encoding StandardInputEncoding { get; }
-        public Encoding StandardOutputEncoding { get; }
-        public Encoding StandardErrorEncoding { get; }
-        public IntPtr ProcessorAffinity { get; }
     }
 }

@@ -39,7 +39,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
     /// <param name="standardOutputEncoding">The encoding for the standard output stream.</param>
     /// <param name="standardErrorEncoding">The encoding for the standard error stream.</param>
     /// <param name="processorAffinity">The processor affinity for the command.</param>
-    /// <param name="useShellExecute">Indicates whether to use the shell to execute the command.</param>
+    /// <param name="useShellExecution">Indicates whether to use the shell to execute the command.</param>
     /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
     /// <remarks>Do not use directly unless you are creating a specialized Command, such as one that will be run through an intermediary like Powershell or Cmd.</remarks>
     public SpecializedCommandConfiguration(string targetFilePath, string arguments = null,
@@ -49,7 +49,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
         Encoding standardInputEncoding = null, Encoding standardOutputEncoding = null,
         Encoding standardErrorEncoding = null, IntPtr processorAffinity = default(IntPtr),
-        bool useShellExecute = false, bool windowCreation = false)
+        bool useShellExecution = false, bool windowCreation = false)
     {
         TargetFilePath = targetFilePath;
         Arguments = arguments;
@@ -58,7 +58,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         EnvironmentVariables = environmentVariables;
         Credentials = credentials;
         ResultValidation = commandResultValidation;
-        UseShellExecution = useShellExecute;
+        UseShellExecution = useShellExecution;
         WindowCreation = windowCreation;
         
         StandardInput = standardInput ?? StreamWriter.Null;
