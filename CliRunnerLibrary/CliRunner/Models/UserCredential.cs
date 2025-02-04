@@ -1,14 +1,22 @@
-﻿// ReSharper disable ClassNeverInstantiated.Global
+﻿/*
+    CliRunner
+    Copyright (C) 2024-2025  Alastair Lundy
 
-/*
-   Based on Tyrrrz's CliWrap Credentials.cs
-   https://github.com/Tyrrrz/CliWrap/blob/master/CliWrap/Credentials.cs
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-    Portions of this code are licensed under the MIT license.
+    Based on Tyrrrz's CliWrap Credentials.cs
+    https://github.com/Tyrrrz/CliWrap/blob/master/CliWrap/Credentials.c
+
+     Constructor signature and field declarations from CliWrap licensed under the MIT License except where considered Copyright Fair Use by law.
+     See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
 using System;
 using System.Security;
+
+// ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 #nullable enable
@@ -42,7 +50,7 @@ namespace CliRunner
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="loadUserProfile"></param>
-        public UserCredential(string domain, string username, SecureString password, bool loadUserProfile)
+        public UserCredential(string? domain, string username, SecureString? password, bool loadUserProfile)
         {
             Domain = domain;
             UserName = username;
