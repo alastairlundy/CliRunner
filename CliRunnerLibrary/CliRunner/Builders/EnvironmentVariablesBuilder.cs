@@ -13,7 +13,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 
 using AlastairLundy.Extensions.Collections.Generics;
 
@@ -31,7 +30,7 @@ public class EnvironmentVariablesBuilder
     private readonly Dictionary<string, string> _environmentVariables;
 
     /// <summary>
-    /// 
+    /// Initializes a new instance of the EnvironmentVariablesBuilder class.
     /// </summary>
     public EnvironmentVariablesBuilder()
     {
