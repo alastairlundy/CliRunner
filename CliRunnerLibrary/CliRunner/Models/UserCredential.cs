@@ -164,11 +164,11 @@ namespace CliRunner
         }
 
         /// <summary>
-        /// 
+        /// Determines if a UserCredential is equal to another UserCredential.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">A UserCredential to be compared.</param>
+        /// <param name="right">The other UserCredential to be compared.</param>
+        /// <returns>True if both UserCredentials are equal to each other; false otherwise.</returns>
         public static bool operator ==(UserCredential? left, UserCredential? right)
         {
             return Equals(left, right);
@@ -180,7 +180,6 @@ namespace CliRunner
         /// <param name="left">A UserCredential to be compared.</param>
         /// <param name="right">The other UserCredential to be compared.</param>
         /// <returns>True if both UserCredentials are not equal to each other; false otherwise.</returns>
-        /// <returns></returns>
         public static bool operator !=(UserCredential? left, UserCredential? right)
         {
             return Equals(left, right) == false;
