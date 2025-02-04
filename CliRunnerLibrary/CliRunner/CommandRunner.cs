@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
 using CliRunner.Exceptions;
+
 using CliRunner.Internal.Localizations;
 
 #if NET5_0_OR_GREATER
@@ -43,16 +44,7 @@ namespace CliRunner;
 /// </summary>
 public class CommandRunner : ICommandRunner
 {
-    private readonly ICommandPipeHandler _commandPipeHandler;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="commandPipeHandler"></param>
-    public CommandRunner(ICommandPipeHandler commandPipeHandler)
-    {
-        _commandPipeHandler = commandPipeHandler;
-    }
+        private readonly ICommandPipeHandler _commandPipeHandler;
 
     /// <summary>
     /// 
@@ -63,13 +55,21 @@ public class CommandRunner : ICommandRunner
     {
         return new CommandRunner(commandPipeHandler);
     } 
+        /// <summary>
+        /// Initialises the CommandRunner with the ICommandPipeHandler to be used.
+        /// </summary>
+        /// <param name="commandPipeHandler">The ICommandPipeHandler to be used.</param>
+        public CommandRunner(ICommandPipeHandler commandPipeHandler)
+        {
+            _commandPipeHandler = commandPipeHandler;
+        }
 
-    /// <summary>
-    /// Creates a process with the specified process start information.
-    /// </summary>
-    /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
-    /// <param name="processorAffinity"></param>
-    /// <returns>the newly created Process with the specified start information.</returns>
+        /// <summary>
+        /// Creates a process with the specified process start information.
+        /// </summary>
+        /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
+        /// <param name="processorAffinity"></param>
+        /// <returns>the newly created Process with the specified start information.</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -99,34 +99,34 @@ public class CommandRunner : ICommandRunner
             return output;
         }
 
-    /// <summary>
-    /// Creates Process Start Information based on specified Command object values.
-    /// </summary>
-    /// <param name="command">The command object to specify Process info.</param>
-    /// <returns>A new ProcessStartInfo object configured with the specified Command object values. .</returns>
-#if NET5_0_OR_GREATER
-    [SupportedOSPlatform("windows")]
-    [SupportedOSPlatform("linux")]
-    [SupportedOSPlatform("freebsd")]
-    [SupportedOSPlatform("macos")]
-    [SupportedOSPlatform("maccatalyst")]
-    [UnsupportedOSPlatform("ios")]
-    [SupportedOSPlatform("android")]
-    [UnsupportedOSPlatform("tvos")]
-    [UnsupportedOSPlatform("browser")]
-#endif
-    public ProcessStartInfo CreateStartInfo(Command command)
-    {
-        return CreateStartInfo(command, command.StandardOutput != null, command.StandardError != null);
-    }
+        /// <summary>
+        /// Creates Process Start Information based on specified Command object values.
+        /// </summary>
+        /// <param name="command">The command object to specify Process info.</param>
+        /// <returns>A new ProcessStartInfo object configured with the specified Command object values. .</returns>
+    #if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("freebsd")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("maccatalyst")]
+        [UnsupportedOSPlatform("ios")]
+        [SupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("tvos")]
+        [UnsupportedOSPlatform("browser")]
+    #endif
+        public ProcessStartInfo CreateStartInfo(Command command)
+        {
+            return CreateStartInfo(command, command.StandardOutput != null, command.StandardError != null);
+        }
 
-    /// <summary>
-    /// Creates Process Start Information based on specified parameters and Command object values.
-    /// </summary>
-    /// <param name="command">The command object to specify Process info.</param>
-    /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
-    /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
-    /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values. .</returns>
+        /// <summary>
+        /// Creates Process Start Information based on specified parameters and Command object values.
+        /// </summary>
+        /// <param name="command">The command object to specify Process info.</param>
+        /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
+        /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
+        /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values. .</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -248,6 +248,14 @@ public class CommandRunner : ICommandRunner
             return output;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="process"></param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="CommandNotSuccessfulException"></exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
