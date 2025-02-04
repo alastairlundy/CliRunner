@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
 
@@ -132,7 +131,7 @@ namespace CliRunner
         /// <param name="targetFilePath">The target file path of the command to be executed.</param>
         /// <param name="arguments">The arguments to pass to the Command upon execution.</param>
         /// <param name="workingDirectoryPath">The working directory to be used.</param>
-        /// <param name="runAsAdministrator">Whether to run the Command with Administrator Privileges.</param>
+        /// <param name="requiresAdministrator">Whether to run the Command with Administrator Privileges.</param>
         /// <param name="environmentVariables">The environment variables to be set (if specified).</param>
         /// <param name="credentials">The credentials to be used (if specified).</param>
         /// <param name="commandResultValidation">Enables or disables Result Validation and exception throwing if the task exits unsuccessfully.</param>
@@ -147,16 +146,16 @@ namespace CliRunner
         /// <param name="standardOutputEncoding"></param>
         public Command(string targetFilePath,
             string arguments = null, string workingDirectoryPath = null,
-            bool runAsAdministrator = false,
+            bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             UserCredentials credentials = null,
             CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
             StreamWriter standardInput = null,
             StreamReader standardOutput = null,
             StreamReader standardError = null,
-            Encoding standardInputEncoding = default,
-            Encoding standardOutputEncoding = default,
-            Encoding standardErrorEncoding = default,
+            Encoding standardInputEncoding = null,
+            Encoding standardOutputEncoding = null,
+            Encoding standardErrorEncoding = null,
 #if NET6_0_OR_GREATER && !NET9_0_OR_GREATER
             IntPtr processorAffinity = 0,
 #else
@@ -167,7 +166,7 @@ namespace CliRunner
         )
         {
             TargetFilePath = targetFilePath;
-            RequiresAdministrator = runAsAdministrator;
+            RequiresAdministrator = requiresAdministrator;
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
@@ -222,8 +221,8 @@ namespace CliRunner
         {
             string commandString = $"{TargetFilePath} {Arguments}";
             string workingDirectory = string.IsNullOrEmpty(WorkingDirectoryPath) ? "" : $" ({Resources.Command_ToString_WorkingDirectory}: {WorkingDirectoryPath})";
-            string adminPrivileges = RequiresAdministrator ? $"\n {Resources.Command_ToString_RequiresAdmin}" : "";
-            string shellExecution = UseShellExecution ? $"\n {Resources.Command_ToString_ShellExecution}" : "";
+            string adminPrivileges = RequiresAdministrator ? $"{Environment.NewLine} {Resources.Command_ToString_RequiresAdmin}" : "";
+            string shellExecution = UseShellExecution ? $"{Environment.NewLine} {Resources.Command_ToString_ShellExecution}" : "";
 
             return $"{commandString}{workingDirectory}{adminPrivileges}{shellExecution}";
         }
