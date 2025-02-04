@@ -6,6 +6,7 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 
 
 ## Features
+* Promotes the single responsibility principle and separation of concerns
 * For .NET 8 and newer TFMs CliRunner has few dependencies ^1
 * Dependency Injection extensions to make using it easier.
 * Support for specific specializations such as running executables or commands via Windows Powershell or CMD on Windows ^2
