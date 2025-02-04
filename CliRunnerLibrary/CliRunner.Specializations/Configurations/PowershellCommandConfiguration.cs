@@ -84,6 +84,17 @@ namespace CliRunner.Specializations.Configurations
         /// The target file path of cross-platform Powershell.
         /// </summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an operating system besides Windows, macOS, Linux, and FreeBSD.</exception>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("browser")]
+    [UnsupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("watchos")]
+#endif
         public new string TargetFilePath
         {
             get
