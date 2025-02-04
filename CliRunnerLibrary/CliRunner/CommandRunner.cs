@@ -46,15 +46,6 @@ public class CommandRunner : ICommandRunner
 {
         private readonly ICommandPipeHandler _commandPipeHandler;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="commandPipeHandler"></param>
-    /// <returns></returns>
-    public static CommandRunner CreateInstance(ICommandPipeHandler commandPipeHandler)
-    {
-        return new CommandRunner(commandPipeHandler);
-    } 
         /// <summary>
         /// Initialises the CommandRunner with the ICommandPipeHandler to be used.
         /// </summary>
