@@ -21,9 +21,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Builders\" />
       <Folder Include="Extensibility\" />
       <Folder Include="Extensions\" />
+      <Folder Include="Specializations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CliRunner.Specializations\CliRunner.Specializations.csproj" />
+      <ProjectReference Include="..\CliRunner\CliRunner.csproj" />
     </ItemGroup>
 
 </Project>
