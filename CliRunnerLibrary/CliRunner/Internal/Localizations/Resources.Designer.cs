@@ -60,6 +60,15 @@ namespace CliRunner.Internal.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Command&apos;s Target File Path cannot be null or empty..
+        /// </summary>
+        internal static string Command_TargetFilePath_Empty {
+            get {
+                return ResourceManager.GetString("Command.TargetFilePath.Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (Requires Administrator).
         /// </summary>
         internal static string Command_ToString_RequiresAdmin {
@@ -128,6 +137,15 @@ namespace CliRunner.Internal.Localizations {
         internal static string Exceptions_FileNotFound {
             get {
                 return ResourceManager.GetString("Exceptions.FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The process start info&apos;s file name cannot be null or empty..
+        /// </summary>
+        internal static string Process_FileName_Empty {
+            get {
+                return ResourceManager.GetString("Process.FileName.Empty", resourceCulture);
             }
         }
     }

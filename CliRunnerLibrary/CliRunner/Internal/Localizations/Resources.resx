@@ -42,4 +42,10 @@
     <data name="CommandResult.ToStandardOutError" xml:space="preserve">
         <value>Cannot convert a process without StandardOutput/StandardError to a BufferedCommandResult.</value>
     </data>
+    <data name="Process.FileName.Empty" xml:space="preserve">
+        <value>The process start info's file name cannot be null or empty.</value>
+    </data>
+    <data name="Command.TargetFilePath.Empty" xml:space="preserve">
+        <value>The Command's Target File Path cannot be null or empty.</value>
+    </data>
 </root>

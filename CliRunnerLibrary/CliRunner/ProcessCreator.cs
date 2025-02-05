@@ -18,6 +18,8 @@ using System.IO;
 using System.Text;
 
 using CliRunner.Abstractions;
+using CliRunner.Internal.Localizations;
+
 // ReSharper disable RedundantBoolCompare
 
 namespace CliRunner;
@@ -33,6 +35,7 @@ public class ProcessCreator : IProcessCreator
         /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
         /// <param name="processorAffinity">The processor affinity to use when creating the Process.</param>
         /// <returns>The newly created Process with the specified start information.</returns>
+        /// <exception cref="ArgumentException">Thrown if the Process Start Info's File Name is null or empty.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -47,6 +50,11 @@ public class ProcessCreator : IProcessCreator
 #endif
         public Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default)
         {
+            if (string.IsNullOrEmpty(processStartInfo.FileName))
+            {
+                throw new ArgumentException(Resources.Process_FileName_Empty);
+            }
+            
             Process output = new Process
             {
                 StartInfo = processStartInfo,
@@ -67,7 +75,9 @@ public class ProcessCreator : IProcessCreator
         /// Creates Process Start Information based on specified Command object values.
         /// </summary>
         /// <param name="commandConfiguration">The command object to specify Process info.</param>
-        /// <returns>A new ProcessStartInfo object configured with the specified Command object values. .</returns>
+        /// <returns>A new ProcessStartInfo object configured with the specified Command object values.</returns>
+        /// <exception cref="ArgumentException">Thrown if the command configuration's Target File Path is null or empty.</exception>
+
     #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -92,6 +102,7 @@ public class ProcessCreator : IProcessCreator
         /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
         /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
         /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values.</returns>
+        /// <exception cref="ArgumentException">Thrown if the command configuration's Target File Path is null or empty.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -107,6 +118,11 @@ public class ProcessCreator : IProcessCreator
         public ProcessStartInfo CreateStartInfo(ICommandConfiguration commandConfiguration, bool redirectStandardOutput,
             bool redirectStandardError)
         {
+            if (string.IsNullOrEmpty(commandConfiguration.TargetFilePath))
+            {
+                throw new ArgumentException(Resources.Command_TargetFilePath_Empty);
+            }
+            
             ProcessStartInfo output = new ProcessStartInfo()
             {
                 FileName = commandConfiguration.TargetFilePath,
