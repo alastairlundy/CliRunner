@@ -11,31 +11,32 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Security;
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
+// ReSharper disable PossibleInvalidOperationException
+// ReSharper disable PossibleNullReferenceException
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 namespace CliRunner.Builders;
+
+#nullable enable
 
 /// <summary>
 /// A class that provides builder methods for constructing UserCredentials.
 /// </summary>
+[SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class UserCredentialBuilder : IDisposable
 {
-    private string _domain;
-    private string _username;
-    private SecureString _password;
-    private bool _loadUserProfile;
+    private UserCredential? _userCredential;
 
     /// <summary>
     /// 
     /// </summary>
     public UserCredentialBuilder()
     {
-        _domain = string.Empty;
-        _username = string.Empty;
-        _password = new SecureString();
-        _loadUserProfile = false;
+        _userCredential = new UserCredential();
     }
         
     /// <summary>
@@ -47,10 +48,8 @@ public class UserCredentialBuilder : IDisposable
     public UserCredentialBuilder SetDomain(string domain) =>
         new UserCredentialBuilder
         {
-            _domain = domain,
-            _loadUserProfile = _loadUserProfile,
-            _password = _password,
-            _username = _username,
+           _userCredential = new UserCredential(domain, _userCredential.UserName, _userCredential.Password,
+                   _userCredential.LoadUserProfile)
         };
 
     /// <summary>
@@ -62,10 +61,8 @@ public class UserCredentialBuilder : IDisposable
     public UserCredentialBuilder SetUsername(string username) =>
         new UserCredentialBuilder
         {
-            _domain = _domain,
-            _loadUserProfile = _loadUserProfile,
-            _password = _password,
-            _username = username,
+            _userCredential = new UserCredential(_userCredential.Domain, username, _userCredential.Password,
+                _userCredential.LoadUserProfile)
         };
 
     /// <summary>
@@ -77,10 +74,8 @@ public class UserCredentialBuilder : IDisposable
     public UserCredentialBuilder SetPassword(SecureString password) =>
         new UserCredentialBuilder
         {
-            _domain = _domain,
-            _loadUserProfile = _loadUserProfile,
-            _password = password,
-            _username = _username,
+            _userCredential = new UserCredential(_userCredential.Domain, _userCredential.UserName, password,
+                _userCredential.LoadUserProfile)
         };
         
     /// <summary>
@@ -92,28 +87,25 @@ public class UserCredentialBuilder : IDisposable
     public UserCredentialBuilder LoadUserProfile(bool loadUserProfile) =>
         new UserCredentialBuilder
         {
-            _domain = _domain,
-            _loadUserProfile = loadUserProfile,
-            _password = _password,
-            _username = _username,
+            _userCredential = new UserCredential(_userCredential.Domain, _userCredential.UserName, _userCredential.Password,
+                loadUserProfile)
         };
-        
+
     /// <summary>
     /// Builds a new instance of UserCredentials using the current settings.
     /// </summary>
     /// <returns>The built UserCredentials.</returns>
     [Pure]
-    public UserCredential Build() => 
-        new UserCredential(_domain, _username, _password, _loadUserProfile);
+    public UserCredential Build() =>
+        new UserCredential(_userCredential!.Domain, _userCredential.UserName, _userCredential.Password,
+            _userCredential.LoadUserProfile);
 
     /// <summary>
     /// Deletes the values of the provided settings.
     /// </summary>
     public void Clear()
     {
-        _domain = string.Empty;
-        _username = string.Empty;
-        _password.Clear();
+       _userCredential.Dispose();
     }
         
     /// <summary>
@@ -121,7 +113,6 @@ public class UserCredentialBuilder : IDisposable
     /// </summary>
     public void Dispose()
     {
-        Clear();
-        _password?.Dispose();
+        _userCredential.Dispose();
     }
 }
