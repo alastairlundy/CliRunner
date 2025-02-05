@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using CliRunner.Abstractions;
 using CliRunner.Extensibility;
 using CliRunner.Specializations.Internal.Localizations;
 
@@ -41,23 +40,23 @@ namespace CliRunner.Specializations.Configurations
     public class CmdCommandConfiguration : SpecializedCommandConfiguration
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the CmdCommandConfiguration class.
         /// </summary>
-        /// <param name="requiresAdministrator"></param>
-        /// <param name="workingDirectoryPath"></param>
-        /// <param name="arguments"></param>
-        /// <param name="environmentVariables"></param>
-        /// <param name="credentials"></param>
-        /// <param name="resultValidation"></param>
-        /// <param name="standardInput"></param>
-        /// <param name="standardOutput"></param>
-        /// <param name="standardError"></param>
-        /// <param name="useShellExecution"></param>
-        /// <param name="windowCreation"></param>
-        /// <param name="standardInputEncoding"></param>
-        /// <param name="standardOutputEncoding"></param>
-        /// <param name="standardErrorEncoding"></param>
-        /// <param name="processorAffinity"></param>
+        /// <param name="arguments">The arguments to be passed to the command.</param>
+        /// <param name="workingDirectoryPath">The working directory for the command.</param>
+        /// <param name="requiresAdministrator">Indicates whether the command requires administrator privileges.</param>
+        /// <param name="environmentVariables">A dictionary of environment variables to be set for the command.</param>
+        /// <param name="credentials">The user credentials to be used when running the command.</param>
+        /// <param name="resultValidation">The validation criteria for the command result.</param>
+        /// <param name="standardInput">The stream for the standard input.</param>
+        /// <param name="standardOutput">The stream for the standard output.</param>
+        /// <param name="standardError">The stream for the standard error.</param>
+        /// <param name="standardInputEncoding">The encoding for the standard input stream.</param>
+        /// <param name="standardOutputEncoding">The encoding for the standard output stream.</param>
+        /// <param name="standardErrorEncoding">The encoding for the standard error stream.</param>
+        /// <param name="processorAffinity">The processor affinity for the command.</param>
+        /// <param name="useShellExecution">Indicates whether to use the shell to execute the command.</param>
+        /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
         public CmdCommandConfiguration(string arguments = null,
             string workingDirectoryPath = null, bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
