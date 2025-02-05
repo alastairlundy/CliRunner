@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -31,6 +32,7 @@ namespace CliRunner
     /// <summary>
     /// A class to represent a User Credential to be used with Commands.
     /// </summary>
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class UserCredential : IEquatable<UserCredential>, IDisposable
     {
         /// <summary>
