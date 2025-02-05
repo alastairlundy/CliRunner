@@ -240,13 +240,13 @@ public class CommandRunner : ICommandRunner
         }
 
         /// <summary>
-        /// 
+        /// Performs common Command Execution tasks shared by the ExecuteAsync and ExecuteBufferedAsync methods.
         /// </summary>
-        /// <param name="command"></param>
-        /// <param name="process"></param>
-        /// <param name="cancellationToken"></param>
-        /// <exception cref="FileNotFoundException"></exception>
-        /// <exception cref="CommandNotSuccessfulException"></exception>
+        /// <param name="command">The command to be executed.</param>
+        /// <param name="process">The process to be piped into and out of the Command.</param>
+        /// <param name="cancellationToken">The cancellation token to use in case of Cancellation.</param>
+        /// <exception cref="FileNotFoundException">Thrown if the Target File Path is not found.</exception>
+        /// <exception cref="CommandNotSuccessfulException">Thrown if the Command execution fails and if the Command requires an exception to be thrown if Command Execution fails.</exception>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]

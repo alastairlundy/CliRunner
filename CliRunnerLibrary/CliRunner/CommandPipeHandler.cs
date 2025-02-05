@@ -16,6 +16,7 @@ using System.Runtime.Versioning;
 
 using System.Diagnostics;
 using System.Threading.Tasks;
+
 using CliRunner.Abstractions;
 
 namespace CliRunner;

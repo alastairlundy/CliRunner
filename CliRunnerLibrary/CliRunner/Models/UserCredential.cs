@@ -15,6 +15,7 @@
 
 using System;
 using System.Security;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -28,7 +29,7 @@ using System.Runtime.Versioning;
 namespace CliRunner
 {
     /// <summary>
-    /// 
+    /// A class to represent a User Credential to be used with Commands.
     /// </summary>
     public class UserCredential : IEquatable<UserCredential>, IDisposable
     {
@@ -59,52 +60,55 @@ namespace CliRunner
         }
         
         /// <summary>
-        /// 
+        /// The domain of the user credential.
         /// </summary>
 #if NET6_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
-        public string? Domain { get; }
+        public string? Domain { get; private set; }
         
         /// <summary>
-        /// 
+        /// The username of the user credential.
         /// </summary>
-        public string? UserName { get; }
+        public string? UserName { get; private set; }
         
         /// <summary>
-        /// 
-        /// </summary>
-#if NET6_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-#endif
-        public SecureString? Password { get; }
-        
-        /// <summary>
-        /// 
+        /// The password of the user credential as a secure string.
         /// </summary>
 #if NET6_0_OR_GREATER
         [SupportedOSPlatform("windows")]
 #endif
-        public bool? LoadUserProfile { get; }
+        public SecureString? Password { get; private set; }
         
         /// <summary>
-        /// 
+        /// Whether to load the UserCredential information and user profile.
+        /// </summary>
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+#endif
+        public bool? LoadUserProfile { get; private set; }
+        
+        /// <summary>
+        /// A null UserCredential instance.
         /// </summary>
         public static UserCredential Null { get; } = new UserCredential();
 
         /// <summary>
-        /// 
+        /// Disposes of the Password SecureString.
         /// </summary>
         public void Dispose()
         {
+            Domain = string.Empty;
+            UserName = string.Empty;
+            LoadUserProfile = false;
             Password?.Dispose();
         }
 
         /// <summary>
-        /// 
+        /// Determines whether the specified user credential is equal to the current user credential.
         /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
+        /// <param name="other">The user credential to compare with the current user credential.</param>
+        /// <returns>True if the specified user credential is equal to the current user credential; false otherwise.</returns>
         public bool Equals(UserCredential? other)
         {
             if (other is null)
@@ -125,11 +129,11 @@ namespace CliRunner
         }
 
         /// <summary>
-        /// 
+        /// Determines whether two user credentials are equal.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">The first user credential to compare.</param>
+        /// <param name="right">The second user credential to compare.</param>
+        /// <returns>True if the two user credential objects are equal; false otherwise.</returns>
         public static bool Equals(UserCredential? left, UserCredential? right)
         {
             if (left is null || right is null)
@@ -141,10 +145,10 @@ namespace CliRunner
         }
         
         /// <summary>
-        /// 
+        /// Determines whether the specified object is equal to the current user credential.
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">The object to compare with the current user credential.</param>
+        /// <returns>True if the specified object is equal to the current user credential; false otherwise.</returns>
         public override bool Equals(object? obj)
         {
             if (obj is null)
@@ -163,9 +167,9 @@ namespace CliRunner
         }
 
         /// <summary>
-        /// 
+        /// Returns the hash code for the current user credential.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The hash code for the current user credential.</returns>
         public override int GetHashCode()
         {
             return HashCode.Combine(Domain, UserName, Password, LoadUserProfile);
