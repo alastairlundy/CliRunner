@@ -304,9 +304,9 @@ public class CommandBuilder : ICommandBuilder
     public ICommandBuilder WithCredentials(Action<UserCredentialBuilder> configure)
     {
         UserCredentialBuilder credentialBuilder = new UserCredentialBuilder()
-            .SetDomain(_commandConfiguration.Credentials.Domain)
-            .SetPassword(_commandConfiguration.Credentials.Password)
-            .SetUsername(_commandConfiguration.Credentials.UserName);
+            .SetDomain(_commandConfiguration.Credentials.Domain!)
+            .SetPassword(_commandConfiguration.Credentials.Password!)
+            .SetUsername(_commandConfiguration.Credentials.UserName!);
 
         configure(credentialBuilder);
 
@@ -509,7 +509,7 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="standardInputEncoding">The encoding type to be used for the Standard Input.</param>
     /// <param name="standardOutputEncoding">The encoding type to be used for the Standard Output.</param>
     /// <param name="standardErrorEncoding">The encoding type to be used for the Standard Error.</param>
-    /// <returns>The new CommandBuilder with the specified Pipe Encoding types.</returns>
+    /// <returns>The new ICommandBuilder with the specified Pipe Encoding types.</returns>
     [Pure]
     public ICommandBuilder WithEncoding(Encoding standardInputEncoding = null,
         Encoding standardOutputEncoding = null,
