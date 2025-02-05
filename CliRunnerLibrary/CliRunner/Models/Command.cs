@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -36,6 +37,7 @@ namespace CliRunner
     /// <summary>
     /// A class to represent a Command to be run.
     /// </summary>
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class Command : ICommandConfiguration, IEquatable<Command>
     {
         /// <summary>

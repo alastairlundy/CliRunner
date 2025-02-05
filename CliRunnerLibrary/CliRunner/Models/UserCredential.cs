@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Security;
 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -36,7 +37,7 @@ namespace CliRunner
     public class UserCredential : IEquatable<UserCredential>, IDisposable
     {
         /// <summary>
-        /// 
+        /// Instantiates the user credential with null values.
         /// </summary>
         public UserCredential()
         {
@@ -47,12 +48,12 @@ namespace CliRunner
         }
 
         /// <summary>
-        /// 
+        /// Instantiates user credential with the specified values.
         /// </summary>
-        /// <param name="domain"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="loadUserProfile"></param>
+        /// <param name="domain">The domain to be used.</param>
+        /// <param name="username">The username to be used.</param>
+        /// <param name="password">The password to be used.</param>
+        /// <param name="loadUserProfile">Whether to load the user profile during Process creation.</param>
         public UserCredential(string? domain, string? username, SecureString? password, bool? loadUserProfile)
         {
             Domain = domain;
@@ -62,7 +63,7 @@ namespace CliRunner
         }
         
         /// <summary>
-        /// The domain of the user credential.
+        /// The domain to be used.
         /// </summary>
 #if NET6_0_OR_GREATER
         [SupportedOSPlatform("windows")]
@@ -70,12 +71,12 @@ namespace CliRunner
         public string? Domain { get; private set; }
         
         /// <summary>
-        /// The username of the user credential.
+        /// The username to be used.
         /// </summary>
         public string? UserName { get; private set; }
         
         /// <summary>
-        /// The password of the user credential as a secure string.
+        /// The password to be used.
         /// </summary>
 #if NET6_0_OR_GREATER
         [SupportedOSPlatform("windows")]
