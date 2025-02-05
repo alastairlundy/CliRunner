@@ -92,8 +92,6 @@ public interface ICommandConfiguration
         /// <summary>
         /// The Standard Input source.
         /// </summary>
-        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
-        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public StreamWriter StandardInput { get; }
 
         /// <summary>
@@ -109,17 +107,11 @@ public interface ICommandConfiguration
         /// <summary>
         /// The processor threads to be used for executing the Command.
         /// </summary>
-#if NET6_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-#endif
         public IntPtr ProcessorAffinity { get; }
 
         /// <summary>
         /// Whether to use Shell Execution or not.
         /// </summary>
-        /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
-        /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public bool UseShellExecution { get; }
         
         /// <summary>
