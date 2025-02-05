@@ -10,6 +10,7 @@
 using System;
 
 using CliRunner.Abstractions;
+using CliRunner.Builders;
 
 using Microsoft.Extensions.DependencyInjection;
 // ReSharper disable RedundantAssignment
@@ -27,6 +28,7 @@ public static class DependencyInjectionExtensions
     /// <returns>The updated service collection with the added CliRunner dependency injection.</returns>
     public static IServiceCollection UseCliRunner(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
+        services.Add(lifetime, typeof(ICommandBuilder), typeof(CommandBuilder));
         services.Add(lifetime, typeof(ICommandPipeHandler), typeof(CommandPipeHandler));
         services.Add(lifetime, typeof(ICommandRunner), typeof(CommandRunner));
         return services;
