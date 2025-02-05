@@ -16,9 +16,15 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+
+using CliRunner.Extensions;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable HeapView.ObjectAllocation.Evident
 // ReSharper disable SuggestVarOrType_BuiltInTypes
+// ReSharper disable RedundantBoolCompare
+
+#nullable enable
 
 namespace CliRunner.Builders;
 
@@ -30,11 +36,27 @@ public class ArgumentsBuilder
     private static readonly IFormatProvider DefaultFormatProvider = CultureInfo.InvariantCulture;
 
     private readonly StringBuilder _buffer;
-        
+
+    private readonly Func<IEnumerable<string>, bool>? _argumentValidationLogic;
+    
+    /// <summary>
+    /// Initialises the ArgumentsBuilder.
+    /// </summary>
     public ArgumentsBuilder()
     {
         _buffer = new StringBuilder();
     }
+
+    /// <summary>
+    /// Initialises the ArgumentsBuilder with the specified Argument Validation Logic.
+    /// </summary>
+    /// <param name="argumentValidationLogic">The argument validation logic to use to decide whether to allow Arguments passed to the builder.</param>
+    public ArgumentsBuilder(Func<IEnumerable<string>, bool> argumentValidationLogic)
+    {
+        _buffer = new StringBuilder();
+        _argumentValidationLogic = argumentValidationLogic;   
+    }
+    
         
     /// <summary>
     /// 
@@ -42,9 +64,25 @@ public class ArgumentsBuilder
     /// <param name="buffer"></param>
     private ArgumentsBuilder(StringBuilder buffer)
     {
-        this._buffer = buffer;
+        _buffer = buffer;
     }
 
+    private ArgumentsBuilder(StringBuilder buffer, Func<IEnumerable<string>, bool> argumentValidationLogic)
+    {
+        _buffer = buffer;
+        _argumentValidationLogic = argumentValidationLogic;
+    }
+        
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="argumentValidationLogic"></param>
+    /// <returns></returns>
+    public ArgumentsBuilder WithArgumentValidation(Func<IEnumerable<string>, bool> argumentValidationLogic)
+    {
+        return new ArgumentsBuilder(_buffer, argumentValidationLogic);
+    }
+    
     /// <summary>
     /// Appends a string value to the arguments builder.
     /// </summary>
@@ -54,14 +92,21 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(string value, bool escape)
     {
-        _buffer.Append(value);
-
-        if (escape)
+        if (IsValidArgument([value]) == true)
         {
-            _buffer.Append(Escape(value));
-        }
+            _buffer.Append(value);
+
+            if (escape)
+            {
+                _buffer.Append(Escape(value));
+            }
             
-        return new ArgumentsBuilder(_buffer);
+            return new ArgumentsBuilder(_buffer);
+        }
+        else
+        {
+            return this;   
+        }
     }
 
     /// <summary>
@@ -72,7 +117,14 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(string value)
     {
-        return Add(value, false);
+        if (IsValidArgument([value]) == true )
+        {
+            return Add(value, false);
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>
@@ -85,18 +137,25 @@ public class ArgumentsBuilder
     public ArgumentsBuilder Add(IEnumerable<string> values, bool escape)
     {
         string[] enumerable = values as string[] ?? values.ToArray();
-            
-        for(int index = 0; index < enumerable.Length; index++)
+        
+        if (IsValidArgument(enumerable) == true)
         {
-            _buffer.Append(enumerable[index]);
-
-            if (escape)
+            for(int index = 0; index < enumerable.Length; index++)
             {
-                _buffer.Append(Escape(enumerable[index]));
+                _buffer.Append(enumerable[index]);
+            
+                if (escape)
+                {
+                    _buffer.Append(Escape(enumerable[index]));
+                }
             }
-        }
 
-        return new ArgumentsBuilder(_buffer);
+            return new ArgumentsBuilder(_buffer);
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>
@@ -107,7 +166,16 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IEnumerable<string> values)
     {
-        return Add(values, false);
+        string[] enumerable = values as string[] ?? values.ToArray();
+        
+        if (IsValidArgument(enumerable) == true)
+        {
+            return Add(enumerable, false);
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>
@@ -120,9 +188,16 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IFormattable value, IFormatProvider formatProvider, bool escape = true)
     {
-        string val = (string)formatProvider.GetFormat(value.GetType());
+        if (IsValidArgument([value]) == true)
+        {
+            string val = (string)formatProvider.GetFormat(value.GetType())!;
            
-        return Add(value.ToString(val, formatProvider), escape);
+            return Add(value.ToString(val, formatProvider), escape);
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>
@@ -135,7 +210,16 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo, bool escape)
     {
-        return Add(value.ToString((string)cultureInfo.GetFormat(value.GetType()), DefaultFormatProvider), escape);
+        if (IsValidArgument([value]) == true)
+        {
+            return Add(value.ToString((string)cultureInfo.GetFormat(value.GetType())!,
+                    DefaultFormatProvider),
+                escape);
+        }
+        else
+        {
+            return this;
+        }
     }
         
     /// <summary>
@@ -183,21 +267,29 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escape = true)
     {
-        foreach (IFormattable val in values)
+        IFormattable[] formattable = values as IFormattable[] ?? values.ToArray();
+        if (IsValidArgument(formattable) == true)
         {
-            string newVal = (string)formatProvider.GetFormat(val.GetType());
-           
-            newVal = val.ToString(newVal, formatProvider);
-                
-            _buffer.Append(newVal);
-
-            if (escape)
+            foreach (IFormattable val in formattable)
             {
-                _buffer.Append(Escape(newVal));
-            }
-        }
+                string newVal = (string)formatProvider.GetFormat(val.GetType())!;
+           
+                newVal = val.ToString(newVal, formatProvider);
+                
+                _buffer.Append(newVal);
 
-        return new ArgumentsBuilder(_buffer);
+                if (escape)
+                {
+                    _buffer.Append(Escape(newVal));
+                }
+            }
+
+            return new ArgumentsBuilder(_buffer);    
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>
@@ -212,7 +304,7 @@ public class ArgumentsBuilder
     {
         foreach (IFormattable val in values)
         {
-            string newVal = val.ToString((string)cultureInfo.GetFormat(val.GetType()), DefaultFormatProvider);
+            string newVal = val.ToString((string)cultureInfo.GetFormat(val.GetType())!, DefaultFormatProvider);
                 
             _buffer.Append(newVal);
 
@@ -234,7 +326,15 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo)
     {
-        return Add(values, cultureInfo, false);
+        IFormattable[] formattable = values as IFormattable[] ?? values.ToArray();
+        if (IsValidArgument(formattable) == true)
+        {
+            return Add(formattable, cultureInfo, false);
+        }
+        else
+        {
+            return this;
+        }
     }
         
     /// <summary>
@@ -246,7 +346,16 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IEnumerable<IFormattable> values, bool escape)
     {
-        return Add(values, CultureInfo.CurrentCulture, escape);
+        IFormattable[] formattable = values as IFormattable[] ?? values.ToArray();
+        
+        if (IsValidArgument(formattable) == true)
+        {
+            return Add(formattable, CultureInfo.CurrentCulture, escape);
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>
@@ -257,7 +366,16 @@ public class ArgumentsBuilder
     [Pure]
     public ArgumentsBuilder Add(IEnumerable<IFormattable> values)
     {
-        return Add(values, false);
+        IFormattable[] formattables = values as IFormattable[] ?? values.ToArray();
+        
+        if (IsValidArgument(formattables) == true)
+        {
+            return Add(formattables, false);
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>
@@ -291,5 +409,41 @@ public class ArgumentsBuilder
     public void Clear()
     {
         _buffer.Clear();
+    }
+
+    private bool IsValidArgument(IEnumerable<string> values)
+    {
+        bool output = true;
+
+        string[] enumerable = values as string[] ?? values.ToArray();
+            
+        if (enumerable.All(x => string.IsNullOrEmpty(x) == true) ||
+            enumerable.All(x => string.IsNullOrWhiteSpace(x) == true))
+        {
+            output = false;
+        }
+        
+        if (_argumentValidationLogic != null)
+        {
+            output = _argumentValidationLogic.Invoke(enumerable);
+        }
+        
+        return output;
+    }
+
+    private bool IsValidArgument(IEnumerable<IFormattable> values)
+    {
+        bool output = true;
+        
+        string[] enumerableStrings = values.Select(x => FormattableToStringExtensions.ToString(x))
+            .ToArray();
+        
+        if (_argumentValidationLogic != null)
+        {
+
+            output = _argumentValidationLogic.Invoke(enumerableStrings);
+        }
+        
+        return output;
     }
 }
