@@ -20,7 +20,7 @@ namespace CliRunner.Builders;
 /// <summary>
 /// A class that provides builder methods for constructing UserCredentials.
 /// </summary>
-public class CredentialBuilder : IDisposable
+public class UserCredentialBuilder : IDisposable
 {
     private string _domain;
     private string _username;
@@ -30,7 +30,7 @@ public class CredentialBuilder : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    public CredentialBuilder()
+    public UserCredentialBuilder()
     {
         _domain = string.Empty;
         _username = string.Empty;
@@ -44,8 +44,8 @@ public class CredentialBuilder : IDisposable
     /// <param name="domain">The domain to set.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated domain.</returns>
     [Pure]
-    public CredentialBuilder SetDomain(string domain) =>
-        new CredentialBuilder
+    public UserCredentialBuilder SetDomain(string domain) =>
+        new UserCredentialBuilder
         {
             _domain = domain,
             _loadUserProfile = _loadUserProfile,
@@ -59,8 +59,8 @@ public class CredentialBuilder : IDisposable
     /// <param name="username">The username to set.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated username.</returns>
     [Pure]
-    public CredentialBuilder SetUsername(string username) =>
-        new CredentialBuilder
+    public UserCredentialBuilder SetUsername(string username) =>
+        new UserCredentialBuilder
         {
             _domain = _domain,
             _loadUserProfile = _loadUserProfile,
@@ -74,8 +74,8 @@ public class CredentialBuilder : IDisposable
     /// <param name="password">The password to set, as a SecureString.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated password.</returns>
     [Pure]
-    public CredentialBuilder SetPassword(SecureString password) =>
-        new CredentialBuilder
+    public UserCredentialBuilder SetPassword(SecureString password) =>
+        new UserCredentialBuilder
         {
             _domain = _domain,
             _loadUserProfile = _loadUserProfile,
@@ -89,8 +89,8 @@ public class CredentialBuilder : IDisposable
     /// <param name="loadUserProfile">True to load the user profile, false otherwise.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated load user profile setting.</returns>
     [Pure]
-    public CredentialBuilder LoadUserProfile(bool loadUserProfile) =>
-        new CredentialBuilder
+    public UserCredentialBuilder LoadUserProfile(bool loadUserProfile) =>
+        new UserCredentialBuilder
         {
             _domain = _domain,
             _loadUserProfile = loadUserProfile,

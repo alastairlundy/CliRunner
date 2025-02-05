@@ -33,7 +33,7 @@ public interface ICommandBuilder
 
     ICommandBuilder WithWorkingDirectory(string workingDirectoryPath);
     ICommandBuilder WithCredentials(UserCredential credentials);
-    ICommandBuilder WithCredentials(Action<CredentialBuilder> configure);
+    ICommandBuilder WithCredentials(Action<UserCredentialBuilder> configure);
     ICommandBuilder WithValidation(CommandResultValidation validation);
     ICommandBuilder WithStandardInputPipe(StreamWriter source);
     ICommandBuilder WithStandardOutputPipe(StreamReader target);
