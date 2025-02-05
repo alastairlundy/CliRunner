@@ -28,7 +28,9 @@ namespace CliRunner.Exceptions
 #if NET5_0_OR_GREATER
         public Command? ExecutedCommand { get; private set; }
 #endif
-        
+        /// <summary>
+        /// The exit code of the Command that was executed.
+        /// </summary>
         public int ExitCode { get; private set; }
         
         /// <summary>
