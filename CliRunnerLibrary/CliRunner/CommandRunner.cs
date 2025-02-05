@@ -60,7 +60,7 @@ public class CommandRunner : ICommandRunner
         /// </summary>
         /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
         /// <param name="processorAffinity"></param>
-        /// <returns>the newly created Process with the specified start information.</returns>
+        /// <returns>The newly created Process with the specified start information.</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -117,7 +117,7 @@ public class CommandRunner : ICommandRunner
         /// <param name="command">The command object to specify Process info.</param>
         /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
         /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
-        /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values. .</returns>
+        /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values.</returns>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -293,6 +293,12 @@ public class CommandRunner : ICommandRunner
             }
         }
 
+        private void DisposeOfProcess(Process process)
+        {
+            process.Close();
+            process.Dispose();
+        }
+
 
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information as a CommandResult.
@@ -318,7 +324,11 @@ public class CommandRunner : ICommandRunner
             
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
-            return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+            CommandResult commandResult = new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+            
+            DisposeOfProcess(process);
+            
+            return commandResult;
         }
 
         /// <summary>
@@ -347,9 +357,13 @@ public class CommandRunner : ICommandRunner
 
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
-            return new BufferedCommandResult(process.ExitCode,
+            BufferedCommandResult commandResult = new BufferedCommandResult(process.ExitCode,
  await process.StandardOutput.ReadToEndAsync(cancellationToken),
                     await process.StandardError.ReadToEndAsync(cancellationToken),
                     process.StartTime, process.ExitTime);
+            
+            DisposeOfProcess(process);
+            
+            return commandResult;
         }
 }
