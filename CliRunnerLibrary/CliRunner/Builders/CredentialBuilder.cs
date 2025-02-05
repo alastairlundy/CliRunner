@@ -11,7 +11,6 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Security;
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
@@ -21,8 +20,7 @@ namespace CliRunner.Builders;
 /// <summary>
 /// A class that provides builder methods for constructing UserCredentials.
 /// </summary>
-[SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-public class CredentialsBuilder : IDisposable
+public class CredentialBuilder : IDisposable
 {
     private string _domain;
     private string _username;
@@ -32,7 +30,7 @@ public class CredentialsBuilder : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    public CredentialsBuilder()
+    public CredentialBuilder()
     {
         _domain = string.Empty;
         _username = string.Empty;
@@ -46,8 +44,8 @@ public class CredentialsBuilder : IDisposable
     /// <param name="domain">The domain to set.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated domain.</returns>
     [Pure]
-    public CredentialsBuilder SetDomain(string domain) =>
-        new CredentialsBuilder
+    public CredentialBuilder SetDomain(string domain) =>
+        new CredentialBuilder
         {
             _domain = domain,
             _loadUserProfile = _loadUserProfile,
@@ -61,8 +59,8 @@ public class CredentialsBuilder : IDisposable
     /// <param name="username">The username to set.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated username.</returns>
     [Pure]
-    public CredentialsBuilder SetUsername(string username) =>
-        new CredentialsBuilder
+    public CredentialBuilder SetUsername(string username) =>
+        new CredentialBuilder
         {
             _domain = _domain,
             _loadUserProfile = _loadUserProfile,
@@ -76,8 +74,8 @@ public class CredentialsBuilder : IDisposable
     /// <param name="password">The password to set, as a SecureString.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated password.</returns>
     [Pure]
-    public CredentialsBuilder SetPassword(SecureString password) =>
-        new CredentialsBuilder
+    public CredentialBuilder SetPassword(SecureString password) =>
+        new CredentialBuilder
         {
             _domain = _domain,
             _loadUserProfile = _loadUserProfile,
@@ -91,8 +89,8 @@ public class CredentialsBuilder : IDisposable
     /// <param name="loadUserProfile">True to load the user profile, false otherwise.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated load user profile setting.</returns>
     [Pure]
-    public CredentialsBuilder LoadUserProfile(bool loadUserProfile) =>
-        new CredentialsBuilder
+    public CredentialBuilder LoadUserProfile(bool loadUserProfile) =>
+        new CredentialBuilder
         {
             _domain = _domain,
             _loadUserProfile = loadUserProfile,
