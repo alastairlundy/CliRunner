@@ -42,9 +42,9 @@ public interface ICommandBuilder
     ICommandBuilder WithShellExecution(bool useShellExecute);
     ICommandBuilder WithWindowCreation(bool useWindowCreation);
 
-    ICommandBuilder WithEncoding(Encoding standardInputEncoding = default,
-        Encoding standardOutputEncoding = default,
-        Encoding standardErrorEncoding = default);
+    ICommandBuilder WithEncoding(Encoding standardInputEncoding = null,
+        Encoding standardOutputEncoding = null,
+        Encoding standardErrorEncoding = null);
 
     Command ToCommand();
 
