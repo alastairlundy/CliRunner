@@ -53,7 +53,7 @@ namespace CliRunner
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="loadUserProfile"></param>
-        public UserCredential(string? domain, string username, SecureString? password, bool loadUserProfile)
+        public UserCredential(string? domain, string? username, SecureString? password, bool? loadUserProfile)
         {
             Domain = domain;
             UserName = username;
