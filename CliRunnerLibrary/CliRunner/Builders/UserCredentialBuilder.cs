@@ -32,7 +32,7 @@ public class UserCredentialBuilder : IDisposable
     private UserCredential? _userCredential;
 
     /// <summary>
-    /// 
+    /// Instantiates the UserCredentialBuilder class.
     /// </summary>
     public UserCredentialBuilder()
     {

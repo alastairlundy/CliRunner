@@ -21,17 +21,68 @@ namespace CliRunner.Abstractions;
 /// </summary>
 public interface ICommandBuilder
 {
+    /// <summary>
+    /// Sets the arguments to pass to the executable.
+    /// </summary>
+    /// <param name="arguments">The arguments to pass to the Command.</param>
+    /// <returns>The updated ICommandBuilder object with the specified arguments.</returns>
     ICommandBuilder WithArguments(IEnumerable<string> arguments);
-    ICommandBuilder WithArguments(IEnumerable<string> arguments, bool escape);
+    
+    /// <summary>
+    /// Sets the arguments to pass to the executable.
+    /// </summary>
+    /// <param name="arguments">The arguments to pass to the executable.</param>
+    /// <param name="escapeArguments">Whether to escape the arguments if escape characters are detected.</param>
+    /// <returns>The new ICommandBuilder object with the specified arguments.</returns>
+    ICommandBuilder WithArguments(IEnumerable<string> arguments, bool escapeArguments);
 
+    /// <summary>
+    /// Sets the arguments to pass to the executable.
+    /// </summary>
+    /// <param name="arguments">The arguments to pass to the executable.</param>
+    /// <returns>The new ICommandBuilder object with the specified arguments.</returns>
     ICommandBuilder WithArguments(string arguments);
+    
+    /// <summary>
+    /// Sets the Target File Path of the Command Executable.
+    /// </summary>
+    /// <param name="targetFilePath">The target file path of the Command.</param>
+    /// <returns>The Command with the updated Target File Path.</returns>
     ICommandBuilder WithTargetFile(string targetFilePath);
+    
+    /// <summary>
+    /// Sets the environment variables to be configured.
+    /// </summary>
+    /// <param name="environmentVariables">The environment variables to be configured.</param>
+    /// <returns>The new CommandBuilder with the specified environment variables.</returns>
     ICommandBuilder WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables);
+    
+    /// <summary>
+    /// Sets the environment variables for the Command to be executed.
+    /// </summary>
+    /// <param name="configure">The environment variables to be configured</param>
+    /// <returns>The new CommandBuilder with the specified environment variables.</returns>
     ICommandBuilder WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure);
-
+    
+    /// <summary>
+    /// Sets whether to execute the Command with Administrator Privileges.
+    /// </summary>
+    /// <param name="runAsAdministrator">Whether to execute the Command with Administrator Privileges.</param>
+    /// <returns>The new CommandBuilder with the specified Administrator Privileges settings.</returns>
     ICommandBuilder WithAdministratorPrivileges(bool runAsAdministrator);
 
+    /// <summary>
+    /// Sets the working directory to be used for the Command.
+    /// </summary>
+    /// <param name="workingDirectoryPath">The working directory to be used.</param>
+    /// <returns>The new CommandBuilder with the specified working directory.</returns>
     ICommandBuilder WithWorkingDirectory(string workingDirectoryPath);
+    
+    /// <summary>
+    /// Sets the specified Credentials to be used.
+    /// </summary>
+    /// <param name="credentials">The credentials to be used.</param>
+    /// <returns>The new CommandBuilder with the specified Credentials.</returns>
     ICommandBuilder WithCredentials(UserCredential credentials);
     
     /// <summary>

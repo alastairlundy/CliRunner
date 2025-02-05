@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace CliRunner.Abstractions;
 
 /// <summary>
-/// An interface to enable Creating Processes from Command inputs.
+/// An interface to enable Creating Processes from Command Configuration inputs.
 /// </summary>
 public interface IProcessCreator
 {
@@ -30,7 +30,7 @@ public interface IProcessCreator
     /// Creates Process Start Information based on specified Command object values.
     /// </summary>
     /// <param name="commandConfiguration">The command object to specify Process info.</param>
-    /// <returns>A new ProcessStartInfo object configured with the specified Command object values. .</returns>
+    /// <returns>A new ProcessStartInfo object configured with the specified Command object values.</returns>
     ProcessStartInfo CreateStartInfo(ICommandConfiguration commandConfiguration);
 
     /// <summary>
