@@ -19,11 +19,8 @@
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Global
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,199 +42,19 @@ namespace CliRunner;
 public class CommandRunner : ICommandRunner
 {
         private readonly ICommandPipeHandler _commandPipeHandler;
+        private readonly IProcessCreator _processCreator;
 
         /// <summary>
         /// Initialises the CommandRunner with the ICommandPipeHandler to be used.
         /// </summary>
         /// <param name="commandPipeHandler">The ICommandPipeHandler to be used.</param>
-        public CommandRunner(ICommandPipeHandler commandPipeHandler)
+        /// <param name="processCreator"></param>
+        public CommandRunner(ICommandPipeHandler commandPipeHandler, IProcessCreator processCreator)
         {
             _commandPipeHandler = commandPipeHandler;
+            _processCreator = processCreator;
         }
-
-        /// <summary>
-        /// Creates a process with the specified process start information.
-        /// </summary>
-        /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
-        /// <param name="processorAffinity"></param>
-        /// <returns>The newly created Process with the specified start information.</returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        public Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default)
-        {
-            Process output = new Process
-            {
-                StartInfo = processStartInfo,
-            };
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-            if (OperatingSystemPolyfill.IsWindows() || OperatingSystemPolyfill.IsLinux())
-#else
-            if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
-#endif
-            {
-                output.ProcessorAffinity = processorAffinity;
-            }
-            
-            return output;
-        }
-
-        /// <summary>
-        /// Creates Process Start Information based on specified Command object values.
-        /// </summary>
-        /// <param name="command">The command object to specify Process info.</param>
-        /// <returns>A new ProcessStartInfo object configured with the specified Command object values. .</returns>
-    #if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-    #endif
-        public ProcessStartInfo CreateStartInfo(Command command)
-        {
-            return CreateStartInfo(command, command.StandardOutput != null, command.StandardError != null);
-        }
-
-        /// <summary>
-        /// Creates Process Start Information based on specified parameters and Command object values.
-        /// </summary>
-        /// <param name="command">The command object to specify Process info.</param>
-        /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
-        /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
-        /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values.</returns>
-#if NET5_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-        [SupportedOSPlatform("freebsd")]
-        [SupportedOSPlatform("macos")]
-        [SupportedOSPlatform("maccatalyst")]
-        [UnsupportedOSPlatform("ios")]
-        [SupportedOSPlatform("android")]
-        [UnsupportedOSPlatform("tvos")]
-        [UnsupportedOSPlatform("browser")]
-#endif
-        public ProcessStartInfo CreateStartInfo(Command command, bool redirectStandardOutput,
-            bool redirectStandardError)
-        {
-            ProcessStartInfo output = new ProcessStartInfo()
-            {
-                FileName = command.TargetFilePath,
-                WorkingDirectory = command.WorkingDirectoryPath,
-                UseShellExecute = command.UseShellExecution,
-                CreateNoWindow = command.WindowCreation,
-                RedirectStandardInput = command.StandardInput != null,
-                RedirectStandardOutput = redirectStandardOutput,
-                RedirectStandardError = redirectStandardError,
-            };
-
-            if (string.IsNullOrEmpty(command.Arguments) == false)
-            {
-                output.Arguments = command.Arguments;
-            }
-
-            if (command.RequiresAdministrator == true)
-            {
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-                if (OperatingSystemPolyfill.IsWindows())
-#else
-                if (OperatingSystem.IsWindows())
-#endif
-                {
-                    output.Verb = "runas";
-                }
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-                else if (OperatingSystemPolyfill.IsLinux() || OperatingSystemPolyfill.IsMacOS() ||  OperatingSystemPolyfill.IsFreeBSD())
-#else
-                else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
-#endif
-                {
-                    output.Verb = "sudo";
-                }
-            }
-
-            if (command.StandardInput != StreamWriter.Null)
-            {
-                output.RedirectStandardInput = true;
-            }
-            if (command.StandardOutput != StreamReader.Null)
-            {
-                output.RedirectStandardOutput = true;
-            }
-            if (command.StandardError != StreamReader.Null)
-            {
-                output.RedirectStandardError = true;
-            }
-
-            if (command.Credentials != null)
-            {
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-                if (OperatingSystemPolyfill.IsWindows())
-#else
-                if (OperatingSystem.IsWindows())
-#endif
-                {
-                    
-#pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                    if (command.Credentials.LoadUserProfile != null)
-#pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                    {
-                        output.LoadUserProfile = (bool)command.Credentials.LoadUserProfile;
-                        
-                        if (output.LoadUserProfile == true)
-                        {
-                            if (command.Credentials.Domain != null)
-                            {
-                                output.Domain = command.Credentials.Domain;
-                            }
-                            if (command.Credentials.UserName != null)
-                            {
-                                output.UserName = command.Credentials.UserName;
-                            }
-                            if (command.Credentials.Password != null)
-                            {
-                                output.Password = command.Credentials.Password;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (command.EnvironmentVariables != null)
-            {
-                foreach (KeyValuePair<string, string> variable in command.EnvironmentVariables)
-                {
-                    if (variable.Value != null)
-                    {
-                        output.Environment[variable.Key] = variable.Value;
-                    }
-                }
-            }
-            
-            if (output.RedirectStandardInput == true)
-            {
-#if NETSTANDARD2_1 || NET5_0_OR_GREATER
-                output.StandardInputEncoding = command.StandardInputEncoding ?? Encoding.Default;
-#endif
-            }
-            
-            output.StandardOutputEncoding = command.StandardOutputEncoding ?? Encoding.Default;
-            output.StandardErrorEncoding = command.StandardErrorEncoding ?? Encoding.Default;
-            
-            return output;
-        }
+    
 
         /// <summary>
         /// Performs common Command Execution tasks shared by the ExecuteAsync and ExecuteBufferedAsync methods.
@@ -320,7 +137,7 @@ public class CommandRunner : ICommandRunner
 #endif
         public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
         {
-            Process process = CreateProcess(CreateStartInfo(command));
+            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command));
             
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
@@ -352,7 +169,7 @@ public class CommandRunner : ICommandRunner
         public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command,
             CancellationToken cancellationToken = default)
         {
-            Process process = CreateProcess(CreateStartInfo(command,
+            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command,
                 true, true));
 
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
