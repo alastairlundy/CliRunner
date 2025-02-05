@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
+        <LangVersion>13</LangVersion>
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <TargetFrameworks>net9.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +18,10 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Bogus" Version="[35.6.1, 36.0.0)"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="PolyFill" Version="[7.16.1, 8.0.0)" Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'"/>
     </ItemGroup>
 
     <ItemGroup>
