@@ -16,6 +16,7 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <LangVersion>13</LangVersion>
         <PackageReleaseNotes>### Changes since 0.11.1
 * Updated CliRunner dependency to 1.0.0 Alpha 1
             * Updated Specialization classes to make use of CliRunner's 1.0.0 Alpha 1 changes</PackageReleaseNotes>
