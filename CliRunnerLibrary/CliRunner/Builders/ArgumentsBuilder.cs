@@ -382,7 +382,7 @@ public class ArgumentsBuilder
         }
         else
         {
-            output = (string.IsNullOrEmpty(value) == true || string.IsNullOrWhiteSpace(value) == true) == false;
+            output = (string.IsNullOrEmpty(value) == true) == false;
         }
         
         return output;
