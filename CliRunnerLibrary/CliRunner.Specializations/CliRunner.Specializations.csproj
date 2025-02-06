@@ -29,11 +29,11 @@
     </PropertyGroup>
     
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
-        <PackageReference Include="AlastairLundy.OSCompatibilityLib" Version="[3.0.1, 4.0.0)" />
+        <PackageReference Include="Polyfill" Version="[7.16.1, 8.0.0)" />
     </ItemGroup>
     
     <ItemGroup>
-      <PackageReference Include="CliRunner" Version="[0.12.0, 0.13.0)" />
+      <PackageReference Include="CliRunner" Version="[0.12.0, 1.0.0)" />
     </ItemGroup>
 
     <ItemGroup>
