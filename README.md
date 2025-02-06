@@ -61,8 +61,8 @@ The following example shows how to configure and build a Command that returns a 
 
 ```csharp
 using CliRunner;
+using CliRunner.Abstractions;
 using CliRunner.Builders;
-using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
   ServiceCollection services = new ServiceCollection();
@@ -90,5 +90,6 @@ If you use CliRunner in your project please make an exact copy of the contents o
 This project would like to thank the following projects for their work:
 * [CliWrap](https://github.com/Tyrrrz/CliWrap/) for inspiring this project
 * [Polyfill](https://github.com/SimonCropp/Polyfill) for simplifying .NET Standard 2.0 & 2.1 support
+* [Microsoft.Bcl.HashCode](https://github.com/dotnet/maintenance-packages) for providing a backport of the HashCode class and static methods to .NET Standard 2.0
 
 For more information please see the [THIRD_PARTY_NOTICES file](https://github.com/alastairlundy/CliRunner/blob/main/THIRD_PARTY_NOTICES.txt).

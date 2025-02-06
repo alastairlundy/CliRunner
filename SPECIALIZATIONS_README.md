@@ -14,6 +14,7 @@ The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 
 ```csharp
 using CliRunner;
+using CliRunner.Abstractions;
 using CliRunner.Builders;
 using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
@@ -38,6 +39,7 @@ using CliRunner.Specializations;
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
 ```csharp
 using CliRunner;
+using CliRunner.Abstractions;
 using CliRunner.Builders;
 using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
@@ -64,9 +66,9 @@ The ClassicPowershellCommand is a specialized Command class with an already conf
 
 ```csharp
 using CliRunner;
+using CliRunner.Abstractions;
 using CliRunner.Builders;
 using CliRunner.Specializations;
-using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
   ServiceCollection services = new ServiceCollection();
@@ -90,9 +92,9 @@ The PowershellCommand's TargetFilePath points to the installed copy of cross-pla
 
 ```csharp
 using CliRunner;
+using CliRunner.Abstractions;
 using CliRunner.Builders;
 using CliRunner.Specializations;
-using CliRunner.Extensions;
 
   /// Initialize CommandRunner with Dependency Injection.
   ServiceCollection services = new ServiceCollection();
