@@ -14,6 +14,7 @@
  */
 
 using System;
+// ReSharper disable MemberCanBeProtected.Global
 
 // ReSharper disable MemberCanBePrivate.Global
 
