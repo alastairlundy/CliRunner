@@ -2,5 +2,9 @@
 
 public class CommandBuilderTests
 {
-    
+
+    public void TestIncompatiblePipingOptions()
+    {
+        
+    }
 }
