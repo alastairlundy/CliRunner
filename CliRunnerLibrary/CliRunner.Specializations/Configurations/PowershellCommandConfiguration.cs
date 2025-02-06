@@ -138,7 +138,7 @@ namespace CliRunner.Specializations.Configurations
            ICommandBuilder installLocationBuilder = new CommandBuilder("/usr/bin/which")
                 .WithArguments("pwsh");
            
-           Command command = installLocationBuilder.ToCommand();
+           Command command = installLocationBuilder.Build();
            
           Task<BufferedCommandResult> task = _commandRunner.ExecuteBufferedAsync(command);
           

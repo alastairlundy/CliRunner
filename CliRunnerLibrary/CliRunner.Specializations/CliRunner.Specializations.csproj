@@ -10,16 +10,15 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.12.0</PackageVersion>
+        <PackageVersion>1.0.0-alpha.1</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageReleaseNotes>### Changes since 0.11.1
-* Updated CliRunner dependency to 0.12.0 
-            * Updated Specialization classes to make use of CliRunner's 0.12.0 changes
-            * Removed obsolete Command code</PackageReleaseNotes>
+* Updated CliRunner dependency to 1.0.0 Alpha 1
+            * Updated Specialization classes to make use of CliRunner's 1.0.0 Alpha 1 changes</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
     </PropertyGroup>
 
@@ -31,12 +30,9 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
         <PackageReference Include="Polyfill" Version="[7.16.1, 8.0.0)" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <PackageReference Include="CliRunner" Version="[0.12.0, 1.0.0)" />
-    </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CliRunner" Version="[1.0.0-alpha.1, )" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
     </ItemGroup>
 
