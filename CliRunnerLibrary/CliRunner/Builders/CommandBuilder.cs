@@ -15,9 +15,11 @@ using System.IO;
 using System.Text;
 
 using CliRunner.Abstractions;
+using CliRunner.Internal.Localizations;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
+// ReSharper disable RedundantBoolCompare
 #endif
 
 namespace CliRunner.Builders;
@@ -344,79 +346,110 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="source">The source to use for the Standard Input pipe.</param>
     /// <returns>The new CommandBuilder with the specified Standard Input pipe source.</returns>
     /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
-    /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
+    /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandardinput"/>
     [Pure]
-    public ICommandBuilder WithStandardInputPipe(StreamWriter source) =>
-        new CommandBuilder(
-            new Command(
-                _commandConfiguration.TargetFilePath,
-                _commandConfiguration.Arguments,
-                _commandConfiguration.WorkingDirectoryPath,
-                _commandConfiguration.RequiresAdministrator,
-                _commandConfiguration.EnvironmentVariables,
-                _commandConfiguration.Credentials,
-                _commandConfiguration.ResultValidation,
-                source,
-                _commandConfiguration.StandardOutput,
-                _commandConfiguration.StandardError,
-                _commandConfiguration.StandardInputEncoding,
-                _commandConfiguration.StandardOutputEncoding,
-                _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
-                _commandConfiguration.WindowCreation,
-                _commandConfiguration.UseShellExecution));
+    public ICommandBuilder WithStandardInputPipe(StreamWriter source)
+    {
+        if (_commandConfiguration.UseShellExecution == true && source != StreamWriter.Null)
+        {
+            throw new ArgumentException(Resources.CommandBuilder_ArgumentConflict_ShellExecution_Input);
+        }
+        else
+        {
+            return new CommandBuilder(
+                new Command(
+                    _commandConfiguration.TargetFilePath,
+                    _commandConfiguration.Arguments,
+                    _commandConfiguration.WorkingDirectoryPath,
+                    _commandConfiguration.RequiresAdministrator,
+                    _commandConfiguration.EnvironmentVariables,
+                    _commandConfiguration.Credentials,
+                    _commandConfiguration.ResultValidation,
+                    source,
+                    _commandConfiguration.StandardOutput,
+                    _commandConfiguration.StandardError,
+                    _commandConfiguration.StandardInputEncoding,
+                    _commandConfiguration.StandardOutputEncoding,
+                    _commandConfiguration.StandardErrorEncoding,
+                    _commandConfiguration.ProcessorAffinity,
+                    _commandConfiguration.WindowCreation,
+                    _commandConfiguration.UseShellExecution));
+        }
+    }
 
     /// <summary>
     /// Sets the Standard Output Pipe target.
     /// </summary>
     /// <param name="target">The target to send the Standard Output to.</param>
     /// <returns>The new CommandBuilder with the specified Standard Output Pipe Target.</returns>
+    /// <remarks>Using Shell Execution whilst also Redirecting Standard Output will throw an Exception. This is a known issue with the System Process class.</remarks>
+    /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandardoutput"/>
     [Pure]
-    public ICommandBuilder WithStandardOutputPipe(StreamReader target) =>
-        new CommandBuilder(
-            new Command(
-                _commandConfiguration.TargetFilePath,
-                _commandConfiguration.Arguments,
-                _commandConfiguration.WorkingDirectoryPath,
-                _commandConfiguration.RequiresAdministrator,
-                _commandConfiguration.EnvironmentVariables,
-                _commandConfiguration.Credentials,
-                _commandConfiguration.ResultValidation,
-                _commandConfiguration.StandardInput,
-                target,
-                _commandConfiguration.StandardError,
-                _commandConfiguration.StandardInputEncoding,
-                _commandConfiguration.StandardOutputEncoding,
-                _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
-                _commandConfiguration.WindowCreation,
-                _commandConfiguration.UseShellExecution));
+    public ICommandBuilder WithStandardOutputPipe(StreamReader target)
+    {
+        if (_commandConfiguration.UseShellExecution == true && target != StreamReader.Null)
+        {
+            throw new ArgumentException(Resources.CommandBuilder_ArgumentConflict_ShellExecution_Output);
+        }
+        else
+        {
+            return new CommandBuilder(
+                new Command(
+                    _commandConfiguration.TargetFilePath,
+                    _commandConfiguration.Arguments,
+                    _commandConfiguration.WorkingDirectoryPath,
+                    _commandConfiguration.RequiresAdministrator,
+                    _commandConfiguration.EnvironmentVariables,
+                    _commandConfiguration.Credentials,
+                    _commandConfiguration.ResultValidation,
+                    _commandConfiguration.StandardInput,
+                    target,
+                    _commandConfiguration.StandardError,
+                    _commandConfiguration.StandardInputEncoding,
+                    _commandConfiguration.StandardOutputEncoding,
+                    _commandConfiguration.StandardErrorEncoding,
+                    _commandConfiguration.ProcessorAffinity,
+                    _commandConfiguration.WindowCreation,
+                    _commandConfiguration.UseShellExecution));
+        }
+    }
 
     /// <summary>
     /// Sets the Standard Error Pipe target.
     /// </summary>
     /// <param name="target">The target to send the Standard Error to.</param>
     /// <returns>The new CommandBuilder with the specified Standard Error Pipe Target.</returns>
+    /// <remarks>Using Shell Execution whilst also Redirecting Standard Error will throw an Exception. This is a known issue with the System Process class.</remarks>
+    /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
     [Pure]
-    public ICommandBuilder WithStandardErrorPipe(StreamReader target) =>
-        new CommandBuilder(
-            new Command(
-                _commandConfiguration.TargetFilePath,
-                _commandConfiguration.Arguments,
-                _commandConfiguration.WorkingDirectoryPath,
-                _commandConfiguration.RequiresAdministrator,
-                _commandConfiguration.EnvironmentVariables,
-                _commandConfiguration.Credentials,
-                _commandConfiguration.ResultValidation,
-                _commandConfiguration.StandardInput,
-                _commandConfiguration.StandardOutput,
-                target,
-                _commandConfiguration.StandardInputEncoding,
-                _commandConfiguration.StandardOutputEncoding,
-                _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
-                _commandConfiguration.WindowCreation,
-                _commandConfiguration.UseShellExecution));
+    public ICommandBuilder WithStandardErrorPipe(StreamReader target)
+    {
+        if (_commandConfiguration.UseShellExecution == true && target != StreamReader.Null)
+        {
+            throw new ArgumentException(Resources.CommandBuilder_ArgumentConflict_ShellExecution_Error);
+        }
+        else
+        {
+           return new CommandBuilder(
+                new Command(
+                    _commandConfiguration.TargetFilePath,
+                    _commandConfiguration.Arguments,
+                    _commandConfiguration.WorkingDirectoryPath,
+                    _commandConfiguration.RequiresAdministrator,
+                    _commandConfiguration.EnvironmentVariables,
+                    _commandConfiguration.Credentials,
+                    _commandConfiguration.ResultValidation,
+                    _commandConfiguration.StandardInput,
+                    _commandConfiguration.StandardOutput,
+                    target,
+                    _commandConfiguration.StandardInputEncoding,
+                    _commandConfiguration.StandardOutputEncoding,
+                    _commandConfiguration.StandardErrorEncoding,
+                    _commandConfiguration.ProcessorAffinity,
+                    _commandConfiguration.WindowCreation,
+                    _commandConfiguration.UseShellExecution));
+        }
+    }
 
     /// <summary>
     /// Sets the Processor Affinity for this command.
