@@ -156,11 +156,11 @@ public interface ICommandBuilder
     /// Builds the Command with the configured parameters.
     /// </summary>
     /// <returns>The newly configured Command.</returns>
-    Command ToCommand();
+    Command Build();
 
     /// <summary>
     /// Builds the ICommandConfiguration with the configured parameters.
     /// </summary>
     /// <returns>The newly configured ICommandConfiguration.</returns>
-    ICommandConfiguration ToConfiguration();
+    ICommandConfiguration BuildConfiguration();
 }

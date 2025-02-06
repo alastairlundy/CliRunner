@@ -536,11 +536,11 @@ public class CommandBuilder : ICommandBuilder
     /// </summary>
     /// <returns>The newly configured Command.</returns>
     [Pure]
-    public Command ToCommand() => new Command(_commandConfiguration);
+    public Command Build() => new Command(_commandConfiguration);
 
     /// <summary>
     /// Builds the ICommandConfiguration with the configured parameters.
     /// </summary>
     /// <returns>The new ICommandConfiguration.</returns>
-    public ICommandConfiguration ToConfiguration() => _commandConfiguration;
+    public ICommandConfiguration BuildConfiguration() => _commandConfiguration;
 }
