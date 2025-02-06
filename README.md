@@ -76,7 +76,7 @@ using CliRunner.Extensions;
                             .WithArguments(["arg1", "arg2"])
                             .WithWorkingDirectory("/Path/To/Directory");
   
-  Command command = builder.ToCommand();
+  Command command = builder.Build();
   
 var result = await _commandRunner.ExecuteBufferedAsync(command);
 ```

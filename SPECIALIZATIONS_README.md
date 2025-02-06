@@ -30,7 +30,7 @@ using CliRunner.Specializations;
           new CmdCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.ToCommand();
+  Command command = builder.Build();
   
   var result = await command.ExecuteBufferedAsync(command);
 ```
@@ -54,7 +54,7 @@ using CliRunner.Specializations;
           new CmdCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.ToCommand();
+  Command command = builder.Build();
   
   var result = await command.ExecuteAsync(command);
 ```
@@ -80,7 +80,7 @@ using CliRunner.Extensions;
           new ClassicPowershellCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.ToCommand();
+  Command command = builder.Build();
   
  var result = await _commandRunner.ExecuteBufferedAsync(command);
 ```
@@ -106,7 +106,7 @@ using CliRunner.Extensions;
           new PowershellCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.ToCommand();
+  Command command = builder.Build();
   
  var result = await _commandRunner.ExecuteBufferedAsync(command);
 ```

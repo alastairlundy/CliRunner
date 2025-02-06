@@ -96,10 +96,16 @@ Here's an example of a simple usage of creating a CliRunner command. For more de
 
 ```csharp
 using CliRunner;
-using CliRunner.Buffered;
+using CliRunner.Abstractions;
+using CliRunner.Builders;
 
-var result = await Command.CreateInstance("Path/To/Exe")
+ICommandRunner commandRunner = serviceProvider.GetService<ICommandRunner>();
+
+ICommandBuilder builder = new CommandBuilder("Path/To/Exe")
               .WithArguments(["arg1", "arg2"])
-              .WithWorkingDirectory("/Path/To/Directory")
-              .ExecuteBufferedAsync();
+              .WithWorkingDirectory("/Path/To/Directory");
+
+Command command = builder.Build();
+
+var result = await command.ExecuteBufferedAsync(command);
 ```
