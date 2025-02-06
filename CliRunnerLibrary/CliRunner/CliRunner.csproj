@@ -13,29 +13,28 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.11.0
+        <PackageReleaseNotes>## Changes since 0.12.0
 
 ### Breaking Changes
-* Removed ``Command``'s ``CreateInstance`` static methods
-* Removed ``Command``'s builder methods
-* Removed ``CommandExecuteExtensions`` class
-* Removed ``AbstractInstallablerCommand`` class
-* Removed ``CommandRunner``'s ``CreateInstance`` static methods
-* Renamed ``UserCredentials`` class to ``UserCredential``
-* Renamed ``UserCredentials.Default`` to ``UserCredential.Null``
+* Renamed ``CredentialsBuilder`` to ``UserCredentialBuilder``
+* Moved Process Creation code out of ``CommandRunner`` and ``ICommandRunner`` to a new class and interface respectively (``ProcessCreator`` and ``IProcessCreator``)
+* Renamed ``CommandBuilder``'s ``ToCommand`` method to ``Build``
+* Renamed ``CommandBuilder``'s ``ToConfiguration`` method to ``BuildConfiguration``
 
 ### Non-Breaking Changes
-* Updated CollectionsExtensions dependency from 6.0.0 Alpha 1 to 6.0.0 Alpha 2
-* Updated Polyfill dependency from 7.15.0 to 7.16.1
-* Added dependency on Microsoft.Bcl.HashCode for .NET Standard 2.0 users.
-* Corrected usage of ``LoadUserProfile`` property
-* Cleaned up EnvironmentVariablesBuilder
-* Created ``SpecializedCommandConfiguration`` abstract class to assist in creating Specializations and simplifying ``Command`` class code.
-* Other improvements and tweaks</PackageReleaseNotes>
+* Added missing xml doc comments
+* Made ``BufferedCommandResult`` implement ``IEquatable&lt;T&gt;``
+* Tweaked ``UserCredentialBuilder`` to internally use ``UserCredential`` model rather than separated components of ``UserCredential``
+* Improved robustness of Target File Path checks during Process creation
+* Added the ability for ``ArgumentsBuilder`` to use argument validation logic to determine whether to add arguments or not - This can be configured from the constructor and is optional
+* ``CommandBuilder`` now throws an exception if ``UseShellExecution`` is set to true AND Standard Input, Standard Output, or Standard Error are set to a non-null value.
+
+### Bug Fixes
+* Fixed Process not being disposed of properly by CommandRunner after Command execution</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>0.12.0</PackageVersion>
+        <PackageVersion>1.0.0-alpha.1</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>

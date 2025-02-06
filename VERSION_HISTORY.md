@@ -1,7 +1,14 @@
 
-## CliRunner version history
+# CliRunner version history
 
-### Pre-release versions
+## Official Releases
+
+### 1.0.0
+| Version | Release Date | Changelog |
+|-|-|-|
+| 1.0.0 Alpha 1 | February 6th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-alpha.1 |
+
+## Pre-release versions
 | Version | Release Date | Changelog |
 |-|-|-|
 | 0.12.0 | February 4th 2025 | https://github.com/alastairlundy/CliRunner/releases/0.12.0 |
