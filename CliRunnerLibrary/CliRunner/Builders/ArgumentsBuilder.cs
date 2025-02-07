@@ -91,7 +91,14 @@ public class ArgumentsBuilder : IArgumentsBuilder
                 _buffer.Append(EscapeSpecialChars(value));
             }
             
-            return new ArgumentsBuilder(_buffer);
+            if (_argumentValidationLogic != null)
+            {
+                return new ArgumentsBuilder(_buffer, _argumentValidationLogic);
+            }
+            else
+            {
+                return new ArgumentsBuilder(_buffer);   
+            }
         }
         else
         {
@@ -141,7 +148,14 @@ public class ArgumentsBuilder : IArgumentsBuilder
                 }
             }
 
-            return new ArgumentsBuilder(_buffer);
+            if (_argumentValidationLogic != null)
+            {
+                return new ArgumentsBuilder(_buffer, _argumentValidationLogic);
+            }
+            else
+            {
+                return new ArgumentsBuilder(_buffer);   
+            }
     }
 
     /// <summary>
@@ -263,7 +277,15 @@ public class ArgumentsBuilder : IArgumentsBuilder
                 }
             }
 
-            return new ArgumentsBuilder(_buffer);    
+            if (_argumentValidationLogic != null)
+            {
+                return new ArgumentsBuilder(_buffer, _argumentValidationLogic); 
+            }
+            else
+            {
+                return new ArgumentsBuilder(_buffer);
+            }
+               
     }
 
     /// <summary>
@@ -291,7 +313,14 @@ public class ArgumentsBuilder : IArgumentsBuilder
             }
         }
 
-        return new ArgumentsBuilder(_buffer);
+        if (_argumentValidationLogic != null)
+        {
+            return new ArgumentsBuilder(_buffer, _argumentValidationLogic);
+        }
+        else
+        {
+            return new ArgumentsBuilder(_buffer);   
+        }
     }
 
     /// <summary>
