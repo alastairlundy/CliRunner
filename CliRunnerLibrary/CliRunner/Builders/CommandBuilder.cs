@@ -271,7 +271,7 @@ public class CommandBuilder : ICommandBuilder
     [UnsupportedOSPlatform("android")]
 #endif
     [Pure]
-    public ICommandBuilder WithCredentials(UserCredential credentials) =>
+    public ICommandBuilder WithCredential(UserCredential credentials) =>
         new CommandBuilder(
             new Command(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
@@ -304,7 +304,7 @@ public class CommandBuilder : ICommandBuilder
     [UnsupportedOSPlatform("freebsd")]
     [UnsupportedOSPlatform("android")]
 #endif
-    public ICommandBuilder WithCredentials(Action<UserCredentialBuilder> configure)
+    public ICommandBuilder WithCredential(Action<UserCredentialBuilder> configure)
     {
         UserCredentialBuilder credentialBuilder = new UserCredentialBuilder()
             .SetDomain(_commandConfiguration.Credentials.Domain!)
@@ -313,7 +313,7 @@ public class CommandBuilder : ICommandBuilder
 
         configure(credentialBuilder);
 
-        return WithCredentials(credentialBuilder.Build());
+        return WithCredential(credentialBuilder.Build());
     }
 
     /// <summary>
