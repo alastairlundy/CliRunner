@@ -16,7 +16,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-
+using CliRunner.Builders.Abstractions;
 using CliRunner.Extensions;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -31,7 +31,7 @@ namespace CliRunner.Builders;
 /// <summary>
 /// A class that provides a fluent interface style builder for constructing Arguments to provide to a program.
 /// </summary>
-public class ArgumentsBuilder
+public class ArgumentsBuilder : IArgumentsBuilder
 {
     private static readonly IFormatProvider DefaultFormatProvider = CultureInfo.InvariantCulture;
 
