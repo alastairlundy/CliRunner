@@ -18,6 +18,7 @@ using System.IO;
 using System.Text;
 
 using CliRunner.Abstractions;
+using CliRunner.Extensions;
 using CliRunner.Internal.Localizations;
 
 // ReSharper disable RedundantBoolCompare
@@ -170,29 +171,7 @@ public class ProcessCreator : IProcessCreator
             {
                 if (OperatingSystem.IsWindows())
                 {
-                    
-#pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                    if (commandConfiguration.Credentials.LoadUserProfile != null)
-#pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-                    {
-                        output.LoadUserProfile = (bool)commandConfiguration.Credentials.LoadUserProfile;
-                        
-                        if (output.LoadUserProfile == true)
-                        {
-                            if (commandConfiguration.Credentials.Domain != null)
-                            {
-                                output.Domain = commandConfiguration.Credentials.Domain;
-                            }
-                            if (commandConfiguration.Credentials.UserName != null)
-                            {
-                                output.UserName = commandConfiguration.Credentials.UserName;
-                            }
-                            if (commandConfiguration.Credentials.Password != null)
-                            {
-                                output.Password = commandConfiguration.Credentials.Password;
-                            }
-                        }
-                    }
+                   output.AddCredential(commandConfiguration.Credential);
                 }
             }
 
