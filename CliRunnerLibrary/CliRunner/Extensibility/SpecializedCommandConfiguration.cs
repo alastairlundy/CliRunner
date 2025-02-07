@@ -61,7 +61,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         WorkingDirectoryPath = workingDirectoryPath;
         RequiresAdministrator = requiresAdministrator;
         EnvironmentVariables = environmentVariables;
-        Credentials = credentials;
+        Credential = credentials;
         ResultValidation = commandResultValidation;
         UseShellExecution = useShellExecution;
         WindowCreation = windowCreation;
@@ -112,7 +112,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         /// <summary>
         /// The credentials to be used when executing the executable.
         /// </summary>
-        public UserCredential Credentials { get; }
+        public UserCredential Credential { get; }
 
         /// <summary>
         /// The result validation to apply to the Command when it is executed.

@@ -82,7 +82,7 @@ public interface ICommandConfiguration
         /// <summary>
         /// The credentials to be used when executing the executable.
         /// </summary>
-        public UserCredential Credentials { get; }
+        public UserCredential Credential { get; }
 
         /// <summary>
         /// The result validation to apply to the Command when it is executed.

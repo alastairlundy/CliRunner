@@ -73,7 +73,7 @@ namespace CliRunner
         /// <summary>
         /// The credentials to be used when executing the executable.
         /// </summary>
-        public UserCredential Credentials { get; protected set; }
+        public UserCredential Credential { get; protected set; }
 
         /// <summary>
         /// The result validation to apply to the Command when it is executed.
@@ -173,7 +173,7 @@ namespace CliRunner
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
-            Credentials = credentials ?? UserCredential.Null;
+            Credential = credentials ?? UserCredential.Null;
 
             ResultValidation = commandResultValidation;
 
@@ -201,7 +201,7 @@ namespace CliRunner
             WorkingDirectoryPath = commandConfiguration.WorkingDirectoryPath ?? Directory.GetCurrentDirectory();
             RequiresAdministrator = commandConfiguration.RequiresAdministrator;
             EnvironmentVariables = commandConfiguration.EnvironmentVariables  ?? new Dictionary<string, string>();
-            Credentials = commandConfiguration.Credentials ?? UserCredential.Null;
+            Credential = commandConfiguration.Credential ?? UserCredential.Null;
             ResultValidation = commandConfiguration.ResultValidation;
             StandardInput = commandConfiguration.StandardInput ?? StreamWriter.Null;
             StandardOutput = commandConfiguration.StandardOutput ?? StreamReader.Null;
@@ -248,7 +248,7 @@ namespace CliRunner
                    && Arguments == other.Arguments
                    && WindowCreation == other.WindowCreation
                    && Equals(EnvironmentVariables, other.EnvironmentVariables)
-                   && Equals(Credentials, other.Credentials)
+                   && Equals(Credential, other.Credential)
                    && ResultValidation == other.ResultValidation
                    && Equals(StandardInput, other.StandardInput)
                    && Equals(StandardOutput, other.StandardOutput)
@@ -291,7 +291,7 @@ namespace CliRunner
                 hashCode = (hashCode * 397) ^ (Arguments != null ? Arguments.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ WindowCreation.GetHashCode();
                 hashCode = (hashCode * 397) ^ (EnvironmentVariables != null ? EnvironmentVariables.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Credentials != null ? Credentials.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Credential != null ? Credential.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (int)ResultValidation;
                 hashCode = (hashCode * 397) ^ (StandardInput != null ? StandardInput.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (StandardOutput != null ? StandardOutput.GetHashCode() : 0);
