@@ -12,9 +12,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using CliRunner.Builders;
+using CliRunner.Abstractions;
 
-namespace CliRunner.Abstractions;
+namespace CliRunner.Builders.Abstractions;
 
 /// <summary>
 /// This interface details the fluent builder methods all CommandBuilders must implement. 
@@ -83,14 +83,14 @@ public interface ICommandBuilder
     /// </summary>
     /// <param name="credentials">The credentials to be used.</param>
     /// <returns>The new CommandBuilder with the specified Credentials.</returns>
-    ICommandBuilder WithCredentials(UserCredential credentials);
+    ICommandBuilder WithCredential(UserCredential credentials);
     
     /// <summary>
     /// Sets the credentials for the Command to be executed.
     /// </summary>
     /// <param name="configure">The CredentialsBuilder configuration.</param>
     /// <returns>The new CommandBuilder with the specified Credentials.</returns>
-    ICommandBuilder WithCredentials(Action<UserCredentialBuilder> configure);
+    ICommandBuilder WithCredential(Action<UserCredentialBuilder> configure);
     
     /// <summary>
     /// Sets the Result Validation whether to throw an exception or not if the Command does not execute successfully.
