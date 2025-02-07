@@ -23,7 +23,7 @@ public static class ProcessAddCredentialExtensions
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
 #endif
-    public static void AddCredential(this Process process, UserCredential credential)
+    public static void AddUserCredential(this Process process, UserCredential credential)
     {
 #pragma warning disable CA1416
         if (credential != null)
@@ -59,7 +59,7 @@ public static class ProcessAddCredentialExtensions
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
 #endif
-    public static void AddCredential(this ProcessStartInfo processStartInfo, UserCredential credential)
+    public static void AddUserCredential(this ProcessStartInfo processStartInfo, UserCredential credential)
     {
 #pragma warning disable CA1416
         if (credential != null)

@@ -171,7 +171,7 @@ public class ProcessCreator : IProcessCreator
             {
                 if (OperatingSystem.IsWindows())
                 {
-                   output.AddCredential(commandConfiguration.Credential);
+                   output.AddUserCredential(commandConfiguration.Credential);
                 }
             }
 
