@@ -166,7 +166,7 @@ public class ProcessCreator : IProcessCreator
                 output.RedirectStandardError = true;
             }
 
-            if (commandConfiguration.Credentials != null)
+            if (commandConfiguration.Credential != null)
             {
                 if (OperatingSystem.IsWindows())
                 {
