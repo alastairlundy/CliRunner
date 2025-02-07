@@ -11,7 +11,7 @@ using System;
 
 using CliRunner.Abstractions;
 using CliRunner.Builders;
-
+using CliRunner.Builders.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 // ReSharper disable RedundantAssignment
 // ReSharper disable UnusedMember.Global
