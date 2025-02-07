@@ -16,7 +16,6 @@ using System.Diagnostics.Contracts;
 
 using AlastairLundy.Extensions.Collections.Generics;
 
-// ReSharper disable UseCollectionExpression
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 // ReSharper disable RedundantExplicitArrayCreation
 
@@ -54,9 +53,8 @@ public class EnvironmentVariablesBuilder
     /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
     [Pure]
     public EnvironmentVariablesBuilder Set(string name, string value){
-        Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal);
-        output.Add(name, value);
-        
+        Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal) { { name, value } };
+
         return new EnvironmentVariablesBuilder(output);
     }
 
