@@ -22,6 +22,10 @@ using CliRunner.Internal.Localizations;
 
 // ReSharper disable RedundantBoolCompare
 
+#if NETSTANDARD2_0 || NETSTANDARD2_1
+using OperatingSystem = Polyfills.OperatingSystemPolyfill;
+#endif
+
 namespace CliRunner;
 
 /// <summary>
@@ -59,11 +63,8 @@ public class ProcessCreator : IProcessCreator
             {
                 StartInfo = processStartInfo,
             };
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-            if (OperatingSystemPolyfill.IsWindows() || OperatingSystemPolyfill.IsLinux())
-#else
+            
             if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
-#endif
             {
                 output.ProcessorAffinity = processorAffinity;
             }
@@ -141,19 +142,12 @@ public class ProcessCreator : IProcessCreator
 
             if (commandConfiguration.RequiresAdministrator == true)
             {
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-                if (OperatingSystemPolyfill.IsWindows())
-#else
+
                 if (OperatingSystem.IsWindows())
-#endif
                 {
                     output.Verb = "runas";
                 }
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-                else if (OperatingSystemPolyfill.IsLinux() || OperatingSystemPolyfill.IsMacOS() ||  OperatingSystemPolyfill.IsFreeBSD())
-#else
                 else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
-#endif
                 {
                     output.Verb = "sudo";
                 }
@@ -174,11 +168,7 @@ public class ProcessCreator : IProcessCreator
 
             if (commandConfiguration.Credentials != null)
             {
-#if NETSTANDARD2_0 || NETSTANDARD2_1 || !NET8_0_OR_GREATER
-                if (OperatingSystemPolyfill.IsWindows())
-#else
                 if (OperatingSystem.IsWindows())
-#endif
                 {
                     
 #pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
