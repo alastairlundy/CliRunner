@@ -17,7 +17,7 @@ using System.Globalization;
 namespace CliRunner.Builders.Abstractions;
 
 /// <summary>
-/// 
+/// An interface that defines the fluent builder methods all ArgumentsBuilder classes must implement.
 /// </summary>
 public interface IArgumentsBuilder
 {
