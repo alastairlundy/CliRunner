@@ -72,16 +72,6 @@ public class ArgumentsBuilder
         _buffer = buffer;
         _argumentValidationLogic = argumentValidationLogic;
     }
-        
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="argumentValidationLogic"></param>
-    /// <returns></returns>
-    public ArgumentsBuilder WithArgumentValidation(Func<string, bool> argumentValidationLogic)
-    {
-        return new ArgumentsBuilder(_buffer, argumentValidationLogic);
-    }
     
     /// <summary>
     /// Appends a string value to the arguments builder.
