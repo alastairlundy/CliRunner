@@ -26,30 +26,30 @@ public interface IArgumentsBuilder
     /// </summary>
     /// <param name="value">The string value to append.</param>
     /// <param name="escape">True to escape special characters in the value, false otherwise.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(string value, bool escape);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(string value, bool escape);
 
     /// <summary>
     /// Appends a string value to the arguments builder without escaping special characters.
     /// </summary>
     /// <param name="value">The string value to append.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(string value);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(string value);
 
     /// <summary>
     /// Appends a collection of string values to the arguments builder.
     /// </summary>
     /// <param name="values">The collection of string values to append.</param>
     /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IEnumerable<string> values, bool escapeSpecialChars);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IEnumerable<string> values, bool escapeSpecialChars);
 
     /// <summary>
     /// Appends a collection of string values to the arguments builder without escaping special characters.
     /// </summary>
     /// <param name="values">The collection of string values to append.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IEnumerable<string> values);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IEnumerable<string> values);
 
     /// <summary>
     /// Appends a formattable value to the arguments builder.
@@ -57,8 +57,8 @@ public interface IArgumentsBuilder
     /// <param name="value">The formattable value to append.</param>
     /// <param name="formatProvider">The format provider to use for formatting the value.</param>
     /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IFormattable value, IFormatProvider formatProvider, bool escapeSpecialChars = true);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IFormattable value, IFormatProvider formatProvider, bool escapeSpecialChars = true);
 
     /// <summary>
     /// Appends a formattable value to the arguments builder using the specified culture.
@@ -66,31 +66,31 @@ public interface IArgumentsBuilder
     /// <param name="value">The formattable value to append.</param>
     /// <param name="cultureInfo">The culture to use for formatting the value.</param>
     /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo, bool escapeSpecialChars);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo, bool escapeSpecialChars);
 
     /// <summary>
     /// Appends a formattable value to the arguments builder using the specified culture without escaping special characters.
     /// </summary>
     /// <param name="value">The formattable value to append.</param>
     /// <param name="cultureInfo">The culture to use for formatting the value.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo);
 
     /// <summary>
     /// Appends a formattable value to the arguments builder.
     /// </summary>
     /// <param name="value">The formattable value to append.</param>
     /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IFormattable value, bool escapeSpecialChars);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IFormattable value, bool escapeSpecialChars);
 
     /// <summary>
     /// Appends a formattable value to the arguments builder without specifying a culture and without escaping special characters.
     /// </summary>
     /// <param name="value">The formattable value to append.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IFormattable value);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IFormattable value);
 
     /// <summary>
     /// Appends a collection of formattable values to the arguments builder.
@@ -98,8 +98,8 @@ public interface IArgumentsBuilder
     /// <param name="values">The collection of formattable values to append.</param>
     /// <param name="formatProvider">The format provider to use for formatting the values.</param>
     /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escapeSpecialChars = true);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escapeSpecialChars = true);
 
     /// <summary>
     /// Appends a collection of formattable values to the arguments builder using the specified culture.
@@ -107,31 +107,31 @@ public interface IArgumentsBuilder
     /// <param name="values">The collection of formattable values to append.</param>
     /// <param name="cultureInfo">The culture to use for formatting the values.</param>
     /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escapeSpecialChars);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escapeSpecialChars);
 
     /// <summary>
     /// Appends a collection of formattable values to the arguments builder using the specified culture without escaping special characters.
     /// </summary>
     /// <param name="values">The collection of formattable values to append.</param>
     /// <param name="cultureInfo">The culture to use for formatting the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo);
 
     /// <summary>
     /// Appends a collection of formattable values to the arguments builder without specifying a culture.
     /// </summary>
     /// <param name="values">The collection of formattable values to append.</param>
     /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IEnumerable<IFormattable> values, bool escapeSpecialChars);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IEnumerable<IFormattable> values, bool escapeSpecialChars);
 
     /// <summary>
     /// Appends a collection of formattable values to the arguments builder without specifying a culture and without escaping special characters.
     /// </summary>
     /// <param name="values">The collection of formattable values to append.</param>
-    /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
-    ArgumentsBuilder Add(IEnumerable<IFormattable> values);
+    /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
+    IArgumentsBuilder Add(IEnumerable<IFormattable> values);
 
     /// <summary>
     /// Builds the arguments into a string.
