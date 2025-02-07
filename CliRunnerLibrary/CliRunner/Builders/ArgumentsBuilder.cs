@@ -98,7 +98,7 @@ public class ArgumentsBuilder
 
             if (escape)
             {
-                _buffer.Append(Escape(value));
+                _buffer.Append(EscapeSpecialChars(value));
             }
             
             return new ArgumentsBuilder(_buffer);
@@ -131,10 +131,10 @@ public class ArgumentsBuilder
     /// Appends a collection of string values to the arguments builder.
     /// </summary>
     /// <param name="values">The collection of string values to append.</param>
-    /// <param name="escape">Whether to escape special characters in the values.</param>
+    /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
     /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public ArgumentsBuilder Add(IEnumerable<string> values, bool escape)
+    public ArgumentsBuilder Add(IEnumerable<string> values, bool escapeSpecialChars)
     {
         string[] enumerable = values as string[] ?? values.ToArray();
         
@@ -144,9 +144,9 @@ public class ArgumentsBuilder
                 {
                     _buffer.Append(enumerable[index]);
             
-                    if (escape)
+                    if (escapeSpecialChars)
                     {
-                        _buffer.Append(Escape(enumerable[index]));
+                        _buffer.Append(EscapeSpecialChars(enumerable[index]));
                     }
                 }
             }
@@ -170,16 +170,16 @@ public class ArgumentsBuilder
     /// </summary>
     /// <param name="value">The formattable value to append.</param>
     /// <param name="formatProvider">The format provider to use for formatting the value.</param>
-    /// <param name="escape">Whether to escape special characters in the values.</param>
+    /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
     /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public ArgumentsBuilder Add(IFormattable value, IFormatProvider formatProvider, bool escape = true)
+    public ArgumentsBuilder Add(IFormattable value, IFormatProvider formatProvider, bool escapeSpecialChars = true)
     {
         if (IsValidArgument(value) == true)
         {
             string val = (string)formatProvider.GetFormat(value.GetType())!;
            
-            return Add(value.ToString(val, formatProvider), escape);
+            return Add(value.ToString(val, formatProvider), escapeSpecialChars);
         }
         else
         {
@@ -192,16 +192,16 @@ public class ArgumentsBuilder
     /// </summary>
     /// <param name="value">The formattable value to append.</param>
     /// <param name="cultureInfo">The culture to use for formatting the value.</param>
-    /// <param name="escape">Whether to escape special characters in the values.</param>
+    /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
     /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo, bool escape)
+    public ArgumentsBuilder Add(IFormattable value, CultureInfo cultureInfo, bool escapeSpecialChars)
     {
         if (IsValidArgument(value) == true)
         {
             return Add(value.ToString((string)cultureInfo.GetFormat(value.GetType())!,
                     DefaultFormatProvider),
-                escape);
+                escapeSpecialChars);
         }
         else
         {
@@ -225,12 +225,12 @@ public class ArgumentsBuilder
     /// Appends a formattable value to the arguments builder.
     /// </summary>
     /// <param name="value">The formattable value to append.</param>
-    /// <param name="escape">Whether to escape special characters in the values.</param>
+    /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
     /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public ArgumentsBuilder Add(IFormattable value, bool escape)
+    public ArgumentsBuilder Add(IFormattable value, bool escapeSpecialChars)
     {
-        return Add(value, CultureInfo.CurrentCulture, escape);
+        return Add(value, CultureInfo.CurrentCulture, escapeSpecialChars);
     }
 
     /// <summary>
@@ -249,10 +249,10 @@ public class ArgumentsBuilder
     /// </summary>
     /// <param name="values">The collection of formattable values to append.</param>
     /// <param name="formatProvider">The format provider to use for formatting the values.</param>
-    /// <param name="escape">Whether to escape special characters in the values.</param>
+    /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
     /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public ArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escape = true)
+    public ArgumentsBuilder Add(IEnumerable<IFormattable> values, IFormatProvider formatProvider, bool escapeSpecialChars = true)
     {
         IFormattable[] formattable = values as IFormattable[] ?? values.ToArray();
         
@@ -266,9 +266,9 @@ public class ArgumentsBuilder
                 {
                     _buffer.Append(newVal);
 
-                    if (escape)
+                    if (escapeSpecialChars)
                     {
-                        _buffer.Append(Escape(newVal));
+                        _buffer.Append(EscapeSpecialChars(newVal));
                     }
                 }
             }
@@ -281,10 +281,10 @@ public class ArgumentsBuilder
     /// </summary>
     /// <param name="values">The collection of formattable values to append.</param>
     /// <param name="cultureInfo">The culture to use for formatting the values.</param>
-    /// <param name="escape">Whether to escape special characters in the values.</param>
+    /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
     /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escape)
+    public ArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escapeSpecialChars)
     {
         foreach (IFormattable val in values)
         {
@@ -294,9 +294,9 @@ public class ArgumentsBuilder
             {
                 _buffer.Append(newVal);
 
-                if (escape)
+                if (escapeSpecialChars)
                 {
-                    _buffer.Append(Escape(newVal));
+                    _buffer.Append(EscapeSpecialChars(newVal));
                 }
             }
         }
@@ -320,12 +320,12 @@ public class ArgumentsBuilder
     /// Appends a collection of formattable values to the arguments builder without specifying a culture.
     /// </summary>
     /// <param name="values">The collection of formattable values to append.</param>
-    /// <param name="escape">Whether to escape special characters in the values.</param>
+    /// <param name="escapeSpecialChars">Whether to escape special characters in the values.</param>
     /// <returns>A new instance of the ArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public ArgumentsBuilder Add(IEnumerable<IFormattable> values, bool escape)
+    public ArgumentsBuilder Add(IEnumerable<IFormattable> values, bool escapeSpecialChars)
     {
-        return Add(values, CultureInfo.CurrentCulture, escape);
+        return Add(values, CultureInfo.CurrentCulture, escapeSpecialChars);
     }
 
     /// <summary>
@@ -354,7 +354,7 @@ public class ArgumentsBuilder
     /// <param name="argument">The string to escape.</param>
     /// <returns>The escaped string.</returns>
     [Pure]
-    public static string Escape(string argument)
+    public static string EscapeSpecialChars(string argument)
     {
         return argument.Replace("\\", "\\\\")
             .Replace("\n", "\\n")

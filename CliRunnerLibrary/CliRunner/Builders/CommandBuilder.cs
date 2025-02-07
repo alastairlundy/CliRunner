@@ -94,7 +94,7 @@ public class CommandBuilder : ICommandBuilder
 
         if (escapeArguments)
         {
-            args = ArgumentsBuilder.Escape(args);
+            args = ArgumentsBuilder.EscapeSpecialChars(args);
         }
 
         return new CommandBuilder(
