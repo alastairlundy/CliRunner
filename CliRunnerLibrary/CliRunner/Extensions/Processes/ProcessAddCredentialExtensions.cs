@@ -10,7 +10,7 @@
 using System.Diagnostics;
 using System.Runtime.Versioning;
 
-namespace CliRunner.Extensions;
+namespace CliRunner.Extensions.Processes;
 
 public static class ProcessAddCredentialExtensions
 {
