@@ -61,7 +61,7 @@ The following example shows how to configure and build a Command that returns a 
 
 ```csharp
 using CliRunner;
-using CliRunner.Abstractions;
+using CliRunner.Builders.Abstractions;
 using CliRunner.Builders;
 
   /// Initialize CommandRunner with Dependency Injection.

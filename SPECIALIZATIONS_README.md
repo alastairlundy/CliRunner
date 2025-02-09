@@ -16,6 +16,7 @@ The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 using CliRunner;
 using CliRunner.Abstractions;
 using CliRunner.Builders;
+using CliRunner.Builders.Abstractions;
 using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
 
@@ -41,6 +42,7 @@ If the result of the command being run is not of concern you can call ``ExecuteA
 using CliRunner;
 using CliRunner.Abstractions;
 using CliRunner.Builders;
+using CliRunner.Builders.Abstractions;
 using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
 
@@ -68,6 +70,7 @@ The ClassicPowershellCommand is a specialized Command class with an already conf
 using CliRunner;
 using CliRunner.Abstractions;
 using CliRunner.Builders;
+using CliRunner.Builders.Abstractions;
 using CliRunner.Specializations;
 
   /// Initialize CommandRunner with Dependency Injection.
@@ -94,6 +97,7 @@ The PowershellCommand's TargetFilePath points to the installed copy of cross-pla
 using CliRunner;
 using CliRunner.Abstractions;
 using CliRunner.Builders;
+using CliRunner.Builders.Abstractions;
 using CliRunner.Specializations;
 
   /// Initialize CommandRunner with Dependency Injection.

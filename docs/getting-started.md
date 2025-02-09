@@ -58,7 +58,7 @@ namespace MyApp;
 ```
 
 #### Manual Setup
-This example manually sets up ``ICommandPipeHandler`` and ``ICommandRunner`` as Singletons.
+This example manually sets up ``ICommandPipeHandler``, ``IProcessCreator``, and ``ICommandRunner`` as Singletons.
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
@@ -81,6 +81,7 @@ namespace MyApp;
             
             // UseCliRunner goes here
             services.AddSingleton<ICommandPipeHandler, CommandPipeHandler>();
+            services.AddSingleton<IProcessCreator, ProcessCreator>();
             services.AddSingleton<ICommandRunner, CommandRunner>();
 
             // Build the service provider
@@ -98,6 +99,7 @@ Here's an example of a simple usage of creating a CliRunner command. For more de
 using CliRunner;
 using CliRunner.Abstractions;
 using CliRunner.Builders;
+using CliRunner.Builders.Abstractions;
 
 ICommandRunner commandRunner = serviceProvider.GetService<ICommandRunner>();
 
