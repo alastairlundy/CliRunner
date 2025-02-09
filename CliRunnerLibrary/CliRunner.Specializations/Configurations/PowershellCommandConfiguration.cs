@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 using CliRunner.Abstractions;
 using CliRunner.Builders;
+using CliRunner.Builders.Abstractions;
 using CliRunner.Extensibility;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
