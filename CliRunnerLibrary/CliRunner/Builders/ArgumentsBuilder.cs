@@ -349,15 +349,6 @@ public class ArgumentsBuilder : IArgumentsBuilder
     }
 
     /// <summary>
-    /// Builds the arguments into a string.
-    /// </summary>
-    /// <returns>The arguments as a string.</returns>
-    public string Build()
-    {
-        return _buffer.ToString();
-    }
-
-    /// <summary>
     /// Escapes special characters in a string.
     /// </summary>
     /// <param name="argument">The string to escape.</param>
@@ -371,6 +362,15 @@ public class ArgumentsBuilder : IArgumentsBuilder
             .Replace("\r", "\\r")
             .Replace("\"", "\\\"")
             .Replace("'", "\\'");
+    }
+
+    /// <summary>
+    /// Builds the arguments into a string.
+    /// </summary>
+    /// <returns>The arguments as a string.</returns>
+    public new string ToString()
+    {
+        return _buffer.ToString();
     }
 
     /// <summary>

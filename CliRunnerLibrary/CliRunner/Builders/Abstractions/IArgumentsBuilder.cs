@@ -133,11 +133,13 @@ public interface IArgumentsBuilder
     /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
     IArgumentsBuilder Add(IEnumerable<IFormattable> values);
 
+    string EscapeSpecialCharacters(string argument);
+    
     /// <summary>
     /// Builds the arguments into a string.
     /// </summary>
     /// <returns>The arguments as a string.</returns>
-    string Build();
+    string ToString();
 
     /// <summary>
     /// Clears the provided argument strings.

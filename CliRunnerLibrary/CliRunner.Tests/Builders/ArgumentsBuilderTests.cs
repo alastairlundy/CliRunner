@@ -14,7 +14,7 @@ public class ArgumentsBuilderTests
 
         string expected = "new list --help";
         
-        Assert.Equal(expected, argumentsBuilder.Build());
+        Assert.Equal(expected, argumentsBuilder.ToString());
     }
     
      
