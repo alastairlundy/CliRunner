@@ -136,7 +136,7 @@ namespace CliRunner
         /// <param name="workingDirectoryPath">The working directory to be used.</param>
         /// <param name="requiresAdministrator">Whether to run the Command with Administrator Privileges.</param>
         /// <param name="environmentVariables">The environment variables to be set (if specified).</param>
-        /// <param name="credentials">The credentials to be used (if specified).</param>
+        /// <param name="credential">The credentials to be used (if specified).</param>
         /// <param name="commandResultValidation">Enables or disables Result Validation and exception throwing if the task exits unsuccessfully.</param>
         /// <param name="standardInput">The standard input source to be used (if specified).</param>
         /// <param name="standardOutput">The standard output destination to be used (if specified).</param>
@@ -144,14 +144,14 @@ namespace CliRunner
         /// <param name="standardErrorEncoding"></param>
         /// <param name="processorAffinity">The processor affinity to be used (if specified).</param>
         /// <param name="windowCreation">Whether to enable or disable Window Creation by the Command's Process.</param>
-        /// <param name="useShellExecute">Whether to enable or disable executing the Command through Shell Execution.</param>
+        /// <param name="useShellExecution">Whether to enable or disable executing the Command through Shell Execution.</param>
         /// <param name="standardInputEncoding"></param>
         /// <param name="standardOutputEncoding"></param>
         public Command(string targetFilePath,
             string arguments = null, string workingDirectoryPath = null,
             bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
-            UserCredential credentials = null,
+            UserCredential credential = null,
             CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
             StreamWriter standardInput = null,
             StreamReader standardOutput = null,
@@ -165,7 +165,7 @@ namespace CliRunner
              IntPtr processorAffinity = default(IntPtr),
 #endif
             bool windowCreation = false,
-            bool useShellExecute = false
+            bool useShellExecution = false
         )
         {
             TargetFilePath = targetFilePath;
@@ -173,7 +173,7 @@ namespace CliRunner
             Arguments = arguments ?? string.Empty;
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
-            Credential = credentials ?? UserCredential.Null;
+            Credential = credential ?? UserCredential.Null;
 
             ResultValidation = commandResultValidation;
 
@@ -182,7 +182,7 @@ namespace CliRunner
             StandardError = standardError ?? StreamReader.Null;
 
             ProcessorAffinity = processorAffinity;
-            UseShellExecution = useShellExecute;
+            UseShellExecution = useShellExecution;
             WindowCreation = windowCreation;
             
             StandardInputEncoding = standardInputEncoding ?? Encoding.Default;
