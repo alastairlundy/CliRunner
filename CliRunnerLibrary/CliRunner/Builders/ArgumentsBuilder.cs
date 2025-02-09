@@ -94,7 +94,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
                 }
             }
 
-            if (_buffer.Length < int.MaxValue)
+            if (_buffer.Length < _buffer.MaxCapacity && _buffer.Length < int.MaxValue)
             {
                 if (escapeSpecialCharacters)
                 {
