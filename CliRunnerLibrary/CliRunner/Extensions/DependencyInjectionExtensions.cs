@@ -10,8 +10,7 @@
 using System;
 
 using CliRunner.Abstractions;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
+
 using Microsoft.Extensions.DependencyInjection;
 // ReSharper disable RedundantAssignment
 // ReSharper disable UnusedMember.Global
@@ -26,10 +25,9 @@ public static class DependencyInjectionExtensions
     /// <param name="services">The service collection to add to.</param>
     /// <param name="lifetime">The service lifetime to use if specified; Singleton otherwise.</param>
     /// <returns>The updated service collection with the added CliRunner dependency injection.</returns>
-    public static IServiceCollection UseCliRunner(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+    public static IServiceCollection UseCliRunner(this IServiceCollection services,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
-        services.Add(lifetime, typeof(IArgumentsBuilder), typeof(ArgumentsBuilder));
-        services.Add(lifetime, typeof(ICommandBuilder), typeof(CommandBuilder));
         services.Add(lifetime, typeof(IProcessCreator), typeof(ProcessCreator));
         services.Add(lifetime, typeof(ICommandPipeHandler), typeof(CommandPipeHandler));
         services.Add(lifetime, typeof(ICommandRunner), typeof(CommandRunner));
