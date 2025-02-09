@@ -143,7 +143,6 @@ public class ProcessCreator : IProcessCreator
 
             if (commandConfiguration.RequiresAdministrator == true)
             {
-
                 if (OperatingSystem.IsWindows())
                 {
                     output.Verb = "runas";
