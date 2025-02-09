@@ -33,7 +33,6 @@
     SOFTWARE.
 */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -105,9 +104,9 @@ public interface ICommandConfiguration
         public StreamReader StandardError { get; }
 
         /// <summary>
-        /// The processor threads to be used for executing the Command.
+        /// The resource policy to use for executing the Command.
         /// </summary>
-        public IntPtr ProcessorAffinity { get; }
+        public ProcessResourcePolicy ResourcePolicy { get; }
 
         /// <summary>
         /// Whether to use Shell Execution or not.

@@ -7,7 +7,6 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -43,7 +42,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
     /// <param name="standardInputEncoding">The encoding for the standard input stream.</param>
     /// <param name="standardOutputEncoding">The encoding for the standard output stream.</param>
     /// <param name="standardErrorEncoding">The encoding for the standard error stream.</param>
-    /// <param name="processorAffinity">The processor affinity for the command.</param>
+    /// <param name="processResourcePolicy">The Process Resource Policy to be used for the command.</param>
     /// <param name="useShellExecution">Indicates whether to use the shell to execute the command.</param>
     /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
     /// <remarks>Do not use directly unless you are creating a specialized Command, such as one that will be run through an intermediary like Powershell or Cmd.</remarks>
@@ -53,7 +52,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
         StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
         Encoding standardInputEncoding = null, Encoding standardOutputEncoding = null,
-        Encoding standardErrorEncoding = null, IntPtr processorAffinity = default(IntPtr),
+        Encoding standardErrorEncoding = null, ProcessResourcePolicy processResourcePolicy = null,
         bool useShellExecution = false, bool windowCreation = false)
     {
         TargetFilePath = targetFilePath;
@@ -74,9 +73,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         StandardOutputEncoding = standardOutputEncoding ?? Encoding.Default;
         StandardErrorEncoding = standardErrorEncoding ?? Encoding.Default;
         
-#pragma warning disable CA1416
-        ProcessorAffinity = processorAffinity;
-#pragma warning restore CA1416
+        ResourcePolicy = processResourcePolicy;
     }
 
         /// <summary>
@@ -143,7 +140,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
 #endif
-        public IntPtr ProcessorAffinity { get; }
+        public ProcessResourcePolicy ResourcePolicy { get; }
 
         /// <summary>
         /// Whether to use Shell Execution or not.

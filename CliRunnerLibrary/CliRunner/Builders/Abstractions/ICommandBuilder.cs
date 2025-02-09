@@ -121,11 +121,11 @@ public interface ICommandBuilder
     ICommandBuilder WithStandardErrorPipe(StreamReader target);
     
     /// <summary>
-    /// Sets the Processor Affinity for this command.
+    /// Sets the Process Resource Policy to be used for this command.
     /// </summary>
-    /// <param name="processorAffinity">The processor affinity to use.</param>
-    /// <returns>The new CommandBuilder with the specified Processor Affinity.</returns>
-    ICommandBuilder WithProcessorAffinity(IntPtr processorAffinity);
+    /// <param name="processResourcePolicy">The process resource policy to use.</param>
+    /// <returns>The new CommandBuilder with the specified Process Resource Policy.</returns>
+    ICommandBuilder WithProcessResourcePolicy(ProcessResourcePolicy processResourcePolicy);
     
     /// <summary>
     /// Enables or disables command execution via Shell Execution.

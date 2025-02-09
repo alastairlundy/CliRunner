@@ -36,16 +36,8 @@ public class CommandBuilderTests
                 Assert.Equal(builtCommand.StandardError, StreamReader.Null);
 
                 Assert.Equal(builtCommand.Credential, UserCredential.Null);
-
-#if NET6_0_OR_GREATER && !NET9_0_OR_GREATER
-        IntPtr processorAffinity = 0;
-#else
-                IntPtr processorAffinity = default(IntPtr);
-#endif
-
-#pragma warning disable CA1416
-                Assert.Equal(processorAffinity, builtCommand.ProcessorAffinity);
-#pragma warning restore CA1416
+                
+                Assert.Equal(ProcessResourcePolicy.Default, builtCommand.ResourcePolicy);
 
                 Assert.False(builtCommand.WindowCreation);
                 Assert.False(builtCommand.UseShellExecution);

@@ -104,7 +104,7 @@ namespace CliRunner
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
 #endif
-        public IntPtr ProcessorAffinity { get; protected set; }
+        public ProcessResourcePolicy ResourcePolicy { get; protected set; }
 
         /// <summary>
         /// Whether to use Shell Execution or not.
@@ -142,7 +142,7 @@ namespace CliRunner
         /// <param name="standardOutput">The standard output destination to be used (if specified).</param>
         /// <param name="standardError">The standard error destination to be used (if specified).</param>
         /// <param name="standardErrorEncoding"></param>
-        /// <param name="processorAffinity">The processor affinity to be used (if specified).</param>
+        /// <param name="processResourcePolicy">The processor affinity to be used (if specified).</param>
         /// <param name="windowCreation">Whether to enable or disable Window Creation by the Command's Process.</param>
         /// <param name="useShellExecution">Whether to enable or disable executing the Command through Shell Execution.</param>
         /// <param name="standardInputEncoding"></param>
@@ -159,11 +159,7 @@ namespace CliRunner
             Encoding standardInputEncoding = null,
             Encoding standardOutputEncoding = null,
             Encoding standardErrorEncoding = null,
-#if NET6_0_OR_GREATER && !NET9_0_OR_GREATER
-            IntPtr processorAffinity = 0,
-#else
-             IntPtr processorAffinity = default(IntPtr),
-#endif
+            ProcessResourcePolicy processResourcePolicy = null,
             bool windowCreation = false,
             bool useShellExecution = false
         )
@@ -181,7 +177,7 @@ namespace CliRunner
             StandardOutput = standardOutput ?? StreamReader.Null;
             StandardError = standardError ?? StreamReader.Null;
 
-            ProcessorAffinity = processorAffinity;
+            ResourcePolicy = processResourcePolicy;
             UseShellExecution = useShellExecution;
             WindowCreation = windowCreation;
             
@@ -211,7 +207,7 @@ namespace CliRunner
             StandardOutputEncoding = commandConfiguration.StandardOutputEncoding ?? Encoding.Default;
             StandardErrorEncoding = commandConfiguration.StandardErrorEncoding ?? Encoding.Default;
             
-            ProcessorAffinity = commandConfiguration.ProcessorAffinity;
+            ResourcePolicy = commandConfiguration.ResourcePolicy;
             WindowCreation = commandConfiguration.WindowCreation;
             UseShellExecution = commandConfiguration.UseShellExecution;
         }
@@ -253,7 +249,7 @@ namespace CliRunner
                    && Equals(StandardInput, other.StandardInput)
                    && Equals(StandardOutput, other.StandardOutput)
                    && Equals(StandardError, other.StandardError)
-                   && ProcessorAffinity == other.ProcessorAffinity
+                   && ResourcePolicy == other.ResourcePolicy
                    && UseShellExecution == other.UseShellExecution;
         }
 
@@ -296,7 +292,7 @@ namespace CliRunner
                 hashCode = (hashCode * 397) ^ (StandardInput != null ? StandardInput.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (StandardOutput != null ? StandardOutput.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (StandardError != null ? StandardError.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ ProcessorAffinity.GetHashCode();
+                hashCode = (hashCode * 397) ^ ResourcePolicy.GetHashCode();
                 hashCode = (hashCode * 397) ^ UseShellExecution.GetHashCode();
                 return hashCode;
             }

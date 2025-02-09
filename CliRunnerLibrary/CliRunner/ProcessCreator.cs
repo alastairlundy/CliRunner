@@ -39,7 +39,7 @@ public class ProcessCreator : IProcessCreator
         /// Creates a process with the specified process start information.
         /// </summary>
         /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
-        /// <param name="processorAffinity">The processor affinity to use when creating the Process.</param>
+        /// <param name="processResourcePolicy">The process resource policy to use when creating the Process.</param>
         /// <returns>The newly created Process with the specified start information.</returns>
         /// <exception cref="ArgumentException">Thrown if the Process Start Info's File Name is null or empty.</exception>
 #if NET5_0_OR_GREATER
@@ -54,7 +54,7 @@ public class ProcessCreator : IProcessCreator
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public Process CreateProcess(ProcessStartInfo processStartInfo, IntPtr processorAffinity = default)
+        public Process CreateProcess(ProcessStartInfo processStartInfo, ProcessResourcePolicy processResourcePolicy)
         {
             if (string.IsNullOrEmpty(processStartInfo.FileName))
             {
@@ -64,12 +64,10 @@ public class ProcessCreator : IProcessCreator
             Process output = new Process
             {
                 StartInfo = processStartInfo,
+                ProcessorAffinity = processResourcePolicy.ProcessorAffinity,
+                PriorityClass = processResourcePolicy.PriorityClass,
+                PriorityBoostEnabled = processResourcePolicy.EnablePriorityBoost,
             };
-            
-            if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
-            {
-                output.ProcessorAffinity = processorAffinity;
-            }
             
             return output;
         }
@@ -141,7 +139,7 @@ public class ProcessCreator : IProcessCreator
             {
                 output.Arguments = commandConfiguration.Arguments;
             }
-
+            
             if (commandConfiguration.RequiresAdministrator == true)
             {
                 if (OperatingSystem.IsWindows())

@@ -137,7 +137,7 @@ public class CommandRunner : ICommandRunner
 #endif
         public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
         {
-            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command));
+            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command), command.ResourcePolicy);
             
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
@@ -170,7 +170,7 @@ public class CommandRunner : ICommandRunner
             CancellationToken cancellationToken = default)
         {
             Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command,
-                true, true));
+                true, true), command.ResourcePolicy);
 
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             

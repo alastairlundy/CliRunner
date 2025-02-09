@@ -77,7 +77,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
 
@@ -109,7 +109,7 @@ public class CommandBuilder : ICommandBuilder
             _commandConfiguration.StandardInputEncoding,
             _commandConfiguration.StandardOutputEncoding,
             _commandConfiguration.StandardErrorEncoding,
-            _commandConfiguration.ProcessorAffinity,
+            _commandConfiguration.ResourcePolicy,
             _commandConfiguration.WindowCreation,
             _commandConfiguration.UseShellExecution));
     }
@@ -135,7 +135,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
 
@@ -160,7 +160,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
     
@@ -185,7 +185,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
 
@@ -226,7 +226,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
 
@@ -251,7 +251,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
 
@@ -284,7 +284,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
 
@@ -335,7 +335,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
 
@@ -370,7 +370,7 @@ public class CommandBuilder : ICommandBuilder
                     _commandConfiguration.StandardInputEncoding,
                     _commandConfiguration.StandardOutputEncoding,
                     _commandConfiguration.StandardErrorEncoding,
-                    _commandConfiguration.ProcessorAffinity,
+                    _commandConfiguration.ResourcePolicy,
                     _commandConfiguration.WindowCreation,
                     _commandConfiguration.UseShellExecution));
         }
@@ -407,7 +407,7 @@ public class CommandBuilder : ICommandBuilder
                     _commandConfiguration.StandardInputEncoding,
                     _commandConfiguration.StandardOutputEncoding,
                     _commandConfiguration.StandardErrorEncoding,
-                    _commandConfiguration.ProcessorAffinity,
+                    _commandConfiguration.ResourcePolicy,
                     _commandConfiguration.WindowCreation,
                     _commandConfiguration.UseShellExecution));
         }
@@ -444,17 +444,17 @@ public class CommandBuilder : ICommandBuilder
                     _commandConfiguration.StandardInputEncoding,
                     _commandConfiguration.StandardOutputEncoding,
                     _commandConfiguration.StandardErrorEncoding,
-                    _commandConfiguration.ProcessorAffinity,
+                    _commandConfiguration.ResourcePolicy,
                     _commandConfiguration.WindowCreation,
                     _commandConfiguration.UseShellExecution));
         }
     }
 
     /// <summary>
-    /// Sets the Processor Affinity for this command.
+    /// Sets the Process Resource Policy to be used for this command.
     /// </summary>
-    /// <param name="processorAffinity">The processor affinity to use.</param>
-    /// <returns>The new CommandBuilder with the specified Processor Affinity.</returns>
+    /// <param name="processResourcePolicy">The process resource policy to use.</param>
+    /// <returns>The new CommandBuilder with the specified Process Resource Policy.</returns>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]
@@ -463,7 +463,7 @@ public class CommandBuilder : ICommandBuilder
     [UnsupportedOSPlatform("android")]
 #endif
     [Pure]
-    public ICommandBuilder WithProcessorAffinity(IntPtr processorAffinity) =>
+    public ICommandBuilder WithProcessResourcePolicy(ProcessResourcePolicy processResourcePolicy) =>
         new CommandBuilder(
             new Command(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
@@ -478,7 +478,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                processorAffinity,
+                processResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 _commandConfiguration.UseShellExecution));
     
@@ -506,7 +506,7 @@ public class CommandBuilder : ICommandBuilder
                 _commandConfiguration.StandardInputEncoding,
                 _commandConfiguration.StandardOutputEncoding,
                 _commandConfiguration.StandardErrorEncoding,
-                _commandConfiguration.ProcessorAffinity,
+                _commandConfiguration.ResourcePolicy,
                 _commandConfiguration.WindowCreation,
                 useShellExecution));
 
@@ -530,7 +530,7 @@ public class CommandBuilder : ICommandBuilder
            _commandConfiguration.StandardInputEncoding,
            _commandConfiguration.StandardOutputEncoding,
            _commandConfiguration.StandardErrorEncoding,
-           _commandConfiguration.ProcessorAffinity,
+           _commandConfiguration.ResourcePolicy,
             enableWindowCreation,
            _commandConfiguration.UseShellExecution));
     
@@ -559,7 +559,7 @@ public class CommandBuilder : ICommandBuilder
             standardInputEncoding,
             standardOutputEncoding,
             standardErrorEncoding,
-            _commandConfiguration.ProcessorAffinity,
+            _commandConfiguration.ResourcePolicy,
             _commandConfiguration.WindowCreation,
             _commandConfiguration.UseShellExecution));
 
