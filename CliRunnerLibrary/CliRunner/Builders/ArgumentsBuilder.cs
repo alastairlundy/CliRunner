@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Extensions;
+using CliRunner.Internal.Localizations;
 
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable HeapView.ObjectAllocation.Evident
@@ -77,18 +78,36 @@ public class ArgumentsBuilder : IArgumentsBuilder
     /// Appends a string value to the arguments builder.
     /// </summary>
     /// <param name="value">The string value to append.</param>
-    /// <param name="escape">True to escape special characters in the value, false otherwise.</param>
+    /// <param name="escapeSpecialCharacters">True to escape special characters in the value, false otherwise.</param>
     /// <returns>A new instance of the IArgumentsBuilder with the updated arguments.</returns>
     [Pure]
-    public IArgumentsBuilder Add(string value, bool escape)
+    public IArgumentsBuilder Add(string value, bool escapeSpecialCharacters)
     {
         if (IsValidArgument(value) == true)
         {
-            _buffer.Append(value);
-
-            if (escape)
+            if (_buffer.Length > 0 && _buffer.Length < int.MaxValue)
             {
-                _buffer.Append(EscapeSpecialChars(value));
+                // Add a space if it's missing before adding the new string.
+                if (_buffer[_buffer.Length - 1] != ' ')
+                {
+                    _buffer.Append(' ');
+                }
+            }
+
+            if (_buffer.Length < int.MaxValue)
+            {
+                if (escapeSpecialCharacters)
+                {
+                    _buffer.Append(EscapeSpecialChars(value));
+                }
+                else
+                {
+                    _buffer.Append(value);
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException(Resources.Exceptions_ArgumentBuilder_Buffer_MaximumSize.Replace("{x}", int.MaxValue.ToString()));
             }
             
             if (_argumentValidationLogic != null)
@@ -102,7 +121,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
         }
         else
         {
-            return this;   
+            return this;
         }
     }
 
@@ -134,28 +153,17 @@ public class ArgumentsBuilder : IArgumentsBuilder
     public IArgumentsBuilder Add(IEnumerable<string> values, bool escapeSpecialChars)
     {
         string[] enumerable = values as string[] ?? values.ToArray();
-        
-            for(int index = 0; index < enumerable.Length; index++)
-            {
-                if (IsValidArgument(enumerable[index]) == true)
-                {
-                    _buffer.Append(enumerable[index]);
-            
-                    if (escapeSpecialChars)
-                    {
-                        _buffer.Append(EscapeSpecialChars(enumerable[index]));
-                    }
-                }
-            }
 
-            if (_argumentValidationLogic != null)
-            {
-                return new ArgumentsBuilder(_buffer, _argumentValidationLogic);
-            }
-            else
-            {
-                return new ArgumentsBuilder(_buffer);   
-            }
+        if (escapeSpecialChars)
+        {
+            enumerable = enumerable.Select(x => EscapeSpecialChars(x)).ToArray();
+        }
+        
+        enumerable = enumerable.Where(x => IsValidArgument(x)).ToArray();
+        
+        string joinedValues = string.Join(" ", enumerable);
+        
+        return Add(joinedValues, escapeSpecialChars);
     }
 
     /// <summary>
@@ -260,32 +268,25 @@ public class ArgumentsBuilder : IArgumentsBuilder
     {
         IFormattable[] formattable = values as IFormattable[] ?? values.ToArray();
         
-            foreach (IFormattable val in formattable)
-            {
-                string newVal = (string)formatProvider.GetFormat(val.GetType())!;
+        List<string> strings = new List<string>();
+        
+        foreach (IFormattable val in formattable)
+        {
+            string newVal = (string)formatProvider.GetFormat(val.GetType())!;
            
-                newVal = val.ToString(newVal, formatProvider);
+            newVal = val.ToString(newVal, formatProvider);
 
-                if (IsValidArgument(newVal) == true)
-                {
-                    _buffer.Append(newVal);
-
-                    if (escapeSpecialChars)
-                    {
-                        _buffer.Append(EscapeSpecialChars(newVal));
-                    }
-                }
-            }
-
-            if (_argumentValidationLogic != null)
+            if (escapeSpecialChars)
             {
-                return new ArgumentsBuilder(_buffer, _argumentValidationLogic); 
+                strings.Add(EscapeSpecialChars(newVal));
             }
             else
             {
-                return new ArgumentsBuilder(_buffer);
+                strings.Add(newVal);
             }
-               
+        }
+
+        return Add(strings, escapeSpecialChars);
     }
 
     /// <summary>
@@ -298,29 +299,16 @@ public class ArgumentsBuilder : IArgumentsBuilder
     [Pure]
     public IArgumentsBuilder Add(IEnumerable<IFormattable> values, CultureInfo cultureInfo, bool escapeSpecialChars)
     {
+        List<string> strings = new List<string>();
+        
         foreach (IFormattable val in values)
         {
             string newVal = val.ToString((string)cultureInfo.GetFormat(val.GetType())!, DefaultFormatProvider);
 
-            if (IsValidArgument(newVal) == true)
-            {
-                _buffer.Append(newVal);
-
-                if (escapeSpecialChars)
-                {
-                    _buffer.Append(EscapeSpecialChars(newVal));
-                }
-            }
+            strings.Add(escapeSpecialChars ? EscapeSpecialChars(newVal) : newVal);
         }
-
-        if (_argumentValidationLogic != null)
-        {
-            return new ArgumentsBuilder(_buffer, _argumentValidationLogic);
-        }
-        else
-        {
-            return new ArgumentsBuilder(_buffer);   
-        }
+        
+        return Add(strings, escapeSpecialChars);
     }
 
     /// <summary>

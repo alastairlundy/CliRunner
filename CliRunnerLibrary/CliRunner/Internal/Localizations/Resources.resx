@@ -57,4 +57,7 @@
     <data name="CommandBuilder.ArgumentConflict.ShellExecution.Error" xml:space="preserve">
         <value>UseShellExecution value of true conflicts with setting of Standard Error to a non-null value. See https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror</value>
     </data>
+    <data name="Exceptions.ArgumentBuilder.Buffer.MaximumSize" xml:space="preserve">
+        <value>ArgumentBuilder buffer size cannot be added to as it is the maximum size of {x}</value>
+    </data>
 </root>

@@ -9,9 +9,12 @@ public class ArgumentsBuilderTests
     public void BuilderChainingTest()
     {
         IArgumentsBuilder argumentsBuilder = new ArgumentsBuilder()
-            .Add("-v");
+            .Add("new")
+            .Add(["list", "--help"]);
 
-        Assert.True(string.IsNullOrEmpty(argumentsBuilder.Build()));
+        string expected = "new list --help";
+        
+        Assert.Equal(expected, argumentsBuilder.Build());
     }
     
      

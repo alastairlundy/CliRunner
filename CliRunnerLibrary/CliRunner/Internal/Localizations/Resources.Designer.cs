@@ -141,6 +141,15 @@ namespace CliRunner.Internal.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ArgumentBuilder buffer size cannot be added to as it is the maximum size of {x}.
+        /// </summary>
+        internal static string Exceptions_ArgumentBuilder_Buffer_MaximumSize {
+            get {
+                return ResourceManager.GetString("Exceptions.ArgumentBuilder.Buffer.MaximumSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The executed command was not succesful and returned an exit code of {x}..
         /// </summary>
         internal static string Exceptions_CommandNotSuccessful_Generic {
