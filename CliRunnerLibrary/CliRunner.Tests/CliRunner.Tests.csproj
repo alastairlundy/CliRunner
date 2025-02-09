@@ -32,6 +32,7 @@
       <Folder Include="Extensibility\" />
       <Folder Include="Extensions\" />
       <Folder Include="Specializations\" />
+      <Folder Include="TestData\" />
     </ItemGroup>
 
     <ItemGroup>
