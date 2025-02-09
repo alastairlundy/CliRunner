@@ -83,7 +83,7 @@ public interface ICommandBuilder
     /// </summary>
     /// <param name="credentials">The credentials to be used.</param>
     /// <returns>The new CommandBuilder with the specified Credentials.</returns>
-    ICommandBuilder WithCredential(UserCredential credentials);
+    ICommandBuilder WithUserCredential(UserCredential credentials);
     
     /// <summary>
     /// Sets the credentials for the Command to be executed.

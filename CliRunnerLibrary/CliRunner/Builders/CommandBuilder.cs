@@ -269,7 +269,7 @@ public class CommandBuilder : ICommandBuilder
     [UnsupportedOSPlatform("android")]
 #endif
     [Pure]
-    public ICommandBuilder WithCredential(UserCredential credentials) =>
+    public ICommandBuilder WithUserCredential(UserCredential credentials) =>
         new CommandBuilder(
             new Command(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
@@ -311,7 +311,7 @@ public class CommandBuilder : ICommandBuilder
 
         configure(credentialBuilder);
 
-        return WithCredential(credentialBuilder.Build());
+        return WithUserCredential(credentialBuilder.Build());
     }
 
     /// <summary>
