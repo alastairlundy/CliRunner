@@ -128,12 +128,12 @@ public class ProcessCreator : IProcessCreator
             ProcessStartInfo output = new ProcessStartInfo()
             {
                 FileName = commandConfiguration.TargetFilePath,
-                WorkingDirectory = commandConfiguration.WorkingDirectoryPath,
+                WorkingDirectory = commandConfiguration.WorkingDirectoryPath ?? Directory.GetCurrentDirectory(),
                 UseShellExecute = commandConfiguration.UseShellExecution,
                 CreateNoWindow = commandConfiguration.WindowCreation,
-                RedirectStandardInput = commandConfiguration.StandardInput != null,
-                RedirectStandardOutput = redirectStandardOutput,
-                RedirectStandardError = redirectStandardError,
+                RedirectStandardInput = commandConfiguration.StandardInput != StreamWriter.Null && commandConfiguration.StandardInput != StreamWriter.Null,
+                RedirectStandardOutput = redirectStandardOutput || commandConfiguration.StandardOutput != StreamReader.Null,
+                RedirectStandardError = redirectStandardError || commandConfiguration.StandardError != StreamReader.Null,
             };
 
             if (string.IsNullOrEmpty(commandConfiguration.Arguments) == false)
@@ -151,19 +151,6 @@ public class ProcessCreator : IProcessCreator
                 {
                     output.Verb = "sudo";
                 }
-            }
-
-            if (commandConfiguration.StandardInput != StreamWriter.Null)
-            {
-                output.RedirectStandardInput = true;
-            }
-            if (commandConfiguration.StandardOutput != StreamReader.Null)
-            {
-                output.RedirectStandardOutput = true;
-            }
-            if (commandConfiguration.StandardError != StreamReader.Null)
-            {
-                output.RedirectStandardError = true;
             }
 
             if (commandConfiguration.Credential != null)
