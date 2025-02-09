@@ -4,7 +4,7 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <TargetFrameworks>net8.0;netstandard2.0;netstandard2.1;net9.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>13</LangVersion>
         <Title>CliRunner</Title>
         <Authors>AlastairLundy</Authors>
         <Description>CliRunner is a .NET Library for interacting with Command Line Interfaces, CliRunner is a library for interacting with Command Line Interfaces and wrapping around executables.</Description>
@@ -13,28 +13,32 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 0.12.0
+        <PackageReleaseNotes>## Changes since 1.0.0 Alpha 1
 
 ### Breaking Changes
-* Renamed ``CredentialsBuilder`` to ``UserCredentialBuilder``
-* Moved Process Creation code out of ``CommandRunner`` and ``ICommandRunner`` to a new class and interface respectively (``ProcessCreator`` and ``IProcessCreator``)
-* Renamed ``CommandBuilder``'s ``ToCommand`` method to ``Build``
-* Renamed ``CommandBuilder``'s ``ToConfiguration`` method to ``BuildConfiguration``
+* Moved ``ICommandBuilder`` to the ``CliRunner.Builders.Abstractions`` namespace (and corresponding folder) from ``CliRunner.Abstractions`` namespace.
+* Renamed ``ICommandBuilder`` and ``CommandBuilder``  ``WithCredentials`` builder method to ``WithCredential``
+* Renamed ``Credentials`` property name to ``Credential`` in relevant classes
+* Changed ``ArgumentsBuilder`` methods to return ``IArgumentsBuilder`` instead of ``ArgumentsBuilder``
+* Changed ``EnvironmentVariablesBuilder`` methods to return ``IEnvironmentVariablesBuilder`` instead of ``EnvironmentVariablesBuilder``
+* Removed ``WithArgumentValidation`` method from  ``ArgumentsBuilder`` - Argument Validation must now be set when instantiating the ``ArgumentsBuilder``.
+* Renamed ``Escape`` static ``ArgumentsBuilder`` method to ``EscapeSpecialChars``
+* Removed builder interfaces from dependency injection extension method since it's setup is unnecessary.
 
-### Non-Breaking Changes
-* Added missing xml doc comments
-* Made ``BufferedCommandResult`` implement ``IEquatable&lt;T&gt;``
-* Tweaked ``UserCredentialBuilder`` to internally use ``UserCredential`` model rather than separated components of ``UserCredential``
-* Improved robustness of Target File Path checks during Process creation
-* Added the ability for ``ArgumentsBuilder`` to use argument validation logic to determine whether to add arguments or not - This can be configured from the constructor and is optional
-* ``CommandBuilder`` now throws an exception if ``UseShellExecution`` is set to true AND Standard Input, Standard Output, or Standard Error are set to a non-null value.
+### Non-breaking Changes
+* Added ``IArgumentsBuilder`` interface that ``ArgumentsBuilder`` now inherits from - No new methods have been added to ``ArgumentsBuilder``.
+* Added ``IEnvironmentVariablesBuilder`` interface that ``EnvironmentVariablesBuilder`` now inherits from - No new methods have been added to ``EnvironmentVariablesBuilder``
+* Simplified OS Polyfill usage code
+* Added ``AddUserCredential`` ProcessStartInfo and Process extension methods - This is now used within ``ProcessCreator`` to pass a UserCredential to the process start info if it is not null
+* Renamed parameters in ``ArgumentsBuilder`` regarding escaping special characters
 
 ### Bug Fixes
-* Fixed Process not being disposed of properly by CommandRunner after Command execution</PackageReleaseNotes>
+* Fixed an issue where a ``UserCredential`` wasn't loaded by ``ProcessCreator`` if ``LoadUserProfile`` was set to false.
+* Fixed an issue where Argument Validation logic wasn't passed as a parameter in returned new ``ArgumentsBuilder`` instances in builder methods.</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-alpha.1</PackageVersion>
+        <PackageVersion>1.0.0-alpha.2</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
