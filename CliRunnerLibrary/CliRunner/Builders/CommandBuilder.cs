@@ -90,12 +90,10 @@ public class CommandBuilder : ICommandBuilder
     [Pure]
     public ICommandBuilder WithArguments(IEnumerable<string> arguments, bool escapeArguments)
     {
-        string args = string.Join(" ", arguments);
-
-        if (escapeArguments)
-        {
-            args = ArgumentsBuilder.EscapeSpecialChars(args);
-        }
+        IArgumentsBuilder argumentsBuilder = new ArgumentsBuilder();
+        argumentsBuilder.Add(arguments, escapeArguments);
+        
+        string args = argumentsBuilder.ToString();
 
         return new CommandBuilder(
             new Command(_commandConfiguration.TargetFilePath,

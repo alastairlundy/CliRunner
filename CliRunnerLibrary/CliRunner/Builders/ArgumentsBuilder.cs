@@ -100,7 +100,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
             {
                 if (escapeSpecialCharacters)
                 {
-                    _buffer.Append(EscapeSpecialChars(value));
+                    _buffer.Append(EscapeSpecialCharacters(value));
                 }
                 else
                 {
@@ -158,7 +158,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
 
         if (escapeSpecialChars)
         {
-            enumerable = enumerable.Select(x => EscapeSpecialChars(x)).ToArray();
+            enumerable = enumerable.Select(x => EscapeSpecialCharacters(x)).ToArray();
         }
         
         enumerable = enumerable.Where(x => IsValidArgument(x)).ToArray();
@@ -280,7 +280,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
 
             if (escapeSpecialChars)
             {
-                strings.Add(EscapeSpecialChars(newVal));
+                strings.Add(EscapeSpecialCharacters(newVal));
             }
             else
             {
@@ -307,7 +307,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
         {
             string newVal = val.ToString((string)cultureInfo.GetFormat(val.GetType())!, DefaultFormatProvider);
 
-            strings.Add(escapeSpecialChars ? EscapeSpecialChars(newVal) : newVal);
+            strings.Add(escapeSpecialChars ? EscapeSpecialCharacters(newVal) : newVal);
         }
         
         return Add(strings, escapeSpecialChars);
@@ -354,7 +354,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
     /// <param name="argument">The string to escape.</param>
     /// <returns>The escaped string.</returns>
     [Pure]
-    public static string EscapeSpecialChars(string argument)
+    public string EscapeSpecialCharacters(string argument)
     {
         return argument.Replace("\\", "\\\\")
             .Replace("\n", "\\n")
