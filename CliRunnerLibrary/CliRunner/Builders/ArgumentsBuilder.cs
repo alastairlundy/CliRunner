@@ -19,6 +19,8 @@ using System.Text;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Extensions;
 using CliRunner.Internal.Localizations;
+// ReSharper disable UseIndexFromEndExpression
+// ReSharper disable ConvertClosureToMethodGroup
 
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable HeapView.ObjectAllocation.Evident
@@ -85,7 +87,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
     {
         if (IsValidArgument(value) == true)
         {
-            if (_buffer.Length > 0 && _buffer.Length < int.MaxValue)
+            if (_buffer.Length is > 0 and < int.MaxValue)
             {
                 // Add a space if it's missing before adding the new string.
                 if (_buffer[_buffer.Length - 1] != ' ')
