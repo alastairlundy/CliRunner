@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 using AlastairLundy.Extensions.Collections.Generics;
+using CliRunner.Builders.Abstractions;
 
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 // ReSharper disable RedundantExplicitArrayCreation
@@ -24,7 +25,7 @@ namespace CliRunner.Builders;
 /// <summary>
 /// A class that provides builder methods for constructing Environment Variables.
 /// </summary>
-public class EnvironmentVariablesBuilder
+public class EnvironmentVariablesBuilder : IEnvironmentVariablesBuilder
 {
     private readonly Dictionary<string, string> _environmentVariables;
 
@@ -50,9 +51,9 @@ public class EnvironmentVariablesBuilder
     /// </summary>
     /// <param name="name">The name of the environment variable to set.</param>
     /// <param name="value">The value of the environment variable to set.</param>
-    /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
+    /// <returns>A new instance of the IEnvironmentVariablesBuilder with the updated environment variables.</returns>
     [Pure]
-    public EnvironmentVariablesBuilder Set(string name, string value){
+    public IEnvironmentVariablesBuilder Set(string name, string value){
         Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal) { { name, value } };
 
         return new EnvironmentVariablesBuilder(output);
@@ -62,9 +63,9 @@ public class EnvironmentVariablesBuilder
     /// Sets multiple environment variables.
     /// </summary>
     /// <param name="variables">The environment variables to set.</param>
-    /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
+    /// <returns>A new instance of the IEnvironmentVariablesBuilder with the updated environment variables.</returns>
     [Pure]
-    public EnvironmentVariablesBuilder Set(IEnumerable<KeyValuePair<string, string>> variables)
+    public IEnvironmentVariablesBuilder Set(IEnumerable<KeyValuePair<string, string>> variables)
     {
         Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal);
         output.AddRange(variables);
@@ -76,9 +77,9 @@ public class EnvironmentVariablesBuilder
     /// Sets multiple environment variables from a read-only dictionary.
     /// </summary>
     /// <param name="variables">The read-only dictionary of environment variables to set.</param>
-    /// <returns>A new instance of the EnvironmentVariablesBuilder with the updated environment variables.</returns>
+    /// <returns>A new instance of the IEnvironmentVariablesBuilder with the updated environment variables.</returns>
     [Pure]
-    public EnvironmentVariablesBuilder Set(IReadOnlyDictionary<string, string> variables)
+    public IEnvironmentVariablesBuilder Set(IReadOnlyDictionary<string, string> variables)
     {
         Dictionary<string, string> output = new Dictionary<string, string>(_environmentVariables, StringComparer.Ordinal);
         output.AddRange(variables);

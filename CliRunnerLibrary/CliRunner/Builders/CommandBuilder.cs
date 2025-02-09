@@ -197,9 +197,9 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="configure">The environment variables to be configured</param>
     /// <returns>The new CommandBuilder with the specified environment variables.</returns>
     [Pure]
-    public ICommandBuilder WithEnvironmentVariables(Action<EnvironmentVariablesBuilder> configure)
+    public ICommandBuilder WithEnvironmentVariables(Action<IEnvironmentVariablesBuilder> configure)
     {
-        EnvironmentVariablesBuilder environmentVariablesBuilder = new EnvironmentVariablesBuilder()
+        IEnvironmentVariablesBuilder environmentVariablesBuilder = new EnvironmentVariablesBuilder()
             .Set(_commandConfiguration.EnvironmentVariables);
 
         configure(environmentVariablesBuilder);
