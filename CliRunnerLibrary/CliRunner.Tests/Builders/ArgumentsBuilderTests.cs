@@ -1,5 +1,6 @@
 ﻿using CliRunner.Builders;
 using CliRunner.Builders.Abstractions;
+using Xunit;
 
 namespace CliRunner.Tests.Builders;
 
