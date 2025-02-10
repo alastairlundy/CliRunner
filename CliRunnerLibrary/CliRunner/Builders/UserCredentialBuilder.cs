@@ -14,6 +14,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Security;
+using CliRunner.Builders.Abstractions;
+
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 // ReSharper disable PossibleInvalidOperationException
 // ReSharper disable PossibleNullReferenceException
@@ -27,7 +29,7 @@ namespace CliRunner.Builders;
 /// A class that provides builder methods for constructing UserCredentials.
 /// </summary>
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-public class UserCredentialBuilder : IDisposable
+public class UserCredentialBuilder : IUserCredentialBuilder, IDisposable
 {
     private UserCredential? _userCredential;
 
@@ -45,7 +47,7 @@ public class UserCredentialBuilder : IDisposable
     /// <param name="domain">The domain to set.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated domain.</returns>
     [Pure]
-    public UserCredentialBuilder SetDomain(string domain) =>
+    public IUserCredentialBuilder SetDomain(string domain) =>
         new UserCredentialBuilder
         {
            _userCredential = new UserCredential(domain, _userCredential.UserName, _userCredential.Password,
@@ -58,7 +60,7 @@ public class UserCredentialBuilder : IDisposable
     /// <param name="username">The username to set.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated username.</returns>
     [Pure]
-    public UserCredentialBuilder SetUsername(string username) =>
+    public IUserCredentialBuilder SetUsername(string username) =>
         new UserCredentialBuilder
         {
             _userCredential = new UserCredential(_userCredential.Domain, username, _userCredential.Password,
@@ -71,7 +73,7 @@ public class UserCredentialBuilder : IDisposable
     /// <param name="password">The password to set, as a SecureString.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated password.</returns>
     [Pure]
-    public UserCredentialBuilder SetPassword(SecureString password) =>
+    public IUserCredentialBuilder SetPassword(SecureString password) =>
         new UserCredentialBuilder
         {
             _userCredential = new UserCredential(_userCredential.Domain, _userCredential.UserName, password,
@@ -84,7 +86,7 @@ public class UserCredentialBuilder : IDisposable
     /// <param name="loadUserProfile">True to load the user profile, false otherwise.</param>
     /// <returns>A new instance of the CredentialsBuilder with the updated load user profile setting.</returns>
     [Pure]
-    public UserCredentialBuilder LoadUserProfile(bool loadUserProfile) =>
+    public IUserCredentialBuilder LoadUserProfile(bool loadUserProfile) =>
         new UserCredentialBuilder
         {
             _userCredential = new UserCredential(_userCredential.Domain, _userCredential.UserName, _userCredential.Password,

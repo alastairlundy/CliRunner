@@ -84,13 +84,13 @@ public interface ICommandBuilder
     /// <param name="credentials">The credentials to be used.</param>
     /// <returns>The new CommandBuilder with the specified Credentials.</returns>
     ICommandBuilder WithUserCredential(UserCredential credentials);
-    
+
     /// <summary>
     /// Sets the credentials for the Command to be executed.
     /// </summary>
     /// <param name="configure">The CredentialsBuilder configuration.</param>
     /// <returns>The new CommandBuilder with the specified Credentials.</returns>
-    ICommandBuilder WithCredential(Action<UserCredentialBuilder> configure);
+    ICommandBuilder WithCredential(Action<IUserCredentialBuilder> configure);
     
     /// <summary>
     /// Sets the Result Validation whether to throw an exception or not if the Command does not execute successfully.

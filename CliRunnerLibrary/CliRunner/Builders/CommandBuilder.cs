@@ -302,9 +302,9 @@ public class CommandBuilder : ICommandBuilder
     [UnsupportedOSPlatform("freebsd")]
     [UnsupportedOSPlatform("android")]
 #endif
-    public ICommandBuilder WithCredential(Action<UserCredentialBuilder> configure)
+    public ICommandBuilder WithCredential(Action<IUserCredentialBuilder> configure)
     {
-        UserCredentialBuilder credentialBuilder = new UserCredentialBuilder()
+        IUserCredentialBuilder credentialBuilder = new UserCredentialBuilder()
             .SetDomain(_commandConfiguration.Credential.Domain!)
             .SetPassword(_commandConfiguration.Credential.Password!)
             .SetUsername(_commandConfiguration.Credential.UserName!);
