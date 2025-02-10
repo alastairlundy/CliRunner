@@ -8,6 +8,7 @@
    */
 
 using System.Diagnostics;
+using System.Runtime.Versioning;
 
 namespace CliRunner;
 
@@ -40,6 +41,11 @@ public class ProcessResourcePolicy
     /// <summary>
     /// The cores and threads to assign to the Process.
     /// </summary>
+    /// <remarks>Process objects only support Processor Affinity on Windows and Linux operating systems.</remarks>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+#endif
     public nint ProcessorAffinity { get; }
     
     /// <summary>
