@@ -7,13 +7,12 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-using System;
 using System.Diagnostics;
 
 namespace CliRunner;
 
 /// <summary>
-/// 
+/// A class that defines a Process' resource configuration.
 /// </summary>
 public class ProcessResourcePolicy
 {
@@ -34,32 +33,32 @@ public class ProcessResourcePolicy
     }
 
     /// <summary>
-    /// 
+    /// The cores and threads to assign to the Process.
     /// </summary>
-    public IntPtr ProcessorAffinity { get; }
+    public nint ProcessorAffinity { get; }
     
     /// <summary>
-    /// 
+    /// The priority class to assign to the Process.
     /// </summary>
     public ProcessPriorityClass PriorityClass { get; }
 
     /// <summary>
-    /// 
+    /// Whether to enable Priority Boost if/when the main window of the Process enters focus.
     /// </summary>
     public bool EnablePriorityBoost { get; }
     
     /// <summary>
-    /// 
+    /// The Minimum Working Set size to be used for the Process.
     /// </summary>
     public nint? MinWorkingSet { get; }
     
     /// <summary>
-    /// 
+    /// Maximum Working Set size to be used for the Process.
     /// </summary>
     public nint? MaxWorkingSet { get; }
     
     /// <summary>
-    /// 
+    /// Creates a ProcessResourcePolicy with a default configuration.
     /// </summary>
     public static ProcessResourcePolicy Default { get; } = new ProcessResourcePolicy();
 }
