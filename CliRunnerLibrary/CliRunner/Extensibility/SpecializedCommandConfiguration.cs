@@ -8,6 +8,7 @@
  */
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -46,6 +47,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
     /// <param name="useShellExecution">Indicates whether to use the shell to execute the command.</param>
     /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
     /// <remarks>Do not use directly unless you are creating a specialized Command, such as one that will be run through an intermediary like Powershell or Cmd.</remarks>
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public SpecializedCommandConfiguration(string targetFilePath, string arguments = null,
         string workingDirectoryPath = null, bool requiresAdministrator = false,
         IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
