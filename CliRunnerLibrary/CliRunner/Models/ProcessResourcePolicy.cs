@@ -17,8 +17,13 @@ namespace CliRunner;
 public class ProcessResourcePolicy
 {
     /// <summary>
-    /// 
+    /// Instantiates the ProcessResourcePolicy with default values unless specified parameters are provided.
     /// </summary>
+    /// <param name="processorAffinity">The processor affinity to be used for the Process.</param>
+    /// <param name="minWorkingSet">The Minimum Working Set Size for the Process.</param>
+    /// <param name="maxWorkingSet">The Maximum Working Set Size for the Process.</param>
+    /// <param name="priorityClass">The priority class to assign to the Process.</param>
+    /// <param name="enablePriorityBoost">Whether to enable Priority Boost if the process window enters focus.</param>
     public ProcessResourcePolicy(nint processorAffinity = default(nint),
         nint? minWorkingSet = null, 
         nint? maxWorkingSet = null,
