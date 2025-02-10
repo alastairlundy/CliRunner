@@ -18,7 +18,6 @@ using System.IO;
 using System.Text;
 
 using CliRunner.Abstractions;
-using CliRunner.Extensions;
 using CliRunner.Extensions.Processes;
 using CliRunner.Internal.Localizations;
 
@@ -68,6 +67,16 @@ public class ProcessCreator : IProcessCreator
                 PriorityClass = processResourcePolicy.PriorityClass,
                 PriorityBoostEnabled = processResourcePolicy.EnablePriorityBoost,
             };
+
+            if (processResourcePolicy.MinWorkingSet != null)
+            {
+                output.MinWorkingSet = (nint)processResourcePolicy.MinWorkingSet;
+            }
+            
+            if (processResourcePolicy.MaxWorkingSet != null)
+            {
+                output.MaxWorkingSet = (nint)processResourcePolicy.MaxWorkingSet;
+            }
             
             return output;
         }

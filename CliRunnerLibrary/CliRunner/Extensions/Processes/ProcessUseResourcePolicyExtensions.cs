@@ -30,6 +30,16 @@ public static class ProcessUseResourcePolicyExtensions
         {
             process.ProcessorAffinity = policy.ProcessorAffinity;
         }
+
+        if (policy.MinWorkingSet != null)
+        {
+            process.MinWorkingSet = (nint)policy.MinWorkingSet;
+        }
+
+        if (policy.MaxWorkingSet != null)
+        {
+            process.MaxWorkingSet = (nint)policy.MaxWorkingSet;
+        }
         
         process.PriorityClass = policy.PriorityClass;
         process.PriorityBoostEnabled = policy.EnablePriorityBoost;

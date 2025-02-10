@@ -20,10 +20,14 @@ public class ProcessResourcePolicy
     /// <summary>
     /// 
     /// </summary>
-    public ProcessResourcePolicy(IntPtr processorAffinity = default(IntPtr),
+    public ProcessResourcePolicy(nint processorAffinity = default(nint),
+        nint? minWorkingSet = null, 
+        nint? maxWorkingSet = null,
         ProcessPriorityClass priorityClass = ProcessPriorityClass.Normal,
         bool enablePriorityBoost = true)
     {
+        MinWorkingSet = minWorkingSet;
+        MaxWorkingSet = maxWorkingSet;
         ProcessorAffinity = processorAffinity;
         PriorityClass = priorityClass;
         EnablePriorityBoost = enablePriorityBoost;
@@ -43,6 +47,16 @@ public class ProcessResourcePolicy
     /// 
     /// </summary>
     public bool EnablePriorityBoost { get; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public nint? MinWorkingSet { get; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public nint? MaxWorkingSet { get; }
     
     /// <summary>
     /// 
