@@ -49,11 +49,6 @@ public interface IUserCredentialBuilder : IDisposable
     UserCredential Build();
 
     /// <summary>
-    /// Deletes the values of the provided settings.
-    /// </summary>
-    void Clear();
-
-    /// <summary>
     /// Disposes of the provided settings.
     /// </summary>
     new void Dispose();

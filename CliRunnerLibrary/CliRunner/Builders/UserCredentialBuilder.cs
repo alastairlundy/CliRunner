@@ -101,14 +101,6 @@ public class UserCredentialBuilder : IUserCredentialBuilder
     public UserCredential Build() =>
         new UserCredential(_userCredential!.Domain, _userCredential.UserName, _userCredential.Password,
             _userCredential.LoadUserProfile);
-
-    /// <summary>
-    /// Deletes the values of the provided settings.
-    /// </summary>
-    public void Clear()
-    {
-       _userCredential.Dispose();
-    }
         
     /// <summary>
     /// Disposes of the provided settings.
