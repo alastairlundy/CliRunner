@@ -65,12 +65,12 @@ public class ArgumentsBuilder : IArgumentsBuilder
     /// 
     /// </summary>
     /// <param name="buffer"></param>
-    private ArgumentsBuilder(StringBuilder buffer)
+    protected ArgumentsBuilder(StringBuilder buffer)
     {
         _buffer = buffer;
     }
 
-    private ArgumentsBuilder(StringBuilder buffer, Func<string, bool> argumentValidationLogic)
+    protected ArgumentsBuilder(StringBuilder buffer, Func<string, bool> argumentValidationLogic)
     {
         _buffer = buffer;
         _argumentValidationLogic = argumentValidationLogic;

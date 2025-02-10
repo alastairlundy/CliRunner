@@ -51,7 +51,7 @@ public class CommandBuilder : ICommandBuilder
         _commandConfiguration = commandConfiguration;
     }
     
-    private CommandBuilder(Command command)
+    protected CommandBuilder(Command command)
     {
         _commandConfiguration = command;
     }

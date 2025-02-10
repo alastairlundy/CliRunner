@@ -41,7 +41,7 @@ public class EnvironmentVariablesBuilder : IEnvironmentVariablesBuilder
     /// Initializes a new instance of the EnvironmentVariablesBuilder class.
     /// </summary>
     /// <param name="vars">The initial environment variables to use.</param>
-    private EnvironmentVariablesBuilder(IDictionary<string, string> vars)
+    protected EnvironmentVariablesBuilder(IDictionary<string, string> vars)
     {
         _environmentVariables = new Dictionary<string, string>(vars, StringComparer.Ordinal);
     }
