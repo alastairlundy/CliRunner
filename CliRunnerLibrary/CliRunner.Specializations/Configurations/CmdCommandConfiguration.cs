@@ -54,7 +54,7 @@ namespace CliRunner.Specializations.Configurations
         /// <param name="standardInputEncoding">The encoding for the standard input stream.</param>
         /// <param name="standardOutputEncoding">The encoding for the standard output stream.</param>
         /// <param name="standardErrorEncoding">The encoding for the standard error stream.</param>
-        /// <param name="processorAffinity">The processor affinity for the command.</param>
+        /// <param name="processResourcePolicy">The process resource policy for the command.</param>
         /// <param name="useShellExecution">Indicates whether to use the shell to execute the command.</param>
         /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
         public CmdCommandConfiguration(string arguments = null,
@@ -63,12 +63,12 @@ namespace CliRunner.Specializations.Configurations
             CommandResultValidation resultValidation = CommandResultValidation.ExitCodeZero,
             StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
             Encoding standardInputEncoding = default, Encoding standardOutputEncoding = default,
-            Encoding standardErrorEncoding = default, IntPtr processorAffinity = default(IntPtr),
+            Encoding standardErrorEncoding = default, ProcessResourcePolicy processResourcePolicy = null,
             bool useShellExecution = false, bool windowCreation = false) : 
             base("", arguments,
             workingDirectoryPath,
             requiresAdministrator, environmentVariables, credentials, resultValidation, standardInput, standardOutput,
-            standardError, standardInputEncoding, standardOutputEncoding, standardErrorEncoding, processorAffinity,
+            standardError, standardInputEncoding, standardOutputEncoding, standardErrorEncoding, processResourcePolicy,
             useShellExecution, windowCreation)
         {
             
