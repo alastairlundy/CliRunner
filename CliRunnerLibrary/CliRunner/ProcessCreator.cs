@@ -59,24 +59,13 @@ public class ProcessCreator : IProcessCreator
             {
                 throw new ArgumentException(Resources.Process_FileName_Empty);
             }
-            
+
             Process output = new Process
             {
                 StartInfo = processStartInfo,
-                ProcessorAffinity = processResourcePolicy.ProcessorAffinity,
-                PriorityClass = processResourcePolicy.PriorityClass,
-                PriorityBoostEnabled = processResourcePolicy.EnablePriorityBoost,
             };
 
-            if (processResourcePolicy.MinWorkingSet != null)
-            {
-                output.MinWorkingSet = (nint)processResourcePolicy.MinWorkingSet;
-            }
-            
-            if (processResourcePolicy.MaxWorkingSet != null)
-            {
-                output.MaxWorkingSet = (nint)processResourcePolicy.MaxWorkingSet;
-            }
+            output.UseResourcePolicy(processResourcePolicy);
             
             return output;
         }
