@@ -22,10 +22,6 @@ using System.Text;
 using CliRunner.Abstractions;
 using CliRunner.Internal.Localizations;
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
-
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -98,12 +94,8 @@ namespace CliRunner
         public StreamReader StandardError { get; protected set; }
 
         /// <summary>
-        /// The processor threads to be used for executing the Command.
+        /// The Process Resource Policy to be used for executing the Command.
         /// </summary>
-#if NET6_0_OR_GREATER
-        [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")]
-#endif
         public ProcessResourcePolicy ResourcePolicy { get; protected set; }
 
         /// <summary>
@@ -141,12 +133,12 @@ namespace CliRunner
         /// <param name="standardInput">The standard input source to be used (if specified).</param>
         /// <param name="standardOutput">The standard output destination to be used (if specified).</param>
         /// <param name="standardError">The standard error destination to be used (if specified).</param>
-        /// <param name="standardErrorEncoding"></param>
-        /// <param name="processResourcePolicy">The processor affinity to be used (if specified).</param>
+        /// <param name="processResourcePolicy">The process resource policy to be used (if specified).</param>
         /// <param name="windowCreation">Whether to enable or disable Window Creation by the Command's Process.</param>
         /// <param name="useShellExecution">Whether to enable or disable executing the Command through Shell Execution.</param>
-        /// <param name="standardInputEncoding"></param>
-        /// <param name="standardOutputEncoding"></param>
+        /// <param name="standardInputEncoding">The Standard Input Encoding to be used (if specified).</param>
+        /// <param name="standardOutputEncoding">The Standard Output Encoding to be used (if specified).</param>
+        /// <param name="standardErrorEncoding">The Standard Error Encoding to be used (if specified).</param>
         public Command(string targetFilePath,
             string arguments = null, string workingDirectoryPath = null,
             bool requiresAdministrator = false,
@@ -170,6 +162,8 @@ namespace CliRunner
             WorkingDirectoryPath = workingDirectoryPath ?? Directory.GetCurrentDirectory();
             EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
             Credential = credential ?? UserCredential.Null;
+            
+            ResourcePolicy = processResourcePolicy ?? ProcessResourcePolicy.Default;
 
             ResultValidation = commandResultValidation;
 

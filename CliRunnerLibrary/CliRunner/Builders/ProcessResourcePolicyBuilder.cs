@@ -68,6 +68,16 @@ public class ProcessResourcePolicyBuilder : IProcessResourcePolicyBuilder
     /// </summary>
     /// <param name="minWorkingSet">The minimum working set to be used.</param>
     /// <returns>The newly created ProcessResourcePolicyBuilder with the updated minimum working set.</returns>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [SupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("linux")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("android")]
+#endif
     [Pure]
     public IProcessResourcePolicyBuilder WithMinWorkingSet(nint minWorkingSet) =>
         new ProcessResourcePolicyBuilder(new ProcessResourcePolicy(
@@ -83,6 +93,16 @@ public class ProcessResourcePolicyBuilder : IProcessResourcePolicyBuilder
     /// <param name="maxWorkingSet">The maximum working set to be used.</param>
     /// <returns>The newly created ProcessResourcePolicyBuilder with the updated maximum working set.</returns>
     [Pure]
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [SupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("linux")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("android")]
+#endif
     public IProcessResourcePolicyBuilder WithMaxWorkingSet(nint maxWorkingSet) =>
         new ProcessResourcePolicyBuilder(new ProcessResourcePolicy(
             _processResourcePolicy.ProcessorAffinity,

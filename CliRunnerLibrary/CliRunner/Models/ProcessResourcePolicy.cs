@@ -8,6 +8,7 @@
    */
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 
 namespace CliRunner;
@@ -15,6 +16,7 @@ namespace CliRunner;
 /// <summary>
 /// A class that defines a Process' resource configuration.
 /// </summary>
+[SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class ProcessResourcePolicy
 {
     /// <summary>
@@ -61,11 +63,25 @@ public class ProcessResourcePolicy
     /// <summary>
     /// The Minimum Working Set size to be used for the Process.
     /// </summary>
+    /// <remarks>Not supported on Linux based operating systems.</remarks>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [SupportedOSPlatform("freebsd")]
+#endif
     public nint? MinWorkingSet { get; }
     
     /// <summary>
     /// Maximum Working Set size to be used for the Process.
     /// </summary>
+    /// <remarks>Not supported on Linux based operating systems.</remarks>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [SupportedOSPlatform("freebsd")]
+#endif
     public nint? MaxWorkingSet { get; }
     
     /// <summary>
