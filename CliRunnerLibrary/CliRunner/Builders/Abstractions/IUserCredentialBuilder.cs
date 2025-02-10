@@ -7,11 +7,12 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
+using System;
 using System.Security;
 
 namespace CliRunner.Builders.Abstractions;
 
-public interface IUserCredentialBuilder
+public interface IUserCredentialBuilder : IDisposable
 {
     /// <summary>
     /// Sets the domain for the credential to be created.
@@ -55,5 +56,5 @@ public interface IUserCredentialBuilder
     /// <summary>
     /// Disposes of the provided settings.
     /// </summary>
-    void Dispose();
+    new void Dispose();
 }

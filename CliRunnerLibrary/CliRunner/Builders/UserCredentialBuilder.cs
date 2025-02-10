@@ -29,7 +29,7 @@ namespace CliRunner.Builders;
 /// A class that provides builder methods for constructing UserCredentials.
 /// </summary>
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-public class UserCredentialBuilder : IUserCredentialBuilder, IDisposable
+public class UserCredentialBuilder : IUserCredentialBuilder
 {
     private UserCredential? _userCredential;
 
