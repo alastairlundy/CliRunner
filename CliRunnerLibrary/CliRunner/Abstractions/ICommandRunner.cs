@@ -17,7 +17,6 @@ namespace CliRunner.Abstractions;
 /// </summary>
 public interface ICommandRunner
 {
-
     /// <summary>
     /// Executes a command asynchronously and returns Command execution information as a CommandResult.
     /// </summary>

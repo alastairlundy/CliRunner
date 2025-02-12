@@ -33,7 +33,6 @@ using CliRunner.Internal.Localizations;
 using System.Runtime.Versioning;
 #endif
 
-
 namespace CliRunner;
 
 /// <summary>
@@ -115,8 +114,7 @@ public class CommandRunner : ICommandRunner
             process.Close();
             process.Dispose();
         }
-
-
+        
         /// <summary>
         /// Executes a command asynchronously and returns Command execution information as a CommandResult.
         /// </summary>
