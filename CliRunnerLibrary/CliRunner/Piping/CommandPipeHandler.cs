@@ -10,16 +10,17 @@
      See THIRD_PARTY_NOTICES.txt for a full copy of the MIT LICENSE.
  */
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
 
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using CliRunner.Abstractions;
+using CliRunner.Piping.Abstractions;
 
-namespace CliRunner;
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+
+namespace CliRunner.Piping;
 
 /// <summary>
 /// The default implementation of ICommandPipeHandler for Command Pipe Handling.

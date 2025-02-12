@@ -10,7 +10,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace CliRunner.Abstractions;
+namespace CliRunner.Piping.Abstractions;
 
 /// <summary>
 /// An interface to allow for a standardized way of Command pipe handling.

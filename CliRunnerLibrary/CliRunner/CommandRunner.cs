@@ -28,6 +28,7 @@ using CliRunner.Abstractions;
 using CliRunner.Exceptions;
 
 using CliRunner.Internal.Localizations;
+using CliRunner.Piping.Abstractions;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
