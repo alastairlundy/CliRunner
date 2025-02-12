@@ -13,7 +13,7 @@ namespace CliRunner
     /// An enum to represent Result Validation states and whether Result Validation should be performed. 
     /// </summary>
     [Flags]
-    public enum CommandResultValidation
+    public enum ProcessResultValidation
     {
         /// <summary>
         /// No validation is performed.

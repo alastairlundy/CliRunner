@@ -94,7 +94,7 @@ public class CommandRunner : ICommandRunner
             await process.WaitForExitAsync(cancellationToken);
 
             // Throw a CommandNotSuccessful exception if required.
-            if (process.ExitCode != 0 && command.ResultValidation == CommandResultValidation.ExitCodeZero)
+            if (process.ExitCode != 0 && command.ResultValidation == ProcessResultValidation.ExitCodeZero)
             {
                 throw new CommandNotSuccessfulException(process.ExitCode, command);
             }

@@ -29,7 +29,7 @@ public class CommandBuilderTests
                             builtCommand.StandardErrorEncoding.Equals(Encoding.Default));
 
                 Assert.Equal(builtCommand.Credential, UserCredential.Null);
-                Assert.Equal(CommandResultValidation.ExitCodeZero, builtCommand.ResultValidation);
+                Assert.Equal(ProcessResultValidation.ExitCodeZero, builtCommand.ResultValidation);
 
                 Assert.Equal(builtCommand.StandardInput, StreamWriter.Null);
                 Assert.Equal(builtCommand.StandardOutput, StreamReader.Null);

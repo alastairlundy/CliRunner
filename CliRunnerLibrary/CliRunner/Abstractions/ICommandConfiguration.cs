@@ -86,7 +86,7 @@ public interface ICommandConfiguration
         /// <summary>
         /// The result validation to apply to the Command when it is executed.
         /// </summary>
-        public CommandResultValidation ResultValidation { get; }
+        public ProcessResultValidation ResultValidation { get; }
 
         /// <summary>
         /// The Standard Input source.

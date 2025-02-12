@@ -320,7 +320,7 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="validation">The result validation behaviour to be used.</param>
     /// <returns>The new CommandBuilder object with the configured Result Validation behaviour.</returns>
     [Pure]
-    public ICommandBuilder WithValidation(CommandResultValidation validation) =>
+    public ICommandBuilder WithValidation(ProcessResultValidation validation) =>
         new CommandBuilder(
             new Command(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,

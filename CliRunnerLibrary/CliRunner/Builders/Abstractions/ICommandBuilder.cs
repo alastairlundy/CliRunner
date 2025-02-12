@@ -97,7 +97,7 @@ public interface ICommandBuilder
     /// </summary>
     /// <param name="validation">The result validation behaviour to be used.</param>
     /// <returns>The new CommandBuilder object with the configured Result Validation behaviour.</returns>
-    ICommandBuilder WithValidation(CommandResultValidation validation);
+    ICommandBuilder WithValidation(ProcessResultValidation validation);
     
     /// <summary>
     /// Sets the Standard Input Pipe source.

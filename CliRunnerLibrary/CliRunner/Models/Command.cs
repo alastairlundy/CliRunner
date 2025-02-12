@@ -74,7 +74,7 @@ namespace CliRunner
         /// <summary>
         /// The result validation to apply to the Command when it is executed.
         /// </summary>
-        public CommandResultValidation ResultValidation { get; protected set; }
+        public ProcessResultValidation ResultValidation { get; protected set; }
 
         /// <summary>
         /// The Standard Input source.
@@ -144,7 +144,7 @@ namespace CliRunner
             bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             UserCredential credential = null,
-            CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
+            ProcessResultValidation commandResultValidation = ProcessResultValidation.ExitCodeZero,
             StreamWriter standardInput = null,
             StreamReader standardOutput = null,
             StreamReader standardError = null,

@@ -51,7 +51,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
     public SpecializedCommandConfiguration(string targetFilePath, string arguments = null,
         string workingDirectoryPath = null, bool requiresAdministrator = false,
         IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
-        CommandResultValidation commandResultValidation = CommandResultValidation.ExitCodeZero,
+        ProcessResultValidation commandResultValidation = ProcessResultValidation.ExitCodeZero,
         StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
         Encoding standardInputEncoding = null, Encoding standardOutputEncoding = null,
         Encoding standardErrorEncoding = null, ProcessResourcePolicy processResourcePolicy = null,
@@ -116,7 +116,7 @@ public abstract class SpecializedCommandConfiguration : ICommandConfiguration
         /// <summary>
         /// The result validation to apply to the Command when it is executed.
         /// </summary>
-        public CommandResultValidation ResultValidation { get; }
+        public ProcessResultValidation ResultValidation { get; }
 
         /// <summary>
         /// The Standard Input source.
