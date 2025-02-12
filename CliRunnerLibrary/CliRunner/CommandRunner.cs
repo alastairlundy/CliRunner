@@ -133,13 +133,13 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<CommandResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
+        public async Task<ProcessResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
         {
             Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command), command.ResourcePolicy);
             
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
-            CommandResult commandResult = new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+            ProcessResult commandResult = new ProcessResult(process.ExitCode, process.StartTime, process.ExitTime);
             
             DisposeOfProcess(process);
             

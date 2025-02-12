@@ -23,7 +23,7 @@ namespace CliRunner
     /// <summary>
     /// A class that represents the results from an asynchronously executed Command.
     /// </summary>
-    public class CommandResult(
+    public class ProcessResult(
         int exitCode,
         DateTime startTime,
         DateTime exitTime)

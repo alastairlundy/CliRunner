@@ -19,19 +19,19 @@ namespace CliRunner.Extensions.Processes;
 public static class ProcessToCommandResultExtensions
 {
     /// <summary>
-    /// Converts an exited process object to a CommandResult.
+    /// Converts an exited process object to a ProcessResult.
     /// </summary>
     /// <param name="process">The exited process to convert to a CommandResult object.</param>
     /// <returns>The resulting CommandResult</returns>
     /// <exception cref="ArgumentException">Thrown if a non-exited process is passed as a parameter.</exception>
-    public static CommandResult ToCommandResult(this Process process)
+    public static ProcessResult ToProcessResult(this Process process)
     {
         if (process.HasExited == false)
         {
             throw new ArgumentException(Resources.CommandResult_ToBuffered_ExitedProcess);
         }
             
-        return new CommandResult(process.ExitCode, process.StartTime, process.ExitTime);
+        return new ProcessResult(process.ExitCode, process.StartTime, process.ExitTime);
     }
         
     /// <summary>

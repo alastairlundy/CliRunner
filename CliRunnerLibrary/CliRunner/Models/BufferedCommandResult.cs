@@ -27,7 +27,7 @@ namespace CliRunner
         string standardError,
         DateTime startTime,
         DateTime exitTime)
-        : CommandResult(exitCode, startTime, exitTime), IEquatable<BufferedCommandResult>
+        : ProcessResult(exitCode, startTime, exitTime), IEquatable<BufferedCommandResult>
     {
         /// <summary>
         /// The Standard Output from the Command represented as a string.
