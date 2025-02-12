@@ -20,10 +20,10 @@ namespace CliRunner.Extensions.Processes;
 public static class ProcessUseResourcePolicyExtensions
 {
     /// <summary>
-    /// 
+    /// Applies a ProcessResourcePolicy to a Process.
     /// </summary>
-    /// <param name="process"></param>
-    /// <param name="policy"></param>
+    /// <param name="process">The process to apply the policy to.</param>
+    /// <param name="policy">The process resource policy to be applied.</param>
     public static void UseResourcePolicy(this Process process, ProcessResourcePolicy policy)
     {
         if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
