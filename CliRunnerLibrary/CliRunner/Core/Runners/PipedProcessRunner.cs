@@ -48,8 +48,8 @@ public class PipedProcessRunner : IPipedProcessRunner
     /// <param name="processResultValidation">The process result validation to be used.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>The Process Results from the running the process with the Piped Standard Output and Standard Error.</returns>
-    /// <exception cref="FileNotFoundException"></exception>
-    /// <exception cref="ProcessNotSuccessfulException"></exception>
+    /// <exception cref="FileNotFoundException">Thrown if the file, with the file name of the process to be executed, is not found.</exception>
+    /// <exception cref="ProcessNotSuccessfulException">Thrown if the result validation requires the process to exit with exit code zero and the process exits with a different exit code.</exception>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]

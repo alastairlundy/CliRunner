@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace CliRunner.Runners.Abstractions;
 
 /// <summary>
+/// A Process Runner-esque interface for Piping output after Executing processes.
 /// </summary>
 public interface IPipedProcessRunner
 {
