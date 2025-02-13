@@ -19,6 +19,7 @@ using CliRunner.Specializations.Internal.Localizations;
 using OperatingSystem = Polyfills.OperatingSystemPolyfill;
 #else
 using System.Runtime.Versioning;
+// ReSharper disable UnusedMember.Global
 #endif
 
 namespace CliRunner.Specializations.Configurations
@@ -60,7 +61,7 @@ namespace CliRunner.Specializations.Configurations
         public CmdCommandConfiguration(string arguments = null,
             string workingDirectoryPath = null, bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
-            CommandResultValidation resultValidation = CommandResultValidation.ExitCodeZero,
+            ProcessResultValidation resultValidation = ProcessResultValidation.ExitCodeZero,
             StreamWriter standardInput = null, StreamReader standardOutput = null, StreamReader standardError = null,
             Encoding standardInputEncoding = default, Encoding standardOutputEncoding = default,
             Encoding standardErrorEncoding = default, ProcessResourcePolicy processResourcePolicy = null,

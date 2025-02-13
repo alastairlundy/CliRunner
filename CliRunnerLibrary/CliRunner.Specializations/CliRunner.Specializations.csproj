@@ -10,16 +10,16 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-alpha.3</PackageVersion>
+        <PackageVersion>1.0.0-alpha.4</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <LangVersion>13</LangVersion>
-        <PackageReleaseNotes>### Changes since 1.0.0 Alpha 2
-* Updated CliRunner dependency to 1.0.0 Alpha 3
-            * Updated Specialization classes to make use of CliRunner's 1.0.0 Alpha 3 changes</PackageReleaseNotes>
+        <PackageReleaseNotes>### Changes since 1.0.0 Alpha 3
+* Updated CliRunner dependency to 1.0.0 Alpha 4
+            * Updated Specialization classes to make use of CliRunner's 1.0.0 Alpha 4 changes</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
     </PropertyGroup>
 
@@ -33,7 +33,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CliRunner" Version="1.0.0-alpha.3" />
+        <PackageReference Include="CliRunner" Version="1.0.0-alpha.4" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
     </ItemGroup>
 
