@@ -25,7 +25,7 @@ public interface IProcessRunner
     /// <param name="process">The process to be run.</param>
     /// <param name="processResultValidation">The process result validation to be used.</param>
     /// <returns>The Process Results from the running the process.</returns>
-    public ProcessResult RunProcess(Process process, ProcessResultValidation processResultValidation);
+    public ProcessResult ExecuteProcess(Process process, ProcessResultValidation processResultValidation);
 
     /// <summary>
     /// Runs the process synchronously, waits for exit, and safely disposes of the Process before returning.
@@ -34,7 +34,7 @@ public interface IProcessRunner
     /// <param name="process">The process to be run.</param>
     /// <param name="processResultValidation">The process result validation to be used.</param>
     /// <returns>The Buffered Process Results from running the process.</returns>
-    public BufferedProcessResult RunBufferedProcess(Process process, ProcessResultValidation processResultValidation);
+    public BufferedProcessResult ExecuteBufferedProcess(Process process, ProcessResultValidation processResultValidation);
 
     /// <summary>
     /// Runs the process asynchronously, waits for exit, and safely disposes of the Process before returning.
@@ -43,7 +43,7 @@ public interface IProcessRunner
     /// <param name="processResultValidation">The process result validation to be used.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>The Process Results from the running the process.</returns>
-    public Task<ProcessResult> RunProcessAsync(Process process, ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default);
+    public Task<ProcessResult> ExecuteProcessAsync(Process process, ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Runs the process asynchronously, waits for exit, and safely disposes of the Process before returning.
@@ -52,6 +52,6 @@ public interface IProcessRunner
     /// <param name="processResultValidation">The process result validation to be used.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>The Buffered Process Results from running the process.</returns>
-    public Task<BufferedProcessResult> RunBufferedProcessAsync(Process process, ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default);
+    public Task<BufferedProcessResult> ExecuteBufferedProcessAsync(Process process, ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default);
 
 }
