@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using CliRunner.Exceptions;
 using CliRunner.Internal.Localizations;
 using CliRunner.Runners.Helpers.Abstractions;
 
@@ -51,19 +51,49 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     {
         return await ExecuteAsync(process, ProcessResultValidation.None, cancellationToken);
     }
+
+    /// <summary>
+    /// Starts a Process and asynchronously waits for it to exit before returning.
+    /// </summary>
+    /// <param name="process">The process to be executed.</param>
+    /// <param name="cancellationToken">The cancellation token to use to cancel the waiting for process exit if required.</param>
+    /// <param name="processResultValidation">Whether validation should be performed on the exit code.</param>
+    /// <returns>The process' exit code.</returns>
+    /// <exception cref="InvalidOperationException">Thrown if the specified process has not exited.</exception>
+    /// <exception cref="ProcessNotSuccessfulException">Thrown if the process result validation was performed and the exit code is not zero.</exception>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
+    public async Task<int> ExecuteAsync(Process process, ProcessResultValidation processResultValidation,
+        CancellationToken cancellationToken = default)
     {
         if (process.HasExited == false)
         {
             process.Start();
             
             await process.WaitForExitAsync(cancellationToken);
+
+            if (process.ExitCode != 0 && processResultValidation == ProcessResultValidation.ExitCodeZero)
+            {
+                throw new ProcessNotSuccessfulException(exitCode: process.ExitCode, process: process);
+            }
+            
+            return process.ExitCode;
         }
         else
         {
             throw new InvalidOperationException(Resources.Exceptions_Processes_CannotStartExitedProcess);
         }
     }
-    
+
     /// <summary>
     /// Disposes of the specified process.
     /// </summary>

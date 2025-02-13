@@ -28,6 +28,15 @@ public interface IProcessRunnerUtility
     public Task<int> ExecuteAsync(Process process, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Starts a Process and asynchronously waits for it to exit before returning.
+    /// </summary>
+    /// <param name="process">The process to be executed.</param>
+    /// <param name="processResultValidation">Whether validation should be performed on the exit code.</param>
+    /// <param name="cancellationToken">The cancellation token to use to cancel the waiting for process exit if required.</param>
+    /// <returns>The process' exit code.</returns>
+    public Task<int> ExecuteAsync(Process process, ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default);
+    
+    /// <summary>
     /// Disposes of the specified process.
     /// </summary>
     /// <param name="process">The process to be disposed of.</param>
