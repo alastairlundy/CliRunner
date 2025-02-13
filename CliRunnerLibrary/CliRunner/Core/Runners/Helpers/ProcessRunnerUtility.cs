@@ -35,6 +35,7 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     /// <param name="process">The process to be executed.</param>
     /// <param name="cancellationToken">The cancellation token to use to cancel the waiting for process exit if required.</param>
     /// <exception cref="InvalidOperationException">Thrown if the specified process has not exited.</exception>
+    /// <returns>The process' exit code.</returns>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]
@@ -46,7 +47,10 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public async Task ExecuteAsync(Process process, CancellationToken cancellationToken = default)
+    public async Task<int> ExecuteAsync(Process process, CancellationToken cancellationToken = default)
+    {
+        return await ExecuteAsync(process, ProcessResultValidation.None, cancellationToken);
+    }
     {
         if (process.HasExited == false)
         {
