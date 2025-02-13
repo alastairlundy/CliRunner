@@ -142,12 +142,7 @@ public class ProcessRunner : IProcessRunner
             throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
         }
         
-        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
-       
-        if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
-        {
-            throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
-        }
+        await _processRunnerUtils.ExecuteAsync(process, processResultValidation , cancellationToken);
        
         return await _processRunnerUtils.GetResultAsync(process, disposeOfProcess: true);
     }
@@ -185,12 +180,7 @@ public class ProcessRunner : IProcessRunner
         process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
         
-        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
-
-        if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
-        {
-            throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
-        }
+        await _processRunnerUtils.ExecuteAsync(process, processResultValidation , cancellationToken);
         
         return await _processRunnerUtils.GetBufferedResultAsync(process, disposeOfProcess: true);
     }
