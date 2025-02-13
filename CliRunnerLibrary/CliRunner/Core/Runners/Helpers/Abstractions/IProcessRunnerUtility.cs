@@ -34,35 +34,35 @@ public interface IProcessRunnerUtility
     public void DisposeOfProcess(Process process);
     
     /// <summary>
-    /// 
+    /// Gets the results from an exited Process.
     /// </summary>
-    /// <param name="process"></param>
-    /// <param name="disposeOfProcess"></param>
-    /// <returns></returns>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
     public ProcessResult GetResult(Process process, bool disposeOfProcess); 
     
     /// <summary>
-    /// 
+    /// Gets the BufferedProcessResults results from an exited Process.
     /// </summary>
-    /// <param name="process"></param>
-    /// <param name="disposeOfProcess"></param>
-    /// <returns></returns>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
     public BufferedProcessResult GetBufferedResult(Process process, bool disposeOfProcess);
     
     /// <summary>
-    /// 
+    /// Asynchronously gets the ProcessResult results from an exited Process.
     /// </summary>
-    /// <param name="process"></param>
-    /// <param name="disposeOfProcess"></param>
-    /// <returns></returns>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
     public Task<ProcessResult> GetResultAsync(Process process, bool disposeOfProcess);
     
     /// <summary>
-    /// 
+    /// Asynchronously gets the BufferedProcessResult results from an exited Process.
     /// </summary>
-    /// <param name="process"></param>
-    /// <param name="disposeOfProcess"></param>
-    /// <returns></returns>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
     public Task<BufferedProcessResult> GetBufferedResultAsync(Process process, bool disposeOfProcess);
     
 }
