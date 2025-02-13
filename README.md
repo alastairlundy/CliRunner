@@ -55,6 +55,11 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9
 * [Nuget](https://nuget.org/packages/) or ``dotnet add package CliRunner``
 
 ## Usage
+
+### Main Use Cases
+
+#### Executing Commands
+
 CliRunner enables use of a fluent builder style of syntax to easily configure and run Commands.
 
 The following example shows how to configure and build a Command that returns a BufferedCommandResult which contains redirected StandardOutput and StandardError.
@@ -80,6 +85,8 @@ using CliRunner.Builders;
   
 var result = await _commandRunner.ExecuteBufferedAsync(command);
 ```
+
+#### Safer Process Running
 
 ## License
 CliRunner is licensed under the MPL 2.0 license. If you modify any of CliRunner's files then the modified files must be licensed under the MPL 2.0 .
