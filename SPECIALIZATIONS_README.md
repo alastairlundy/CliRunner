@@ -46,12 +46,9 @@ using CliRunner.Builders.Abstractions;
 using CliRunner.Specializations.Configurations;
 using CliRunner.Specializations;
 
-  /// Initialize CommandRunner with Dependency Injection.
-  ServiceCollection services = new ServiceCollection();
-  services.UseCliRunner();
+    // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ServiceProvider sp = services.Build();
-  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
+  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
 
   //Build your command fluently
   ICommandBuilder builder = new CommandBuilder(
@@ -73,12 +70,9 @@ using CliRunner.Builders;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Specializations;
 
-  /// Initialize CommandRunner with Dependency Injection.
-  ServiceCollection services = new ServiceCollection();
-  services.UseCliRunner();
+    // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ServiceProvider sp = services.Build();
-  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
+  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
 
    //Build your command fluently
   ICommandBuilder builder = new CommandBuilder(
@@ -100,12 +94,9 @@ using CliRunner.Builders;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Specializations;
 
-  /// Initialize CommandRunner with Dependency Injection.
-  ServiceCollection services = new ServiceCollection();
-  services.UseCliRunner();
+    // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ServiceProvider sp = services.Build();
-  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
+  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
 
    //Build your command fluently
   ICommandBuilder builder = new CommandBuilder(

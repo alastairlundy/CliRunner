@@ -10,6 +10,17 @@ In addition to what CliWrap provides in Command properties, CliRunner adds sever
 
 CliRunner differs by moving business logic out of the Command class and into separate classes.
 
+### Results
+CliWrap's result model classes are ``CommandResult`` and ``BufferedCommandResult``.
+
+CliRunner's equivalent classes are ``ProcessResult`` and ``BufferedProcessResult``.
+
+### Result Validation Enum name
+CliWrap calls its Result Validation enum ``CommandResultValidation``.
+
+CliRunner calls its equivalent ``ProcessResultValidation``.
+
+
 ### Credential Model
 To avoid naming conflicts with naming both a variable ``Credentials`` and the ``Credentials`` class, CliRunner calls the class ``UserCredentials``.
 
