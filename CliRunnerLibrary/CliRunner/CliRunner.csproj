@@ -13,29 +13,27 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 1.0.0 Alpha 2
+        <PackageReleaseNotes>## Changes since 1.0.0 Alpha 3
 
 ### Breaking Changes
-* Replaced ``ProcessorAffinity`` property and usage within ``Command``, ``ICommandConfiguration``, ``ICommandBuilder``, and ``CommandBuilder`` with ``ProcessResourcePolicy``
-* Renamed ``WithCredentials``  method in ``CommandBuilder`` and ``ICommandBuilder`` to ``WithCredential``
-* Moved Process Extensions to a new namespace
-* Renamed ``ArgumentsBuilder``'s ``Build`` method to ``ToString``
+* Renamed ``CommandResult`` to ``ProcessResult`` 
+* Renamed ``BufferedCommandResult`` to ``BufferedProcessResult``
+* Renamed ``CommandResultValidation`` to ``ProcessResultValidation``
+* Removed ``ICommandPipeHandler`` and ``CommandPipeHandler``
+* Removed ``ToCommandResult`` extension methods
 
 ### Non-Breaking Changes
-* Added ``ProcessResourcePolicy`` model class
-* Added ``ProcessResourcePolicyBuilder`` and ``IProcessResourcePolicyBuilder`` to fluently build ``ProcessResourcePolicy`` instances.
-* Added ``UserCredentialBuilder`` and ``IUserCredentialBuilder`` for fluently building ``UserCredential`` instances.
-
-### Bug Fixes
-* Fixed a potential issue where ``ArgumentsBuilder`` wouldn't check size of internal StringBuilder buffer before adding to it.
-* Fixed a bug where ``ArgumentsBuilder`` wouldn't add a space between arguments
-* Fixed a bug where ``ArgumentsBuilder`` would duplicate arguments to be added
-* Fixed a bug where ``ProcessCreator`` would allow null working directory path to be added to ProcessStartInfo
-* Fixed a bug where ``ProcessCreator`` would erroneously override whether to Redirect Standard Input, Standard Output, and Standard Error.</PackageReleaseNotes>
+* Updated  CollectionsExtensions from 6.0.0 Alpha 2 to 6.0.0 RC 1
+* Added ``IProcessPipeHandler`` and ``ProcessPipeHandler`` - This is mainly meant to be used by CommandRunner
+* Added ``IPipedProcessRunner`` and ``PipedProcessRunner``  - This is mainly meant to be used by CommandRunner
+* Added ``IProcessRunner`` and ``ProcessRunner``  - Closing #9 
+* Added ``IProcessRunnerUtility`` and ``ProcessRunnerUtility``
+* Updated ``CommandRunner`` to use ``IProcessPipeHandler`` and ``IPipedProcessRunner``
+* Updated Dependency Injection Extensions</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-alpha.3</PackageVersion>
+        <PackageVersion>1.0.0-alpha.4</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
