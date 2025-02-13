@@ -31,5 +31,5 @@ public interface ICommandRunner
     /// <param name="command">The command to be executed.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
-    Task<BufferedCommandResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
+    Task<BufferedProcessResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
 }

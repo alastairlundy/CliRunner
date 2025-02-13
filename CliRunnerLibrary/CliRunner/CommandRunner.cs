@@ -165,7 +165,7 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<BufferedCommandResult> ExecuteBufferedAsync(Command command,
+        public async Task<BufferedProcessResult> ExecuteBufferedAsync(Command command,
             CancellationToken cancellationToken = default)
         {
             Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command,
@@ -173,7 +173,7 @@ public class CommandRunner : ICommandRunner
 
             await DoCommonCommandExecutionWork(command, process, cancellationToken);
             
-            BufferedCommandResult commandResult = new BufferedCommandResult(process.ExitCode,
+            BufferedProcessResult commandResult = new BufferedProcessResult(process.ExitCode,
  await process.StandardOutput.ReadToEndAsync(cancellationToken),
                     await process.StandardError.ReadToEndAsync(cancellationToken),
                     process.StartTime, process.ExitTime);
