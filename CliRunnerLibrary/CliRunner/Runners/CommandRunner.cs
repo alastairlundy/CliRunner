@@ -29,7 +29,8 @@ using CliRunner.Exceptions;
 using CliRunner.Piping.Abstractions;
 using CliRunner.Runners.Abstractions;
 
-namespace CliRunner.Runners;
+// ReSharper disable CheckNamespace
+namespace CliRunner;
 
 /// <summary>
 /// The default implementation of the CliRunner command running mechanism, ICommandRunner.

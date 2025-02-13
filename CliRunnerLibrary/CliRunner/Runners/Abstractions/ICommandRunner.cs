@@ -10,7 +10,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CliRunner.Runners.Abstractions;
+// ReSharper disable once CheckNamespace
+namespace CliRunner.Abstractions;
 
 /// <summary>
 /// An interface to specify required Command Running functionality.
