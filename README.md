@@ -31,18 +31,18 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 ## Supported Platforms 
 This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9 supported project.
 
-| Operating System | Support Status | Notes |
-|-|-|-|
-| Windows | Fully Supported :white_check_mark: | |
-| macOS | Fully Supported :white_check_mark: | |
-| Mac Catalyst | Fully Supported :white_check_mark: | |
-| Linux | Fully Supported :white_check_mark: | |
-| FreeBSD | Fully Supported :white_check_mark: | |
-| Android | Untested Platform :warning: | Support for this platform has not been tested but should theoretically work. |
-| IOS | Not Supported :x: | Not supported due to ``Process.Start()`` not supporting IOS. ^3 | 
-| tvOS | Not Supported :x: | Not supported due to ``Process.Start()`` not supporting tvOS ^3 |
-| watchOS | Not Supported :x: | Not supported due to ``Process.Start()`` not supporting watchOS ^4 |
-| Browser | Not Supported :x: | Not supported due to not being a valid target Platform for executing programs. |
+| Operating System | Support Status                     | Notes                                                                                       |
+|------------------|------------------------------------|---------------------------------------------------------------------------------------------|
+| Windows          | Fully Supported :white_check_mark: |                                                                                             |
+| macOS            | Fully Supported :white_check_mark: |                                                                                             |
+| Mac Catalyst     | Untested Platform :warning:        | Support for this platform has not been tested but should theoretically work.                |
+| Linux            | Fully Supported :white_check_mark: |                                                                                             |
+| FreeBSD          | Fully Supported :white_check_mark: |                                                                                             |
+| Android          | Untested Platform :warning:        | Support for this platform has not been tested but should theoretically work.                |
+| IOS              | Not Supported :x:                  | Not supported due to ``Process.Start()`` not supporting IOS. ^3                             | 
+| tvOS             | Not Supported :x:                  | Not supported due to ``Process.Start()`` not supporting tvOS ^3                             |
+| watchOS          | Not Supported :x:                  | Not supported due to ``Process.Start()`` not supporting watchOS ^4                          |
+| Browser          | Not Supported and Not Planned :x:  | Not supported due to not being a valid target Platform for executing programs or processes. |
 
 ^3 - See the [Process class documentation](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=net-9.0#system-diagnostics-process-start) for more info.
 
