@@ -12,9 +12,14 @@ using System;
 using CliRunner.Abstractions;
 using CliRunner.Piping;
 using CliRunner.Piping.Abstractions;
+
 using CliRunner.Runners;
 using CliRunner.Runners.Abstractions;
+using CliRunner.Runners.Helpers;
+using CliRunner.Runners.Helpers.Abstractions;
+
 using Microsoft.Extensions.DependencyInjection;
+
 // ReSharper disable RedundantAssignment
 // ReSharper disable UnusedMember.Global
 
@@ -31,6 +36,7 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddCliRunner(this IServiceCollection services,
         ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
+        services.Add(lifetime, typeof(IProcessRunnerUtility), typeof(ProcessRunnerUtility));
         services.Add(lifetime, typeof(IPipedProcessRunner), typeof(PipedProcessRunner));
         services.Add(lifetime, typeof(IProcessRunner), typeof(ProcessRunner));
         services.Add(lifetime, typeof(IProcessCreator), typeof(ProcessCreator));
