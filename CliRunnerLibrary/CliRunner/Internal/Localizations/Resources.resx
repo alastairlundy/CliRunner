@@ -36,12 +36,6 @@
     <data name="Command.ToString.WorkingDirectory" xml:space="preserve">
         <value>Working Directory</value>
     </data>
-    <data name="CommandResult.ToBuffered.ExitedProcess" xml:space="preserve">
-        <value>Cannot convert an non-exited process to a CommandResult</value>
-    </data>
-    <data name="CommandResult.ToStandardOutError" xml:space="preserve">
-        <value>Cannot convert a process without StandardOutput/StandardError to a BufferedCommandResult.</value>
-    </data>
     <data name="Process.FileName.Empty" xml:space="preserve">
         <value>The process start info's file name cannot be null or empty.</value>
     </data>
@@ -59,5 +53,11 @@
     </data>
     <data name="Exceptions.ArgumentBuilder.Buffer.MaximumSize" xml:space="preserve">
         <value>ArgumentBuilder buffer size cannot be added to as it is the maximum size of {x}</value>
+    </data>
+    <data name="Exceptions.ProcessNotSuccessful.Generic" xml:space="preserve">
+        <value>The executed process was not succesful and returned an exit code of {x}.</value>
+    </data>
+    <data name="Exceptions.ProcessNotSuccessful.Specific" xml:space="preserve">
+        <value>The executed process, with executable name of {x}, was not succesful and returned an exit code of {y}.</value>
     </data>
 </root>

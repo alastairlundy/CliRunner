@@ -123,24 +123,6 @@ namespace CliRunner.Internal.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot convert an non-exited process to a CommandResult.
-        /// </summary>
-        internal static string CommandResult_ToBuffered_ExitedProcess {
-            get {
-                return ResourceManager.GetString("CommandResult.ToBuffered.ExitedProcess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot convert a process without StandardOutput/StandardError to a BufferedCommandResult..
-        /// </summary>
-        internal static string CommandResult_ToStandardOutError {
-            get {
-                return ResourceManager.GetString("CommandResult.ToStandardOutError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ArgumentBuilder buffer size cannot be added to as it is the maximum size of {x}.
         /// </summary>
         internal static string Exceptions_ArgumentBuilder_Buffer_MaximumSize {
@@ -173,6 +155,24 @@ namespace CliRunner.Internal.Localizations {
         internal static string Exceptions_FileNotFound {
             get {
                 return ResourceManager.GetString("Exceptions.FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The executed process was not succesful and returned an exit code of {x}..
+        /// </summary>
+        internal static string Exceptions_ProcessNotSuccessful_Generic {
+            get {
+                return ResourceManager.GetString("Exceptions.ProcessNotSuccessful.Generic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The executed process, with executable name of {x}, was not succesful and returned an exit code of {y}..
+        /// </summary>
+        internal static string Exceptions_ProcessNotSuccessful_Specific {
+            get {
+                return ResourceManager.GetString("Exceptions.ProcessNotSuccessful.Specific", resourceCulture);
             }
         }
         
