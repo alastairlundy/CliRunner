@@ -8,6 +8,7 @@
    */
 
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace CliRunner.Piping.Abstractions;
@@ -18,23 +19,23 @@ namespace CliRunner.Piping.Abstractions;
 public interface IProcessPipeHandler
 {
     /// <summary>
-    /// Asynchronously copies the Command's Standard Input to the process' standard input.
+    /// Asynchronously copies the StreamWriter to the process' standard input.
     /// </summary>
-    /// <param name="source">The command to be copied from.</param>
+    /// <param name="source">The StreamWriter to be copied from.</param>
     /// <param name="destination">The process to be copied to</param>
-    Task PipeStandardInputAsync(Process source, Process destination);
+    Task PipeStandardInputAsync(StreamWriter source, Process destination);
 
     /// <summary>
-    /// Asynchronously copies the process' Standard Output to the Command's Standard Output.
+    /// Asynchronously copies the process' Standard Output to a StreamReader.
     /// </summary>
     /// <param name="source">The process to be copied from.</param>
-    /// <param name="destination">The command to be copied to</param>
-    Task PipeStandardOutputAsync(Process source, Process destination);
+    /// <param name="destination">The StreamReader to be copied to</param>
+    Task PipeStandardOutputAsync(Process source, StreamReader destination);
 
     /// <summary>
-    /// Asynchronously copies the process' Standard Error to the Command's Standard Error.
+    /// Asynchronously copies the process' Standard Error to a StreamReader.
     /// </summary>
     /// <param name="source">The process to be copied from.</param>
-    /// <param name="destination">The command to be copied to</param>
-    Task PipeStandardErrorAsync(Process source, Process destination);
+    /// <param name="destination">The StreamReader to be copied to</param>
+    Task PipeStandardErrorAsync(Process source, StreamReader destination);
 }
