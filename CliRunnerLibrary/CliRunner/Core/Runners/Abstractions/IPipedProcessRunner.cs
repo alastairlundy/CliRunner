@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 namespace CliRunner.Runners.Abstractions;
 
 /// <summary>
-/// 
 /// </summary>
 public interface IPipedProcessRunner
 {

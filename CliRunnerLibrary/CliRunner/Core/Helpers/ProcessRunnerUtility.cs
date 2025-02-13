@@ -17,6 +17,10 @@ using CliRunner.Runners.Helpers.Abstractions;
 
 namespace CliRunner.Runners.Helpers;
 
+/// <summary>
+/// A Process Running Utility to easily create different Process Runners.
+/// </summary>
+/// <remarks>This class is primarily intended for internal use OR use when creating a Process Runner or Command Runner implementation.</remarks>
 public class ProcessRunnerUtility : IProcessRunnerUtility
 {
     

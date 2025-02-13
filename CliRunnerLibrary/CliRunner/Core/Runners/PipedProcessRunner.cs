@@ -114,7 +114,8 @@ public class PipedProcessRunner : IPipedProcessRunner
     {
         if (File.Exists(process.StartInfo.FileName) == false)
         {
-            throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
+            throw new FileNotFoundException(
+                Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
         }
 
         process.StartInfo.RedirectStandardOutput = true;
