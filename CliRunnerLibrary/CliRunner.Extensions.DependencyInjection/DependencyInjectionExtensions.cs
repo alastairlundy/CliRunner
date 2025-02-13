@@ -23,7 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 // ReSharper disable RedundantAssignment
 // ReSharper disable UnusedMember.Global
 
-namespace CliRunner.Extensions;
+namespace CliRunner.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
