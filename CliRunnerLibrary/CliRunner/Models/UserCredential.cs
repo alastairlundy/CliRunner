@@ -97,7 +97,7 @@ namespace CliRunner
         public static UserCredential Null { get; } = new UserCredential();
 
         /// <summary>
-        /// Disposes of the Password SecureString.
+        /// Disposes of the Password SecureString and other UserCredential values.
         /// </summary>
         public void Dispose()
         {

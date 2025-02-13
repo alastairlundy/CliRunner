@@ -21,7 +21,7 @@ using System;
 namespace CliRunner
 {
     /// <summary>
-    /// A class that represents the results from an asynchronously executed Command.
+    /// A class that represents the results from an executed Process or Command.
     /// </summary>
     public class ProcessResult(
         int exitCode,
