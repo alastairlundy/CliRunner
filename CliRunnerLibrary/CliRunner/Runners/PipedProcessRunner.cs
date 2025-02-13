@@ -12,20 +12,35 @@ using System.IO;
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
+
 using CliRunner.Exceptions;
 using CliRunner.Internal.Localizations;
 using CliRunner.Piping.Abstractions;
 using CliRunner.Runners.Abstractions;
+using CliRunner.Runners.Helpers.Abstractions;
 
 namespace CliRunner.Runners;
 
 /// <summary>
 /// 
 /// </summary>
-/// <param name="processPipeHandler"></param>
-public class PipedProcessRunner(IProcessPipeHandler processPipeHandler) : IPipedProcessRunner
+public class PipedProcessRunner : IPipedProcessRunner
 {
+    private readonly IProcessPipeHandler _processPipeHandler;
     
+    private readonly IProcessRunnerUtility _processRunnerUtils;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="processRunnerUtils"></param>
+    /// <param name="processPipeHandler"></param>
+    public PipedProcessRunner(IProcessRunnerUtility processRunnerUtils, IProcessPipeHandler processPipeHandler)
+    {
+        _processRunnerUtils = processRunnerUtils;
+        _processPipeHandler = processPipeHandler;
+    }
+
     /// <summary>
     /// Runs the process asynchronously, waits for exit, and safely disposes of the Process before returning.
     /// </summary>
@@ -33,8 +48,8 @@ public class PipedProcessRunner(IProcessPipeHandler processPipeHandler) : IPiped
     /// <param name="processResultValidation">The process result validation to be used.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>The Process Results from the running the process with the Piped Standard Output and Standard Error.</returns>
-    /// <exception cref="FileNotFoundException">Thrown if the file, with the file name of the process to be executed, is not found.</exception>
-    /// <exception cref="ProcessNotSuccessfulException">Thrown if the result validation requires the process to exit with exit code zero and the process exits with a different exit code.</exception>
+    /// <exception cref="FileNotFoundException"></exception>
+    /// <exception cref="ProcessNotSuccessfulException"></exception>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]
@@ -53,10 +68,8 @@ public class PipedProcessRunner(IProcessPipeHandler processPipeHandler) : IPiped
         {
             throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
         }
-        
-        process.Start();
-       
-        await process.WaitForExitAsync(cancellationToken);
+
+        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
        
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
         {
@@ -67,13 +80,10 @@ public class PipedProcessRunner(IProcessPipeHandler processPipeHandler) : IPiped
         StreamReader standardError = StreamReader.Null;
         
         // Pipe Standard Output and Error
-        await processPipeHandler.PipeStandardOutputAsync(process, standardOutput);
-        await processPipeHandler.PipeStandardErrorAsync(process, standardError);
+        await _processPipeHandler.PipeStandardOutputAsync(process, standardOutput);
+        await _processPipeHandler.PipeStandardErrorAsync(process, standardError);
         
-        ProcessResult processResult = new ProcessResult(process.ExitCode, process.StartTime, process.ExitTime);
-       
-        process.Close();
-        process.Dispose();
+        ProcessResult processResult = await _processRunnerUtils.GetResultAsync(process, true);
        
         return (processResult, standardOutput, standardError);
     }
@@ -110,9 +120,7 @@ public class PipedProcessRunner(IProcessPipeHandler processPipeHandler) : IPiped
         process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
         
-        process.Start();
-       
-        await process.WaitForExitAsync(cancellationToken);
+        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
 
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
         {
@@ -123,15 +131,10 @@ public class PipedProcessRunner(IProcessPipeHandler processPipeHandler) : IPiped
         StreamReader standardError = StreamReader.Null;
         
         // Pipe Standard Output and Error
-        await processPipeHandler.PipeStandardOutputAsync(process, standardOutput);
-        await processPipeHandler.PipeStandardErrorAsync(process, standardError);
+        await _processPipeHandler.PipeStandardOutputAsync(process, standardOutput);
+        await _processPipeHandler.PipeStandardErrorAsync(process, standardError);
         
-        BufferedProcessResult output = new BufferedProcessResult(process.ExitCode,
-            await process.StandardOutput.ReadToEndAsync(cancellationToken),
-            await process.StandardError.ReadToEndAsync(cancellationToken), process.StartTime, process.ExitTime);
-        
-        process.Close();
-        process.Dispose();
+        BufferedProcessResult output = await _processRunnerUtils.GetBufferedResultAsync(process, true);
 
         return (output, standardOutput, standardError);
     }

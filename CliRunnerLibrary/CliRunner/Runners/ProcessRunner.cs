@@ -17,6 +17,7 @@ using CliRunner.Exceptions;
 using CliRunner.Internal.Localizations;
 
 using CliRunner.Runners.Abstractions;
+using CliRunner.Runners.Helpers.Abstractions;
 
 namespace CliRunner.Runners;
 
@@ -25,9 +26,11 @@ namespace CliRunner.Runners;
 /// </summary>
 public class ProcessRunner : IProcessRunner
 {
-    public ProcessRunner()
+    private readonly IProcessRunnerUtility _processRunnerUtils;
+    
+    public ProcessRunner(IProcessRunnerUtility processRunnerUtils)
     {
-        
+        _processRunnerUtils = processRunnerUtils;
     }
 
     /// <summary>
@@ -58,22 +61,14 @@ public class ProcessRunner : IProcessRunner
         }
         
         process.Start();
-
         process.WaitForExit();
 
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
         {
             throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
         }
-        
-        ProcessResult processResult = new ProcessResult(process.ExitCode, process.StartTime, process.ExitTime);
-       
-        // Properly dispose of the Process once the results are gotten.
-        process.Close();
-        process.Dispose();
-       
-        // Return after process disposal.
-        return processResult;
+
+        return _processRunnerUtils.GetResult(process, disposeOfProcess: true);
     }
 
     /// <summary>
@@ -108,7 +103,6 @@ public class ProcessRunner : IProcessRunner
         process.StartInfo.RedirectStandardError = true;
         
         process.Start();
-
         process.WaitForExit();
        
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
@@ -116,16 +110,7 @@ public class ProcessRunner : IProcessRunner
             throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
         }
         
-        BufferedProcessResult processResult = new BufferedProcessResult(process.ExitCode,
-            process.StandardOutput.ReadToEnd(),
-            process.StandardError.ReadToEnd(),
-            process.StartTime,
-            process.ExitTime);
-       
-        process.Close();
-        process.Dispose();
-       
-        return processResult;
+        return _processRunnerUtils.GetBufferedResult(process, disposeOfProcess: true);
     }
 
     /// <summary>
@@ -157,23 +142,15 @@ public class ProcessRunner : IProcessRunner
             throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
         }
         
-        process.Start();
+        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
        
-       await process.WaitForExitAsync(cancellationToken);
+        if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
+        {
+            throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
+        }
        
-       if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
-       {
-           throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
-       }
-       
-       ProcessResult processResult = new ProcessResult(process.ExitCode, process.StartTime, process.ExitTime);
-       
-       process.Close();
-       process.Dispose();
-       
-       return processResult;
+        return await _processRunnerUtils.GetResultAsync(process, disposeOfProcess: true);
     }
-
     
 
     /// <summary>
@@ -196,7 +173,7 @@ public class ProcessRunner : IProcessRunner
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public async Task<BufferedProcessResult> ExecuteBufferedProcessAsync(Process process, 
+    public async Task<BufferedProcessResult> ExecuteBufferedProcessAsync(Process process,
         ProcessResultValidation processResultValidation,
         CancellationToken cancellationToken = default)
     {
@@ -208,22 +185,13 @@ public class ProcessRunner : IProcessRunner
         process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
         
-        process.Start();
-       
-        await process.WaitForExitAsync(cancellationToken);
+        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
 
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
         {
             throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
         }
         
-        BufferedProcessResult output = new BufferedProcessResult(process.ExitCode,
-           await process.StandardOutput.ReadToEndAsync(cancellationToken),
-            await process.StandardError.ReadToEndAsync(cancellationToken), process.StartTime, process.ExitTime);
-        
-        process.Close();
-        process.Dispose();
-
-        return output;
+        return await _processRunnerUtils.GetBufferedResultAsync(process, disposeOfProcess: true);
     }
 }
