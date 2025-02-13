@@ -10,7 +10,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CliRunner.Abstractions;
+namespace CliRunner.Runners.Abstractions;
 
 /// <summary>
 /// An interface to specify required Command Running functionality.
