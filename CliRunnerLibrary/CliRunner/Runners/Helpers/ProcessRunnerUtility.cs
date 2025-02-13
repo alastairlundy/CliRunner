@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using CliRunner.Internal.Localizations;
 using CliRunner.Runners.Helpers.Abstractions;
 
 namespace CliRunner.Runners.Helpers;
@@ -21,7 +21,7 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
         }
         else
         {
-            throw new InvalidOperationException("Cannot start a process that has exited.");
+            throw new InvalidOperationException(Resources.Exceptions_Processes_CannotStartExitedProcess);
         }
     }
     

@@ -159,6 +159,15 @@ namespace CliRunner.Internal.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot start a process that has exited..
+        /// </summary>
+        internal static string Exceptions_Processes_CannotStartExitedProcess {
+            get {
+                return ResourceManager.GetString("Exceptions.Processes.CannotStartExitedProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The executed process was not succesful and returned an exit code of {x}..
         /// </summary>
         internal static string Exceptions_ProcessNotSuccessful_Generic {
