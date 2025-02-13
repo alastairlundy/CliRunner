@@ -20,7 +20,7 @@ namespace CliRunner
         /// </summary>
         None = 0b0,
         /// <summary>
-        /// Throws an exception if the Command's Exit code is not zero.
+        /// Throws an exception if the Process's Exit code is not zero.
         /// </summary>
         ExitCodeZero = 0b1,
     }
