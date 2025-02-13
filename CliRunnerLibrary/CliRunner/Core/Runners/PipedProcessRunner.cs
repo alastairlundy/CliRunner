@@ -22,7 +22,7 @@ using CliRunner.Runners.Helpers.Abstractions;
 namespace CliRunner.Runners;
 
 /// <summary>
-/// 
+/// A Process Runner-esque class for Piping output after Executing processes.
 /// </summary>
 public class PipedProcessRunner : IPipedProcessRunner
 {
@@ -33,8 +33,8 @@ public class PipedProcessRunner : IPipedProcessRunner
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="processRunnerUtils"></param>
-    /// <param name="processPipeHandler"></param>
+    /// <param name="processRunnerUtils">The process runner utility service to use.</param>
+    /// <param name="processPipeHandler">The process pipe handler service to use.</param>
     public PipedProcessRunner(IProcessRunnerUtility processRunnerUtils, IProcessPipeHandler processPipeHandler)
     {
         _processRunnerUtils = processRunnerUtils;

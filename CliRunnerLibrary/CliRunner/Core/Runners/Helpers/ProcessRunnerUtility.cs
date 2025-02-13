@@ -16,6 +16,10 @@ using System.Threading.Tasks;
 using CliRunner.Internal.Localizations;
 using CliRunner.Runners.Helpers.Abstractions;
 
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
+
 namespace CliRunner.Runners.Helpers;
 
 /// <summary>
@@ -25,6 +29,23 @@ namespace CliRunner.Runners.Helpers;
 public class ProcessRunnerUtility : IProcessRunnerUtility
 {
     
+    /// <summary>
+    /// Starts a Process and asynchronously waits for it to exit before returning.
+    /// </summary>
+    /// <param name="process">The process to be executed.</param>
+    /// <param name="cancellationToken">The cancellation token to use to cancel the waiting for process exit if required.</param>
+    /// <exception cref="InvalidOperationException">Thrown if the specified process has not exited.</exception>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
     public async Task ExecuteAsync(Process process, CancellationToken cancellationToken = default)
     {
         if (process.HasExited == false)
@@ -40,9 +61,9 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     }
     
     /// <summary>
-    /// Disposes of the Process if it is running 
+    /// Disposes of the specified process.
     /// </summary>
-    /// <param name="process"></param>
+    /// <param name="process">The process to be disposed of.</param>
     public void DisposeOfProcess(Process process)
     {
         if (process.HasExited == false)
@@ -54,7 +75,12 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
         process.Dispose();
     }
 
-    
+    /// <summary>
+    /// Gets the results from an exited Process.
+    /// </summary>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
     public ProcessResult GetResult(Process process, bool disposeOfProcess)
     {
         if (process.HasExited == false)
@@ -77,6 +103,23 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
         return processResult;
     }
 
+    /// <summary>
+    /// Gets the BufferedProcessResults results from an exited Process.
+    /// </summary>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
     public BufferedProcessResult GetBufferedResult(Process process, bool disposeOfProcess)
     {
         if (process.HasExited == false)
@@ -102,11 +145,22 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     }
 
     /// <summary>
-    /// 
+    /// Asynchronously gets the ProcessResult results from an exited Process.
     /// </summary>
-    /// <param name="process"></param>
-    /// <param name="disposeOfProcess"></param>
-    /// <returns></returns>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
     public async Task<ProcessResult> GetResultAsync(Process process, bool disposeOfProcess)
     {
         if (process.HasExited == false)
@@ -132,11 +186,22 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     }
 
     /// <summary>
-    /// 
+    /// Asynchronously gets the BufferedProcessResult results from an exited Process.
     /// </summary>
-    /// <param name="process"></param>
-    /// <param name="disposeOfProcess">Whether to dispose of the process before returning.</param>
-    /// <returns>The BufferedProcessResult </returns>
+    /// <param name="process">The process to retrieve results from.</param>
+    /// <param name="disposeOfProcess">Whether to dispose of the Process before returning.</param>
+    /// <returns>The results from an exited process.</returns>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
     public async Task<BufferedProcessResult> GetBufferedResultAsync(Process process, bool disposeOfProcess)
     {
         if (process.HasExited == false)
