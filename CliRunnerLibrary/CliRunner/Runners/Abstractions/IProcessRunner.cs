@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CliRunner.Abstractions;
+namespace CliRunner.Runners.Abstractions;
 
 /// <summary>
 /// An interface to specify safe Process Running functionality.
@@ -45,7 +45,7 @@ public interface IProcessRunner
     /// <returns>The Process Results from the running the process.</returns>
     public Task<ProcessResult> ExecuteProcessAsync(Process process, ProcessResultValidation processResultValidation,
         CancellationToken cancellationToken = default);
-
+    
     /// <summary>
     /// Runs the process asynchronously, waits for exit, and safely disposes of the Process before returning.
     /// </summary>
@@ -55,5 +55,4 @@ public interface IProcessRunner
     /// <returns>The Buffered Process Results from running the process.</returns>
     public Task<BufferedProcessResult> ExecuteBufferedProcessAsync(Process process,
         ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default);
-
 }

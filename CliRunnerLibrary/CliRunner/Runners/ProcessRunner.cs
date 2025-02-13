@@ -9,21 +9,16 @@
 
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
-using CliRunner.Abstractions;
 using CliRunner.Exceptions;
-using CliRunner.Extensions.Processes;
 using CliRunner.Internal.Localizations;
 
-using CliRunner.Piping.Abstractions;
+using CliRunner.Runners.Abstractions;
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
-
-namespace CliRunner;
+namespace CliRunner.Runners;
 
 /// <summary>
 /// The default implementation of IProcessRunner, a safer way to execute processes.
@@ -178,6 +173,8 @@ public class ProcessRunner : IProcessRunner
        
        return processResult;
     }
+
+    
 
     /// <summary>
     /// Runs the process asynchronously, waits for exit, and safely disposes of the Process before returning.
