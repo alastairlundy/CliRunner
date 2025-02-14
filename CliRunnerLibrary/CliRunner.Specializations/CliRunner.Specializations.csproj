@@ -10,15 +10,15 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-alpha.4</PackageVersion>
+        <PackageVersion>1.0.0-beta.1</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <LangVersion>13</LangVersion>
-        <PackageReleaseNotes>### Changes since 1.0.0 Alpha 3
-* Updated CliRunner dependency to 1.0.0 Alpha 4
+        <PackageReleaseNotes>### Changes since 1.0.0 Alpha 4
+* Updated CliRunner dependency to 1.0.0 Beta 1
             * Updated Specialization classes to make use of CliRunner's 1.0.0 Alpha 4 changes</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
         <PackageIcon>icon.png</PackageIcon>
