@@ -67,5 +67,19 @@ public class CommandBuilderTests
                                 .WithStandardInputPipe(new StreamWriter(Console.OpenStandardInput()));
                 });
         }
+
+        [Fact]
+        public void TestTargetFileReconfigured()
+        { 
+                //Arrange
+              ICommandBuilder commandBuilder = new CommandBuilder("foo");
+              
+              //Act
+              commandBuilder = commandBuilder.WithTargetFile("bar");
+              
+              //Assert
+              Command command = commandBuilder.Build();
+              Assert.Equal("bar", command.TargetFilePath);
+        }
         
 }
