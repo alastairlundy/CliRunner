@@ -39,7 +39,7 @@ public class CommandBuilder : ICommandBuilder
     /// <param name="targetFilePath">The target file path of a Command to be executed.</param>
     public CommandBuilder(string targetFilePath)
     {
-        _commandConfiguration = new Command(targetFilePath);
+        _commandConfiguration = new Command(targetFilePath, processResourcePolicy: ProcessResourcePolicy.Default);
     }
 
     /// <summary>
