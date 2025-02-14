@@ -20,7 +20,6 @@
 
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,6 +27,10 @@ using CliRunner.Abstractions;
 using CliRunner.Exceptions;
 using CliRunner.Piping.Abstractions;
 using CliRunner.Runners.Abstractions;
+
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
 
 // ReSharper disable CheckNamespace
 namespace CliRunner;
@@ -77,15 +80,16 @@ public class CommandRunner : ICommandRunner
 #endif
         public async Task<ProcessResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
         {
-            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command), command.ResourcePolicy);
+            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command));
             
             if (command.StandardInput != null)
             {
-                await _processPipeHandler.PipeStandardInputAsync(command.StandardInput, process);
+                process.StartInfo.RedirectStandardInput = true;
+                await _processPipeHandler.PipeStandardInputAsync(command.StandardInput.BaseStream, process);
             }
             
-            (ProcessResult processResult, StreamReader standardOutput, StreamReader standardError) result =
-                await _pipedProcessRunner.ExecuteProcessWithPipingAsync(process, ProcessResultValidation.None,
+            (ProcessResult processResult, Stream standardOutput, Stream standardError) result =
+                await _pipedProcessRunner.ExecuteProcessWithPipingAsync(process, ProcessResultValidation.None, command.ResourcePolicy,
                     cancellationToken);
 
             // Throw a CommandNotSuccessful exception if required.
@@ -96,12 +100,12 @@ public class CommandRunner : ICommandRunner
             
             if (command.StandardOutput != null)
             {
-                await result.standardOutput.BaseStream.CopyToAsync(command.StandardOutput.BaseStream,
+                await result.standardOutput.CopyToAsync(command.StandardOutput.BaseStream,
                     cancellationToken);
             }
             if (command.StandardError != null)
             {
-                await result.standardError.BaseStream.CopyToAsync(command.StandardError.BaseStream, cancellationToken);
+                await result.standardError.CopyToAsync(command.StandardError.BaseStream, cancellationToken);
             }
             
             return result.processResult;
@@ -129,16 +133,17 @@ public class CommandRunner : ICommandRunner
             CancellationToken cancellationToken = default)
         {
             Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command,
-                true, true), command.ResourcePolicy);
+                true, true));
 
-            if (command.StandardInput != null)
+            if (command.StandardInput != null && command.StandardInput != StreamWriter.Null)
             {
-                await _processPipeHandler.PipeStandardInputAsync(command.StandardInput, process);
+                process.StartInfo.RedirectStandardInput = true;
+                await _processPipeHandler.PipeStandardInputAsync(command.StandardInput.BaseStream, process);
             }
             
             // PipedProcessRunner runs the Process for us.
-            (BufferedProcessResult processResult, StreamReader standardOutput, StreamReader standardError) result =
-                await _pipedProcessRunner.ExecuteBufferedProcessWithPipingAsync(process, ProcessResultValidation.None,
+            (BufferedProcessResult processResult, Stream standardOutput, Stream standardError) result =
+                await _pipedProcessRunner.ExecuteBufferedProcessWithPipingAsync(process, ProcessResultValidation.None, command.ResourcePolicy,
                     cancellationToken);
 
             // Throw a CommandNotSuccessful exception if required.
@@ -149,12 +154,12 @@ public class CommandRunner : ICommandRunner
             
             if (command.StandardOutput != null)
             {
-                await result.standardOutput.BaseStream.CopyToAsync(command.StandardOutput.BaseStream,
+                await result.standardOutput.CopyToAsync(command.StandardOutput.BaseStream,
                     cancellationToken);
             }
             if (command.StandardError != null)
             {
-                await result.standardError.BaseStream.CopyToAsync(command.StandardError.BaseStream, cancellationToken);
+                await result.standardError.CopyToAsync(command.StandardError.BaseStream, cancellationToken);
             }
             
             return result.processResult;

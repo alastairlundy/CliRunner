@@ -22,9 +22,8 @@ public interface IProcessCreator
     /// Creates a process with the specified process start information.
     /// </summary>
     /// <param name="processStartInfo">The process start information to be used to configure the process to be created.</param>
-    /// <param name="processResourcePolicy">The process resource policy to be used to configure the process to be created.</param>
     /// <returns>The newly created Process with the specified start information.</returns>
-    Process CreateProcess(ProcessStartInfo processStartInfo, ProcessResourcePolicy processResourcePolicy);
+    Process CreateProcess(ProcessStartInfo processStartInfo);
 
     /// <summary>
     /// Creates Process Start Information based on specified Command object values.

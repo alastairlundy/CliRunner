@@ -46,6 +46,7 @@ public class PipedProcessRunner : IPipedProcessRunner
     /// </summary>
     /// <param name="process">The process to be run.</param>
     /// <param name="processResultValidation">The process result validation to be used.</param>
+    /// <param name="processResourcePolicy">The process resource policy to be set if it is not null.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>The Process Results from the running the process with the Piped Standard Output and Standard Error.</returns>
     /// <exception cref="FileNotFoundException">Thrown if the file, with the file name of the process to be executed, is not found.</exception>
@@ -61,23 +62,18 @@ public class PipedProcessRunner : IPipedProcessRunner
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public async Task<(ProcessResult processResult, StreamReader standardOutput, StreamReader standardError)> ExecuteProcessWithPipingAsync(Process process,
-        ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default)
+    public async Task<(ProcessResult processResult, Stream standardOutput, Stream standardError)> ExecuteProcessWithPipingAsync(Process process,
+        ProcessResultValidation processResultValidation, ProcessResourcePolicy processResourcePolicy = null, CancellationToken cancellationToken = default)
     {
-        if (File.Exists(process.StartInfo.FileName) == false)
-        {
-            throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
-        }
-
-        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
+        await _processRunnerUtils.ExecuteAsync(process, ProcessResultValidation.None, processResourcePolicy, cancellationToken);
        
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
         {
             throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
         }
 
-        StreamReader standardOutput = StreamReader.Null;
-        StreamReader standardError = StreamReader.Null;
+        Stream standardOutput = Stream.Null;
+        Stream standardError = Stream.Null;
         
         // Pipe Standard Output and Error
         await _processPipeHandler.PipeStandardOutputAsync(process, standardOutput);
@@ -87,12 +83,13 @@ public class PipedProcessRunner : IPipedProcessRunner
        
         return (processResult, standardOutput, standardError);
     }
-    
+
     /// <summary>
     /// Runs the process asynchronously, waits for exit, and safely disposes of the Process before returning.
     /// </summary>
     /// <param name="process">The process to be run.</param>
     /// <param name="processResultValidation">The process result validation to be used.</param>
+    /// <param name="processResourcePolicy">The process resource policy to be set if it is not null.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>The Buffered Process Results from running the process with the Piped Standard Output and Standard Error.</returns>
     /// <exception cref="FileNotFoundException">Thrown if the file, with the file name of the process to be executed, is not found.</exception>
@@ -108,28 +105,23 @@ public class PipedProcessRunner : IPipedProcessRunner
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public async Task<(BufferedProcessResult processResult, StreamReader standardOutput, StreamReader standardError)>
+    public async Task<(BufferedProcessResult processResult, Stream standardOutput, Stream standardError)>
         ExecuteBufferedProcessWithPipingAsync(Process process, ProcessResultValidation processResultValidation,
+            ProcessResourcePolicy processResourcePolicy = null,
             CancellationToken cancellationToken = default)
     {
-        if (File.Exists(process.StartInfo.FileName) == false)
-        {
-            throw new FileNotFoundException(
-                Resources.Exceptions_FileNotFound.Replace("{file}", process.StartInfo.FileName));
-        }
-
         process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
         
-        await _processRunnerUtils.ExecuteAsync(process, cancellationToken);
+        await _processRunnerUtils.ExecuteAsync(process, ProcessResultValidation.None, processResourcePolicy, cancellationToken);
 
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
         {
             throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);
         }
 
-        StreamReader standardOutput = StreamReader.Null;
-        StreamReader standardError = StreamReader.Null;
+        Stream standardOutput = Stream.Null;
+        Stream standardError = Stream.Null;
         
         // Pipe Standard Output and Error
         await _processPipeHandler.PipeStandardOutputAsync(process, standardOutput);

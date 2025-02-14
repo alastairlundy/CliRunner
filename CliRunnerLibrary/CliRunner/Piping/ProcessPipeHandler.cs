@@ -31,11 +31,14 @@ public class ProcessPipeHandler : IProcessPipeHandler
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif 
-    public async Task PipeStandardInputAsync(StreamWriter source, Process destination)
+    public async Task PipeStandardInputAsync(Stream source, Process destination)
     {
-        await destination.StandardInput.FlushAsync();
-        destination.StandardInput.BaseStream.Position = 0;
-        await source.BaseStream.CopyToAsync(destination.StandardInput.BaseStream);  
+        if (destination.StartInfo.RedirectStandardInput && destination.StandardInput != StreamWriter.Null)
+        {
+            await destination.StandardInput.FlushAsync();
+            destination.StandardInput.BaseStream.Position = 0;
+            await source.CopyToAsync(destination.StandardInput.BaseStream); 
+        }
     }
 
     /// <summary>
@@ -54,16 +57,15 @@ public class ProcessPipeHandler : IProcessPipeHandler
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif 
-    public async Task PipeStandardOutputAsync(Process source, StreamReader destination)
+    public async Task PipeStandardOutputAsync(Process source, Stream destination)
     {
-        if (destination.Equals(StreamReader.Null))
+        if (source.StartInfo.RedirectStandardOutput)
         {
-            destination = new StreamReader(source.StandardOutput.BaseStream);
+            if (source.StandardOutput != StreamReader.Null)
+            {
+                await source.StandardOutput.BaseStream.CopyToAsync(destination);
+            }
         }
-        
-        destination.DiscardBufferedData();
-        destination.BaseStream.Position = 0;
-        await source.StandardOutput.BaseStream.CopyToAsync(destination.BaseStream);
     }
 
     /// <summary>
@@ -82,15 +84,14 @@ public class ProcessPipeHandler : IProcessPipeHandler
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif 
-    public async Task PipeStandardErrorAsync(Process source, StreamReader destination)
+    public async Task PipeStandardErrorAsync(Process source, Stream destination)
     {
-        if (destination.Equals(StreamReader.Null))
+        if (source.StartInfo.RedirectStandardError)
         {
-            destination = new StreamReader(source.StandardError.BaseStream);
+            if (source.StandardError != StreamReader.Null)
+            {
+                await source.StandardError.BaseStream.CopyToAsync(destination);
+            }
         }
-        
-        destination.DiscardBufferedData();
-        destination.BaseStream.Position = 0;
-        await source.StandardError.BaseStream.CopyToAsync(destination.BaseStream);
     }
 }

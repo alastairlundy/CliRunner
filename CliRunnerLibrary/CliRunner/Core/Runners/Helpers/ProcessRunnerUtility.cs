@@ -9,14 +9,20 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using CliRunner.Exceptions;
+using CliRunner.Extensions;
+using CliRunner.Extensions.Processes;
 using CliRunner.Internal.Localizations;
 using CliRunner.Runners.Helpers.Abstractions;
 
-#if NET5_0_OR_GREATER
+#if NETSTANDARD2_0 || NETSTANDARD2_1
+using OperatingSystem = Polyfills.OperatingSystemPolyfill;
+#else
 using System.Runtime.Versioning;
 #endif
 
@@ -28,7 +34,39 @@ namespace CliRunner.Runners.Helpers;
 /// <remarks>This class is primarily intended for internal use OR use when creating a Process Runner or Command Runner implementation.</remarks>
 public class ProcessRunnerUtility : IProcessRunnerUtility
 {
+    private readonly IFilePathResolver _filePathResolver;
     
+    public ProcessRunnerUtility(IFilePathResolver filePathResolver)
+    {
+        _filePathResolver = filePathResolver;
+    }
+    
+    public int Execute(Process process)
+    {
+        return Execute(process, ProcessResultValidation.None, null);
+    }
+
+    public int Execute(Process process, ProcessResultValidation processResultValidation,
+        ProcessResourcePolicy processResourcePolicy = null)
+    {
+            _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
+            process.StartInfo.FileName = resolvedFilePath;
+            
+            if (process.HasStarted() == false)
+            {
+                process.Start();
+            }
+
+            if (processResourcePolicy != null)
+            {
+                process.SetResourcePolicy(processResourcePolicy);
+            }
+
+            process.WaitForExit();
+
+            return process.ExitCode;
+    }
+
     /// <summary>
     /// Starts a Process and asynchronously waits for it to exit before returning.
     /// </summary>
@@ -49,13 +87,14 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
 #endif
     public async Task<int> ExecuteAsync(Process process, CancellationToken cancellationToken = default)
     {
-        return await ExecuteAsync(process, ProcessResultValidation.None, cancellationToken);
+        return await ExecuteAsync(process, ProcessResultValidation.None,null, cancellationToken);
     }
 
     /// <summary>
     /// Starts a Process and asynchronously waits for it to exit before returning.
     /// </summary>
     /// <param name="process">The process to be executed.</param>
+    /// <param name="processResourcePolicy">The process resource policy to be set for the Process.</param>
     /// <param name="cancellationToken">The cancellation token to use to cancel the waiting for process exit if required.</param>
     /// <param name="processResultValidation">Whether validation should be performed on the exit code.</param>
     /// <returns>The process' exit code.</returns>
@@ -72,12 +111,23 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public async Task<int> ExecuteAsync(Process process, ProcessResultValidation processResultValidation,
+    public async Task<int> ExecuteAsync(Process process,
+        ProcessResultValidation processResultValidation,
+        ProcessResourcePolicy processResourcePolicy = null,
         CancellationToken cancellationToken = default)
     {
-        if (process.HasExited == false)
-        {
-            process.Start();
+        _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
+        process.StartInfo.FileName = resolvedFilePath;
+
+            if (process.HasStarted() == false)
+            {
+                process.Start();
+            }
+
+            if (processResourcePolicy != null)
+            {
+                process.SetResourcePolicy(processResourcePolicy);
+            }
             
             await process.WaitForExitAsync(cancellationToken);
 
@@ -87,11 +137,6 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
             }
             
             return process.ExitCode;
-        }
-        else
-        {
-            throw new InvalidOperationException(Resources.Exceptions_Processes_CannotStartExitedProcess);
-        }
     }
 
     /// <summary>
@@ -108,7 +153,7 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
         process.Close();
         process.Dispose();
     }
-
+    
     /// <summary>
     /// Gets the results from an exited Process.
     /// </summary>
@@ -117,10 +162,13 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
     /// <returns>The results from an exited process.</returns>
     public ProcessResult GetResult(Process process, bool disposeOfProcess)
     {
-        if (process.HasExited == false)
+        if (process.HasStarted() == false)
         {
             if (Process.GetProcesses().Any(x => x.Equals(process)) == false)
             {
+                _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
+                process.StartInfo.FileName = resolvedFilePath;
+                
                  process.Start();
             }
             
@@ -156,10 +204,13 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
 #endif
     public BufferedProcessResult GetBufferedResult(Process process, bool disposeOfProcess)
     {
-        if (process.HasExited == false)
+        if (process.HasStarted() == false)
         {
             if (Process.GetProcesses().Any(x => x.Equals(process)) == false)
             {
+                _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
+                process.StartInfo.FileName = resolvedFilePath;
+                
                 process.Start();
             }
             
@@ -197,7 +248,7 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
 #endif
     public async Task<ProcessResult> GetResultAsync(Process process, bool disposeOfProcess)
     {
-        if (process.HasExited == false)
+        if (process.HasStarted() == false)
         {
             if (Process.GetProcesses().Any(x => x.Equals(process)) == false)
             {
@@ -238,7 +289,7 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
 #endif
     public async Task<BufferedProcessResult> GetBufferedResultAsync(Process process, bool disposeOfProcess)
     {
-        if (process.HasExited == false)
+        if (process.HasStarted() == false)
         {
             if (Process.GetProcesses().Contains(process) == false)
             {

@@ -19,6 +19,11 @@ namespace CliRunner.Runners.Helpers.Abstractions;
 /// <remarks>This interface is primarily intended for internal use OR use when creating a Process Runner or Command Runner implementation.</remarks>
 public interface IProcessRunnerUtility
 {
+    public int Execute(Process process);
+
+    public int Execute(Process process, ProcessResultValidation processResultValidation,
+        ProcessResourcePolicy processResourcePolicy = null);
+    
     /// <summary>
     /// Starts a Process and asynchronously waits for it to exit before returning.
     /// </summary>
@@ -34,7 +39,9 @@ public interface IProcessRunnerUtility
     /// <param name="processResultValidation">Whether validation should be performed on the exit code.</param>
     /// <param name="cancellationToken">The cancellation token to use to cancel the waiting for process exit if required.</param>
     /// <returns>The process' exit code.</returns>
-    public Task<int> ExecuteAsync(Process process, ProcessResultValidation processResultValidation, CancellationToken cancellationToken = default);
+    public Task<int> ExecuteAsync(Process process, ProcessResultValidation processResultValidation, 
+        ProcessResourcePolicy processResourcePolicy = null,
+        CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Disposes of the specified process.
