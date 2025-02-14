@@ -1,6 +1,10 @@
 # CliRunner
 CliRunner is a library for interacting with Command Line Interfaces and wrapping around executables.
 
+
+
+![CliRunner logo](https://github.com/alastairlundy/CliRunner/blob/main/.assets/icon.png)
+
 [![NuGet](https://img.shields.io/nuget/v/CliRunner.svg)](https://www.nuget.org/packages/CliRunner/) 
 [![NuGet](https://img.shields.io/nuget/dt/CliRunner.svg)](https://www.nuget.org/packages/CliRunner/)
 
