@@ -90,7 +90,7 @@ public interface ICommandBuilder
     /// </summary>
     /// <param name="configure">The CredentialsBuilder configuration.</param>
     /// <returns>The new CommandBuilder with the specified Credentials.</returns>
-    ICommandBuilder WithCredential(Action<IUserCredentialBuilder> configure);
+    ICommandBuilder WithUserCredential(Action<IUserCredentialBuilder> configure);
     
     /// <summary>
     /// Sets the Result Validation whether to throw an exception or not if the Command does not execute successfully.
