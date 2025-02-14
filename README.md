@@ -54,7 +54,8 @@ This can be added to any .NET Standard 2.0, .NET Standard 2.1, .NET 8, or .NET 9
 **Note:** This library has not been tested on Android or Tizen!
 
 ## Installation
-* [Nuget](https://nuget.org/packages/) or ``dotnet add package CliRunner``
+* [CliRunner Nuget](https://nuget.org/packages/CliRunner) or ``dotnet add package CliRunner``
+* [CliRunner.Extensions.DependencyInjection Nuget](https://nuget.org/packages/CliRunner.Extensions.DependencyInjection) or ``dotnet add package CliRunner.Extensions.DependencyInjection``
 
 ## Usage
 
@@ -158,7 +159,7 @@ CliRunner is licensed under the MPL 2.0 license. If you modify any of CliRunner'
 
 If you use CliRunner in your project please make an exact copy of the contents of CliRunner's LICENSE.txt file available either in your third party licenses txt file or as a separate txt file.
 
-## Assets
+### Assets
 CliRunner's Icon is NOT licensed under the MPL 2.0 license and are licensed under Copyright with all rights reserved to me (Alastair Lundy).
 
 If you fork CliRunner and re-distribute it, please replace the usage of the icon unless you have prior written agreements from me. 

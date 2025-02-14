@@ -13,27 +13,27 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 1.0.0 Alpha 3
+        <PackageReleaseNotes>## Changes since 1.0.0 Alpha 4
 
-### Breaking Changes
-* Renamed ``CommandResult`` to ``ProcessResult`` 
-* Renamed ``BufferedCommandResult`` to ``BufferedProcessResult``
-* Renamed ``CommandResultValidation`` to ``ProcessResultValidation``
-* Removed ``ICommandPipeHandler`` and ``CommandPipeHandler``
-* Removed ``ToCommandResult`` extension methods
+### Final Breaking Changes before 1.0
+* Moved Dependency Injection extensions to a separate library.
+* Renamed ``UseResourcePolicy`` extension method to ``SetResourcePolicy``
+* Changed Process Running classes to make use of ProcessResourcePolicy
 
 ### Non-Breaking Changes
-* Updated  CollectionsExtensions from 6.0.0 Alpha 2 to 6.0.0 RC 1
-* Added ``IProcessPipeHandler`` and ``ProcessPipeHandler`` - This is mainly meant to be used by CommandRunner
-* Added ``IPipedProcessRunner`` and ``PipedProcessRunner``  - This is mainly meant to be used by CommandRunner
-* Added ``IProcessRunner`` and ``ProcessRunner``  - Closing #9 
-* Added ``IProcessRunnerUtility`` and ``ProcessRunnerUtility``
-* Updated ``CommandRunner`` to use ``IProcessPipeHandler`` and ``IPipedProcessRunner``
-* Updated Dependency Injection Extensions</PackageReleaseNotes>
+* Added ``HasStarted()`` Process extension method
+* Added support for CliRunnert to resolve Target Files set to PATH variable file paths.
+* Added ``IFilePathResolver`` and ``FilePathResolver``
+
+### Bug Fixes
+* Fixed a bug that would throw an exception due to setting ProcessResourcePolicy objects to Processes before they were started
+* Fixed a bug that would throw an exception due to Standard Input attempting to be redirected when nulll.
+* Fixed a bug where the default ProcessorAffinity for a ProcessResourcePolicy would be an invalid value.
+* Fixed a bug where ProcessPipeHandler would cause an exception </PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-alpha.4</PackageVersion>
+        <PackageVersion>1.0.0-beta.1</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <PackageIcon>icon.png</PackageIcon>
