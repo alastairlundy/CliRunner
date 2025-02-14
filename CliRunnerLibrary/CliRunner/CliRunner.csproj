@@ -36,6 +36,7 @@
         <PackageVersion>1.0.0-alpha.4</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
@@ -86,6 +87,11 @@
     <ItemGroup>
       <None Update="THIRD_PARTY_NOTICES.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\.assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
       </None>
     </ItemGroup>
 

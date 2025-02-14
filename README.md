@@ -156,6 +156,11 @@ CliRunner is licensed under the MPL 2.0 license. If you modify any of CliRunner'
 
 If you use CliRunner in your project please make an exact copy of the contents of CliRunner's LICENSE.txt file available either in your third party licenses txt file or as a separate txt file.
 
+## Assets
+CliRunner's Icon is NOT licensed under the MPL 2.0 license and are licensed under Copyright with all rights reserved to me (Alastair Lundy).
+
+If you fork CliRunner and re-distribute it, please replace the usage of the icon unless you have prior written agreements from me. 
+
 ## Acknowledgements
 This project would like to thank the following projects for their work:
 * [CliWrap](https://github.com/Tyrrrz/CliWrap/) for inspiring this project

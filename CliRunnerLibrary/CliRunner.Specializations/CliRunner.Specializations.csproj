@@ -21,6 +21,7 @@
 * Updated CliRunner dependency to 1.0.0 Alpha 4
             * Updated Specialization classes to make use of CliRunner's 1.0.0 Alpha 4 changes</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
 
@@ -63,6 +64,14 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\.assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -19,6 +19,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     
@@ -33,6 +34,14 @@
         <PackagePath>LICENSE.txt</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\.assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
     </ItemGroup>
     
 </Project>
