@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Security;
 using System.Text;
 
 using Xunit;
@@ -49,6 +51,7 @@ public class CommandBuilderTests
         {
                 ICommandBuilder commandBuilder = new CommandBuilder("foo");
 
+                //Assert
                 Assert.Throws<ArgumentException>(() =>
                 {
                     commandBuilder.WithShellExecution(true)
@@ -81,5 +84,115 @@ public class CommandBuilderTests
               Command command = commandBuilder.Build();
               Assert.Equal("bar", command.TargetFilePath);
         }
-        
+
+        [Fact]
+        public void TestArgumentsReplaced()
+        {
+             //Arrange
+             ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                     .WithArguments("--arg-value=value");
+             
+             //Act
+             var newArguments = commandBuilder.WithArguments("--flag")
+                     .Build();
+             
+             //Assert
+             Assert.NotEqual(newArguments, commandBuilder.Build());
+        }
+
+        [Fact]
+        public void TestValidationReconfigured()
+        {
+                //Arrange
+                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                        .WithValidation(ProcessResultValidation.None);
+                
+                //Act
+                commandBuilder = commandBuilder.WithValidation(ProcessResultValidation.ExitCodeZero);
+                
+                //Assert
+                Command command = commandBuilder.Build();
+                Assert.Equal(ProcessResultValidation.ExitCodeZero, command.ResultValidation);
+        }
+
+        [Fact]
+        public void TestReconfiguredUserCredential()
+        {
+                //Arrange
+                SecureString password = new SecureString();
+                password.AppendChar('1');
+                password.AppendChar('2');
+                password.AppendChar('3');
+                password.AppendChar('4');
+                
+                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                        .WithUserCredential(new UserCredential("", "admin", password, false));
+                
+                //Act
+                SecureString password2 = new SecureString();
+                password2.AppendChar('9');
+                password2.AppendChar('8');
+                password2.AppendChar('7');
+                password2.AppendChar('6');
+
+                UserCredential userCredential = new UserCredential("", "root", password2, false);
+                
+                commandBuilder = commandBuilder.WithUserCredential(userCredential);
+                
+                //Assert
+                Command command = commandBuilder.Build();
+                Assert.Equal(userCredential, command.Credential);
+        }
+
+        [Fact]
+        public void TestReconfiguredResourcePolicy()
+        {
+                //Arrange
+                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                        .WithProcessResourcePolicy(ProcessResourcePolicy.Default);
+                
+                
+                //Arrange
+                ProcessResourcePolicy resourcePolicy = new ProcessResourcePolicy(default,
+                        null,
+                        null,
+                        ProcessPriorityClass.AboveNormal,
+                        true);
+                
+                commandBuilder = commandBuilder.WithProcessResourcePolicy(resourcePolicy);
+                
+                //Assert
+                Command command = commandBuilder.Build();
+                Assert.Equal(resourcePolicy, command.ResourcePolicy);
+        }
+
+        [Fact]
+        public void TestReconfiguredAdminPrivileges()
+        {
+             //Act
+             ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                     .WithAdministratorPrivileges(false);
+             
+             //Arrange
+             commandBuilder = commandBuilder.WithAdministratorPrivileges(true);
+             
+             //Assert
+             Command command = commandBuilder.Build();
+             Assert.True(command.RequiresAdministrator);
+        }
+
+        [Fact]
+        public void TestReconfiguredWorkingDirectory()
+        {
+                //Act
+                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                        .WithWorkingDirectory("dir");
+                
+                //Arrange
+                commandBuilder = commandBuilder.WithWorkingDirectory("dir2");
+                
+                //Assert
+                Command command = commandBuilder.Build();
+                Assert.Equal("dir2", command.WorkingDirectoryPath);
+        }
 }
