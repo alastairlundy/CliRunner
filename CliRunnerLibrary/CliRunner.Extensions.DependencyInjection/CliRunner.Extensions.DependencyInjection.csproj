@@ -15,6 +15,10 @@
         <RepositoryType>git</RepositoryType>
         <PackageReleaseNotes>Initial Release as separate package.</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
 
     
