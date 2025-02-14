@@ -170,8 +170,7 @@ namespace CliRunner
             StandardInput = standardInput ?? StreamWriter.Null;
             StandardOutput = standardOutput ?? StreamReader.Null;
             StandardError = standardError ?? StreamReader.Null;
-
-            ResourcePolicy = processResourcePolicy;
+            
             UseShellExecution = useShellExecution;
             WindowCreation = windowCreation;
             
