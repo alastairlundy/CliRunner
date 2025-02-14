@@ -23,15 +23,17 @@ Assuming CliRunner version 1 has been released, the following tweaks to your ``.
 ## Setting up CliRunner
 
 ### Dependency Injection 
-There's 2 main ways of setting up CliRunner with dependency injection: manually, and using CliRunner's ``UseCliRunner`` configuration extension methods.
+There's 2 main ways of setting up CliRunner with dependency injection: manually, and using CliRunner's ``AddCliRunner`` configuration extension methods with the ``CliRunner.Extensions.DependencyInjection`` nuget package.
 
-#### Using ``UseCliRunner``
+#### Using ``AddCliRunner``
+For this approach you'll need the ``CliRunner.Extensions.DependencyInjection`` nuget package.
+
 If your project doesn't already use Dependency Injection, you can set it up as follows:
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
 
-using CliRunner.Extensions;
+using CliRunner.Extensions.DependencyInjection;
 
 namespace MyApp;
 
@@ -46,8 +48,8 @@ namespace MyApp;
 
             // Register Your other dependencies here
             
-            // UseCliRunner goes here
-            services.UseCliRunner();
+            // AddCliRunner goes here
+            services.AddCliRunner();
 
             // Build the service provider
             serviceProvider = services.BuildServiceProvider();
@@ -79,8 +81,10 @@ namespace MyApp;
 
             // Register Your other dependencies here
             
-            // UseCliRunner goes here
-            services.AddSingleton<ICommandPipeHandler, CommandPipeHandler>();
+            services.AddSingleton<IFilePathResolver, FilePathResolver>();
+            services.AddSingleton<IProcessRunnerUtility, ProcessRunnerUtility>();
+            services.AddSingleton<IPipedProcessRunner, PipedProcessRunner>();
+            services.AddSingleton<IProcessPipeHandler, ProcessPipeHandler>();
             services.AddSingleton<IProcessCreator, ProcessCreator>();
             services.AddSingleton<ICommandRunner, CommandRunner>();
 
