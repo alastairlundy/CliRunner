@@ -7,6 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
@@ -27,12 +28,17 @@ public class ProcessResourcePolicy
     /// <param name="maxWorkingSet">The Maximum Working Set Size for the Process.</param>
     /// <param name="priorityClass">The priority class to assign to the Process.</param>
     /// <param name="enablePriorityBoost">Whether to enable Priority Boost if the process window enters focus.</param>
-    public ProcessResourcePolicy(nint processorAffinity = default(nint),
+    public ProcessResourcePolicy(IntPtr? processorAffinity = null,
         nint? minWorkingSet = null, 
         nint? maxWorkingSet = null,
         ProcessPriorityClass priorityClass = ProcessPriorityClass.Normal,
         bool enablePriorityBoost = true)
     {
+        if (processorAffinity == default)
+        {
+            processorAffinity = new IntPtr(0x0001);  
+        }
+        
         MinWorkingSet = minWorkingSet;
         MaxWorkingSet = maxWorkingSet;
         ProcessorAffinity = processorAffinity;
@@ -48,7 +54,7 @@ public class ProcessResourcePolicy
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]
 #endif
-    public nint ProcessorAffinity { get; }
+    public IntPtr? ProcessorAffinity { get; }
     
     /// <summary>
     /// The priority class to assign to the Process.

@@ -17,37 +17,49 @@ using System.Diagnostics;
 
 namespace CliRunner.Extensions.Processes;
 
-public static class ProcessUseResourcePolicyExtensions
+public static class ProcessSetResourcePolicyExtensions
 {
+
     /// <summary>
     /// Applies a ProcessResourcePolicy to a Process.
     /// </summary>
     /// <param name="process">The process to apply the policy to.</param>
     /// <param name="policy">The process resource policy to be applied.</param>
-    public static void UseResourcePolicy(this Process process, ProcessResourcePolicy policy)
+    /// <exception cref="InvalidOperationException"></exception>
+    public static void SetResourcePolicy(this Process process, ProcessResourcePolicy policy)
     {
-        if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
+        if (process.HasStarted())
         {
-            process.ProcessorAffinity = policy.ProcessorAffinity;
-        }
-
-        if (OperatingSystem.IsMacOS() ||
-            OperatingSystem.IsMacCatalyst() ||
-            OperatingSystem.IsFreeBSD() ||
-            OperatingSystem.IsWindows())
-        {
-            if (policy.MinWorkingSet != null)
+            if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux())
             {
-                process.MinWorkingSet = (nint)policy.MinWorkingSet;
+                if (policy.ProcessorAffinity is not null)
+                {
+                    process.ProcessorAffinity = (IntPtr)policy.ProcessorAffinity;
+                }
             }
 
-            if (policy.MaxWorkingSet != null)
+            if (OperatingSystem.IsMacOS() ||
+                OperatingSystem.IsMacCatalyst() ||
+                OperatingSystem.IsFreeBSD() ||
+                OperatingSystem.IsWindows())
             {
-                process.MaxWorkingSet = (nint)policy.MaxWorkingSet;
+                if (policy.MinWorkingSet != null)
+                {
+                    process.MinWorkingSet = (nint)policy.MinWorkingSet;
+                }
+
+                if (policy.MaxWorkingSet != null)
+                {
+                    process.MaxWorkingSet = (nint)policy.MaxWorkingSet;
+                }
             }
-        }
         
-        process.PriorityClass = policy.PriorityClass;
-        process.PriorityBoostEnabled = policy.EnablePriorityBoost;
+            process.PriorityClass = policy.PriorityClass;
+            process.PriorityBoostEnabled = policy.EnablePriorityBoost;
+        }
+        else
+        {
+            throw new InvalidOperationException("Cannot set Resource Policy to a Process that has not already been started.");
+        }
     }
 }
