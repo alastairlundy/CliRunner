@@ -40,11 +40,47 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
         _filePathResolver = filePathResolver;
     }
     
+    /// <summary>
+    /// Starts a Process and synchronously waits for it to exit before returning.
+    /// </summary>
+    /// <param name="process">The process to be executed.</param>
+    /// <exception cref="InvalidOperationException">Thrown if the specified process has not exited.</exception>
+    /// <returns>The process' exit code.</returns>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
     public int Execute(Process process)
     {
-        return Execute(process, ProcessResultValidation.None, null);
+        return Execute(process, ProcessResultValidation.None);
     }
 
+    /// <summary>
+    /// Starts a Process and synchronously waits for it to exit before returning.
+    /// </summary>
+    /// <param name="process">The process to be executed.</param>
+    /// <param name="processResultValidation">Whether validation should be performed on the exit code.</param>
+    /// <param name="processResourcePolicy">The process resource policy to be set if it is not null.</param>
+    /// <exception cref="InvalidOperationException">Thrown if the specified process has not exited.</exception>
+    /// <returns>The process' exit code.</returns>
+#if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [SupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("browser")]
+#endif
     public int Execute(Process process, ProcessResultValidation processResultValidation,
         ProcessResourcePolicy processResourcePolicy = null)
     {
