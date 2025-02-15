@@ -36,66 +36,40 @@ public class FilePathResolver : IFilePathResolver
     {
         if (string.IsNullOrEmpty(inputFilePath))
         {
-            throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", inputFilePath));
+            throw new ArgumentNullException(Resources.Exceptions_TargetFile_NullOrEmpty);
+        }
+
+        if (File.Exists(inputFilePath))
+        {
+            outputFilePath = inputFilePath;
+            return;
         }
         
-        if (File.Exists(inputFilePath) == false)
-        {
-            bool isPartOfPath = false;
+        string? path = Environment.GetEnvironmentVariable("PATH");
             
-            string? pathLocation = null;
+        char pathSeparator = OperatingSystem.IsWindows() ? ';' : ':';
 
-            if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-            {
-                string? path = Environment.GetEnvironmentVariable("PATH");
-
-                if (path != null)
-                {
-                    char separator = OperatingSystem.IsWindows() ? ';' : ':';
-                    
-                    string[] lines = path.Split(separator);
-                    
-                    isPartOfPath = lines.Any(x => x.EndsWith(inputFilePath + Path.DirectorySeparatorChar) || x.EndsWith(inputFilePath));
-
-                    if (isPartOfPath)
-                    {
-                        string actual = Path.GetFullPath(lines.First(x => x.EndsWith(inputFilePath + Path.DirectorySeparatorChar) || x.EndsWith(inputFilePath)));
-
-                        bool exactFileExists =  Directory.GetFiles(actual).Select(x => Path.GetFileNameWithoutExtension(x))
-                            .Any(x => x.Equals(inputFilePath));
-
-                        if (exactFileExists)
-                        {
-                            string exactFile = Directory.GetFiles(actual).First(x => Path.GetFileNameWithoutExtension(x).Equals(inputFilePath));
-                            pathLocation = Path.Combine(actual, exactFile);
-                        }
-                    }
-                    else
-                    {
-                        pathLocation = null;
-                    }
-                }
-                else
-                {
-                    isPartOfPath = false;
-                }
-            }
-
-            if (isPartOfPath && pathLocation != null && string.IsNullOrEmpty(pathLocation) == false)
-            {
-                outputFilePath = pathLocation;
-            }
-
-            if (File.Exists(inputFilePath) == false)
-            {
-                throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", inputFilePath));
-            }
-
-            outputFilePath = inputFilePath;
-        }
-        else
+        if (path == null)
         {
             outputFilePath = inputFilePath;
+            return;
         }
+            
+        string[] paths = path.Split(pathSeparator);
+
+        foreach (string pathLine in paths)
+        {
+            string[] files = Directory.EnumerateFiles(pathLine,
+                $"{Path.GetFileName(inputFilePath)}.*",
+                SearchOption.TopDirectoryOnly).ToArray();
+            
+            if (files.Length > 0)
+            {
+                outputFilePath = files.First();
+                return;
+            }
+        }
+        
+        throw new FileNotFoundException(Resources.Exceptions_FileNotFound.Replace("{file}", inputFilePath));
     }
 }
