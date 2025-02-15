@@ -22,12 +22,13 @@ namespace CliRunner
     /// A buffered ProcessResult containing a Process's or Command's StandardOutput and StandardError information.
     /// </summary>
     public class BufferedProcessResult(
+        string executableFilePath,
         int exitCode,
         string standardOutput,
         string standardError,
         DateTime startTime,
         DateTime exitTime)
-        : ProcessResult(exitCode, startTime, exitTime), IEquatable<BufferedProcessResult>
+        : ProcessResult(executableFilePath, exitCode, startTime, exitTime), IEquatable<BufferedProcessResult>
     {
         /// <summary>
         /// The Standard Output from a Process or Command represented as a string.

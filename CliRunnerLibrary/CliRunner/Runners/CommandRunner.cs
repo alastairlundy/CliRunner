@@ -18,6 +18,7 @@
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Global
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -145,7 +146,7 @@ public class CommandRunner : ICommandRunner
             (BufferedProcessResult processResult, Stream standardOutput, Stream standardError) result =
                 await _pipedProcessRunner.ExecuteBufferedProcessWithPipingAsync(process, ProcessResultValidation.None, command.ResourcePolicy,
                     cancellationToken);
-
+            
             // Throw a CommandNotSuccessful exception if required.
             if (result.processResult.ExitCode != 0 && command.ResultValidation == ProcessResultValidation.ExitCodeZero)
             {

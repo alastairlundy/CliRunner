@@ -24,6 +24,7 @@ namespace CliRunner
     /// A class that represents the results from an executed Process or Command.
     /// </summary>
     public class ProcessResult(
+        string executableFilePath,
         int exitCode,
         DateTime startTime,
         DateTime exitTime)
@@ -36,6 +37,11 @@ namespace CliRunner
         /// The exit code from the Command that was executed.
         /// </summary>
         public int ExitCode { get; } = exitCode;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ExecutedFilePath { get; } = executableFilePath;
 
         /// <summary>
         /// The Date and Time that the Command's execution started.
