@@ -16,8 +16,10 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+
+using AlastairLundy.Extensions.System.Globalization;
+
 using CliRunner.Builders.Abstractions;
-using CliRunner.Extensions;
 using CliRunner.Internal.Localizations;
 // ReSharper disable UseIndexFromEndExpression
 // ReSharper disable ConvertClosureToMethodGroup
@@ -399,8 +401,15 @@ public class ArgumentsBuilder : IArgumentsBuilder
 
     private bool IsValidArgument(IFormattable value)
     {
-        string s = FormattableToStringExtensions.ToString(value);
-        
-        return IsValidArgument(s);
+        string? s = FormattableToStringExtensions.ToString(value);
+
+        if (s != null)
+        {
+            return IsValidArgument(s);
+        }
+        else
+        {
+            return false;   
+        }
     }
 }

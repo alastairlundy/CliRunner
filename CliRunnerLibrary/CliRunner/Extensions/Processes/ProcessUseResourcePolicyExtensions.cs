@@ -15,6 +15,8 @@ using OperatingSystem = Polyfills.OperatingSystemPolyfill;
 using System;
 using System.Diagnostics;
 
+using AlastairLundy.Extensions.System.Processes;
+
 namespace CliRunner.Extensions.Processes;
 
 public static class ProcessSetResourcePolicyExtensions

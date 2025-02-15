@@ -9,15 +9,14 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using AlastairLundy.Extensions.System.Processes;
+
 using CliRunner.Exceptions;
-using CliRunner.Extensions;
 using CliRunner.Extensions.Processes;
-using CliRunner.Internal.Localizations;
 using CliRunner.Runners.Helpers.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
