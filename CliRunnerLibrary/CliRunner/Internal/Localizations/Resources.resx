@@ -63,4 +63,7 @@
     <data name="Exceptions.Processes.CannotStartExitedProcess" xml:space="preserve">
         <value>Cannot start a process that has exited.</value>
     </data>
+    <data name="Exceptions.TargetFile.NullOrEmpty" xml:space="preserve">
+        <value>Input file path cannot be null or empty.</value>
+    </data>
 </root>

@@ -14,7 +14,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using CliRunner.Exceptions;
-using CliRunner.Internal.Localizations;
 using CliRunner.Piping.Abstractions;
 using CliRunner.Runners.Abstractions;
 using CliRunner.Runners.Helpers.Abstractions;
@@ -114,7 +113,7 @@ public class PipedProcessRunner : IPipedProcessRunner
         process.StartInfo.RedirectStandardError = true;
         
         await _processRunnerUtils.ExecuteAsync(process, ProcessResultValidation.None, processResourcePolicy, cancellationToken);
-
+        
         if (processResultValidation == ProcessResultValidation.ExitCodeZero && process.ExitCode != 0)
         {
             throw new ProcessNotSuccessfulException(process: process, exitCode: process.ExitCode);

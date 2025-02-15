@@ -85,7 +85,11 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
         ProcessResourcePolicy processResourcePolicy = null)
     {
             _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
-            process.StartInfo.FileName = resolvedFilePath;
+            
+            if (resolvedFilePath.Equals(process.StartInfo.FileName) == false)
+            {
+                process.StartInfo.FileName = resolvedFilePath;    
+            }
             
             if (process.HasStarted() == false)
             {
@@ -152,26 +156,30 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
         CancellationToken cancellationToken = default)
     {
         _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
-        process.StartInfo.FileName = resolvedFilePath;
+       
+        if (resolvedFilePath.Equals(process.StartInfo.FileName) == false)
+        {
+            process.StartInfo.FileName = resolvedFilePath;    
+        }
 
-            if (process.HasStarted() == false)
-            {
-                process.Start();
-            }
+        if (process.HasStarted() == false)
+        {
+            process.Start();
+        }
 
-            if (processResourcePolicy != null)
-            {
-                process.SetResourcePolicy(processResourcePolicy);
-            }
+        if (processResourcePolicy != null)
+        {
+            process.SetResourcePolicy(processResourcePolicy);
+        }
             
-            await process.WaitForExitAsync(cancellationToken);
+        await process.WaitForExitAsync(cancellationToken);
 
-            if (process.ExitCode != 0 && processResultValidation == ProcessResultValidation.ExitCodeZero)
-            {
-                throw new ProcessNotSuccessfulException(exitCode: process.ExitCode, process: process);
-            }
+        if (process.ExitCode != 0 && processResultValidation == ProcessResultValidation.ExitCodeZero)
+        {
+            throw new ProcessNotSuccessfulException(exitCode: process.ExitCode, process: process);
+        }
             
-            return process.ExitCode;
+        return process.ExitCode;
     }
 
     /// <summary>
@@ -202,15 +210,20 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
             if (Process.GetProcesses().Any(x => x.Equals(process)) == false)
             {
                 _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
-                process.StartInfo.FileName = resolvedFilePath;
                 
-                 process.Start();
+                if (resolvedFilePath.Equals(process.StartInfo.FileName) == false)
+                {
+                    process.StartInfo.FileName = resolvedFilePath;    
+                }
+                
+                process.Start();
             }
             
             process.WaitForExit();
         }
         
-        ProcessResult processResult = new ProcessResult(process.ExitCode, process.StartTime, process.ExitTime);
+        ProcessResult processResult = new ProcessResult(process.StartInfo.FileName, process.ExitCode, process.StartTime,
+            process.ExitTime);
 
         if (disposeOfProcess)
         {
@@ -244,7 +257,11 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
             if (Process.GetProcesses().Any(x => x.Equals(process)) == false)
             {
                 _filePathResolver.ResolveFilePath(process.StartInfo.FileName, out string resolvedFilePath);
-                process.StartInfo.FileName = resolvedFilePath;
+
+                if (resolvedFilePath.Equals(process.StartInfo.FileName) == false)
+                {
+                    process.StartInfo.FileName = resolvedFilePath;    
+                }
                 
                 process.Start();
             }
@@ -252,7 +269,8 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
             process.WaitForExit();
         }
         
-        BufferedProcessResult processResult = new BufferedProcessResult(process.ExitCode,
+        BufferedProcessResult processResult = new BufferedProcessResult(
+            process.StartInfo.FileName, process.ExitCode,
              process.StandardOutput.ReadToEnd(),  process.StandardError.ReadToEnd(),
             process.StartTime, process.ExitTime);
 
@@ -295,7 +313,8 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
             }
         }
         
-        ProcessResult processResult = new ProcessResult(process.ExitCode, process.StartTime, process.ExitTime);
+        ProcessResult processResult = new ProcessResult(process.StartInfo.FileName, process.ExitCode, process.StartTime,
+            process.ExitTime);
 
         if (disposeOfProcess)
         {
@@ -334,8 +353,10 @@ public class ProcessRunnerUtility : IProcessRunnerUtility
             await process.WaitForExitAsync();
         }
         
-        BufferedProcessResult processResult = new BufferedProcessResult(process.ExitCode,
-            await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync(),
+        BufferedProcessResult processResult = new BufferedProcessResult(
+            process.StartInfo.FileName, process.ExitCode,
+            await process.StandardOutput.ReadToEndAsync(),
+            await process.StandardError.ReadToEndAsync(),
             process.StartTime, process.ExitTime);
 
         if (disposeOfProcess)
