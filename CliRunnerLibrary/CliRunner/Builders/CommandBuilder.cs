@@ -32,7 +32,7 @@ namespace CliRunner.Builders;
 public class CommandBuilder : ICommandBuilder
 {
     private readonly ICommandConfiguration _commandConfiguration;
-
+    
     /// <summary>
     /// Instantiates the CommandBuilder with a specified target file path of an ICommandConfiguration.
     /// </summary>
