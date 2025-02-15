@@ -34,7 +34,7 @@ public class ProcessResourcePolicy
         ProcessPriorityClass priorityClass = ProcessPriorityClass.Normal,
         bool enablePriorityBoost = true)
     {
-        if (processorAffinity == default)
+        if (processorAffinity == null)
         {
             processorAffinity = new IntPtr(0x0001);  
         }
