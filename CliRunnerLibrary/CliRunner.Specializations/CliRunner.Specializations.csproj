@@ -35,7 +35,6 @@
 
     <ItemGroup>
         <PackageReference Include="CliRunner" Version="1.0.0-beta.1" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
     </ItemGroup>
 
     <ItemGroup>
