@@ -17,6 +17,8 @@ using AlastairLundy.Extensions.System.Processes;
 
 using CliRunner.Exceptions;
 using CliRunner.Extensions.Processes;
+using CliRunner.Helpers;
+using CliRunner.Helpers.Abstractions;
 using CliRunner.Runners.Helpers.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1

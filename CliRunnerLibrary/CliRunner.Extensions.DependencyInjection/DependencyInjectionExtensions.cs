@@ -10,6 +10,8 @@
 using System;
 
 using CliRunner.Abstractions;
+using CliRunner.Helpers;
+using CliRunner.Helpers.Abstractions;
 using CliRunner.Piping;
 using CliRunner.Piping.Abstractions;
 

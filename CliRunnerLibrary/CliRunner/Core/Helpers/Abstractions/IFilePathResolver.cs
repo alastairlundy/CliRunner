@@ -8,7 +8,7 @@
    */
 
 
-namespace CliRunner.Runners.Helpers.Abstractions;
+namespace CliRunner.Helpers.Abstractions;
 
 public interface IFilePathResolver
 {
