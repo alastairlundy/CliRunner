@@ -13,23 +13,7 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes since 1.0.0 Alpha 4
-
-### Final Breaking Changes before 1.0
-* Moved Dependency Injection extensions to a separate library.
-* Renamed ``UseResourcePolicy`` extension method to ``SetResourcePolicy``
-* Changed Process Running classes to make use of ProcessResourcePolicy
-
-### Non-Breaking Changes
-* Added ``HasStarted()`` Process extension method
-* Added support for CliRunnert to resolve Target Files set to PATH variable file paths.
-* Added ``IFilePathResolver`` and ``FilePathResolver``
-
-### Bug Fixes
-* Fixed a bug that would throw an exception due to setting ProcessResourcePolicy objects to Processes before they were started
-* Fixed a bug that would throw an exception due to Standard Input attempting to be redirected when nulll.
-* Fixed a bug where the default ProcessorAffinity for a ProcessResourcePolicy would be an invalid value.
-* Fixed a bug where ProcessPipeHandler would cause an exception </PackageReleaseNotes>
+        <PackageReleaseNotes></PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
