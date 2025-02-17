@@ -1,6 +1,8 @@
 ## CliRunner.Extensions.DependencyInjection
 This readme covers the **CliRunner Dependency Injections** package. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
 
+This package adds a ``AddCliRunner`` Dependency Injection extension method to enable easy CliRunner setup when using the Microsoft.Extensions.DependencyInjection package.
+
 [![NuGet](https://img.shields.io/nuget/v/CliRunner.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/CliRunner.Extensions.DependencyInjection/)
 [![NuGet](https://img.shields.io/nuget/dt/CliRunner.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/CliRunner.Extensions.DependencyInjection/)
 
