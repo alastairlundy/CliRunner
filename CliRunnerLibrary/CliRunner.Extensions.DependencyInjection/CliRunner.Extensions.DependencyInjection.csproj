@@ -9,14 +9,14 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <TargetFrameworks>net9.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.0-preview.1</Version>
+        <Version>1.0.0-preview.1.1</Version>
         <Title>CliRunner.Extensions.DependencyInjection</Title>
         <Authors>AlastairLundy</Authors>
         <Description>Adds a ``AddCliRunner`` Dependency Injection extension method to enable easy CliRunner setup when using the Microsoft.Extensions.DependencyInjection package.</Description>
         <Copyright>Copyright (c) Alastair Lundy 2024-2025</Copyright>
         <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>Initial Release as separate package.</PackageReleaseNotes>
+        <PackageReleaseNotes>Fix incorrect readme being included in package.</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -37,7 +37,7 @@
         <PackagePath>LICENSE.txt</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-        <Content Include="..\..\README.md">
+        <Content Include="README.md">
             <Link>README.md</Link>
             <PackagePath>README.md</PackagePath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
