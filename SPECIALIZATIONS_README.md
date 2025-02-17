@@ -1,6 +1,9 @@
 # CliRunner.Specializations
 This readme covers the **CliRunner Specializations** library. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
 
+[![NuGet](https://img.shields.io/nuget/v/CliRunner.Specializations.svg)](https://www.nuget.org/packages/CliRunner.Specializations/)
+[![NuGet](https://img.shields.io/nuget/dt/CliRunner.Specializations.svg)](https://www.nuget.org/packages/CliRunner.Specializations/)
+
 ## Usage
 CliRunner.Specializations comes with 3 specializations as of 0.8.0: 
 - [CmdCommand](#cmdcommand) - An easier way to execute processes and commands through cmd.exe (Only supported on Windows)
