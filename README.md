@@ -213,6 +213,8 @@ Releases that add major breaking changes or significantly affect the API should 
 ### Building for Testing
 You can build for testing by building the desired project within your IDE or VS Code, or manually by entering the following command: ``dotnet build -c Debug``.
 
+If you encounter any bugs or issues, try running the ``CliRunner.Tests`` project and setting breakpoints in the affected CliRunner project's code where appropriate. Failing that, please [report the issue](https://github.com/alastairlundy/CliRunner/issues/new/) if one doesn't already exist for the bug(s).
+
 ### Building for Release
 Before building a release build, ensure you apply the relevant changes to the relevant ``.csproj`` file corresponding to the package you are trying to build:
 * Update the Package Version variable 
