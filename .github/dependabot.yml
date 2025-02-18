@@ -9,6 +9,7 @@ updates:
     directories:
         - "/CliRunnerLibrary/CliRunner" # Location of package manifests
         - "/CliRunnerLibrary/CliRunner.Specializations"
+        - "/CliRunnerLibrary/CliRunner.Extensions.DependencyInjection"
     schedule:
       interval: "weekly"
     versioning-strategy: increase-if-necessary
