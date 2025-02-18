@@ -12,6 +12,11 @@
         <RepositoryType>git</RepositoryType>
         <Description>Makes extending CliRunner, and using custom Command Runners and Command Configurations easier.</Description>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
     
     <ItemGroup>
