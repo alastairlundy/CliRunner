@@ -13,11 +13,37 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageReleaseNotes>## Changes since 1.0.0 Beta 1
+
+### Added
+
+* add description to DI extensions readme in [`2a6872e`](https://github.com/alastairlundy/CliRunner/commit/2a6872e44c3da514d69083a553816ad334a07bf4)
+* add Nuget info badges to DI extensions Readme in [`6ae2490`](https://github.com/alastairlundy/CliRunner/commit/6ae2490e4d050bad8b5abe9ea02641aa070a2cc2)
+* add executableFilePath in [`123c8d8`](https://github.com/alastairlundy/CliRunner/commit/123c8d8c96816022c51e87430e17c26da75a5a3d)
+* add localization and clean up process running in [`03aadca`](https://github.com/alastairlundy/CliRunner/commit/03aadcaf85d40316a4acd3d72ab6308ab69532ea)
+* add xml doc comments in [`d00b0ad`](https://github.com/alastairlundy/CliRunner/commit/d00b0adf43bb1823abde1cf6e6613d34e453372a)
+
+### Changed
+* Update Collection Extensions dependency from 6.0.0 RC 1 to 6.0.0
+* Add dependency on System Extensions 6.0.0
+* Update SPECIALIZATIONS_README.md in [`37bd8c7`](https://github.com/alastairlundy/CliRunner/commit/37bd8c7768e55ac9a564941b52aa5cfdee4b0ce4)
+* move file resolver path helpers in [`7f2113f`](https://github.com/alastairlundy/CliRunner/commit/7f2113f42e89a71f466cbcbcd6be133fcfcc4e8e)
+* Update CommandBuilder.cs in [`915235f`](https://github.com/alastairlundy/CliRunner/commit/915235fd8cb23769a3bf22803798dbc8faff59c3)
+* cleanup code in [`e9f99a8`](https://github.com/alastairlundy/CliRunner/commit/e9f99a8ac043e2d2633d4f39f944f6120e4fa866)
+* move extensions to SystemExtensions in [`af6e2c0`](https://github.com/alastairlundy/CliRunner/commit/af6e2c0b036dd41fb9c8a0745be47045dd5d5ed2)
+
+### Removed
+
+* remove redundant SourceLink package reference in [`775188c`](https://github.com/alastairlundy/CliRunner/commit/775188cddff885a4320bca81dd55ab6ddc287ced)
+
+### Fixed
+* rework file path resolving logic in [`37e18ee`](https://github.com/alastairlundy/CliRunner/commit/37e18ee7070f5fe416d56a001dd8844db94b2ef6)
+* fix DI extensions readme issue in [`29aeb8a`](https://github.com/alastairlundy/CliRunner/commit/29aeb8a5e621d7e2ac52e4e312f48c14de257e14)
+* fix build issue in [`7cdff75`](https://github.com/alastairlundy/CliRunner/commit/7cdff75454f19e0430a94dbe97702eefe29b8fad)</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-beta.1</PackageVersion>
+        <PackageVersion>1.0.0-beta.2</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <PackageIcon>icon.png</PackageIcon>
@@ -48,6 +74,10 @@
           <PackagePath>README.md</PackagePath>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Include="..\..\THIRD_PARTY_NOTICES.txt">
+        <Link>THIRD_PARTY_NOTICES.txt</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
     
     <ItemGroup>
@@ -66,9 +96,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <None Update="THIRD_PARTY_NOTICES.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
       <None Include="..\..\.assets\icon.png">
         <Pack>True</Pack>
         <PackagePath></PackagePath>
