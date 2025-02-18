@@ -1,7 +1,7 @@
 ### Contributing to the Project
 
 #### Suggestions and Bug Reports
-If you have either a suggestion or bug report you can file it on thi project's [GitHub Issues page](https://github.com/alastairlundy/CliRunner/issues/).
+If you have either a suggestion or bug report you can file it on this project's [GitHub Issues page](https://github.com/alastairlundy/CliRunner/issues/).
 
 #### Submitting a Pull Request
 If you'd like to add a feature or change part of this project's code, please:
