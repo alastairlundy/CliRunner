@@ -257,7 +257,7 @@ Future updates should aim focus on one or more of the following:
 ## License
 CliRunner is licensed under the MPL 2.0 license. If you modify any of CliRunner's files then the modified files must be licensed under the MPL 2.0 .
 
-If you use CliRunner in your project please make an exact copy of the contents of CliRunner's LICENSE.txt file available either in your third party licenses txt file or as a separate txt file.
+If you use CliRunner in your project please make an exact copy of the contents of CliRunner's [LICENSE.txt file](https://github.com/alastairlundy/CliRunner/blob/main/LICENSE.txt) available either in your third party licenses txt file or as a separate txt file.
 
 ### CliRunner Assets
 CliRunner's Icon is NOT licensed under the MPL 2.0 license and are licensed under Copyright with all rights reserved to me (Alastair Lundy).
