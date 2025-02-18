@@ -17,20 +17,20 @@ using OperatingSystem = Polyfills.OperatingSystemPolyfill;
 using System;
 using System.IO;
 using System.Linq;
+
 using CliRunner.Helpers.Abstractions;
 using CliRunner.Internal.Localizations;
-using CliRunner.Runners.Helpers.Abstractions;
 
 namespace CliRunner.Helpers;
 
 public class FilePathResolver : IFilePathResolver
 {
     /// <summary>
-    /// 
+    /// Resolves the file path if the file path is a PATH environment variable.
     /// </summary>
-    /// <param name="inputFilePath"></param>
-    /// <param name="outputFilePath"></param>
-    /// <exception cref="FileNotFoundException"></exception>
+    /// <param name="inputFilePath">The input file path to resolve.</param>
+    /// <param name="outputFilePath">The resolved file path if the file path is in the PATH environment variable; the original input file path otherwise.</param>
+    /// <exception cref="FileNotFoundException">Thrown if the input file path is null or empty.</exception>
     public void ResolveFilePath(string inputFilePath, out string outputFilePath)
     {
         if (string.IsNullOrEmpty(inputFilePath))
