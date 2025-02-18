@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Tests", "CliRunne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Extensions.DependencyInjection", "CliRunner.Extensions.DependencyInjection\CliRunner.Extensions.DependencyInjection.csproj", "{6F448EEE-96B1-4113-B9E7-DD2473F94C3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Extensibility", "CliRunner.Extensibility\CliRunner.Extensibility.csproj", "{18DBBDE5-2147-4BCD-A631-57DC549DA812}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{6F448EEE-96B1-4113-B9E7-DD2473F94C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F448EEE-96B1-4113-B9E7-DD2473F94C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F448EEE-96B1-4113-B9E7-DD2473F94C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18DBBDE5-2147-4BCD-A631-57DC549DA812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18DBBDE5-2147-4BCD-A631-57DC549DA812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18DBBDE5-2147-4BCD-A631-57DC549DA812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18DBBDE5-2147-4BCD-A631-57DC549DA812}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

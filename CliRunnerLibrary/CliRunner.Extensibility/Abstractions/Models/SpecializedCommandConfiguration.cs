@@ -10,15 +10,15 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Text;
-
-#if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
-#endif
-
+using System.Text;
 using CliRunner.Abstractions;
 
-namespace CliRunner.Extensibility;
+#if NET5_0_OR_GREATER
+#nullable enable
+#endif
+
+namespace CliRunner.Extensibility.Abstractions;
 
 /// <summary>
 /// An abstract class that implements ICommandConfiguration and adds a default constructor.

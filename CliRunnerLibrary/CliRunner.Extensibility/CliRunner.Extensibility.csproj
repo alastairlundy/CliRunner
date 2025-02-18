@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <LangVersion>13</LangVersion>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TargetFrameworks>net9.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <Title>CliRunner.Extensibility</Title>
+        <Authors>AlastairLundy</Authors>
+        <Copyright>Copyright (c) Alastair Lundy 2024-2025</Copyright>
+        <RepositoryUrl>https://github.com/alastairlundy/CliRunner</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <Description>Makes extending CliRunner, and using custom Command Runners and Command Configurations easier.</Description>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="CliRunner" Version="1.0.0-beta.2" />
+        <PackageReference Include="PolyFill" Version="[7.16.1, 8.0.0)" Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\net9.0\THIRD_PARTY_NOTICES.txt" />
+      <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\net8.0\THIRD_PARTY_NOTICES.txt" />
+      <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\netstandard2.1\THIRD_PARTY_NOTICES.txt" />
+      <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\netstandard2.0\THIRD_PARTY_NOTICES.txt" />
+      <Content Include="..\..\LICENSE.txt">
+        <Link>LICENSE.txt</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\LICENSE.txt">
+            <Link>LICENSE.txt</Link>
+            <PackagePath>LICENSE.txt</PackagePath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+</Project>
