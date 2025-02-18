@@ -14,7 +14,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-using AlastairLundy.Extensions.Collections.Generics;
+using AlastairLundy.Extensions.Collections.Generic;
+
 using CliRunner.Builders.Abstractions;
 
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
