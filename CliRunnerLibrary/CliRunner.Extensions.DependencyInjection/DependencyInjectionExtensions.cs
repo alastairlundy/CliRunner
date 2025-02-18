@@ -45,7 +45,7 @@ public static class DependencyInjectionExtensions
         services.Add(lifetime, typeof(IProcessCreator), typeof(ProcessCreator));
         services.Add(lifetime, typeof(IProcessPipeHandler), typeof(ProcessPipeHandler));
         
-        services.Add(lifetime, typeof(ICommandRunner), typeof(CommandRunner));
+        services.Add(lifetime, typeof(ICliCommandRunner), typeof(CliCommandRunner));
         return services;
     }
 

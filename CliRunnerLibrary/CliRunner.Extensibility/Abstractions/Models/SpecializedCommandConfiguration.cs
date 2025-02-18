@@ -25,7 +25,7 @@ namespace CliRunner.Extensibility.Abstractions;
 /// </summary>
 /// /// <remarks>Do not use this class directly unless you are creating a specialized Command,
 /// such as one that will be run through an intermediary process like Powershell or Cmd.</remarks>
-public abstract class SpecializedCommandConfiguration : ICommandConfiguration
+public abstract class SpecializedCommandConfiguration : ICliCommandConfiguration
 {
     /// <summary>
     /// Initializes a new instance of the Specialized Command Configuration class.

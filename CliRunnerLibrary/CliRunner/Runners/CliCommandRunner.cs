@@ -18,7 +18,6 @@
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Global
 
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -39,7 +38,7 @@ namespace CliRunner;
 /// <summary>
 /// The default implementation of the CliRunner command running mechanism, ICommandRunner.
 /// </summary>
-public class CommandRunner : ICommandRunner
+public class CliCommandRunner : ICliCommandRunner
 {
         private readonly IPipedProcessRunner _pipedProcessRunner;
         
@@ -53,7 +52,7 @@ public class CommandRunner : ICommandRunner
         /// <param name="pipedProcessRunner"></param>
         /// <param name="processPipeHandler"></param>
         /// <param name="processCreator"></param>
-        public CommandRunner(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessCreator processCreator)
+        public CliCommandRunner(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessCreator processCreator)
         {
             _pipedProcessRunner = pipedProcessRunner;
             _processPipeHandler = processPipeHandler;

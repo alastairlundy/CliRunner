@@ -46,7 +46,7 @@ namespace CliRunner.Abstractions;
 /// <summary>
 /// This interface details the properties expected of a Command.
 /// </summary>
-public interface ICommandConfiguration
+public interface ICliCommandConfiguration
 {
         /// <summary>
         /// Whether administrator privileges are required when executing the Command.

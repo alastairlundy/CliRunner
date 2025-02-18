@@ -16,7 +16,7 @@ namespace CliRunner.Abstractions;
 /// <summary>
 /// An interface to specify required Command Running functionality.
 /// </summary>
-public interface ICommandRunner
+public interface ICliCommandRunner
 {
     /// <summary>
     /// Executes a command asynchronously and returns Command execution information as a CommandResult.

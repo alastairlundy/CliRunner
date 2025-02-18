@@ -34,7 +34,7 @@ namespace CliRunner
     /// A class to represent a Command to be run.
     /// </summary>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public class CliCommand : ICommandConfiguration, IEquatable<CliCommand>
+    public class CliCommand : ICliCommandConfiguration, IEquatable<CliCommand>
     {
         /// <summary>
         /// Whether administrator privileges are required when executing the Command.
@@ -183,7 +183,7 @@ namespace CliRunner
         /// Creates a new Command with the specified Command Configuration.
         /// </summary>
         /// <param name="commandConfiguration">The command configuration to be used to for the Command.</param>
-        public CliCommand(ICommandConfiguration commandConfiguration)
+        public CliCommand(ICliCommandConfiguration commandConfiguration)
         {
             TargetFilePath = commandConfiguration.TargetFilePath;
             Arguments = commandConfiguration.Arguments; 

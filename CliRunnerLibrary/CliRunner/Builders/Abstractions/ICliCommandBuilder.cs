@@ -162,5 +162,5 @@ public interface ICliCommandBuilder
     /// Builds the ICommandConfiguration with the configured parameters.
     /// </summary>
     /// <returns>The newly configured ICommandConfiguration.</returns>
-    ICommandConfiguration BuildConfiguration();
+    ICliCommandConfiguration BuildConfiguration();
 }

@@ -30,7 +30,7 @@ public interface IProcessCreator
     /// </summary>
     /// <param name="commandConfiguration">The command object to specify Process info.</param>
     /// <returns>A new ProcessStartInfo object configured with the specified Command object values.</returns>
-    ProcessStartInfo CreateStartInfo(ICommandConfiguration commandConfiguration);
+    ProcessStartInfo CreateStartInfo(ICliCommandConfiguration commandConfiguration);
 
     /// <summary>
     /// Creates Process Start Information based on specified parameters and Command object values.
@@ -39,6 +39,6 @@ public interface IProcessCreator
     /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
     /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
     /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values.</returns>
-    ProcessStartInfo CreateStartInfo(ICommandConfiguration commandConfiguration, bool redirectStandardOutput, bool redirectStandardError);
+    ProcessStartInfo CreateStartInfo(ICliCommandConfiguration commandConfiguration, bool redirectStandardOutput, bool redirectStandardError);
 
 }

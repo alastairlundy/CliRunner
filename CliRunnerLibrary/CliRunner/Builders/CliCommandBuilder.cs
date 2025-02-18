@@ -31,7 +31,7 @@ namespace CliRunner.Builders;
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class CliCommandBuilder : ICliCommandBuilder
 {
-    private readonly ICommandConfiguration _commandConfiguration;
+    private readonly ICliCommandConfiguration _commandConfiguration;
     
     /// <summary>
     /// Instantiates the CommandBuilder with a specified target file path of an ICommandConfiguration.
@@ -46,7 +46,7 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// Instantiates the CommandBuilder with a specified ICommandConfiguration configuration
     /// </summary>
     /// <param name="commandConfiguration">The configuration to be used when building the Command.</param>
-    public CliCommandBuilder(ICommandConfiguration commandConfiguration)
+    public CliCommandBuilder(ICliCommandConfiguration commandConfiguration)
     {
         _commandConfiguration = commandConfiguration;
     }
@@ -574,5 +574,5 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// Builds the ICommandConfiguration with the configured parameters.
     /// </summary>
     /// <returns>The new ICommandConfiguration.</returns>
-    public ICommandConfiguration BuildConfiguration() => _commandConfiguration;
+    public ICliCommandConfiguration BuildConfiguration() => _commandConfiguration;
 }

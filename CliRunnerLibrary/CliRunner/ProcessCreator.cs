@@ -86,7 +86,7 @@ public class ProcessCreator : IProcessCreator
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("browser")]
     #endif
-        public ProcessStartInfo CreateStartInfo(ICommandConfiguration commandConfiguration)
+        public ProcessStartInfo CreateStartInfo(ICliCommandConfiguration commandConfiguration)
         {
             return CreateStartInfo(commandConfiguration, commandConfiguration.StandardOutput != null, commandConfiguration.StandardError != null);
         }
@@ -111,7 +111,7 @@ public class ProcessCreator : IProcessCreator
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo(ICommandConfiguration commandConfiguration, bool redirectStandardOutput,
+        public ProcessStartInfo CreateStartInfo(ICliCommandConfiguration commandConfiguration, bool redirectStandardOutput,
             bool redirectStandardError)
         {
             if (string.IsNullOrEmpty(commandConfiguration.TargetFilePath))
