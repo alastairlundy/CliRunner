@@ -42,6 +42,10 @@
             <PackagePath>README.md</PackagePath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\netstandard2.1\THIRD_PARTY_NOTICES.txt" />
+        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\net8.0\THIRD_PARTY_NOTICES.txt" />
+        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\net9.0\THIRD_PARTY_NOTICES.txt" />
+        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\netstandard2.0\THIRD_PARTY_NOTICES.txt" />
     </ItemGroup>
 
     <ItemGroup>
