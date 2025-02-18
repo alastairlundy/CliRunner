@@ -12,7 +12,7 @@ using CliRunner.Builders.Abstractions;
 
 namespace CliRunner.Tests.Builders;
 
-public class CommandBuilderTests
+public class CliCommandBuilderTests
 {
 
         [Fact]
