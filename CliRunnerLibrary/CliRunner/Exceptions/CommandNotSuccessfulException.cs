@@ -26,7 +26,7 @@ namespace CliRunner.Exceptions
         /// The command that was executed.
         /// </summary>
 #if NET5_0_OR_GREATER
-        public Command? ExecutedCommand { get; private set; }
+        public CliCommand? ExecutedCommand { get; private set; }
 #endif
         /// <summary>
         /// The exit code of the Command that was executed.
@@ -51,7 +51,7 @@ namespace CliRunner.Exceptions
         /// </summary>
         /// <param name="exitCode">The exit code of the Command that was executed.</param>
         /// <param name="command">The command that was executed.</param>
-        public CommandNotSuccessfulException(int exitCode, Command command) : base(Resources.Exceptions_CommandNotSuccessful_Specific.Replace("{y}", exitCode.ToString()
+        public CommandNotSuccessfulException(int exitCode, CliCommand command) : base(Resources.Exceptions_CommandNotSuccessful_Specific.Replace("{y}", exitCode.ToString()
             .Replace("{x}", command.TargetFilePath)))
         {
 #if NET5_0_OR_GREATER

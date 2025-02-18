@@ -34,7 +34,7 @@ namespace CliRunner
     /// A class to represent a Command to be run.
     /// </summary>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public class Command : ICommandConfiguration, IEquatable<Command>
+    public class CliCommand : ICommandConfiguration, IEquatable<CliCommand>
     {
         /// <summary>
         /// Whether administrator privileges are required when executing the Command.
@@ -139,7 +139,7 @@ namespace CliRunner
         /// <param name="standardInputEncoding">The Standard Input Encoding to be used (if specified).</param>
         /// <param name="standardOutputEncoding">The Standard Output Encoding to be used (if specified).</param>
         /// <param name="standardErrorEncoding">The Standard Error Encoding to be used (if specified).</param>
-        public Command(string targetFilePath,
+        public CliCommand(string targetFilePath,
             string arguments = null, string workingDirectoryPath = null,
             bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
@@ -183,7 +183,7 @@ namespace CliRunner
         /// Creates a new Command with the specified Command Configuration.
         /// </summary>
         /// <param name="commandConfiguration">The command configuration to be used to for the Command.</param>
-        public Command(ICommandConfiguration commandConfiguration)
+        public CliCommand(ICommandConfiguration commandConfiguration)
         {
             TargetFilePath = commandConfiguration.TargetFilePath;
             Arguments = commandConfiguration.Arguments; 
@@ -224,7 +224,7 @@ namespace CliRunner
         /// </summary>
         /// <param name="other">The other Command object to be compared.</param>
         /// <returns>true if both Command objects are the same; false otherwise.</returns>
-        public bool Equals(Command other)
+        public bool Equals(CliCommand other)
         {
             if (other is null)
             {
@@ -258,7 +258,7 @@ namespace CliRunner
                 return false;
             }
 
-            if (obj is Command command)
+            if (obj is CliCommand command)
             {
                 return Equals(command);
             }
@@ -297,7 +297,7 @@ namespace CliRunner
         /// <param name="left">A command to be compared.</param>
         /// <param name="right">The other command to be compared.</param>
         /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
-        public static bool Equals(Command left, Command right)
+        public static bool Equals(CliCommand left, CliCommand right)
         {
             return left.Equals(right);
         }
@@ -308,7 +308,7 @@ namespace CliRunner
         /// <param name="left">A command to be compared.</param>
         /// <param name="right">The other command to be compared.</param>
         /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
-        public static bool operator ==(Command left, Command right)
+        public static bool operator ==(CliCommand left, CliCommand right)
         {
             return Equals(left, right);
         }
@@ -319,7 +319,7 @@ namespace CliRunner
         /// <param name="left">A command to be compared.</param>
         /// <param name="right">The other command to be compared.</param>
         /// <returns>True if both Commands are not equal to each other; false otherwise.</returns>
-        public static bool operator !=(Command left, Command right)
+        public static bool operator !=(CliCommand left, CliCommand right)
         {
             return Equals(left, right) == false;
         }

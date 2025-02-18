@@ -79,7 +79,7 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<ProcessResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default)
+        public async Task<ProcessResult> ExecuteAsync(CliCommand command, CancellationToken cancellationToken = default)
         {
             Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command));
             
@@ -130,7 +130,7 @@ public class CommandRunner : ICommandRunner
         [UnsupportedOSPlatform("tvos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public async Task<BufferedProcessResult> ExecuteBufferedAsync(Command command,
+        public async Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommand command,
             CancellationToken cancellationToken = default)
         {
             Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command,

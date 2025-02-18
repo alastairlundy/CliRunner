@@ -18,7 +18,7 @@ public class CommandBuilderTests
         [Fact]
         public void TestDefaultConfiguration()
         {
-                ICommandBuilder commandBuilder = new CommandBuilder("foo");
+                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo");
 
                 var builtCommand = commandBuilder.Build();
                 Assert.Equal("foo", builtCommand.TargetFilePath);
@@ -49,7 +49,7 @@ public class CommandBuilderTests
         [Fact]
         public void TestIncompatiblePipingOptionsThrowsException()
         {
-                ICommandBuilder commandBuilder = new CommandBuilder("foo");
+                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo");
 
                 //Assert
                 Assert.Throws<ArgumentException>(() =>
@@ -75,13 +75,13 @@ public class CommandBuilderTests
         public void TestTargetFileReconfigured()
         { 
                 //Arrange
-              ICommandBuilder commandBuilder = new CommandBuilder("foo");
+              ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo");
               
               //Act
               commandBuilder = commandBuilder.WithTargetFile("bar");
               
               //Assert
-              Command command = commandBuilder.Build();
+              CliCommand command = commandBuilder.Build();
               Assert.Equal("bar", command.TargetFilePath);
         }
 
@@ -89,7 +89,7 @@ public class CommandBuilderTests
         public void TestArgumentsReplaced()
         {
              //Arrange
-             ICommandBuilder commandBuilder = new CommandBuilder("foo")
+             ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
                      .WithArguments("--arg-value=value");
              
              //Act
@@ -104,14 +104,14 @@ public class CommandBuilderTests
         public void TestValidationReconfigured()
         {
                 //Arrange
-                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
                         .WithValidation(ProcessResultValidation.None);
                 
                 //Act
                 commandBuilder = commandBuilder.WithValidation(ProcessResultValidation.ExitCodeZero);
                 
                 //Assert
-                Command command = commandBuilder.Build();
+                CliCommand command = commandBuilder.Build();
                 Assert.Equal(ProcessResultValidation.ExitCodeZero, command.ResultValidation);
         }
 
@@ -125,7 +125,7 @@ public class CommandBuilderTests
                 password.AppendChar('3');
                 password.AppendChar('4');
                 
-                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
                         .WithUserCredential(new UserCredential("", "admin", password, false));
                 
                 //Act
@@ -140,7 +140,7 @@ public class CommandBuilderTests
                 commandBuilder = commandBuilder.WithUserCredential(userCredential);
                 
                 //Assert
-                Command command = commandBuilder.Build();
+                CliCommand command = commandBuilder.Build();
                 Assert.Equal(userCredential, command.Credential);
         }
 
@@ -148,7 +148,7 @@ public class CommandBuilderTests
         public void TestReconfiguredResourcePolicy()
         {
                 //Arrange
-                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
                         .WithProcessResourcePolicy(ProcessResourcePolicy.Default);
                 
                 
@@ -162,7 +162,7 @@ public class CommandBuilderTests
                 commandBuilder = commandBuilder.WithProcessResourcePolicy(resourcePolicy);
                 
                 //Assert
-                Command command = commandBuilder.Build();
+                CliCommand command = commandBuilder.Build();
                 Assert.Equal(resourcePolicy, command.ResourcePolicy);
         }
 
@@ -170,14 +170,14 @@ public class CommandBuilderTests
         public void TestReconfiguredAdminPrivileges()
         {
              //Act
-             ICommandBuilder commandBuilder = new CommandBuilder("foo")
+             ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
                      .WithAdministratorPrivileges(false);
              
              //Arrange
              commandBuilder = commandBuilder.WithAdministratorPrivileges(true);
              
              //Assert
-             Command command = commandBuilder.Build();
+             CliCommand command = commandBuilder.Build();
              Assert.True(command.RequiresAdministrator);
         }
 
@@ -185,14 +185,14 @@ public class CommandBuilderTests
         public void TestReconfiguredWorkingDirectory()
         {
                 //Act
-                ICommandBuilder commandBuilder = new CommandBuilder("foo")
+                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
                         .WithWorkingDirectory("dir");
                 
                 //Arrange
                 commandBuilder = commandBuilder.WithWorkingDirectory("dir2");
                 
                 //Assert
-                Command command = commandBuilder.Build();
+                CliCommand command = commandBuilder.Build();
                 Assert.Equal("dir2", command.WorkingDirectoryPath);
         }
 }

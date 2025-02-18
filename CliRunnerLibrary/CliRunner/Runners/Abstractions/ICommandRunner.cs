@@ -24,7 +24,7 @@ public interface ICommandRunner
     /// <param name="command">The command to be executed.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>A CommandResult object containing the execution information of the command.</returns>
-    Task<ProcessResult> ExecuteAsync(Command command, CancellationToken cancellationToken = default);
+    Task<ProcessResult> ExecuteAsync(CliCommand command, CancellationToken cancellationToken = default);
         
     /// <summary>
     ///Executes a command asynchronously and returns Command execution information and Command output as a BufferedCommandResult.
@@ -32,5 +32,5 @@ public interface ICommandRunner
     /// <param name="command">The command to be executed.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
     /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
-    Task<BufferedProcessResult> ExecuteBufferedAsync(Command command, CancellationToken cancellationToken = default);
+    Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommand command, CancellationToken cancellationToken = default);
 }
