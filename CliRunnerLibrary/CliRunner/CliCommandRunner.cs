@@ -23,10 +23,13 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
+using AlastairLundy.Extensions.Processes;
+using AlastairLundy.Extensions.Processes.Abstractions;
+
+using AlastairLundy.Extensions.Processes.Piping.Abstractions;
+
 using CliRunner.Abstractions;
 using CliRunner.Exceptions;
-using CliRunner.Piping.Abstractions;
-using CliRunner.Runners.Abstractions;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;

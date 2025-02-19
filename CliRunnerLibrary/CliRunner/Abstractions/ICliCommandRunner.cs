@@ -10,6 +10,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using AlastairLundy.Extensions.Processes;
+
 // ReSharper disable once CheckNamespace
 namespace CliRunner.Abstractions;
 

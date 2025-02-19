@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Specializations",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Tests", "CliRunner.Tests\CliRunner.Tests.csproj", "{460CFFEC-4F3B-408D-A0E3-42731E88879B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Extensions.DependencyInjection", "CliRunner.Extensions.DependencyInjection\CliRunner.Extensions.DependencyInjection.csproj", "{6F448EEE-96B1-4113-B9E7-DD2473F94C3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Extensions", "CliRunner.Extensions\CliRunner.Extensions.csproj", "{6F448EEE-96B1-4113-B9E7-DD2473F94C3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CliRunner.Extensibility", "CliRunner.Extensibility\CliRunner.Extensibility.csproj", "{18DBBDE5-2147-4BCD-A631-57DC549DA812}"
 EndProject
