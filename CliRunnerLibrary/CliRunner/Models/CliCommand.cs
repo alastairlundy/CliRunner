@@ -19,6 +19,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
+using AlastairLundy.Extensions.Processes;
+
 using CliRunner.Abstractions;
 using CliRunner.Internal.Localizations;
 

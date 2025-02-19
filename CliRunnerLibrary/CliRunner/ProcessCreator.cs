@@ -17,8 +17,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
+using AlastairLundy.Extensions.Processes;
+
 using CliRunner.Abstractions;
-using CliRunner.Extensions.Processes;
 using CliRunner.Internal.Localizations;
 
 // ReSharper disable RedundantBoolCompare

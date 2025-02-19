@@ -36,6 +36,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using AlastairLundy.Extensions.Processes;
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;

@@ -14,6 +14,10 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
 
+using AlastairLundy.Extensions.Processes;
+using AlastairLundy.Extensions.Processes.Builders;
+using AlastairLundy.Extensions.Processes.Builders.Abstractions;
+
 using CliRunner.Abstractions;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Internal.Localizations;

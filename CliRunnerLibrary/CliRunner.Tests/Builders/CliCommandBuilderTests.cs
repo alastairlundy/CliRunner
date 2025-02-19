@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Security;
 using System.Text;
-
+using AlastairLundy.Extensions.Processes;
 using Xunit;
 
 using CliRunner.Builders;
