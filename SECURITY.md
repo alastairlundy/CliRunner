@@ -17,7 +17,7 @@ Versions that are currently supported with Bug Fixes and/or Security Fixes.
 To report a security vulnerability please privately report a Security Vulnerability in the Security tab on this project within GitHub.
 Please ensure you provide all the details regarding the vulnerability. I will try to reply to your report within 2-3 Business Days acknowledging receipt of it.
 
-I will then investigate the issue further and decide whether or not to accept the vulnerability. I will then inform you whether we accept the vulnerability or not.
+I will then investigate the issue further and decide whether or not to accept the vulnerability. I will then inform you whether I accept the vulnerability or not.
 
 If the vulnerability is accepted please do not publish the details of the vulnerability until at least 1 Business Day after the updates patching the security vulnerability have been released .
 
