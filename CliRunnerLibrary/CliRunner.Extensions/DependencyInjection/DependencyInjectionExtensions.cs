@@ -9,23 +9,21 @@
 
 using System;
 
-using CliRunner.Abstractions;
-using CliRunner.Helpers;
-using CliRunner.Helpers.Abstractions;
-using CliRunner.Piping;
-using CliRunner.Piping.Abstractions;
+using AlastairLundy.Extensions.Processes;
+using AlastairLundy.Extensions.Processes.Abstractions;
+using AlastairLundy.Extensions.Processes.Piping;
+using AlastairLundy.Extensions.Processes.Piping.Abstractions;
+using AlastairLundy.Extensions.Processes.Utilities;
+using AlastairLundy.Extensions.Processes.Utilities.Abstractions;
 
-using CliRunner.Runners;
-using CliRunner.Runners.Abstractions;
-using CliRunner.Runners.Helpers;
-using CliRunner.Runners.Helpers.Abstractions;
+using CliRunner.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable RedundantAssignment
 // ReSharper disable UnusedMember.Global
 
-namespace CliRunner.Extensions.DependencyInjection;
+namespace CliRunner.Extensions;
 
 public static class DependencyInjectionExtensions
 {
@@ -38,7 +36,8 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddCliRunner(this IServiceCollection services,
         ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
-        services.Add(lifetime, typeof(IFilePathResolver), typeof(FilePathResolver));
+    //   services.Add(lifetime, typeof(IFilePathResolver), typeof(FilePathResolver));
+        
         services.Add(lifetime, typeof(IProcessRunnerUtility), typeof(ProcessRunnerUtility));
         services.Add(lifetime, typeof(IPipedProcessRunner), typeof(PipedProcessRunner));
         services.Add(lifetime, typeof(IProcessRunner), typeof(ProcessRunner));

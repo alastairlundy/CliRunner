@@ -1,13 +1,18 @@
-## CliRunner.Extensions.DependencyInjection
-This readme covers the **CliRunner Dependency Injections** package. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
+## CliRunner.Extensions.
+This readme covers the **CliRunner.Extensions** package. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
 
-This package adds a ``AddCliRunner`` Dependency Injection extension method to enable easy CliRunner setup when using the Microsoft.Extensions.DependencyInjection package.
+This package adds:
+* extension methods that enable better interoperability between CliRunner and existing .NET types
+* the ``AddCliRunner`` Dependency Injection extension method to enable easy CliRunner setup when using the Microsoft.Extensions.DependencyInjection package
+* 
 
 [![NuGet](https://img.shields.io/nuget/v/CliRunner.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/CliRunner.Extensions.DependencyInjection/)
 [![NuGet](https://img.shields.io/nuget/dt/CliRunner.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/CliRunner.Extensions.DependencyInjection/)
 
 ## Usage
-CliRunner.Extensions.DependencyInjection provides an extension method to make it easier to use CliRunner with Microsoft.Extensions.DependencyInjection.
+
+### DependencyInjecton
+CliRunner.Extensions provides an extension method to make it easier to use CliRunner with Microsoft.Extensions.DependencyInjection.
 
 The ``AddCliRunner`` IServiceCollection extension method adds CliRunner's interface-able services.
 
@@ -22,6 +27,7 @@ The services injected includes:
 
 ## Why a separate package?
 There's a few different reasons:
+* Provides extension methods in a 
 * Not everybody necessarily uses Microsoft's Dependency Injection packages.
 * Helps de-couple the Dependency Injection extension functionality from the main library
 
