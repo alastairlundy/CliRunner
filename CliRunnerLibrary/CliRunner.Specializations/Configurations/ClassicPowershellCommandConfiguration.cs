@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using AlastairLundy.Extensions.Processes;
 using CliRunner.Extensibility;
+using CliRunner.Extensibility.Abstractions;
 using CliRunner.Specializations.Internal.Localizations;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -33,7 +35,7 @@ namespace CliRunner.Specializations.Configurations
         [UnsupportedOSPlatform("freebsd")]
         [UnsupportedOSPlatform("android")]
 #endif
-    public class ClassicPowershellCommandConfiguration : SpecializedCommandConfiguration
+    public class ClassicPowershellCommandConfiguration : SpecializedCliCommandConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the ClassicPowershellCommandConfiguration class.

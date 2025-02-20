@@ -13,10 +13,13 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
+using AlastairLundy.Extensions.Processes;
+
 using CliRunner.Abstractions;
 using CliRunner.Builders;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Extensibility;
+using CliRunner.Extensibility.Abstractions;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = Polyfills.OperatingSystemPolyfill;
@@ -42,9 +45,9 @@ namespace CliRunner.Specializations.Configurations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class PowershellCommandConfiguration : SpecializedCommandConfiguration
+    public class PowershellCommandConfiguration : SpecializedCliCommandConfiguration
     {
-        private readonly ICommandRunner _commandRunner;
+        private readonly ICliCommandRunner _commandRunner;
 
         /// <summary>
         /// Initializes a new instance of the PowershellCommandConfiguration class.
@@ -65,7 +68,7 @@ namespace CliRunner.Specializations.Configurations
         /// <param name="processResourcePolicy">The processor resource policy for the command.</param>
         /// <param name="useShellExecution">Indicates whether to use the shell to execute the command.</param>
         /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
-        public PowershellCommandConfiguration(ICommandRunner commandRunner, string arguments = null,
+        public PowershellCommandConfiguration(ICliCommandRunner commandRunner, string arguments = null,
             string workingDirectoryPath = null, bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
             ProcessResultValidation resultValidation = ProcessResultValidation.ExitCodeZero,
@@ -136,10 +139,10 @@ namespace CliRunner.Specializations.Configurations
 
         private string GetUnixInstallLocation()
         {
-           ICommandBuilder installLocationBuilder = new CommandBuilder("/usr/bin/which")
+           ICliCommandBuilder installLocationBuilder = new CliCommandBuilder("/usr/bin/which")
                 .WithArguments("pwsh");
            
-           Command command = installLocationBuilder.Build();
+           CliCommand command = installLocationBuilder.Build();
            
           Task<BufferedProcessResult> task = _commandRunner.ExecuteBufferedAsync(command);
           
