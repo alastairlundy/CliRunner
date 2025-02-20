@@ -398,3 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 /CliRunnerLibrary/.idea
 .vscode/settings.json
+/docfx/_site
