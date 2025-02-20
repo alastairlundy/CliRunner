@@ -12,7 +12,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Versioning;
 using System.Text;
+
 using AlastairLundy.Extensions.Processes;
+
 using CliRunner.Abstractions;
 
 #if NET5_0_OR_GREATER
