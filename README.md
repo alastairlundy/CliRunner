@@ -56,6 +56,7 @@ CliRunner's packages can be installed via the .NET SDK CLI, Nuget via your IDE o
 |---------------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------|
 | CliRunner                 | [CliRunner Nuget](https://nuget.org/packages/CliRunner)                                 | ``dotnet add package CliRunner``                 |
 | CliRunner.Extensions      | [CliRunner.Extensions Nuget](https://nuget.org/packages/CliRunner.Extensions)           | ``dotnet add package CliRunner.Extensions``      |
+| CliRunner.Extensibility   | [CliRunner.Extensibility Nuget](https://nuget.org/packages/CliRunner.Extensibility)     | ``dotnet add package CliRunner.Extensibility``   |
 | CliRunner.Specializations | [CliRunner.Specializations Nuget](https://nuget.org/packages/CliRunner.Specializations) | ``dotnet add package CliRunner.Specializations`` |
 
 
