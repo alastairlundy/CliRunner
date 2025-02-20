@@ -8,7 +8,8 @@
 */
 
 using System;
-
+using AlastairLundy.Extensions.IO.Files;
+using AlastairLundy.Extensions.IO.Files.Abstractions;
 using AlastairLundy.Extensions.Processes;
 using AlastairLundy.Extensions.Processes.Abstractions;
 using AlastairLundy.Extensions.Processes.Piping;
@@ -35,8 +36,8 @@ public static class DependencyInjectionExtensions
     /// <returns>The updated service collection with the added CliRunner dependency injection.</returns>
     public static IServiceCollection AddCliRunner(this IServiceCollection services,
         ServiceLifetime lifetime = ServiceLifetime.Singleton)
-    {
-    //   services.Add(lifetime, typeof(IFilePathResolver), typeof(FilePathResolver));
+    { 
+        services.Add(lifetime, typeof(IFilePathResolver), typeof(FilePathResolver));
         
         services.Add(lifetime, typeof(IProcessRunnerUtility), typeof(ProcessRunnerUtility));
         services.Add(lifetime, typeof(IPipedProcessRunner), typeof(PipedProcessRunner));
