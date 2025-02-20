@@ -14,7 +14,7 @@ This package adds:
 ### DependencyInjecton
 CliRunner.Extensions provides an extension method to make it easier to use CliRunner with Microsoft.Extensions.DependencyInjection.
 
-The ``AddCliRunner`` IServiceCollection extension method adds CliRunner's interface-able services.
+The ``AddCliRunner`` IServiceCollection extension method adds CliRunner's and ProcessExtensions' interface-able services.
 
 The services injected includes:
 * ``IFilePathResolver``
