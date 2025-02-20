@@ -45,4 +45,4 @@ If you fork CliRunner and re-distribute it, please replace the usage of the icon
 This project would like to thank the following projects for their work:
 * [Microsoft.Extensions.DependencyInjection.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions) for providing Dependency Injection Abstractions for .NET .
 
-For more information, please see the [THIRD_PARTY_NOTICES file](https://github.com/alastairlundy/CliRunner/blob/main/CliRunnerLibrary/CliRunner.Extensions.DependencyInjection/THIRD_PARTY_NOTICES.txt).
+For more information, please see the [THIRD_PARTY_NOTICES file](https://github.com/alastairlundy/CliRunner/blob/main/CliRunnerLibrary/CliRunner.Extensions/THIRD_PARTY_NOTICES.txt).
