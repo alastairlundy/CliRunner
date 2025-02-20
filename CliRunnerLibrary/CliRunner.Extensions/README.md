@@ -1,4 +1,4 @@
-## CliRunner.Extensions.
+## CliRunner.Extensions
 This readme covers the **CliRunner.Extensions** package. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
 
 This package adds:
@@ -6,8 +6,8 @@ This package adds:
 * the ``AddCliRunner`` Dependency Injection extension method to enable easy CliRunner setup when using the Microsoft.Extensions.DependencyInjection package
 * 
 
-[![NuGet](https://img.shields.io/nuget/v/CliRunner.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/CliRunner.Extensions.DependencyInjection/)
-[![NuGet](https://img.shields.io/nuget/dt/CliRunner.Extensions.DependencyInjection.svg)](https://www.nuget.org/packages/CliRunner.Extensions.DependencyInjection/)
+[![NuGet](https://img.shields.io/nuget/v/CliRunner.Extensions.svg)](https://www.nuget.org/packages/CliRunner.Extensions/)
+[![NuGet](https://img.shields.io/nuget/dt/CliRunner.Extensions.svg)](https://www.nuget.org/packages/CliRunner.Extensions/)
 
 ## Usage
 
@@ -32,7 +32,7 @@ There's a few different reasons:
 * Helps de-couple the Dependency Injection extension functionality from the main library
 
 ## Licensing
-CliRunner.Extensions.DependencyInjection is licensed under the MPL 2.0 license. If you modify any of the package's files then the modified files must be licensed under the MPL 2.0 .
+CliRunner.Extensions is licensed under the MPL 2.0 license. If you modify any of the package's files then the modified files must be licensed under the MPL 2.0 .
 
 If you use this package in your project please make an exact copy of the contents of the LICENSE.txt file available either in your third party licenses txt file or as a separate txt file.
 
