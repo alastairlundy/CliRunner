@@ -24,7 +24,7 @@ namespace CliRunner.Extensibility.Abstractions.Runners;
 /// <summary>
 /// An abstract class to allow creating Specialized Command runners that run Commands through other Commands.
 /// </summary>
-public abstract class SpecializedCommandRunner : ICliCommandRunner
+public abstract class SpecializedCliCommandRunner : ICliCommandRunner
 {
     private readonly CliCommandRunner _commandRunner;
     
@@ -35,7 +35,7 @@ public abstract class SpecializedCommandRunner : ICliCommandRunner
     /// </summary>
     /// <param name="commandRunner">The command runner to be used.</param>
     /// <param name="commandRunnerConfiguration">The command running configuration to use for the Command that will run other Commands.</param>
-    protected SpecializedCommandRunner(CliCommandRunner commandRunner, ICliCommandConfiguration commandRunnerConfiguration)
+    protected SpecializedCliCommandRunner(CliCommandRunner commandRunner, ICliCommandConfiguration commandRunnerConfiguration)
     {
         _commandRunner = commandRunner;
         _commandRunnerConfiguration = commandRunnerConfiguration;

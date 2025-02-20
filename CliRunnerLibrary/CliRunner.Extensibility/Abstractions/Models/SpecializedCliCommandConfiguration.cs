@@ -16,6 +16,7 @@ using System.Text;
 using AlastairLundy.Extensions.Processes;
 
 using CliRunner.Abstractions;
+// ReSharper disable UnusedType.Global
 
 #if NET5_0_OR_GREATER
 #nullable enable
@@ -28,7 +29,7 @@ namespace CliRunner.Extensibility.Abstractions;
 /// </summary>
 /// /// <remarks>Do not use this class directly unless you are creating a specialized Command,
 /// such as one that will be run through an intermediary process like Powershell or Cmd.</remarks>
-public abstract class SpecializedCommandConfiguration : ICliCommandConfiguration
+public abstract class SpecializedCliCommandConfiguration : ICliCommandConfiguration
 {
     /// <summary>
     /// Initializes a new instance of the Specialized Command Configuration class.
@@ -51,7 +52,7 @@ public abstract class SpecializedCommandConfiguration : ICliCommandConfiguration
     /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
     /// <remarks>Do not use directly unless you are creating a specialized Command, such as one that will be run through an intermediary like Powershell or Cmd.</remarks>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public SpecializedCommandConfiguration(string targetFilePath, string? arguments = null,
+    public SpecializedCliCommandConfiguration(string targetFilePath, string? arguments = null,
         string? workingDirectoryPath = null, bool requiresAdministrator = false,
         IReadOnlyDictionary<string, string>? environmentVariables = null, UserCredential? credentials = null,
         ProcessResultValidation commandResultValidation = ProcessResultValidation.ExitCodeZero,

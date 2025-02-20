@@ -17,6 +17,9 @@
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <PackageIcon>icon.png</PackageIcon>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.0-beta.3</Version>
+        <PackageReleaseNotes>Initial Release as separate package.</PackageReleaseNotes>
     </PropertyGroup>
     
     <ItemGroup>
