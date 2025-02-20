@@ -46,17 +46,17 @@ CliRunner is available on [Nuget](https://nuget.org).
 
 These are the CliRunner projects:
 * CliRunner - The main CliRunner package.
-* [CliRunner.Extensions.DependencyInjection](CliRunnerLibrary/CliRunner.Extensions.DependencyInjection/README.md)
+* [CliRunner.Extensions](CliRunnerLibrary/CliRunner.Extensions/README.md)
 * [CliRunner.Specializations](SPECIALIZATIONS_README.md)
 
 ### Installing CliRunner
 CliRunner's packages can be installed via the .NET SDK CLI, Nuget via your IDE or code editor's package interface, or via the Nuget website.
 
-| Package Name                             | Nuget Link                                                                                                            | .NET SDK CLI command                                            |
-|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| CliRunner                                | [CliRunner Nuget](https://nuget.org/packages/CliRunner)                                                               | ``dotnet add package CliRunner``                                |
-| CliRunner.Extensions.DependencyInjection | [CliRunner.Extensions.DependencyInjection Nuget](https://nuget.org/packages/CliRunner.Extensions.DependencyInjection) | ``dotnet add package CliRunner.Extensions.DependencyInjection`` |
-| CliRunner.Specializations                | [CliRunner.Specializations Nuget](https://nuget.org/packages/CliRunner.Specializations)                               | ``dotnet add package CliRunner.Specializations``                |
+| Package Name              | Nuget Link                                                                              | .NET SDK CLI command                             |
+|---------------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------|
+| CliRunner                 | [CliRunner Nuget](https://nuget.org/packages/CliRunner)                                 | ``dotnet add package CliRunner``                 |
+| CliRunner.Extensions      | [CliRunner.Extensions Nuget](https://nuget.org/packages/CliRunner.Extensions)           | ``dotnet add package CliRunner.Extensions``      |
+| CliRunner.Specializations | [CliRunner.Specializations Nuget](https://nuget.org/packages/CliRunner.Specializations) | ``dotnet add package CliRunner.Specializations`` |
 
 
 ### Supported Platforms
