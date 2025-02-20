@@ -33,7 +33,7 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 ^2 - The Specialization library is distributed separately.
 
 ## Why use CliRunner over [CliWrap](https://github.com/Tyrrrz/CliWrap/)?
-* Greater separation of concerns with the Command class - Command Building, Command Running, andCommand Pipe handling are moved to separate classes.
+* Greater separation of concerns with the Command class - Command Building, Command Running, and Command Pipe handling are moved to separate classes.
 * Supports Dependency Injection
 * Classes and code follow the Single Responsibility Principle
 * No hidden or additional licensing terms are required beyond the source code license.
@@ -103,17 +103,17 @@ using AlastairLundy.Extensions.Processes;
 
   // ServiceProvider and Dependency Injection code ommitted for clarity
   
-  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
+  ICliCommandRunner _commandRunner = serviceProvider.GetRequiredService<ICliCommandRunner>();
 
   // Fluently configure your Command.
-  ICommandBuilder builder = new CommandBuilder("Path/To/Executable")
+  ICliCommandBuilder builder = new CliCommandBuilder("Path/To/Executable")
                             .WithArguments(["arg1", "arg2"])
                             .WithWorkingDirectory("/Path/To/Directory");
   
-  // Build it as a Command object when you're ready to use it.
-  Command command = builder.Build();
+  // Build it as a CliCommand object when you're ready to use it.
+  CliCommand command = builder.Build();
   
-  // Execute the command through CommandRunner and get the results.
+  // Execute the CliCommand through CommandRunner and get the results.
 BufferedProcessResult result = await _commandRunner.ExecuteBufferedAsync(command);
 ```
 
