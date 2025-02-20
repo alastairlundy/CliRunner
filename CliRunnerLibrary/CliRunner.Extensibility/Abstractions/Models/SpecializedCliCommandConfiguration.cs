@@ -39,7 +39,7 @@ public abstract class SpecializedCliCommandConfiguration : ICliCommandConfigurat
     /// <param name="workingDirectoryPath">The working directory for the command.</param>
     /// <param name="requiresAdministrator">Indicates whether the command requires administrator privileges.</param>
     /// <param name="environmentVariables">A dictionary of environment variables to be set for the command.</param>
-    /// <param name="credentials">The user credentials to be used when running the command.</param>
+    /// <param name="credential">The user credentials to be used when running the command.</param>
     /// <param name="commandResultValidation">The validation criteria for the command result.</param>
     /// <param name="standardInput">The stream for the standard input.</param>
     /// <param name="standardOutput">The stream for the standard output.</param>
@@ -54,7 +54,7 @@ public abstract class SpecializedCliCommandConfiguration : ICliCommandConfigurat
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public SpecializedCliCommandConfiguration(string targetFilePath, string? arguments = null,
         string? workingDirectoryPath = null, bool requiresAdministrator = false,
-        IReadOnlyDictionary<string, string>? environmentVariables = null, UserCredential? credentials = null,
+        IReadOnlyDictionary<string, string>? environmentVariables = null, UserCredential? credential = null,
         ProcessResultValidation commandResultValidation = ProcessResultValidation.ExitCodeZero,
         StreamWriter? standardInput = null, StreamReader? standardOutput = null, StreamReader? standardError = null,
         Encoding? standardInputEncoding = null, Encoding? standardOutputEncoding = null,
@@ -62,11 +62,15 @@ public abstract class SpecializedCliCommandConfiguration : ICliCommandConfigurat
         bool useShellExecution = false, bool windowCreation = false)
     {
         TargetFilePath = targetFilePath;
-        Arguments = arguments;
-        WorkingDirectoryPath = workingDirectoryPath;
+        if (arguments != null) Arguments = arguments;
+        if (workingDirectoryPath != null) WorkingDirectoryPath = workingDirectoryPath;
         RequiresAdministrator = requiresAdministrator;
-        EnvironmentVariables = environmentVariables;
-        Credential = credentials;
+        if (environmentVariables != null) EnvironmentVariables = environmentVariables;
+
+        if (credential is not null)
+        {
+            Credential = credential;
+        }
         ResultValidation = commandResultValidation;
         UseShellExecution = useShellExecution;
         WindowCreation = windowCreation;
@@ -78,8 +82,11 @@ public abstract class SpecializedCliCommandConfiguration : ICliCommandConfigurat
         StandardInputEncoding = standardInputEncoding ?? Encoding.Default;
         StandardOutputEncoding = standardOutputEncoding ?? Encoding.Default;
         StandardErrorEncoding = standardErrorEncoding ?? Encoding.Default;
-        
-        ResourcePolicy = processResourcePolicy;
+
+        if (processResourcePolicy is not null)
+        {
+            ResourcePolicy = processResourcePolicy;
+        }
     }
 
         /// <summary>
