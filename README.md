@@ -97,6 +97,8 @@ using CliRunner;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Builders;
 
+using AlastairLundy.Extensions.Processes;
+
   //Namespace and classs code ommitted for clarity 
 
   // ServiceProvider and Dependency Injection code ommitted for clarity
