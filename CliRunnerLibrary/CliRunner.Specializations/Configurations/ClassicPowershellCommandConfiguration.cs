@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using AlastairLundy.Extensions.Processes;
-using CliRunner.Extensibility;
 using CliRunner.Extensibility.Abstractions;
 using CliRunner.Specializations.Internal.Localizations;
 
