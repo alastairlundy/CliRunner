@@ -12,7 +12,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using CliRunner.Extensibility;
+using AlastairLundy.Extensions.Processes;
+using CliRunner.Extensibility.Abstractions;
 using CliRunner.Specializations.Internal.Localizations;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -38,7 +39,7 @@ namespace CliRunner.Specializations.Configurations
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("watchos")]
 #endif
-    public class CmdCommandConfiguration : SpecializedCommandConfiguration
+    public class CmdCommandConfiguration : SpecializedCliCommandConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the CmdCommandConfiguration class.

@@ -6,6 +6,7 @@
 ### 1.0.0
 | Version | Release Date | Changelog |
 |-|-|-|
+| 1.0.0 Beta 3 | February 20th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-beta.3 |
 | 1.0.0 Beta 2 | February 18th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-beta.2 |
 | 1.0.0 Beta 1 | February 14th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-beta.1 |
 | 1.0.0 Alpha 4 | February 13th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-alpha.4 |

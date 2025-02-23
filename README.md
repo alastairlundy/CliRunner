@@ -33,7 +33,7 @@ CliRunner is a library for interacting with Command Line Interfaces and wrapping
 ^2 - The Specialization library is distributed separately.
 
 ## Why use CliRunner over [CliWrap](https://github.com/Tyrrrz/CliWrap/)?
-* Greater separation of concerns with the Command class - Command Building, Command Running, andCommand Pipe handling are moved to separate classes.
+* Greater separation of concerns with the Command class - Command Building, Command Running, and Command Pipe handling are moved to separate classes.
 * Supports Dependency Injection
 * Classes and code follow the Single Responsibility Principle
 * No hidden or additional licensing terms are required beyond the source code license.
@@ -46,17 +46,18 @@ CliRunner is available on [Nuget](https://nuget.org).
 
 These are the CliRunner projects:
 * CliRunner - The main CliRunner package.
-* [CliRunner.Extensions.DependencyInjection](CliRunnerLibrary/CliRunner.Extensions.DependencyInjection/README.md)
+* [CliRunner.Extensions](CliRunnerLibrary/CliRunner.Extensions/README.md)
 * [CliRunner.Specializations](SPECIALIZATIONS_README.md)
 
 ### Installing CliRunner
 CliRunner's packages can be installed via the .NET SDK CLI, Nuget via your IDE or code editor's package interface, or via the Nuget website.
 
-| Package Name                             | Nuget Link                                                                                                            | .NET SDK CLI command                                            |
-|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| CliRunner                                | [CliRunner Nuget](https://nuget.org/packages/CliRunner)                                                               | ``dotnet add package CliRunner``                                |
-| CliRunner.Extensions.DependencyInjection | [CliRunner.Extensions.DependencyInjection Nuget](https://nuget.org/packages/CliRunner.Extensions.DependencyInjection) | ``dotnet add package CliRunner.Extensions.DependencyInjection`` |
-| CliRunner.Specializations                | [CliRunner.Specializations Nuget](https://nuget.org/packages/CliRunner.Specializations)                               | ``dotnet add package CliRunner.Specializations``                |
+| Package Name              | Nuget Link                                                                              | .NET SDK CLI command                             |
+|---------------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------|
+| CliRunner                 | [CliRunner Nuget](https://nuget.org/packages/CliRunner)                                 | ``dotnet add package CliRunner``                 |
+| CliRunner.Extensions      | [CliRunner.Extensions Nuget](https://nuget.org/packages/CliRunner.Extensions)           | ``dotnet add package CliRunner.Extensions``      |
+| CliRunner.Extensibility   | [CliRunner.Extensibility Nuget](https://nuget.org/packages/CliRunner.Extensibility)     | ``dotnet add package CliRunner.Extensibility``   |
+| CliRunner.Specializations | [CliRunner.Specializations Nuget](https://nuget.org/packages/CliRunner.Specializations) | ``dotnet add package CliRunner.Specializations`` |
 
 
 ### Supported Platforms
@@ -97,21 +98,23 @@ using CliRunner;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Builders;
 
+using AlastairLundy.Extensions.Processes;
+
   //Namespace and classs code ommitted for clarity 
 
   // ServiceProvider and Dependency Injection code ommitted for clarity
   
-  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
+  ICliCommandRunner _commandRunner = serviceProvider.GetRequiredService<ICliCommandRunner>();
 
   // Fluently configure your Command.
-  ICommandBuilder builder = new CommandBuilder("Path/To/Executable")
+  ICliCommandBuilder builder = new CliCommandBuilder("Path/To/Executable")
                             .WithArguments(["arg1", "arg2"])
                             .WithWorkingDirectory("/Path/To/Directory");
   
-  // Build it as a Command object when you're ready to use it.
-  Command command = builder.Build();
+  // Build it as a CliCommand object when you're ready to use it.
+  CliCommand command = builder.Build();
   
-  // Execute the command through CommandRunner and get the results.
+  // Execute the CliCommand through CommandRunner and get the results.
 BufferedProcessResult result = await _commandRunner.ExecuteBufferedAsync(command);
 ```
 
