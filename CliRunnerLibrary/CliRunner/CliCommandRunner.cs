@@ -47,7 +47,7 @@ public class CliCommandRunner : ICliCommandRunner
         
         private readonly IProcessPipeHandler _processPipeHandler;
         
-        private readonly IProcessCreator _processCreator;
+        private readonly IProcessFactory _processCreator;
 
         /// <summary>
         /// Initialises the CommandRunner with the ICommandPipeHandler to be used.
@@ -55,7 +55,7 @@ public class CliCommandRunner : ICliCommandRunner
         /// <param name="pipedProcessRunner"></param>
         /// <param name="processPipeHandler"></param>
         /// <param name="processCreator"></param>
-        public CliCommandRunner(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessCreator processCreator)
+        public CliCommandRunner(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessFactory processCreator)
         {
             _pipedProcessRunner = pipedProcessRunner;
             _processPipeHandler = processPipeHandler;
@@ -83,7 +83,7 @@ public class CliCommandRunner : ICliCommandRunner
 #endif
         public async Task<ProcessResult> ExecuteAsync(CliCommand command, CancellationToken cancellationToken = default)
         {
-            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command));
+            Process process = _processCreator.CreateProcess(_processCreator.ConfigureProcess(command));
             
             if (command.StandardInput != null)
             {
@@ -135,7 +135,7 @@ public class CliCommandRunner : ICliCommandRunner
         public async Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommand command,
             CancellationToken cancellationToken = default)
         {
-            Process process = _processCreator.CreateProcess(_processCreator.CreateStartInfo(command,
+            Process process = _processCreator.CreateProcess(_processCreator.ConfigureProcess(command,
                 true, true));
 
             if (command.StandardInput != null && command.StandardInput != StreamWriter.Null)

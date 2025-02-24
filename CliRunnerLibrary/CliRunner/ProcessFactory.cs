@@ -33,7 +33,7 @@ namespace CliRunner;
 /// <summary>
 /// A class to enable easy Process Creation with Command Configuration information.
 /// </summary>
-public class ProcessCreator : IProcessCreator
+public class ProcessFactory : IProcessFactory
 {
     /// <summary>
     /// Creates a process with the specified process start information.
@@ -74,7 +74,6 @@ public class ProcessCreator : IProcessCreator
         /// <param name="commandConfiguration">The command object to specify Process info.</param>
         /// <returns>A new ProcessStartInfo object configured with the specified Command object values.</returns>
         /// <exception cref="ArgumentException">Thrown if the command configuration's Target File Path is null or empty.</exception>
-
     #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -87,9 +86,9 @@ public class ProcessCreator : IProcessCreator
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("browser")]
     #endif
-        public ProcessStartInfo CreateStartInfo(ICliCommandConfiguration commandConfiguration)
+        public ProcessStartInfo ConfigureProcess(ICliCommandConfiguration commandConfiguration)
         {
-            return CreateStartInfo(commandConfiguration, commandConfiguration.StandardOutput != null, commandConfiguration.StandardError != null);
+            return ConfigureProcess(commandConfiguration, commandConfiguration.StandardOutput != null, commandConfiguration.StandardError != null);
         }
 
         /// <summary>
@@ -112,7 +111,7 @@ public class ProcessCreator : IProcessCreator
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo CreateStartInfo(ICliCommandConfiguration commandConfiguration, bool redirectStandardOutput,
+        public ProcessStartInfo ConfigureProcess(ICliCommandConfiguration commandConfiguration, bool redirectStandardOutput,
             bool redirectStandardError)
         {
             if (string.IsNullOrEmpty(commandConfiguration.TargetFilePath))
