@@ -26,7 +26,7 @@ namespace CliRunner.Extensibility.Abstractions.Runners;
 /// </summary>
 public abstract class SpecializedCliCommandRunner : ICliCommandRunner
 {
-    private readonly CliCommandRunner _commandRunner;
+    private readonly ICliCommandRunner _commandRunner;
     
     private readonly ICliCommandConfiguration _commandRunnerConfiguration;
     
@@ -35,18 +35,18 @@ public abstract class SpecializedCliCommandRunner : ICliCommandRunner
     /// </summary>
     /// <param name="commandRunner">The command runner to be used.</param>
     /// <param name="commandRunnerConfiguration">The command running configuration to use for the Command that will run other Commands.</param>
-    protected SpecializedCliCommandRunner(CliCommandRunner commandRunner, ICliCommandConfiguration commandRunnerConfiguration)
+    protected SpecializedCliCommandRunner(ICliCommandRunner commandRunner, ICliCommandConfiguration commandRunnerConfiguration)
     {
         _commandRunner = commandRunner;
         _commandRunnerConfiguration = commandRunnerConfiguration;
     }
-
+    
     /// <summary>
     /// Create the command to be run from the Command runner configuration and an input command.
     /// </summary>
     /// <param name="inputCommand">The command to be run by the Command Runner command.</param>
     /// <returns>The built Command that will run the input command.</returns>
-    protected CliCommand CreateRunnerCommand(CliCommand inputCommand)
+    protected virtual CliCommand CreateRunnerCommand(CliCommand inputCommand)
     {
         ICliCommandBuilder commandBuilder = new CliCommandBuilder(_commandRunnerConfiguration)
             .WithArguments(inputCommand.TargetFilePath + " " + inputCommand.Arguments)
