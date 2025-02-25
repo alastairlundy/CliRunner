@@ -7,10 +7,6 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
    */
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +22,8 @@ using CliRunner.Internal.Localizations;
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = Polyfills.OperatingSystemPolyfill;
+#else
+using System.Runtime.Versioning;
 #endif
 
 namespace CliRunner;

@@ -47,19 +47,19 @@ public class CliCommandRunner : ICliCommandRunner
         
         private readonly IProcessPipeHandler _processPipeHandler;
         
-        private readonly IProcessFactory _processCreator;
+        private readonly IProcessFactory _processFactory;
 
         /// <summary>
         /// Initialises the CommandRunner with the ICommandPipeHandler to be used.
         /// </summary>
         /// <param name="pipedProcessRunner"></param>
-        /// <param name="processPipeHandler"></param>
-        /// <param name="processCreator"></param>
-        public CliCommandRunner(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessFactory processCreator)
+        /// <param name="processPipeHandler">The process pipe handler to be used.</param>
+        /// <param name="processFactory">The process factory to be used.</param>
+        public CliCommandRunner(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessFactory processFactory)
         {
             _pipedProcessRunner = pipedProcessRunner;
             _processPipeHandler = processPipeHandler;
-            _processCreator = processCreator;
+            _processFactory = processFactory;
         }
         
         
@@ -83,7 +83,7 @@ public class CliCommandRunner : ICliCommandRunner
 #endif
         public async Task<ProcessResult> ExecuteAsync(CliCommand command, CancellationToken cancellationToken = default)
         {
-            Process process = _processCreator.CreateProcess(_processCreator.ConfigureProcess(command));
+            Process process = _processFactory.CreateProcess(_processFactory.ConfigureProcess(command));
             
             if (command.StandardInput != null)
             {
@@ -135,7 +135,7 @@ public class CliCommandRunner : ICliCommandRunner
         public async Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommand command,
             CancellationToken cancellationToken = default)
         {
-            Process process = _processCreator.CreateProcess(_processCreator.ConfigureProcess(command,
+            Process process = _processFactory.CreateProcess(_processFactory.ConfigureProcess(command,
                 true, true));
 
             if (command.StandardInput != null && command.StandardInput != StreamWriter.Null)
