@@ -7,6 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -62,10 +63,12 @@ public abstract class SpecializedCliCommandConfiguration : ICliCommandConfigurat
         bool useShellExecution = false, bool windowCreation = false)
     {
         TargetFilePath = targetFilePath;
-        if (arguments != null) Arguments = arguments;
-        if (workingDirectoryPath != null) WorkingDirectoryPath = workingDirectoryPath;
+        
+        Arguments = arguments ?? string.Empty;
+        WorkingDirectoryPath = workingDirectoryPath ?? Environment.CurrentDirectory;
+        EnvironmentVariables = environmentVariables ?? new Dictionary<string, string>();
+        
         RequiresAdministrator = requiresAdministrator;
-        if (environmentVariables != null) EnvironmentVariables = environmentVariables;
 
         if (credential is not null)
         {
@@ -122,7 +125,7 @@ public abstract class SpecializedCliCommandConfiguration : ICliCommandConfigurat
         /// <summary>
         /// The credentials to be used when executing the executable.
         /// </summary>
-        public UserCredential Credential { get; }
+        public UserCredential? Credential { get; }
 
         /// <summary>
         /// The result validation to apply to the Command when it is executed.
@@ -153,7 +156,7 @@ public abstract class SpecializedCliCommandConfiguration : ICliCommandConfigurat
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
 #endif
-        public ProcessResourcePolicy ResourcePolicy { get; }
+        public ProcessResourcePolicy? ResourcePolicy { get; }
 
         /// <summary>
         /// Whether to use Shell Execution or not.
