@@ -135,7 +135,7 @@ public class CliCommandBuilderTests
                 password2.AppendChar('7');
                 password2.AppendChar('6');
 
-                UserCredential userCredential = new UserCredential("", "root", password2, false);
+                UserCredential? userCredential = new UserCredential("", "root", password2, false);
                 
                 commandBuilder = commandBuilder.WithUserCredential(userCredential);
                 
@@ -153,7 +153,7 @@ public class CliCommandBuilderTests
                 
                 
                 //Arrange
-                ProcessResourcePolicy resourcePolicy = new ProcessResourcePolicy(default,
+                ProcessResourcePolicy? resourcePolicy = new ProcessResourcePolicy(default,
                         null,
                         null,
                         ProcessPriorityClass.AboveNormal,
