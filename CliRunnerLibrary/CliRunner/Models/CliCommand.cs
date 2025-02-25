@@ -33,7 +33,7 @@ using CliRunner.Internal.Localizations;
 namespace CliRunner
 {
     /// <summary>
-    /// A class to represent a Command to be run.
+    /// A class to represent Commands that can be run.
     /// </summary>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class CliCommand : ICliCommandConfiguration, IEquatable<CliCommand>
