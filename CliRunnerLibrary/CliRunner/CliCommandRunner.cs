@@ -50,7 +50,7 @@ public class CliCommandRunner : ICliCommandRunner
         private readonly IProcessFactory _processFactory;
 
         /// <summary>
-        /// Initialises the CommandRunner with the ICommandPipeHandler to be used.
+        /// Initializes the CommandRunner with the ICommandPipeHandler to be used.
         /// </summary>
         /// <param name="pipedProcessRunner"></param>
         /// <param name="processPipeHandler">The process pipe handler to be used.</param>
