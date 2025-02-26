@@ -23,10 +23,11 @@ using CliRunner.Builders.Abstractions;
 using CliRunner.Internal.Localizations;
 
 // ReSharper disable RedundantBoolCompare
+// ReSharper disable NullableWarningSuppressionIsUsed
+
 
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
-// ReSharper disable NullableWarningSuppressionIsUsed
 #endif
 
 namespace CliRunner.Builders;
