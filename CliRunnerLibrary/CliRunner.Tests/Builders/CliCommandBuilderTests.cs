@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Security;
 using System.Text;
 using AlastairLundy.Extensions.Processes;
@@ -115,6 +116,9 @@ public class CliCommandBuilderTests
                 Assert.Equal(ProcessResultValidation.ExitCodeZero, command.ResultValidation);
         }
 
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+#endif
         [Fact]
         public void TestReconfiguredUserCredential()
         {
@@ -135,7 +139,7 @@ public class CliCommandBuilderTests
                 password2.AppendChar('7');
                 password2.AppendChar('6');
 
-                UserCredential? userCredential = new UserCredential("", "root", password2, false);
+                UserCredential userCredential = new UserCredential("", "root", password2, false);
                 
                 commandBuilder = commandBuilder.WithUserCredential(userCredential);
                 
@@ -144,6 +148,12 @@ public class CliCommandBuilderTests
                 Assert.Equal(userCredential, command.Credential);
         }
 
+#if NET5_0_OR_GREATER
+        [SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("linux")]
+        [SupportedOSPlatform("macos")]
+        [SupportedOSPlatform("freebsd")]
+#endif
         [Fact]
         public void TestReconfiguredResourcePolicy()
         {
@@ -153,11 +163,10 @@ public class CliCommandBuilderTests
                 
                 
                 //Arrange
-                ProcessResourcePolicy? resourcePolicy = new ProcessResourcePolicy(default,
+                ProcessResourcePolicy resourcePolicy = new ProcessResourcePolicy(null,
                         null,
                         null,
-                        ProcessPriorityClass.AboveNormal,
-                        true);
+                        ProcessPriorityClass.AboveNormal);
                 
                 commandBuilder = commandBuilder.WithProcessResourcePolicy(resourcePolicy);
                 
