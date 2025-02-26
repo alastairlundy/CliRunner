@@ -462,9 +462,11 @@ public class CliCommandBuilder : ICliCommandBuilder
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("linux")]
-    [UnsupportedOSPlatform("macos")]
-    [UnsupportedOSPlatform("freebsd")]
-    [UnsupportedOSPlatform("android")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("maccatalyst")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("tvos")]
 #endif
     [Pure]
     public ICliCommandBuilder WithProcessResourcePolicy(ProcessResourcePolicy processResourcePolicy) =>
