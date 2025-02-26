@@ -22,9 +22,11 @@ using CliRunner.Abstractions;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Internal.Localizations;
 
+// ReSharper disable RedundantBoolCompare
+
 #if NET5_0_OR_GREATER
 using System.Runtime.Versioning;
-// ReSharper disable RedundantBoolCompare
+// ReSharper disable NullableWarningSuppressionIsUsed
 #endif
 
 namespace CliRunner.Builders;
@@ -308,10 +310,21 @@ public class CliCommandBuilder : ICliCommandBuilder
 #endif
     public ICliCommandBuilder WithUserCredential(Action<IUserCredentialBuilder> configure)
     {
+        UserCredential credential;
+
+        if (_commandConfiguration.Credential is null)
+        {
+            credential = UserCredential.Null;
+        }
+        else
+        {
+            credential = _commandConfiguration.Credential;
+        }
+        
         IUserCredentialBuilder credentialBuilder = new UserCredentialBuilder()
-            .SetDomain(_commandConfiguration.Credential.Domain!)
-            .SetPassword(_commandConfiguration.Credential.Password!)
-            .SetUsername(_commandConfiguration.Credential.UserName!);
+            .SetDomain(credential.Domain!)
+            .SetPassword(credential.Password!)
+            .SetUsername(credential.UserName!);
 
         configure(credentialBuilder);
 
