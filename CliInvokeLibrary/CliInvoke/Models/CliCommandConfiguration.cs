@@ -18,8 +18,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
-using AlastairLundy.CliInvoke.Abstractions;
+
 using AlastairLundy.CliInvoke.Internal.Localizations;
+
 using AlastairLundy.Extensions.Processes;
 
 // ReSharper disable UnusedMember.Global
@@ -34,7 +35,7 @@ namespace AlastairLundy.CliInvoke
     /// A class to represent Commands that can be run.
     /// </summary>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-    public class CliCommand : ICliCommandConfiguration, IEquatable<CliCommand>
+    public class CliCommandConfiguration : IEquatable<CliCommandConfiguration>
     {
         /// <summary>
         /// Whether administrator privileges are required when executing the Command.
@@ -121,7 +122,7 @@ namespace AlastairLundy.CliInvoke
         public Encoding StandardErrorEncoding { get; protected set; }
 
         /// <summary>
-        /// Configures the Command to be wrapped and executed.
+        /// Configures the Command configuration to be wrapped and executed.
         /// </summary>
         /// <param name="targetFilePath">The target file path of the command to be executed.</param>
         /// <param name="arguments">The arguments to pass to the Command upon execution.</param>
@@ -139,7 +140,7 @@ namespace AlastairLundy.CliInvoke
         /// <param name="standardInputEncoding">The Standard Input Encoding to be used (if specified).</param>
         /// <param name="standardOutputEncoding">The Standard Output Encoding to be used (if specified).</param>
         /// <param name="standardErrorEncoding">The Standard Error Encoding to be used (if specified).</param>
-        public CliCommand(string targetFilePath,
+        public CliCommandConfiguration(string targetFilePath,
             string arguments = null, string workingDirectoryPath = null,
             bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null,
@@ -183,7 +184,7 @@ namespace AlastairLundy.CliInvoke
         /// Creates a new Command with the specified Command Configuration.
         /// </summary>
         /// <param name="commandConfiguration">The command configuration to be used to for the Command.</param>
-        public CliCommand(ICliCommandConfiguration commandConfiguration)
+        public CliCommandConfiguration(CliCommandConfiguration commandConfiguration)
         {
             TargetFilePath = commandConfiguration.TargetFilePath;
             Arguments = commandConfiguration.Arguments; 
@@ -224,7 +225,7 @@ namespace AlastairLundy.CliInvoke
         /// </summary>
         /// <param name="other">The other Command object to be compared.</param>
         /// <returns>true if both Command objects are the same; false otherwise.</returns>
-        public bool Equals(CliCommand other)
+        public bool Equals(CliCommandConfiguration other)
         {
             if (other is null)
             {
@@ -258,7 +259,7 @@ namespace AlastairLundy.CliInvoke
                 return false;
             }
 
-            if (obj is CliCommand command)
+            if (obj is CliCommandConfiguration command)
             {
                 return Equals(command);
             }
@@ -297,7 +298,7 @@ namespace AlastairLundy.CliInvoke
         /// <param name="left">A command to be compared.</param>
         /// <param name="right">The other command to be compared.</param>
         /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
-        public static bool Equals(CliCommand left, CliCommand right)
+        public static bool Equals(CliCommandConfiguration left, CliCommandConfiguration right)
         {
             return left.Equals(right);
         }
@@ -308,7 +309,7 @@ namespace AlastairLundy.CliInvoke
         /// <param name="left">A command to be compared.</param>
         /// <param name="right">The other command to be compared.</param>
         /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
-        public static bool operator ==(CliCommand left, CliCommand right)
+        public static bool operator ==(CliCommandConfiguration left, CliCommandConfiguration right)
         {
             return Equals(left, right);
         }
@@ -319,7 +320,7 @@ namespace AlastairLundy.CliInvoke
         /// <param name="left">A command to be compared.</param>
         /// <param name="right">The other command to be compared.</param>
         /// <returns>True if both Commands are not equal to each other; false otherwise.</returns>
-        public static bool operator !=(CliCommand left, CliCommand right)
+        public static bool operator !=(CliCommandConfiguration left, CliCommandConfiguration right)
         {
             return Equals(left, right) == false;
         }

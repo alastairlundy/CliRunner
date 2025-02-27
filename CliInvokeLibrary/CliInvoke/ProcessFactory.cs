@@ -81,7 +81,7 @@ public class ProcessFactory : IProcessFactory
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("browser")]
     #endif
-        public ProcessStartInfo ConfigureProcess(ICliCommandConfiguration commandConfiguration)
+        public ProcessStartInfo ConfigureProcess(CliCommandConfiguration commandConfiguration)
         {
             return ConfigureProcess(commandConfiguration, commandConfiguration.StandardOutput != null, commandConfiguration.StandardError != null);
         }
@@ -106,7 +106,7 @@ public class ProcessFactory : IProcessFactory
         [UnsupportedOSPlatform("watchos")]
         [UnsupportedOSPlatform("browser")]
 #endif
-        public ProcessStartInfo ConfigureProcess(ICliCommandConfiguration commandConfiguration, bool redirectStandardOutput,
+        public ProcessStartInfo ConfigureProcess(CliCommandConfiguration commandConfiguration, bool redirectStandardOutput,
             bool redirectStandardError)
         {
             if (string.IsNullOrEmpty(commandConfiguration.TargetFilePath))
