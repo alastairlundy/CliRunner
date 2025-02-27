@@ -20,13 +20,13 @@ namespace AlastairLundy.CliInvoke.Exceptions
     /// <summary>
     /// Represents errors that occur if a Command being executed by CliInvoke is unsuccessful.
     /// </summary>
-    public sealed class CommandNotSuccessfulException : Exception
+    public sealed class CliCommandNotSuccessfulException : Exception
     {
         /// <summary>
         /// The command that was executed.
         /// </summary>
 #if NET5_0_OR_GREATER
-        public CliCommand? ExecutedCommand { get; private set; }
+        public CliCommandConfiguration? ExecutedCliCommand { get; private set; }
 #endif
         /// <summary>
         /// The exit code of the Command that was executed.
@@ -37,12 +37,12 @@ namespace AlastairLundy.CliInvoke.Exceptions
         /// Thrown when a Command that was executed exited with a non-zero exit code.
         /// </summary>
         /// <param name="exitCode">The exit code of the Command that was executed.</param>
-        public CommandNotSuccessfulException(int exitCode) : base(Resources.Exceptions_CommandNotSuccessful_Generic.Replace("{x}", exitCode.ToString()))
+        public CliCommandNotSuccessfulException(int exitCode) : base(Resources.Exceptions_CommandNotSuccessful_Generic.Replace("{x}", exitCode.ToString()))
         {
             ExitCode = exitCode;
             
 #if NET5_0_OR_GREATER
-            ExecutedCommand = null;
+            ExecutedCliCommand = null;
 #endif
         }
 
@@ -51,12 +51,12 @@ namespace AlastairLundy.CliInvoke.Exceptions
         /// </summary>
         /// <param name="exitCode">The exit code of the Command that was executed.</param>
         /// <param name="command">The command that was executed.</param>
-        public CommandNotSuccessfulException(int exitCode, CliCommand command) : base(Resources.Exceptions_CommandNotSuccessful_Specific.Replace("{y}", exitCode.ToString()
+        public CliCommandNotSuccessfulException(int exitCode, CliCommandConfiguration command) : base(Resources.Exceptions_CommandNotSuccessful_Specific.Replace("{y}", exitCode.ToString()
             .Replace("{x}", command.TargetFilePath)))
         {
 #if NET5_0_OR_GREATER
-            ExecutedCommand = command;
-            Source = ExecutedCommand.TargetFilePath;
+            ExecutedCliCommand = command;
+            Source = ExecutedCliCommand.TargetFilePath;
 #endif
             
             ExitCode = exitCode;
