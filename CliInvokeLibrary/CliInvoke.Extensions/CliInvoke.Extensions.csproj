@@ -9,8 +9,8 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <TargetFrameworks>net9.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.0-preview.3</Version>
-        <Title>CliInvoke.Extensions.DependencyInjection</Title>
+        <Version>1.0.0-rc.1</Version>
+        <Title>AlastairLundy.CliInvoke.Extensions</Title>
         <Authors>AlastairLundy</Authors>
         <Description>Adds a ``AddCliInvoke`` Dependency Injection extension method to enable easy CliInvoke setup when using the Microsoft.Extensions.DependencyInjection package.</Description>
         <Copyright>Copyright (c) Alastair Lundy 2024-2025</Copyright>
@@ -29,8 +29,8 @@
 
     
     <ItemGroup>
-        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.1.0, 2.0.0)" />
-        <PackageReference Include="CliRunner" Version="1.0.0-beta.3" />
+        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.2.0, 2.0.0)" />
+        <PackageReference Include="AlastairLundy.CliInvoke" Version="1.0.0-rc.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[9.0.2, 10.0.0)" />
     </ItemGroup>
 

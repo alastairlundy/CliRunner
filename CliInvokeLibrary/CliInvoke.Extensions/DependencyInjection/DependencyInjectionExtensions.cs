@@ -8,16 +8,18 @@
 */
 
 using System;
+using AlastairLundy.CliInvoke.Abstractions;
+
 using AlastairLundy.Extensions.IO.Files;
 using AlastairLundy.Extensions.IO.Files.Abstractions;
+
 using AlastairLundy.Extensions.Processes;
 using AlastairLundy.Extensions.Processes.Abstractions;
 using AlastairLundy.Extensions.Processes.Piping;
 using AlastairLundy.Extensions.Processes.Piping.Abstractions;
 using AlastairLundy.Extensions.Processes.Utilities;
 using AlastairLundy.Extensions.Processes.Utilities.Abstractions;
-using CliRunner;
-using CliRunner.Abstractions;
+
 using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable RedundantAssignment
@@ -44,7 +46,7 @@ public static class DependencyInjectionExtensions
         services.Add(lifetime, typeof(IProcessFactory), typeof(ProcessFactory));
         services.Add(lifetime, typeof(IProcessPipeHandler), typeof(ProcessPipeHandler));
         
-        services.Add(lifetime, typeof(ICliCommandRunner), typeof(CliCommandRunner));
+        services.Add(lifetime, typeof(ICliCommandInvoker), typeof(CliCommandInvoker));
         return services;
     }
 
