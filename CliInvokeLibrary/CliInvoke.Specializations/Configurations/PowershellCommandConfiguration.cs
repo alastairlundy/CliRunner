@@ -18,13 +18,11 @@ using CliRunner.Builders;
 using CliRunner.Builders.Abstractions;
 using CliRunner.Extensibility.Abstractions;
 
-<<<<<<< TODO: Unmerged change from project 'CliInvoke.Specializations (net9.0)', Before:
-=======
+
 using CliRunner;
 using CliRunner.Specializations;
 using CliRunner.Specializations.Configurations;
 using CliInvoke.Specializations.Configurations;
->>>>>>> After
 
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -41,15 +39,15 @@ namespace AlastairLundy.CliInvoke.Specializations.Configurations
     /// A class to make running commands through cross-platform Powershell easier.
     /// </summary>
 #if NET5_0_OR_GREATER
-    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    [System.Runtime.Versioning.SupportedOSPlatform("macos")]
-    [System.Runtime.Versioning.SupportedOSPlatform("linux")]
-    [System.Runtime.Versioning.SupportedOSPlatform("freebsd")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("android")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("ios")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("watchos")]
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("browser")]
+    [UnsupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("watchos")]
 #endif
     public class PowershellCommandConfiguration : SpecializedCliCommandConfiguration
     {
@@ -95,15 +93,15 @@ namespace AlastairLundy.CliInvoke.Specializations.Configurations
         /// </summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if run on an operating system besides Windows, macOS, Linux, and FreeBSD.</exception>
 #if NET5_0_OR_GREATER
-    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    [System.Runtime.Versioning.SupportedOSPlatform("macos")]
-    [System.Runtime.Versioning.SupportedOSPlatform("linux")]
-    [System.Runtime.Versioning.SupportedOSPlatform("freebsd")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("android")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("ios")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]
-    [System.Runtime.Versioning.UnsupportedOSPlatform("watchos")]
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("freebsd")]
+    [UnsupportedOSPlatform("browser")]
+    [UnsupportedOSPlatform("android")]
+    [UnsupportedOSPlatform("ios")]
+    [UnsupportedOSPlatform("tvos")]
+    [UnsupportedOSPlatform("watchos")]
 #endif
         public new string TargetFilePath
         {
