@@ -7,7 +7,7 @@ This readme covers the **CliInvoke Specializations** library. Looking for the [C
 ## Usage
 CliInvoke.Specializations comes with 3 specializations as of 0.8.0: 
 - [CmdCommand](#cmdcommand) - An easier way to execute processes and commands through cmd.exe (Only supported on Windows)
-- [ClassicPowershellCommand](#classicpower-shellcommand) - An easier way to execute processes and commands through Windows Powershell (Only supported on Windows)
+- [ClassicPowershellCommand](#classicpowershellcommand) - An easier way to execute processes and commands through Windows Powershell (Only supported on Windows)
 - [PowershellCommand](#powershellcommand) - An easier way to execute processes and commands through the modern Cross-Platform open source Powershell (Powershell is not installed by CliInvoke and is expected to be installed if you plan to use it.)
 
 All Command specialization classes come with an already configured TargetFilePath that points to the relevant executable.
@@ -27,16 +27,16 @@ using AlastairLundy.CliInvoke.Specializations;
 
 
   ServiceProvider sp = services.Build();
-  ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
+  ICommandInvoker _commandInvoker = sp.GetService<ICommandInvoker>();
 
   //Build your command fluently
-  ICommandBuilder builder = new CommandBuilder(
+  ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
           new CmdCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.Build();
+  CliCommandConfiguration commandConfig = builder.Build();
   
-  var result = await command.ExecuteBufferedAsync(command);
+  var result = await _commandInvoker.ExecuteBufferedAsync(commandConfig);
 ```
 
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
@@ -51,16 +51,16 @@ using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
+  ICommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICommandInvoker>();
 
   //Build your command fluently
-  ICommandBuilder builder = new CommandBuilder(
+  ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
           new CmdCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.Build();
+  CliCommandConfiguration commandConfig = builder.Build();
   
-  var result = await command.ExecuteAsync(command);
+  var result = await _commandInvoker.ExecuteAsync(commandConfig);
 ```
 
 ### ClassicPowershellCommand
@@ -75,16 +75,16 @@ using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
+  ICommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICommandInvoker>();
 
    //Build your command fluently
-  ICommandBuilder builder = new CommandBuilder(
+  ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
           new ClassicPowershellCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.Build();
+  CliCommandConfiguration commandConfig = builder.Build();
   
- var result = await _commandRunner.ExecuteBufferedAsync(command);
+ var result = await _commandInvoker.ExecuteBufferedAsync(commandConfig);
 ```
 
 ### PowershellCommand
@@ -99,16 +99,16 @@ using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ICommandRunner _commandRunner = serviceProvider.GetRequiredService<ICommandRunner>();
+  ICommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICommandInvoker>();
 
    //Build your command fluently
-  ICommandBuilder builder = new CommandBuilder(
+  ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
           new PowershellCommandConfiguration("Your arguments go here"))
                 .WithWorkingDirectory(Environment.SystemDirectory);
   
-  Command command = builder.Build();
+  CliCommandConfiguration commandConfig = builder.Build();
   
- var result = await _commandRunner.ExecuteBufferedAsync(command);
+ var result = await _commandInvoker.ExecuteBufferedAsync(commandConfig);
 ```
 
 ## Licensing
