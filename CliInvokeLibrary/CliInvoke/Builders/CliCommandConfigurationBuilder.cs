@@ -18,7 +18,6 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
 
-using AlastairLundy.CliInvoke.Abstractions;
 using AlastairLundy.CliInvoke.Builders.Abstractions;
 using AlastairLundy.CliInvoke.Internal.Localizations;
 
@@ -36,31 +35,26 @@ namespace AlastairLundy.CliInvoke.Builders;
 /// A class to build Commands and Command Configurations with a Fluent configuration interface. 
 /// </summary>
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-public class CliCommandBuilder : ICliCommandBuilder
+public class CliCommandConfigurationBuilder : ICliCommandConfigurationBuilder
 {
-    private readonly ICliCommandConfiguration _commandConfiguration;
+    private readonly CliCommandConfiguration _commandConfiguration;
     
     /// <summary>
     /// Instantiates the CommandBuilder with a specified target file path of an ICommandConfiguration.
     /// </summary>
     /// <param name="targetFilePath">The target file path of a Command to be executed.</param>
-    public CliCommandBuilder(string targetFilePath)
+    public CliCommandConfigurationBuilder(string targetFilePath)
     {
-        _commandConfiguration = new CliCommand(targetFilePath, processResourcePolicy: ProcessResourcePolicy.Default);
+        _commandConfiguration = new CliCommandConfiguration(targetFilePath, processResourcePolicy: ProcessResourcePolicy.Default);
     }
 
     /// <summary>
-    /// Instantiates the CommandBuilder with a specified ICommandConfiguration configuration
+    /// Instantiates the CommandBuilder with a specified CommandConfiguration configuration
     /// </summary>
     /// <param name="commandConfiguration">The configuration to be used when building the Command.</param>
-    public CliCommandBuilder(ICliCommandConfiguration commandConfiguration)
+    public CliCommandConfigurationBuilder(CliCommandConfiguration commandConfiguration)
     {
         _commandConfiguration = commandConfiguration;
-    }
-    
-    protected CliCommandBuilder(CliCommand command)
-    {
-        _commandConfiguration = command;
     }
     
     /// <summary>
@@ -69,9 +63,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="arguments">The arguments to pass to the Command.</param>
     /// <returns>The updated ICommandBuilder object with the specified arguments.</returns>
     [Pure]
-    public ICliCommandBuilder WithArguments(IEnumerable<string> arguments) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithArguments(IEnumerable<string> arguments) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 string.Join(" ", arguments),
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -95,15 +89,15 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="escapeArguments">Whether to escape the arguments if escape characters are detected.</param>
     /// <returns>The new ICommandBuilder object with the specified arguments.</returns>
     [Pure]
-    public ICliCommandBuilder WithArguments(IEnumerable<string> arguments, bool escapeArguments)
+    public ICliCommandConfigurationBuilder WithArguments(IEnumerable<string> arguments, bool escapeArguments)
     {
         IArgumentsBuilder argumentsBuilder = new ArgumentsBuilder();
         argumentsBuilder.Add(arguments, escapeArguments);
         
         string args = argumentsBuilder.ToString();
 
-        return new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+        return new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
             args,
             _commandConfiguration.WorkingDirectoryPath,
             _commandConfiguration.RequiresAdministrator,
@@ -127,9 +121,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="arguments">The arguments to pass to the executable.</param>
     /// <returns>The new ICommandBuilder object with the specified arguments.</returns>
     [Pure]
-    public ICliCommandBuilder WithArguments(string arguments) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithArguments(string arguments) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -152,9 +146,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="targetFilePath">The target file path of the Command.</param>
     /// <returns>The Command with the updated Target File Path.</returns>
     [Pure]
-    public ICliCommandBuilder WithTargetFile(string targetFilePath) =>
-        new CliCommandBuilder(
-            new CliCommand(targetFilePath,
+    public ICliCommandConfigurationBuilder WithTargetFile(string targetFilePath) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(targetFilePath,
                 _commandConfiguration.Arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -177,9 +171,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="environmentVariables">The environment variables to be configured.</param>
     /// <returns>The new CommandBuilder with the specified environment variables.</returns>
     [Pure]
-    public ICliCommandBuilder WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithEnvironmentVariables(IReadOnlyDictionary<string, string> environmentVariables) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -202,7 +196,7 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="configure">The environment variables to be configured</param>
     /// <returns>The new CommandBuilder with the specified environment variables.</returns>
     [Pure]
-    public ICliCommandBuilder WithEnvironmentVariables(Action<IEnvironmentVariablesBuilder> configure)
+    public ICliCommandConfigurationBuilder WithEnvironmentVariables(Action<IEnvironmentVariablesBuilder> configure)
     {
         IEnvironmentVariablesBuilder environmentVariablesBuilder = new EnvironmentVariablesBuilder()
             .Set(_commandConfiguration.EnvironmentVariables);
@@ -218,9 +212,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="runAsAdministrator">Whether to execute the Command with Administrator Privileges.</param>
     /// <returns>The new CommandBuilder with the specified Administrator Privileges settings.</returns>
     [Pure]
-    public ICliCommandBuilder WithAdministratorPrivileges(bool runAsAdministrator) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithAdministratorPrivileges(bool runAsAdministrator) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 runAsAdministrator,
@@ -243,9 +237,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="workingDirectoryPath">The working directory to be used.</param>
     /// <returns>The new CommandBuilder with the specified working directory.</returns>
     [Pure]
-    public ICliCommandBuilder WithWorkingDirectory(string workingDirectoryPath) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithWorkingDirectory(string workingDirectoryPath) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
                 workingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -276,9 +270,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     [UnsupportedOSPlatform("android")]
 #endif
     [Pure]
-    public ICliCommandBuilder WithUserCredential(UserCredential credentials) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithUserCredential(UserCredential credentials) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -309,7 +303,7 @@ public class CliCommandBuilder : ICliCommandBuilder
     [UnsupportedOSPlatform("freebsd")]
     [UnsupportedOSPlatform("android")]
 #endif
-    public ICliCommandBuilder WithUserCredential(Action<IUserCredentialBuilder> configure)
+    public ICliCommandConfigurationBuilder WithUserCredential(Action<IUserCredentialBuilder> configure)
     {
         UserCredential credential;
 
@@ -338,9 +332,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="validation">The result validation behaviour to be used.</param>
     /// <returns>The new CommandBuilder object with the configured Result Validation behaviour.</returns>
     [Pure]
-    public ICliCommandBuilder WithValidation(ProcessResultValidation validation) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithValidation(ProcessResultValidation validation) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -365,7 +359,7 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
     /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandardinput"/>
     [Pure]
-    public ICliCommandBuilder WithStandardInputPipe(StreamWriter source)
+    public ICliCommandConfigurationBuilder WithStandardInputPipe(StreamWriter source)
     {
         if (_commandConfiguration.UseShellExecution == true && source != StreamWriter.Null)
         {
@@ -373,8 +367,8 @@ public class CliCommandBuilder : ICliCommandBuilder
         }
         else
         {
-            return new CliCommandBuilder(
-                new CliCommand(
+            return new CliCommandConfigurationBuilder(
+                new CliCommandConfiguration(
                     _commandConfiguration.TargetFilePath,
                     _commandConfiguration.Arguments,
                     _commandConfiguration.WorkingDirectoryPath,
@@ -402,7 +396,7 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <remarks>Using Shell Execution whilst also Redirecting Standard Output will throw an Exception. This is a known issue with the System Process class.</remarks>
     /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandardoutput"/>
     [Pure]
-    public ICliCommandBuilder WithStandardOutputPipe(StreamReader target)
+    public ICliCommandConfigurationBuilder WithStandardOutputPipe(StreamReader target)
     {
         if (_commandConfiguration.UseShellExecution == true && target != StreamReader.Null)
         {
@@ -410,8 +404,8 @@ public class CliCommandBuilder : ICliCommandBuilder
         }
         else
         {
-            return new CliCommandBuilder(
-                new CliCommand(
+            return new CliCommandConfigurationBuilder(
+                new CliCommandConfiguration(
                     _commandConfiguration.TargetFilePath,
                     _commandConfiguration.Arguments,
                     _commandConfiguration.WorkingDirectoryPath,
@@ -439,7 +433,7 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <remarks>Using Shell Execution whilst also Redirecting Standard Error will throw an Exception. This is a known issue with the System Process class.</remarks>
     /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
     [Pure]
-    public ICliCommandBuilder WithStandardErrorPipe(StreamReader target)
+    public ICliCommandConfigurationBuilder WithStandardErrorPipe(StreamReader target)
     {
         if (_commandConfiguration.UseShellExecution == true && target != StreamReader.Null)
         {
@@ -447,8 +441,8 @@ public class CliCommandBuilder : ICliCommandBuilder
         }
         else
         {
-           return new CliCommandBuilder(
-                new CliCommand(
+           return new CliCommandConfigurationBuilder(
+                new CliCommandConfiguration(
                     _commandConfiguration.TargetFilePath,
                     _commandConfiguration.Arguments,
                     _commandConfiguration.WorkingDirectoryPath,
@@ -483,9 +477,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     [UnsupportedOSPlatform("tvos")]
 #endif
     [Pure]
-    public ICliCommandBuilder WithProcessResourcePolicy(ProcessResourcePolicy processResourcePolicy) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithProcessResourcePolicy(ProcessResourcePolicy processResourcePolicy) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -511,9 +505,9 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
     /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror"/>
     [Pure]
-    public ICliCommandBuilder WithShellExecution(bool useShellExecution) =>
-        new CliCommandBuilder(
-            new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithShellExecution(bool useShellExecution) =>
+        new CliCommandConfigurationBuilder(
+            new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
                 _commandConfiguration.Arguments,
                 _commandConfiguration.WorkingDirectoryPath,
                 _commandConfiguration.RequiresAdministrator,
@@ -536,8 +530,8 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="enableWindowCreation">Whether to enable or disable window creation for the wrapped executable.</param>
     /// <returns>The new CommandBuilder with the specified window creation behaviour.</returns>
     [Pure]
-    public ICliCommandBuilder WithWindowCreation(bool enableWindowCreation) =>
-        new CliCommandBuilder(new CliCommand(_commandConfiguration.TargetFilePath,
+    public ICliCommandConfigurationBuilder WithWindowCreation(bool enableWindowCreation) =>
+        new CliCommandConfigurationBuilder(new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
            _commandConfiguration.Arguments,
            _commandConfiguration.WorkingDirectoryPath,
            _commandConfiguration.RequiresAdministrator,
@@ -563,10 +557,10 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// <param name="standardErrorEncoding">The encoding type to be used for the Standard Error.</param>
     /// <returns>The new ICommandBuilder with the specified Pipe Encoding types.</returns>
     [Pure]
-    public ICliCommandBuilder WithEncoding(Encoding standardInputEncoding = null,
+    public ICliCommandConfigurationBuilder WithEncoding(Encoding standardInputEncoding = null,
         Encoding standardOutputEncoding = null,
         Encoding standardErrorEncoding = null) =>
-        new CliCommandBuilder(new CliCommand(_commandConfiguration.TargetFilePath,
+        new CliCommandConfigurationBuilder(new CliCommandConfiguration(_commandConfiguration.TargetFilePath,
             _commandConfiguration.Arguments,
             _commandConfiguration.WorkingDirectoryPath,
             _commandConfiguration.RequiresAdministrator,
@@ -588,11 +582,11 @@ public class CliCommandBuilder : ICliCommandBuilder
     /// </summary>
     /// <returns>The newly configured Command.</returns>
     [Pure]
-    public CliCommand Build() => new CliCommand(_commandConfiguration);
+    public CliCommandConfiguration Build() => new CliCommandConfiguration(_commandConfiguration);
 
     /// <summary>
     /// Builds the ICommandConfiguration with the configured parameters.
     /// </summary>
     /// <returns>The new ICommandConfiguration.</returns>
-    public ICliCommandConfiguration BuildConfiguration() => _commandConfiguration;
+    public CliCommandConfiguration BuildConfiguration() => _commandConfiguration;
 }
