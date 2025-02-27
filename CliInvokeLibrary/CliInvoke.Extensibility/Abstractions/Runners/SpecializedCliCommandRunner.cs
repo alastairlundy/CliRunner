@@ -10,12 +10,11 @@
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
+using AlastairLundy.CliInvoke.Abstractions;
+using AlastairLundy.CliInvoke.Builders;
+using AlastairLundy.CliInvoke.Builders.Abstractions;
 using AlastairLundy.Extensions.Processes;
 
-using CliRunner;
-using CliRunner.Abstractions;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -24,20 +23,20 @@ namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Runners;
 /// <summary>
 /// An abstract class to allow creating Specialized Command runners that run Commands through other Commands.
 /// </summary>
-public abstract class SpecializedCliCommandRunner : ICliCommandRunner
+public abstract class SpecializedCliCommandInvoker : ICliCommandInvoker
 {
-    private readonly ICliCommandRunner _commandRunner;
+    private readonly ICliCommandInvoker _commandInvoker;
     
-    private readonly ICliCommandConfiguration _commandRunnerConfiguration;
+    private readonly CliCommandConfiguration _commandRunnerConfiguration;
     
     /// <summary>
     /// Instantiates the Command Running configuration and the CommandRunner.
     /// </summary>
-    /// <param name="commandRunner">The command runner to be used.</param>
+    /// <param name="commandInvoker">The command runner to be used.</param>
     /// <param name="commandRunnerConfiguration">The command running configuration to use for the Command that will run other Commands.</param>
-    protected SpecializedCliCommandRunner(ICliCommandRunner commandRunner, ICliCommandConfiguration commandRunnerConfiguration)
+    protected SpecializedCliCommandInvoker(ICliCommandInvoker commandInvoker, CliCommandConfiguration commandRunnerConfiguration)
     {
-        _commandRunner = commandRunner;
+        _commandInvoker = commandInvoker;
         _commandRunnerConfiguration = commandRunnerConfiguration;
     }
     
@@ -46,9 +45,9 @@ public abstract class SpecializedCliCommandRunner : ICliCommandRunner
     /// </summary>
     /// <param name="inputCommand">The command to be run by the Command Runner command.</param>
     /// <returns>The built Command that will run the input command.</returns>
-    protected virtual CliCommand CreateRunnerCommand(CliCommand inputCommand)
+    protected virtual CliCommandConfiguration CreateRunnerCommand(CliCommandConfiguration inputCommand)
     {
-        ICliCommandBuilder commandBuilder = new CliCommandBuilder(_commandRunnerConfiguration)
+        ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder(_commandRunnerConfiguration)
             .WithArguments(inputCommand.TargetFilePath + " " + inputCommand.Arguments)
             .WithEnvironmentVariables(inputCommand.EnvironmentVariables)
             .WithProcessResourcePolicy(inputCommand.ResourcePolicy)
@@ -81,11 +80,11 @@ public abstract class SpecializedCliCommandRunner : ICliCommandRunner
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public async Task<ProcessResult> ExecuteAsync(CliCommand command, CancellationToken cancellationToken = default)
+    public async Task<ProcessResult> ExecuteAsync(CliCommandConfiguration command, CancellationToken cancellationToken = default)
     {
-        CliCommand commandToBeRun = CreateRunnerCommand(command);
+        CliCommandConfiguration commandToBeRun = CreateRunnerCommand(command);
         
-        return await _commandRunner.ExecuteAsync(commandToBeRun, cancellationToken);
+        return await _commandInvoker.ExecuteAsync(commandToBeRun, cancellationToken);
     }
 
     /// <summary>
@@ -105,10 +104,10 @@ public abstract class SpecializedCliCommandRunner : ICliCommandRunner
     [UnsupportedOSPlatform("tvos")]
     [UnsupportedOSPlatform("browser")]
 #endif
-    public async Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommand command, CancellationToken cancellationToken = default)
+    public async Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommandConfiguration command, CancellationToken cancellationToken = default)
     {
-        CliCommand commandToBeRun = CreateRunnerCommand(command);
+        CliCommandConfiguration commandToBeRun = CreateRunnerCommand(command);
         
-        return await _commandRunner.ExecuteBufferedAsync(commandToBeRun, cancellationToken);
+        return await _commandInvoker.ExecuteBufferedAsync(commandToBeRun, cancellationToken);
     }
 }

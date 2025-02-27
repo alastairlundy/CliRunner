@@ -20,15 +20,15 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <Version>1.0.0-beta.3</Version>
-        <PackageReleaseNotes>Initial Release as separate package.</PackageReleaseNotes>
+        <Version>1.0.0-rc.1</Version>
+        <PackageReleaseNotes>Updated to support CliInvoke 1.0.0 RC 1 changes.</PackageReleaseNotes>
         <RootNamespace>AlastairLundy.CliInvoke.Extensibility</RootNamespace>
         <AssemblyName>AlastairLundy.CliInvoke.Extensibility</AssemblyName>
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.1.0, 2.0.0)" />
-        <PackageReference Include="CliRunner" Version="1.0.0-beta.3" />
+        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.2.0, 2.0.0)" />
+        <PackageReference Include="AlastairLundy.CliInvoke" Version="1.0.0-rc.1" />
     </ItemGroup>
     
     <ItemGroup>
