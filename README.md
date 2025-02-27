@@ -3,8 +3,8 @@ CliInvoke is a library for interacting with Command Line Interfaces and wrapping
 
 <img src="https://github.com/alastairlundy/CliInvoke/blob/main/.assets/icon.png" width="192" height="192" alt="CliInvoke Logo">
 
-[![NuGet](https://img.shields.io/nuget/v/CliInvoke.svg)](https://www.nuget.org/packages/CliInvoke/) 
-[![NuGet](https://img.shields.io/nuget/dt/CliInvoke.svg)](https://www.nuget.org/packages/CliInvoke/)
+[![NuGet](https://img.shields.io/nuget/v/AlastairLundy.CliInvoke.svg)](https://www.nuget.org/packages/AlastairLundy.CliInvoke/) 
+[![NuGet](https://img.shields.io/nuget/dt/AlastairLundy.CliInvoke.svg)](https://www.nuget.org/packages/AlastairLundy.CliInvoke/)
 
 ## Table of Contents
 * [Features](#features)
@@ -42,7 +42,7 @@ CliInvoke is a library for interacting with Command Line Interfaces and wrapping
 * Uses .NET's built in ``Process`` type.
 
 ## How to install and use CliInvoke
-CliInvoke is available on [Nuget](https://nuget.org).
+CliInvoke is available on Nuget.
 
 These are the CliInvoke projects:
 * CliInvoke - The main CliInvoke package.
@@ -52,11 +52,11 @@ These are the CliInvoke projects:
 ### Installing CliInvoke
 CliInvoke's packages can be installed via the .NET SDK CLI, Nuget via your IDE or code editor's package interface, or via the Nuget website.
 
-| Package Name              | Nuget Link                                                                              | .NET SDK CLI command                             |
-|---------------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------|
-| AlastairLundy.CliInvoke   | [CliInvoke Nuget](https://nuget.org/packages/CliInvoke)                                 | ``dotnet add package AlastairLundy.CliInvoke``                 |
-| AlastairLundy.CliInvoke.Extensions    | [AlastairLundy.CliInvoke.Extensions Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensions)           | ``dotnet add package AlastairLundy.CliInvoke.Extensions``      |
-| AlastairLundy.CliInvoke.Extensibility | [AlastairLundy.CliInvoke.Extensibility Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensibility)     | ``dotnet add package AlastairLundy.CliInvoke.Extensibility``   |
+| Package Name                            | Nuget Link                                                                                                          | .NET SDK CLI command                                           |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| AlastairLundy.CliInvoke                 | [CliInvoke Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke)                                               | ``dotnet add package AlastairLundy.CliInvoke``                 |
+| AlastairLundy.CliInvoke.Extensions      | [AlastairLundy.CliInvoke.Extensions Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensions)           | ``dotnet add package AlastairLundy.CliInvoke.Extensions``      |
+| AlastairLundy.CliInvoke.Extensibility   | [AlastairLundy.CliInvoke.Extensibility Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensibility)     | ``dotnet add package AlastairLundy.CliInvoke.Extensibility``   |
 | AlastairLundy.CliInvoke.Specializations | [AlastairLundy.CliInvoke.Specializations Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Specializations) | ``dotnet add package AlastairLundy.CliInvoke.Specializations`` |
 
 
@@ -104,18 +104,18 @@ using AlastairLundy.Extensions.Processes;
 
   // ServiceProvider and Dependency Injection code ommitted for clarity
   
-  ICliCommandRunner _commandRunner = serviceProvider.GetRequiredService<ICliCommandRunner>();
+  ICliCommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICliCommandInvoker>();
 
   // Fluently configure your Command.
-  ICliCommandBuilder builder = new CliCommandBuilder("Path/To/Executable")
+  ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder("Path/To/Executable")
                             .WithArguments(["arg1", "arg2"])
                             .WithWorkingDirectory("/Path/To/Directory");
   
-  // Build it as a CliCommand object when you're ready to use it.
-  CliCommand command = builder.Build();
+  // Build it as a CliCommandConfiguration object when you're ready to use it.
+  CliCommandConfiguration commandConfig = builder.Build();
   
   // Execute the CliCommand through CommandRunner and get the results.
-BufferedProcessResult result = await _commandRunner.ExecuteBufferedAsync(command);
+BufferedProcessResult result = await _commandInvoker.ExecuteBufferedAsync(commandConfig);
 ```
 
 ## How to Build CliInvoke's code
