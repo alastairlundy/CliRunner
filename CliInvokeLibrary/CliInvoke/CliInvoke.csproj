@@ -13,16 +13,24 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReleaseNotes>## Changes
-- Renamed ``Command`` to ``CliCommand``
-- Renamed ``CommandBuilder`` to ``CliCommandBuilder``
-- Renamed ``ICommandBuider`` to ``ICliCommandBuilder``
-- Renamed ``ICommandConfiguration`` to ``ICliCommandConfiguration``</PackageReleaseNotes>
+        <PackageReleaseNotes>## Changes since 1.0.0 Beta 3
+
+* Renamed library to CliInvoke to avoid confusion and affiliation with other projects named "CliRunner"
+* Adjusted namespaces to reflect library name change.
+* Merged ``ICommandConfiguration`` and ``CliCommand`` into ``CliCommandConfiguration``.
+* Renamed ``ICliCommandBuilder`` to ``ICliCommandConfigurationBuilder``
+* Renamed ``CliCommandBuilder`` to ``CliCommandConfigurationBuilder``
+* Renamed ``CliCommandRunner`` to ``CliCommandInvoker``
+* Renamed ``ICliCommandRunner`` to ``ICliCommandInvoker``
+* Renamed ``CommandNotSuccessfulException`` to ``CliCommandNotSuccessfulException``
+* Renamed ``ProcessCreator`` and ``IProcessCreator`` to ``ProcessFactory`` and ``IProcessFactory`` respectively.
+* Updated Polyfill requirement from 7.18.0 to 7.20.0
+* Updated ProcessExtensions requirement from 1.1.0 to 1.2.0</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-beta.3</PackageVersion>
-        <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
+        <PackageVersion>1.0.0-rc.1</PackageVersion>
+        <PackageTags>shell, cli, process, wrapping, commandline, invoke</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <PackageIcon>icon.png</PackageIcon>
         <AssemblyName>AlastairLundy.CliInvoke</AssemblyName>

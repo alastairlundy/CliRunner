@@ -1,9 +1,16 @@
 
-# CliRunner version history
+# CliInvoke version history
 
-## Official Releases
+## As CliInvoke
 
-### 1.0.0
+### 1.0.0 Pre-releases
+| Version | Release Date | Changelog |
+|-|-|-|
+| 1.0.0 RC 1 | February 27th 2025 | https://github.com/alastairlundy/CliInvoke/releases/1.0.0-rc.1 |
+
+## As CliRunner
+
+### 1.0.0 Pre-releases
 | Version | Release Date | Changelog |
 |-|-|-|
 | 1.0.0 Beta 3 | February 20th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-beta.3 |
@@ -14,7 +21,7 @@
 | 1.0.0 Alpha 2 | February 9th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-alpha.2 |
 | 1.0.0 Alpha 1 | February 6th 2025 | https://github.com/alastairlundy/CliRunner/releases/1.0.0-alpha.1 |
 
-## Pre-release versions
+### Pre-release versions
 | Version | Release Date | Changelog |
 |-|-|-|
 | 0.12.0 | February 4th 2025 | https://github.com/alastairlundy/CliRunner/releases/0.12.0 |
