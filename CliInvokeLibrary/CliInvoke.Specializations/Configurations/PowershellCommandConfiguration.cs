@@ -12,17 +12,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+
+using AlastairLundy.CliInvoke.Abstractions;
+using AlastairLundy.CliInvoke.Builders;
+using AlastairLundy.CliInvoke.Builders.Abstractions;
+using AlastairLundy.CliInvoke.Extensibility.Abstractions;
+
 using AlastairLundy.Extensions.Processes;
-using CliRunner.Abstractions;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
-using CliRunner.Extensibility.Abstractions;
 
-
-using CliRunner;
-using CliRunner.Specializations;
-using CliRunner.Specializations.Configurations;
-using CliInvoke.Specializations.Configurations;
 
 
 #if NETSTANDARD2_0 || NETSTANDARD2_1
@@ -51,12 +48,12 @@ namespace AlastairLundy.CliInvoke.Specializations.Configurations
 #endif
     public class PowershellCommandConfiguration : SpecializedCliCommandConfiguration
     {
-        private readonly ICliCommandRunner _commandRunner;
+        private readonly ICliCommandInvoker _commandInvoker;
 
         /// <summary>
         /// Initializes a new instance of the PowershellCommandConfiguration class.
         /// </summary>
-        /// <param name="commandRunner">The command runner to be used to get the Target File Path.</param>
+        /// <param name="commandInvoker">The command runner to be used to get the Target File Path.</param>
         /// <param name="arguments">The arguments to be passed to the command.</param>
         /// <param name="workingDirectoryPath">The working directory for the command.</param>
         /// <param name="requiresAdministrator">Indicates whether the command requires administrator privileges.</param>
@@ -72,7 +69,7 @@ namespace AlastairLundy.CliInvoke.Specializations.Configurations
         /// <param name="processResourcePolicy">The processor resource policy for the command.</param>
         /// <param name="useShellExecution">Indicates whether to use the shell to execute the command.</param>
         /// <param name="windowCreation">Indicates whether to create a new window for the command.</param>
-        public PowershellCommandConfiguration(ICliCommandRunner commandRunner, string arguments = null,
+        public PowershellCommandConfiguration(ICliCommandInvoker commandInvoker, string arguments = null,
             string workingDirectoryPath = null, bool requiresAdministrator = false,
             IReadOnlyDictionary<string, string> environmentVariables = null, UserCredential credentials = null,
             ProcessResultValidation resultValidation = ProcessResultValidation.ExitCodeZero,
@@ -85,7 +82,7 @@ namespace AlastairLundy.CliInvoke.Specializations.Configurations
             standardError, standardInputEncoding, standardOutputEncoding, standardErrorEncoding, processResourcePolicy,
             useShellExecution, windowCreation)
         {
-            _commandRunner = commandRunner;
+            _commandInvoker = commandInvoker;
         }
         
         /// <summary>
@@ -143,12 +140,12 @@ namespace AlastairLundy.CliInvoke.Specializations.Configurations
 
         private string GetUnixInstallLocation()
         {
-           ICliCommandBuilder installLocationBuilder = new CliCommandBuilder("/usr/bin/which")
+           ICliCommandConfigurationBuilder installLocationBuilder = new CliCommandConfigurationBuilder("/usr/bin/which")
                 .WithArguments("pwsh");
            
-           CliCommand command = installLocationBuilder.Build();
+           CliCommandConfiguration command = installLocationBuilder.Build();
            
-          Task<BufferedProcessResult> task = _commandRunner.ExecuteBufferedAsync(command);
+          Task<BufferedProcessResult> task = _commandInvoker.ExecuteBufferedAsync(command);
           
           task.RunSynchronously();
           
