@@ -5,7 +5,7 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <TargetFrameworks>net9.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
-        <Title>CliInvoke.Extensibility</Title>
+        <Title>AlastairLundy.CliInvoke.Extensibility</Title>
         <Authors>AlastairLundy</Authors>
         <Copyright>Copyright (c) Alastair Lundy 2024-2025</Copyright>
         <RepositoryUrl>https://github.com/alastairlundy/CliInvoke</RepositoryUrl>
