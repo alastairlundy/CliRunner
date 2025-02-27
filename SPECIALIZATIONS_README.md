@@ -1,14 +1,14 @@
 # CliInvoke.Specializations
-This readme covers the **CliInvoke Specializations** library. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
+This readme covers the **CliInvoke Specializations** library. Looking for the [CliInvoke Readme](https://github.com/alastairlundy/CliInvoke/blob/main/README.md)?
 
-[![NuGet](https://img.shields.io/nuget/v/CliRunner.Specializations.svg)](https://www.nuget.org/packages/CliRunner.Specializations/)
-[![NuGet](https://img.shields.io/nuget/dt/CliRunner.Specializations.svg)](https://www.nuget.org/packages/CliRunner.Specializations/)
+[![NuGet](https://img.shields.io/nuget/v/AlastairLundy.CliInvoke.Specializations.svg)](https://www.nuget.org/packages/AlastairLundy.CliInvoke.Specializations/)
+[![NuGet](https://img.shields.io/nuget/dt/AlastairLundy.CliInvoke.Specializations.svg)](https://www.nuget.org/packages/AlastairLundy.CliInvoke.Specializations/)
 
 ## Usage
-CliRunner.Specializations comes with 3 specializations as of 0.8.0: 
+CliInvoke.Specializations comes with 3 specializations as of 0.8.0: 
 - [CmdCommand](#cmdcommand) - An easier way to execute processes and commands through cmd.exe (Only supported on Windows)
 - [ClassicPowershellCommand](#classicpower-shellcommand) - An easier way to execute processes and commands through Windows Powershell (Only supported on Windows)
-- [PowershellCommand](#powershellcommand) - An easier way to execute processes and commands through the modern Cross-Platform open source Powershell (Powershell is not installed by CliRunner and is expected to be installed if you plan to use it.)
+- [PowershellCommand](#powershellcommand) - An easier way to execute processes and commands through the modern Cross-Platform open source Powershell (Powershell is not installed by CliInvoke and is expected to be installed if you plan to use it.)
 
 All Command specialization classes come with an already configured TargetFilePath that points to the relevant executable.
 
@@ -16,16 +16,15 @@ All Command specialization classes come with an already configured TargetFilePat
 The CmdCommand's TargetFilePath points to Windows' copy of cmd.exe .
 
 ```csharp
-using CliRunner;
-using CliRunner.Abstractions;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
-using CliRunner.Specializations.Configurations;
-using CliRunner.Specializations;
+using AlastairLundy.CliInvoke;
+using AlastairLundy.CliInvoke.Abstractions;
+using AlastairLundy.CliInvoke.Builders;
+using AlastairLundy.CliInvoke.Builders.Abstractions;
+using AlastairLundy.CliInvoke.Specializations.Configurations;
+using AlastairLundy.CliInvoke.Specializations;
 
-  /// Initialize CommandRunner with Dependency Injection.
-  ServiceCollection services = new ServiceCollection();
-  services.UseCliRunner();
+    // ServiceProvider and Dependency Injection code ommitted for clarity
+
 
   ServiceProvider sp = services.Build();
   ICommandRunner _commandRunner = sp.GetService<ICommandRunner>();
@@ -42,12 +41,13 @@ using CliRunner.Specializations;
 
 If the result of the command being run is not of concern you can call ``ExecuteAsync()`` instead of ``ExecuteBufferedAsync()`` and ignore the returned CommandResult like so:
 ```csharp
-using CliRunner;
-using CliRunner.Abstractions;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
-using CliRunner.Specializations.Configurations;
-using CliRunner.Specializations;
+using AlastairLundy.CliInvoke;
+using AlastairLundy.CliInvoke.Abstractions;
+using AlastairLundy.CliInvoke.Builders;
+using AlastairLundy.CliInvoke.Builders.Abstractions;
+using AlastairLundy.CliInvoke.Specializations.Configurations;
+
+using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
@@ -67,11 +67,11 @@ using CliRunner.Specializations;
 The ClassicPowershellCommand is a specialized Command class with an already configured TargetFilePath that points to Windows' copy of powershell.exe .
 
 ```csharp
-using CliRunner;
-using CliRunner.Abstractions;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
-using CliRunner.Specializations;
+using AlastairLundy.CliInvoke;
+using AlastairLundy.CliInvoke.Abstractions;
+using AlastairLundy.CliInvoke.Builders;
+using AlastairLundy.CliInvoke.Builders.Abstractions;
+using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
@@ -91,11 +91,11 @@ using CliRunner.Specializations;
 The PowershellCommand's TargetFilePath points to the installed copy of cross-platform Powershell if it is installed.
 
 ```csharp
-using CliRunner;
-using CliRunner.Abstractions;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
-using CliRunner.Specializations;
+using AlastairLundy.CliInvoke;
+using AlastairLundy.CliInvoke.Abstractions;
+using AlastairLundy.CliInvoke.Builders;
+using AlastairLundy.CliInvoke.Builders.Abstractions;
+using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
@@ -112,6 +112,6 @@ using CliRunner.Specializations;
 ```
 
 ## Licensing
-CliRunner and CliRunner Specializations are licensed under the MPL 2.0 license. If you modify any of CliRunner's or CliRunner.Specialization's files then the modified files must be licensed under the MPL 2.0 .
+CliInvoke and CliInvoke Specializations are licensed under the MPL 2.0 license. If you modify any of CliInvoke's or CliInvoke.Specialization's files then the modified files must be licensed under the MPL 2.0 .
 
-If you use CliRunner or CliRunner.Specializations in your project please make an exact copy of the contents of CliRunner's LICENSE.txt file available either in your third party licenses txt file or as a separate txt file.
+If you use CliInvoke or CliInvoke.Specializations in your project please make an exact copy of the contents of CliInvoke's LICENSE.txt file available either in your third party licenses txt file or as a separate txt file.
