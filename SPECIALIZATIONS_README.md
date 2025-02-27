@@ -1,5 +1,5 @@
-# CliRunner.Specializations
-This readme covers the **CliRunner Specializations** library. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
+# CliInvoke.Specializations
+This readme covers the **CliInvoke Specializations** library. Looking for the [CliRunner Readme](https://github.com/alastairlundy/CliRunner/blob/main/README.md)?
 
 [![NuGet](https://img.shields.io/nuget/v/CliRunner.Specializations.svg)](https://www.nuget.org/packages/CliRunner.Specializations/)
 [![NuGet](https://img.shields.io/nuget/dt/CliRunner.Specializations.svg)](https://www.nuget.org/packages/CliRunner.Specializations/)

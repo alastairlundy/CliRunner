@@ -1,7 +1,7 @@
 This library makes use of some open source libraries and some code from open source libraries.
 
 -----------------------------------------------------------------------------
-CliRunner makes use of some code from CliWrap.
+CliInvoke makes use of some code from CliWrap.
 
 CliWrap is licensed under the MIT License.
 
@@ -28,7 +28,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
- CliRunner uses Polyfill to enable easier support for .NET Standard 2.0 and .NET Standard 2.1
+ CliInvoke uses Polyfill to enable easier support for .NET Standard 2.0 and .NET Standard 2.1
  
 Polyfill is licensed under the MIT license.
 -----------------------------------------------------
@@ -55,7 +55,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 
- CliRunner uses AlastairLundy.Extensions.Processes to enable safer and easier running of Processes.
+ CliInvoke uses AlastairLundy.Extensions.Processes to enable safer and easier running of Processes.
  
  AlastairLundy.Extensions.Processes is licensed under the Mozilla Public License 2.0 .
 -----------------------------------------------------

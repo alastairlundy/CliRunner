@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <TargetFrameworks>net8.0;net9.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>CliInvoke.Specializations</Title>
+        <Authors>AlastairLundy</Authors>
+        <Copyright>Copyright (c) 2024-2025 Alastair Lundy</Copyright>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageVersion>1.0.0-beta.3</PackageVersion>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <RepositoryUrl>https://github.com/alastairlundy/CliInvoke</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <LangVersion>13</LangVersion>
+        <PackageReleaseNotes>### Changes since 1.0.0 Alpha 4
+* Updated CliRunner dependency to 1.0.0 Beta 3
+            * Updated Specialization classes to make use of CliRunner's 1.0.0 Alpha 4 changes</PackageReleaseNotes>
+        <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
+        <PackageIcon>icon.png</PackageIcon>
+        <RootNamespace>AlastairLundy.CliInvoke.Specializations</RootNamespace>
+        <AssemblyName>AlastairLundy.CliInvoke.Specializations</AssemblyName>
+    </PropertyGroup>
+
+
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
+        <PackageReference Include="Polyfill" Version="[7.17.0, 8.0.0)" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CliRunner" Version="1.0.0-beta.3" />
+        <PackageReference Include="CliRunner.Extensibility" Version="1.0.0-beta.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\LICENSE.txt">
+            <Link>LICENSE.txt</Link>
+            <PackagePath>LICENSE.txt</PackagePath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\..\SPECIALIZATIONS_README.md">
+            <Link>README.md</Link>
+            <PackagePath>README.md</PackagePath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Internal\Localizations\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Internal\Localizations\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\.assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Runners\" />
+    </ItemGroup>
+
+</Project>
