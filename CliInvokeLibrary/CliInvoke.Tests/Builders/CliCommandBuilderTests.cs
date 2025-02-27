@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Security;
 using System.Text;
 using AlastairLundy.Extensions.Processes;
