@@ -5,20 +5,21 @@ using System.IO;
 using System.Runtime.Versioning;
 using System.Security;
 using System.Text;
+using AlastairLundy.CliInvoke.Builders;
+using AlastairLundy.CliInvoke.Builders.Abstractions;
 using AlastairLundy.Extensions.Processes;
-using CliRunner.Builders;
-using CliRunner.Builders.Abstractions;
+
 using Xunit;
 
 namespace AlastairLundy.CliInvoke.Tests.Builders;
 
-public class CliCommandBuilderTests
+public class CliCommandConfigurationBuilderTests
 {
 
         [Fact]
         public void TestDefaultConfiguration()
         {
-                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo");
+                ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo");
 
                 var builtCommand = commandBuilder.Build();
                 Assert.Equal("foo", builtCommand.TargetFilePath);
@@ -49,7 +50,7 @@ public class CliCommandBuilderTests
         [Fact]
         public void TestIncompatiblePipingOptionsThrowsException()
         {
-                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo");
+                ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo");
 
                 //Assert
                 Assert.Throws<ArgumentException>(() =>
@@ -75,13 +76,13 @@ public class CliCommandBuilderTests
         public void TestTargetFileReconfigured()
         { 
                 //Arrange
-              ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo");
+              ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo");
               
               //Act
               commandBuilder = commandBuilder.WithTargetFile("bar");
               
               //Assert
-              CliRunner.CliCommand command = commandBuilder.Build();
+              CliCommandConfiguration command = commandBuilder.Build();
               Assert.Equal("bar", command.TargetFilePath);
         }
 
@@ -89,7 +90,7 @@ public class CliCommandBuilderTests
         public void TestArgumentsReplaced()
         {
              //Arrange
-             ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
+             ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo")
                      .WithArguments("--arg-value=value");
              
              //Act
@@ -104,14 +105,14 @@ public class CliCommandBuilderTests
         public void TestValidationReconfigured()
         {
                 //Arrange
-                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
+                ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo")
                         .WithValidation(ProcessResultValidation.None);
                 
                 //Act
                 commandBuilder = commandBuilder.WithValidation(ProcessResultValidation.ExitCodeZero);
                 
                 //Assert
-                CliRunner.CliCommand command = commandBuilder.Build();
+                CliCommandConfiguration command = commandBuilder.Build();
                 Assert.Equal(ProcessResultValidation.ExitCodeZero, command.ResultValidation);
         }
 
@@ -128,7 +129,7 @@ public class CliCommandBuilderTests
                 password.AppendChar('3');
                 password.AppendChar('4');
                 
-                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
+                ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo")
                         .WithUserCredential(new UserCredential("", "admin", password, false));
                 
                 //Act
@@ -143,7 +144,7 @@ public class CliCommandBuilderTests
                 commandBuilder = commandBuilder.WithUserCredential(userCredential);
                 
                 //Assert
-                CliRunner.CliCommand command = commandBuilder.Build();
+                CliCommandConfiguration command = commandBuilder.Build();
                 Assert.Equal(userCredential, command.Credential);
         }
 
@@ -157,7 +158,7 @@ public class CliCommandBuilderTests
         public void TestReconfiguredResourcePolicy()
         {
                 //Arrange
-                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
+                ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo")
                         .WithProcessResourcePolicy(ProcessResourcePolicy.Default);
                 
                 
@@ -170,7 +171,7 @@ public class CliCommandBuilderTests
                 commandBuilder = commandBuilder.WithProcessResourcePolicy(resourcePolicy);
                 
                 //Assert
-                CliRunner.CliCommand command = commandBuilder.Build();
+                CliCommandConfiguration command = commandBuilder.Build();
                 Assert.Equal(resourcePolicy, command.ResourcePolicy);
         }
 
@@ -178,14 +179,14 @@ public class CliCommandBuilderTests
         public void TestReconfiguredAdminPrivileges()
         {
              //Act
-             ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
+             ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo")
                      .WithAdministratorPrivileges(false);
              
              //Arrange
              commandBuilder = commandBuilder.WithAdministratorPrivileges(true);
              
              //Assert
-             CliRunner.CliCommand command = commandBuilder.Build();
+             CliCommandConfiguration command = commandBuilder.Build();
              Assert.True(command.RequiresAdministrator);
         }
 
@@ -193,14 +194,14 @@ public class CliCommandBuilderTests
         public void TestReconfiguredWorkingDirectory()
         {
                 //Act
-                ICliCommandBuilder commandBuilder = new CliCommandBuilder("foo")
+                ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder("foo")
                         .WithWorkingDirectory("dir");
                 
                 //Arrange
                 commandBuilder = commandBuilder.WithWorkingDirectory("dir2");
                 
                 //Assert
-                CliRunner.CliCommand command = commandBuilder.Build();
+                CliCommandConfiguration command = commandBuilder.Build();
                 Assert.Equal("dir2", command.WorkingDirectoryPath);
         }
 }
