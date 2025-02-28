@@ -47,7 +47,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
     private readonly Func<string, bool>? _argumentValidationLogic;
     
     /// <summary>
-    /// Initialises the ArgumentsBuilder.
+    /// Initializes the ArgumentsBuilder.
     /// </summary>
     public ArgumentsBuilder()
     {
@@ -55,7 +55,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
     }
 
     /// <summary>
-    /// Initialises the ArgumentsBuilder with the specified Argument Validation Logic.
+    /// Initializes the ArgumentsBuilder with the specified Argument Validation Logic.
     /// </summary>
     /// <param name="argumentValidationLogic">The argument validation logic to use to decide whether to allow Arguments passed to the builder.</param>
     public ArgumentsBuilder(Func<string, bool> argumentValidationLogic)
