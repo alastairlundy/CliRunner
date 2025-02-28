@@ -8,6 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace AlastairLundy.CliInvoke.Internal.Localizations {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -35,7 +38,7 @@ namespace AlastairLundy.CliInvoke.Internal.Localizations {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CliInvoke.Internal.Localizations.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlastairLundy.CliInvoke.Internal.Localizations.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -152,33 +155,6 @@ namespace AlastairLundy.CliInvoke.Internal.Localizations {
         internal static string Exceptions_FileNotFound {
             get {
                 return ResourceManager.GetString("Exceptions.FileNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot start a process that has exited..
-        /// </summary>
-        internal static string Exceptions_Processes_CannotStartExitedProcess {
-            get {
-                return ResourceManager.GetString("Exceptions.Processes.CannotStartExitedProcess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The executed process was not succesful and returned an exit code of {x}..
-        /// </summary>
-        internal static string Exceptions_ProcessNotSuccessful_Generic {
-            get {
-                return ResourceManager.GetString("Exceptions.ProcessNotSuccessful.Generic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The executed process, with executable name of {x}, was not succesful and returned an exit code of {y}..
-        /// </summary>
-        internal static string Exceptions_ProcessNotSuccessful_Specific {
-            get {
-                return ResourceManager.GetString("Exceptions.ProcessNotSuccessful.Specific", resourceCulture);
             }
         }
         
