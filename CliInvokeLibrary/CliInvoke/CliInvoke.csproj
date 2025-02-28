@@ -45,7 +45,7 @@
     
     <ItemGroup>
         <PackageReference Include="AlastairLundy.Extensions.System" Version="[6.0.0, 7.0.0)"/>
-        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.2.0, 2.0.0)"/>
+        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.2.1, 2.0.0)"/>
     </ItemGroup>
     
     <ItemGroup >

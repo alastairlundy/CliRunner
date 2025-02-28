@@ -47,7 +47,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
     private readonly Func<string, bool>? _argumentValidationLogic;
     
     /// <summary>
-    /// Initialises the ArgumentsBuilder.
+    /// Initializes the ArgumentsBuilder.
     /// </summary>
     public ArgumentsBuilder()
     {
@@ -55,7 +55,7 @@ public class ArgumentsBuilder : IArgumentsBuilder
     }
 
     /// <summary>
-    /// Initialises the ArgumentsBuilder with the specified Argument Validation Logic.
+    /// Initializes the ArgumentsBuilder with the specified Argument Validation Logic.
     /// </summary>
     /// <param name="argumentValidationLogic">The argument validation logic to use to decide whether to allow Arguments passed to the builder.</param>
     public ArgumentsBuilder(Func<string, bool> argumentValidationLogic)
@@ -195,7 +195,12 @@ public class ArgumentsBuilder : IArgumentsBuilder
     {
         if (IsValidArgument(value) == true)
         {
-            string val = (string)formatProvider.GetFormat(value.GetType());
+            string? val = (string?)formatProvider.GetFormat(value.GetType());
+
+            if (val == null)
+            {
+                throw new NullReferenceException("IFormatProvider formated the IFormattable {x} which resulted in a null string.".Replace("{x}", nameof(value)));
+            }
            
             return Add(value.ToString(val, formatProvider), escapeSpecialChars);
         }
@@ -217,9 +222,14 @@ public class ArgumentsBuilder : IArgumentsBuilder
     {
         if (IsValidArgument(value) == true)
         {
-            return Add(value.ToString((string)cultureInfo.GetFormat(value.GetType())!,
-                    DefaultFormatProvider),
-                escapeSpecialChars);
+            string? newVal = (string?)cultureInfo.GetFormat(value.GetType());
+
+            if (newVal == null)
+            {
+                throw new NullReferenceException("IFormatProvider formated the IFormattable {x} which resulted in a null string.".Replace("{x}", nameof(value)));
+            }
+            
+            return Add(value.ToString(newVal, DefaultFormatProvider), escapeSpecialChars);
         }
         else
         {
@@ -278,8 +288,13 @@ public class ArgumentsBuilder : IArgumentsBuilder
         
         foreach (IFormattable val in formattable)
         {
-            string newVal = (string)formatProvider.GetFormat(val.GetType())!;
+            string? newVal = (string?)formatProvider.GetFormat(val.GetType());
            
+            if (newVal == null)
+            {
+                throw new NullReferenceException("IFormatProvider formated the IFormattable {x} which resulted in a null string.".Replace("{x}", nameof(val)));
+            }
+            
             newVal = val.ToString(newVal, formatProvider);
 
             if (escapeSpecialChars)
@@ -309,8 +324,13 @@ public class ArgumentsBuilder : IArgumentsBuilder
         
         foreach (IFormattable val in values)
         {
-            string newVal = val.ToString((string)cultureInfo.GetFormat(val.GetType())!, DefaultFormatProvider);
+            string newVal = val.ToString((string?)cultureInfo.GetFormat(val.GetType()), DefaultFormatProvider);
 
+            if (newVal == null)
+            {
+                throw new NullReferenceException("IFormatProvider formated the IFormattable {x} which resulted in a null string.".Replace("{x}", nameof(newVal)));
+            }
+            
             strings.Add(escapeSpecialChars ? EscapeSpecialCharacters(newVal) : newVal);
         }
         
