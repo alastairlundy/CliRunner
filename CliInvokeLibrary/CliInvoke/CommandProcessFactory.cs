@@ -14,13 +14,16 @@ using OperatingSystem = Polyfills.OperatingSystemPolyfill;
 #else
 using System.Runtime.Versioning;
 #endif
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+
 using AlastairLundy.CliInvoke.Abstractions;
 using AlastairLundy.CliInvoke.Internal.Localizations;
+
 using AlastairLundy.Extensions.Processes;
 
 namespace AlastairLundy.CliInvoke;
@@ -28,7 +31,7 @@ namespace AlastairLundy.CliInvoke;
 /// <summary>
 /// A class to enable easy Process Creation with Command Configuration information.
 /// </summary>
-public class ProcessFactory : IProcessFactory
+public class CommandProcessFactory : ICommandProcessFactory
 {
     /// <summary>
     /// Creates a process with the specified process start information.
