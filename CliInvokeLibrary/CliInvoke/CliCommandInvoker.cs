@@ -47,19 +47,19 @@ public class CliCommandInvoker : ICliCommandInvoker
         
         private readonly IProcessPipeHandler _processPipeHandler;
         
-        private readonly IProcessFactory _processFactory;
+        private readonly ICommandProcessFactory _commandProcessFactory;
 
         /// <summary>
         /// Initializes the CommandRunner with the ICommandPipeHandler to be used.
         /// </summary>
         /// <param name="pipedProcessRunner"></param>
         /// <param name="processPipeHandler">The process pipe handler to be used.</param>
-        /// <param name="processFactory">The process factory to be used.</param>
-        public CliCommandInvoker(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessFactory processFactory)
+        /// <param name="commandProcessFactory">The command process factory to be used.</param>
+        public CliCommandInvoker(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, ICommandProcessFactory commandProcessFactory)
         {
             _pipedProcessRunner = pipedProcessRunner;
             _processPipeHandler = processPipeHandler;
-            _processFactory = processFactory;
+            _commandProcessFactory = commandProcessFactory;
         }
         
         
@@ -83,7 +83,7 @@ public class CliCommandInvoker : ICliCommandInvoker
 #endif
         public async Task<ProcessResult> ExecuteAsync(CliCommandConfiguration commandConfiguration, CancellationToken cancellationToken = default)
         {
-            Process process = _processFactory.CreateProcess(_processFactory.ConfigureProcess(commandConfiguration));
+            Process process = _commandProcessFactory.CreateProcess(_commandProcessFactory.ConfigureProcess(commandConfiguration));
             
             if (commandConfiguration.StandardInput != null)
             {
@@ -135,7 +135,7 @@ public class CliCommandInvoker : ICliCommandInvoker
         public async Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommandConfiguration commandConfiguration,
             CancellationToken cancellationToken = default)
         {
-            Process process = _processFactory.CreateProcess(_processFactory.ConfigureProcess(commandConfiguration,
+            Process process = _commandProcessFactory.CreateProcess(_commandProcessFactory.ConfigureProcess(commandConfiguration,
                 true, true));
 
             if (commandConfiguration.StandardInput != null && commandConfiguration.StandardInput != StreamWriter.Null)

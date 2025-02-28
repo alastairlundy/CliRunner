@@ -15,7 +15,7 @@ namespace AlastairLundy.CliInvoke.Abstractions;
 /// <summary>
 /// An interface to enable Creating Processes from Command Configuration inputs.
 /// </summary>
-public interface IProcessFactory
+public interface ICommandProcessFactory
 {
     /// <summary>
     /// Creates a process with the specified process start information.
