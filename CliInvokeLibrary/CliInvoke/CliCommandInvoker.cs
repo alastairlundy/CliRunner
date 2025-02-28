@@ -47,7 +47,7 @@ public class CliCommandInvoker : ICliCommandInvoker
         
         private readonly IProcessPipeHandler _processPipeHandler;
         
-        private readonly IProcessFactory _processFactory;
+        private readonly ICommandProcessFactory _processFactory;
 
         /// <summary>
         /// Initializes the CommandRunner with the ICommandPipeHandler to be used.
@@ -55,7 +55,7 @@ public class CliCommandInvoker : ICliCommandInvoker
         /// <param name="pipedProcessRunner"></param>
         /// <param name="processPipeHandler">The process pipe handler to be used.</param>
         /// <param name="processFactory">The process factory to be used.</param>
-        public CliCommandInvoker(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, IProcessFactory processFactory)
+        public CliCommandInvoker(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, ICommandProcessFactory processFactory)
         {
             _pipedProcessRunner = pipedProcessRunner;
             _processPipeHandler = processPipeHandler;
