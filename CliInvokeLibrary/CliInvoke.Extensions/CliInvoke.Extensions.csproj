@@ -29,7 +29,7 @@
 
     
     <ItemGroup>
-        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.2.0, 2.0.0)" />
+        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.2.1, 2.0.0)" />
         <PackageReference Include="AlastairLundy.CliInvoke" Version="1.0.0-rc.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[9.0.2, 10.0.0)" />
     </ItemGroup>
