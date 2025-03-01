@@ -18,7 +18,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageReleaseNotes>Updated code to support CliInvoke 1.0.0 RC 1</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>shell, cli, process, wrapping, commandline,</PackageTags>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -29,7 +29,6 @@
 
     
     <ItemGroup>
-        <PackageReference Include="AlastairLundy.Extensions.Processes" Version="[1.2.0, 2.0.0)" />
         <PackageReference Include="AlastairLundy.CliInvoke" Version="1.0.0-rc.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[9.0.2, 10.0.0)" />
     </ItemGroup>
@@ -45,10 +44,6 @@
             <PackagePath>README.md</PackagePath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\netstandard2.1\THIRD_PARTY_NOTICES.txt" />
-        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\net8.0\THIRD_PARTY_NOTICES.txt" />
-        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\net9.0\THIRD_PARTY_NOTICES.txt" />
-        <Content Remove="..\..\..\..\..\.nuget\packages\clirunner\1.0.0-beta.2\contentFiles\any\netstandard2.0\THIRD_PARTY_NOTICES.txt" />
     </ItemGroup>
 
     <ItemGroup>
