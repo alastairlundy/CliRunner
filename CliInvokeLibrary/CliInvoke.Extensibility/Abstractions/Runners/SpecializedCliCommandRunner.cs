@@ -23,7 +23,7 @@ namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Runners;
 /// <summary>
 /// An abstract class to allow creating Specialized Command runners that run Commands through other Commands.
 /// </summary>
-public abstract class SpecializedCliCommandInvoker : ICliCommandInvoker
+public abstract class SpecializedCliCommandInvoker : ICliCommandInvoker, ISpecializedCliCommandInvoker
 {
     private readonly ICliCommandInvoker _commandInvoker;
     
@@ -45,7 +45,7 @@ public abstract class SpecializedCliCommandInvoker : ICliCommandInvoker
     /// </summary>
     /// <param name="inputCommand">The command to be run by the Command Runner command.</param>
     /// <returns>The built Command that will run the input command.</returns>
-    protected virtual CliCommandConfiguration CreateRunnerCommand(CliCommandConfiguration inputCommand)
+    public virtual CliCommandConfiguration CreateRunnerCommand(CliCommandConfiguration inputCommand)
     {
         ICliCommandConfigurationBuilder commandBuilder = new CliCommandConfigurationBuilder(_commandRunnerConfiguration)
             .WithArguments(inputCommand.TargetFilePath + " " + inputCommand.Arguments)
