@@ -6,6 +6,7 @@
 ### 1.0.0 Pre-releases
 | Version | Release Date | Changelog |
 |-|-|-|
+| 1.0.0 RC 2 | March 1st 2025 | https://github.com/alastairlundy/CliInvoke/releases/1.0.0-rc.2 |
 | 1.0.0 RC 1 | February 27th 2025 | https://github.com/alastairlundy/CliInvoke/releases/1.0.0-rc.1 |
 
 ## As CliRunner
