@@ -27,7 +27,7 @@
 * Updated Polyfill requirement from 7.18.0 to 7.20.0
 * Updated ProcessExtensions requirement from 1.1.0 to 1.2.0</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageVersion>1.0.0-rc.1</PackageVersion>
         <PackageTags>shell, cli, process, wrapping, commandline, invoke</PackageTags>

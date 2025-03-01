@@ -8,7 +8,7 @@
         <Authors>AlastairLundy</Authors>
         <Copyright>Copyright (c) 2024-2025 Alastair Lundy</Copyright>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageVersion>1.0.0-rc.1</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
