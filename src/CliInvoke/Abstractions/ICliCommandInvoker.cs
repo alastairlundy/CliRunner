@@ -21,18 +21,18 @@ namespace AlastairLundy.CliInvoke.Abstractions;
 public interface ICliCommandInvoker
 {
     /// <summary>
-    /// Executes a command asynchronously and returns Command execution information as a CommandResult.
+    /// Executes a command asynchronously and returns Command execution information as a ProcessResult.
     /// </summary>
     /// <param name="commandConfiguration">The command to be executed.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
-    /// <returns>A CommandResult object containing the execution information of the command.</returns>
+    /// <returns>A ProcessResult object containing the execution information of the command.</returns>
     Task<ProcessResult> ExecuteAsync(CliCommandConfiguration commandConfiguration, CancellationToken cancellationToken = default);
         
     /// <summary>
-    ///Executes a command asynchronously and returns Command execution information and Command output as a BufferedCommandResult.
+    ///Executes a command asynchronously and returns Command execution information and Command output as a BufferedProcessResult.
     /// </summary>
     /// <param name="commandConfiguration">The command to be executed.</param>
     /// <param name="cancellationToken">A token to cancel the operation if required.</param>
-    /// <returns>A BufferedCommandResult object containing the output of the command.</returns>
+    /// <returns>A BufferedProcessResult object containing the output of the command.</returns>
     Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommandConfiguration commandConfiguration, CancellationToken cancellationToken = default);
 }

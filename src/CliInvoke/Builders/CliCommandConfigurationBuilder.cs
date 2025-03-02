@@ -32,7 +32,7 @@ using System.Runtime.Versioning;
 namespace AlastairLundy.CliInvoke.Builders;
 
 /// <summary>
-/// A class to build Commands and Command Configurations with a Fluent configuration interface. 
+/// A class to build Command Configurations with a Fluent configuration interface. 
 /// </summary>
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class CliCommandConfigurationBuilder : ICliCommandConfigurationBuilder
