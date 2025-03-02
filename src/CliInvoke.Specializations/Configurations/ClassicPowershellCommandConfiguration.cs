@@ -24,7 +24,7 @@ using AlastairLundy.Extensions.Processes;
 namespace AlastairLundy.CliInvoke.Specializations.Configurations
 {
     /// <summary>
-    /// A class to make running commands through Windows Powershell easier.
+    /// A Command configuration to make running commands through Windows Powershell easier.
     /// </summary>
 #if NET5_0_OR_GREATER
         [SupportedOSPlatform("windows")]

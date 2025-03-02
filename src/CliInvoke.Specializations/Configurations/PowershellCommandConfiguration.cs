@@ -20,8 +20,6 @@ using AlastairLundy.CliInvoke.Extensibility.Abstractions;
 
 using AlastairLundy.Extensions.Processes;
 
-
-
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 using OperatingSystem = Polyfills.OperatingSystemPolyfill;
 #else
@@ -33,11 +31,12 @@ using System.Runtime.Versioning;
 namespace AlastairLundy.CliInvoke.Specializations.Configurations
 {
     /// <summary>
-    /// A class to make running commands through cross-platform Powershell easier.
+    /// A Command configuration to make running commands through cross-platform Powershell easier.
     /// </summary>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
     [SupportedOSPlatform("linux")]
     [SupportedOSPlatform("freebsd")]
     [UnsupportedOSPlatform("browser")]
@@ -92,6 +91,7 @@ namespace AlastairLundy.CliInvoke.Specializations.Configurations
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [SupportedOSPlatform("macos")]
+    [SupportedOSPlatform("maccatalyst")]
     [SupportedOSPlatform("linux")]
     [SupportedOSPlatform("freebsd")]
     [UnsupportedOSPlatform("browser")]

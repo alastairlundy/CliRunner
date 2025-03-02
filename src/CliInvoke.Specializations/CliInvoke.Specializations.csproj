@@ -10,16 +10,15 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.0-rc.2</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <RepositoryUrl>https://github.com/alastairlundy/CliInvoke</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <LangVersion>13</LangVersion>
-        <PackageReleaseNotes>### Changes since 1.0.0 RC 1
-* Updated CliInvoke dependency to 1.0.0 RC 2
-            * Updated Specialization classes to make use of CliInvoke 1.0.0 RC 2's changes</PackageReleaseNotes>
+        <PackageReleaseNotes>### Changes since 1.0.0
+* Updated CliInvoke dependency to 1.0.0</PackageReleaseNotes>
         <Description>CliRunner Specializations is a library for providing Specializations of CliRunner's Commands.</Description>
         <PackageIcon>icon.png</PackageIcon>
         <RootNamespace>AlastairLundy.CliInvoke.Specializations</RootNamespace>
@@ -36,8 +35,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AlastairLundy.CliInvoke" Version="1.0.0-rc.2" />
-        <PackageReference Include="AlastairLundy.CliInvoke.Extensibility" Version="1.0.0-rc.2" />
+        <PackageReference Include="AlastairLundy.CliInvoke" Version="[1.0.0, 2.0.0)" />
+        <PackageReference Include="AlastairLundy.CliInvoke.Extensibility" Version="[1.0.0, 2.0.0)" />
     </ItemGroup>
 
     <ItemGroup>

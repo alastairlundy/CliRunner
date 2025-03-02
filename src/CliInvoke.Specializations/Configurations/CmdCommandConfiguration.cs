@@ -28,7 +28,7 @@ using System.Runtime.Versioning;
 namespace AlastairLundy.CliInvoke.Specializations.Configurations
 {
     /// <summary>
-    /// A class to make running commands through Windows CMD easier.
+    /// A Command configuration to make running commands through Windows CMD easier.
     /// </summary>
 #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]

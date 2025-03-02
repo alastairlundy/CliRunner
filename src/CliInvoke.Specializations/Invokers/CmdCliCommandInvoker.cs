@@ -10,7 +10,8 @@
 using System;
 using System.Runtime.Versioning;
 using AlastairLundy.CliInvoke.Abstractions;
-using AlastairLundy.CliInvoke.Extensibility.Abstractions.Runners;
+
+using AlastairLundy.CliInvoke.Extensibility.Abstractions.Invokers;
 
 using AlastairLundy.CliInvoke.Specializations.Configurations;
 using AlastairLundy.CliInvoke.Specializations.Internal.Localizations;
@@ -20,13 +21,13 @@ namespace AlastairLundy.CliInvoke.Specializations.Invokers;
 /// <summary>
 /// Run commands through CMD with ease.
 /// </summary>
-public class CmdCliCommandInvoker : SpecializedCliCommandInvoker
+public class CmdCliCommandInvoker : SpecializedCliCommandInvoker, ISpecializedCliCommandInvoker
 {
     /// <summary>
-    /// 
+    /// Instantiates the Cmd Cli command invoker
     /// </summary>
     /// <remarks>Only supported on Windows based operating systems.</remarks>
-    /// <param name="commandInvoker"></param>
+    /// <param name="commandInvoker">The cli command invoker service to be used to run commands.</param>
     #if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows")]
     [UnsupportedOSPlatform("linux")]
