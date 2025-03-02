@@ -7,6 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,10 +17,10 @@ using AlastairLundy.CliInvoke.Builders.Abstractions;
 
 using AlastairLundy.Extensions.Processes;
 
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
+<<<<<<<< Updated upstream:CliInvokeLibrary/CliInvoke.Extensibility/Abstractions/Runners/SpecializedCliCommandInvoker.cs
 
+========
+>>>>>>>> Stashed changes:src/CliInvoke.Extensibility/Abstractions/Invokers/SpecializedCliCommandInvoker.cs
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Invokers;
@@ -27,7 +28,7 @@ namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Invokers;
 /// <summary>
 /// An abstract class to allow creating Specialized Command runners that run Commands through other Commands.
 /// </summary>
-public abstract class SpecializedCliCommandInvoker : ISpecializedCliCommandInvoker
+public abstract class SpecializedCliCommandInvoker : ICliCommandInvoker, ISpecializedCliCommandInvoker
 {
     private readonly ICliCommandInvoker _commandInvoker;
     

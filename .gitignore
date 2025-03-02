@@ -401,5 +401,5 @@ FodyWeavers.xsd
 /docfx/_site/docs
 /docfx/_site
 /CliInvokeLibrary/.idea
-/src/.idea
 /docs/_site
+/src/.idea
