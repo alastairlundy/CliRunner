@@ -204,7 +204,7 @@ namespace AlastairLundy.CliInvoke
             StandardOutputEncoding = commandConfiguration.StandardOutputEncoding ?? Encoding.Default;
             StandardErrorEncoding = commandConfiguration.StandardErrorEncoding ?? Encoding.Default;
             
-            ResourcePolicy = commandConfiguration.ResourcePolicy;
+            ResourcePolicy = commandConfiguration.ResourcePolicy ?? ProcessResourcePolicy.Default;
             WindowCreation = commandConfiguration.WindowCreation;
             UseShellExecution = commandConfiguration.UseShellExecution;
         }
