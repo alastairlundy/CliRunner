@@ -76,8 +76,4 @@
       </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Runners\" />
-    </ItemGroup>
-
 </Project>
