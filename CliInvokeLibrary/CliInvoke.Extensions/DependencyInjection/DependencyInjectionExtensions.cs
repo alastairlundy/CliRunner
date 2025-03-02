@@ -21,6 +21,7 @@ using AlastairLundy.Extensions.Processes.Utilities;
 using AlastairLundy.Extensions.Processes.Utilities.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 // ReSharper disable RedundantAssignment
 // ReSharper disable UnusedMember.Global
@@ -34,39 +35,43 @@ public static class DependencyInjectionExtensions
     /// </summary>
     /// <param name="services">The service collection to add to.</param>
     /// <param name="lifetime">The service lifetime to use if specified; Singleton otherwise.</param>
-    /// <returns>The updated service collection with the added CliInvoke dependency injection.</returns>
+    /// <returns>The updated service collection with the added CliInvoke services set up.</returns>
     public static IServiceCollection AddCliInvoke(this IServiceCollection services,
         ServiceLifetime lifetime = ServiceLifetime.Singleton)
-    { 
-        services.Add(lifetime, typeof(IFilePathResolver), typeof(FilePathResolver));
-        
-        services.Add(lifetime, typeof(IProcessRunnerUtility), typeof(ProcessRunnerUtility));
-        services.Add(lifetime, typeof(IPipedProcessRunner), typeof(PipedProcessRunner));
-        services.Add(lifetime, typeof(IProcessRunner), typeof(ProcessRunner));
-        services.Add(lifetime, typeof(IProcessFactory), typeof(ProcessFactory));
-        services.Add(lifetime, typeof(IProcessPipeHandler), typeof(ProcessPipeHandler));
-        
-        services.Add(lifetime, typeof(ICliCommandInvoker), typeof(CliCommandInvoker));
-        return services;
-    }
-
-    private static void Add(this IServiceCollection services, ServiceLifetime lifetime, Type serviceType,
-        Type implementationType)
     {
         switch (lifetime)
         {
             case ServiceLifetime.Singleton:
-                services = services.AddSingleton(serviceType, implementationType);
+                services.TryAddSingleton<IFilePathResolver, FilePathResolver>();
+                services.TryAddSingleton<IProcessRunnerUtility, ProcessRunnerUtility>();
+                services.TryAddSingleton<IPipedProcessRunner, PipedProcessRunner>();
+                services.TryAddSingleton<IProcessPipeHandler, ProcessPipeHandler>();
+                
+                services.AddSingleton<ICommandProcessFactory, CommandProcessFactory>();
+                services.AddSingleton<ICliCommandInvoker, CliCommandInvoker>();
                 break;
             case ServiceLifetime.Scoped:
-                services = services.AddScoped(serviceType, implementationType);
+                services.TryAddScoped<IFilePathResolver, FilePathResolver>();
+                services.TryAddScoped<IProcessRunnerUtility, ProcessRunnerUtility>();
+                services.TryAddScoped<IPipedProcessRunner, PipedProcessRunner>();
+                services.TryAddScoped<IProcessPipeHandler, ProcessPipeHandler>();
+                
+                services.AddScoped<ICommandProcessFactory, CommandProcessFactory>();
+                services.AddScoped<ICliCommandInvoker, CliCommandInvoker>();
                 break;
             case ServiceLifetime.Transient:
-                services = services.AddTransient(serviceType, implementationType);
+                services.TryAddTransient<IFilePathResolver, FilePathResolver>();
+                services.TryAddTransient<IProcessRunnerUtility, ProcessRunnerUtility>();
+                services.TryAddTransient<IPipedProcessRunner, PipedProcessRunner>();
+                services.TryAddTransient<IProcessPipeHandler, ProcessPipeHandler>();
+                
+                services.AddTransient<ICommandProcessFactory, CommandProcessFactory>();
+                services.AddTransient<ICliCommandInvoker, CliCommandInvoker>();
                 break;
             default:
-                services = services.AddSingleton(serviceType, implementationType);
-                break;
+                throw new ArgumentOutOfRangeException(nameof(lifetime), lifetime, null);
         }
+        
+        return services;
     }
 }
