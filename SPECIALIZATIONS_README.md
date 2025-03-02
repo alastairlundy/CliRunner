@@ -25,9 +25,7 @@ using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
-
-  ServiceProvider sp = services.Build();
-  ICommandInvoker _commandInvoker = sp.GetService<ICommandInvoker>();
+  ICliCommandInvoker _commandInvoker = sp.GetRequiredService<ICliCommandInvoker>();
 
   //Build your command fluently
   ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
@@ -51,7 +49,7 @@ using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ICommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICommandInvoker>();
+  ICliCommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICliCommandInvoker>();
 
   //Build your command fluently
   ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
@@ -75,7 +73,7 @@ using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ICommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICommandInvoker>();
+  ICliCommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICliCommandInvoker>();
 
    //Build your command fluently
   ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
@@ -99,7 +97,7 @@ using AlastairLundy.CliInvoke.Specializations;
 
     // ServiceProvider and Dependency Injection code ommitted for clarity
 
-  ICommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICommandInvoker>();
+  ICliCommandInvoker _commandInvoker = serviceProvider.GetRequiredService<ICliCommandInvoker>();
 
    //Build your command fluently
   ICliCommandConfigurationBuilder builder = new CliCommandConfigurationBuilder(
