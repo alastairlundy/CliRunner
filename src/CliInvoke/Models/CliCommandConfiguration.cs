@@ -32,13 +32,13 @@ using AlastairLundy.Extensions.Processes;
 namespace AlastairLundy.CliInvoke
 {
     /// <summary>
-    /// A class to represent Commands that can be run.
+    /// A class to represent the configuration of a Command to be run.
     /// </summary>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class CliCommandConfiguration : IEquatable<CliCommandConfiguration>
     {
         /// <summary>
-        /// Whether administrator privileges are required when executing the Command.
+        /// Whether administrator privileges should be used when executing the Command.
         /// </summary>
         public bool RequiresAdministrator { get; protected set; }
 
@@ -68,7 +68,7 @@ namespace AlastairLundy.CliInvoke
         public IReadOnlyDictionary<string, string> EnvironmentVariables { get; protected set; }
 
         /// <summary>
-        /// The credentials to be used when executing the executable.
+        /// The credential to be used when executing the Command.
         /// </summary>
         public UserCredential Credential { get; protected set; }
 
@@ -78,29 +78,31 @@ namespace AlastairLundy.CliInvoke
         public ProcessResultValidation ResultValidation { get; protected set; }
 
         /// <summary>
-        /// The Standard Input source.
+        /// The Standard Input source to redirect Standard Input to if configured.
         /// </summary>
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
         public StreamWriter StandardInput { get; protected set; }
 
         /// <summary>
-        /// The Standard Output target.
+        /// The Standard Output target to redirect Standard Output to if configured.
         /// </summary>
         public StreamReader StandardOutput { get; protected set; }
 
         /// <summary>
-        /// The Standard Error target.
+        /// The Standard Error target to redirect Standard Output to if configured.
         /// </summary>
         public StreamReader StandardError { get; protected set; }
 
         /// <summary>
         /// The Process Resource Policy to be used for executing the Command.
         /// </summary>
+        /// <remarks>Process Resource Policy objects enable configuring Processor Affinity and other resource settings to be applied to the Command if supported by the currently running operating system.
+        /// <para>Not all properties of a Process Resource Policy support all operating systems. Check before configuring a property.</para></remarks>
         public ProcessResourcePolicy ResourcePolicy { get; protected set; }
 
         /// <summary>
-        /// Whether to use Shell Execution or not.
+        /// Whether to use Shell Execution or not when executing the Command.
         /// </summary>
         /// <remarks>Using Shell Execution whilst also Redirecting Standard Input will throw an Exception. This is a known issue with the System Process class.</remarks>
         /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.redirectstandarderror" />
@@ -109,6 +111,7 @@ namespace AlastairLundy.CliInvoke
         /// <summary>
         /// The encoding to use for the Standard Input.
         /// </summary>
+        /// <remarks>This is ignored on .NET Standard 2.0 as it is unsupported on that Target Framework's Process class.</remarks>
         public Encoding StandardInputEncoding { get; protected set; }
         
         /// <summary>
@@ -127,15 +130,15 @@ namespace AlastairLundy.CliInvoke
         /// <param name="targetFilePath">The target file path of the command to be executed.</param>
         /// <param name="arguments">The arguments to pass to the Command upon execution.</param>
         /// <param name="workingDirectoryPath">The working directory to be used.</param>
-        /// <param name="requiresAdministrator">Whether to run the Command with Administrator Privileges.</param>
+        /// <param name="requiresAdministrator">Whether to run the Command with administrator privileges.</param>
         /// <param name="environmentVariables">The environment variables to be set (if specified).</param>
-        /// <param name="credential">The credentials to be used (if specified).</param>
-        /// <param name="commandResultValidation">Enables or disables Result Validation and exception throwing if the task exits unsuccessfully.</param>
+        /// <param name="credential">The credential to be used (if specified).</param>
+        /// <param name="commandResultValidation">Whether to perform Result Validation and exception throwing if the Command exits with an exit code other than 0.</param>
         /// <param name="standardInput">The standard input source to be used (if specified).</param>
         /// <param name="standardOutput">The standard output destination to be used (if specified).</param>
         /// <param name="standardError">The standard error destination to be used (if specified).</param>
         /// <param name="processResourcePolicy">The process resource policy to be used (if specified).</param>
-        /// <param name="windowCreation">Whether to enable or disable Window Creation by the Command's Process.</param>
+        /// <param name="windowCreation">Whether to enable or disable Window Creation of the Command's Process.</param>
         /// <param name="useShellExecution">Whether to enable or disable executing the Command through Shell Execution.</param>
         /// <param name="standardInputEncoding">The Standard Input Encoding to be used (if specified).</param>
         /// <param name="standardOutputEncoding">The Standard Output Encoding to be used (if specified).</param>
@@ -181,9 +184,9 @@ namespace AlastairLundy.CliInvoke
         }
 
         /// <summary>
-        /// Creates a new Command with the specified Command Configuration.
+        /// Configures this Command configuration with the specified Command configuration.
         /// </summary>
-        /// <param name="commandConfiguration">The command configuration to be used to for the Command.</param>
+        /// <param name="commandConfiguration">The command configuration to be used to configure the Command to be run.</param>
         public CliCommandConfiguration(CliCommandConfiguration commandConfiguration)
         {
             TargetFilePath = commandConfiguration.TargetFilePath;
@@ -233,17 +236,17 @@ namespace AlastairLundy.CliInvoke
             }
             
             return RequiresAdministrator == other.RequiresAdministrator
-                   && TargetFilePath == other.TargetFilePath
-                   && WorkingDirectoryPath == other.WorkingDirectoryPath
-                   && Arguments == other.Arguments
+                   && TargetFilePath.Equals(other.TargetFilePath)
+                   && WorkingDirectoryPath.Equals(other.WorkingDirectoryPath)
+                   && Arguments.Equals(other.Arguments)
                    && WindowCreation == other.WindowCreation
-                   && Equals(EnvironmentVariables, other.EnvironmentVariables)
-                   && Equals(Credential, other.Credential)
+                   && EnvironmentVariables.Equals(other.EnvironmentVariables)
+                   && Credential.Equals(other.Credential)
                    && ResultValidation == other.ResultValidation
-                   && Equals(StandardInput, other.StandardInput)
-                   && Equals(StandardOutput, other.StandardOutput)
-                   && Equals(StandardError, other.StandardError)
-                   && ResourcePolicy == other.ResourcePolicy
+                   && StandardInput.Equals(other.StandardInput)
+                   && StandardOutput.Equals(other.StandardOutput)
+                   && StandardError.Equals(other.StandardError)
+                   && ResourcePolicy.Equals(other.ResourcePolicy)
                    && UseShellExecution == other.UseShellExecution;
         }
 

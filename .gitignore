@@ -402,3 +402,4 @@ FodyWeavers.xsd
 /docfx/_site
 /CliInvokeLibrary/.idea
 /src/.idea
+/docs/_site
