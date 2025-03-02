@@ -17,10 +17,7 @@ using AlastairLundy.CliInvoke.Builders.Abstractions;
 
 using AlastairLundy.Extensions.Processes;
 
-<<<<<<<< Updated upstream:CliInvokeLibrary/CliInvoke.Extensibility/Abstractions/Runners/SpecializedCliCommandInvoker.cs
 
-========
->>>>>>>> Stashed changes:src/CliInvoke.Extensibility/Abstractions/Invokers/SpecializedCliCommandInvoker.cs
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Invokers;
