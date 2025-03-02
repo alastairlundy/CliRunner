@@ -10,11 +10,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using AlastairLundy.Extensions.Processes;
+using AlastairLundy.CliInvoke.Abstractions;
 
 namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Runners;
 
-public interface ISpecializedCliCommandInvoker
+public interface ISpecializedCliCommandInvoker : ICliCommandInvoker
 {
     /// <summary>
     /// Create the command to be run from the Command runner configuration and an input command.
@@ -22,24 +22,4 @@ public interface ISpecializedCliCommandInvoker
     /// <param name="inputCommand">The command to be run by the Command Runner command.</param>
     /// <returns>The built Command that will run the input command.</returns>
     CliCommandConfiguration CreateRunnerCommand(CliCommandConfiguration inputCommand);
-
-    /// <summary>
-    /// Executes a command asynchronously through a Command Running Command, and returns Command execution information as a CommandResult.
-    /// </summary>
-    /// <param name="command">The command to be executed.</param>
-    /// <param name="cancellationToken">A token to cancel the operation if required.</param>
-    /// <returns>A ProcessResult object containing the execution information of the command.</returns>
-#if NET5_0_OR_GREATER
-#endif
-    Task<ProcessResult> ExecuteAsync(CliCommandConfiguration command, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Executes a command asynchronously through a CommandRunner Command and returns Command execution information and Command output as a BufferedCommandResult.
-    /// </summary>
-    /// <param name="command">The command to be executed.</param>
-    /// <param name="cancellationToken">A token to cancel the operation if required.</param>
-    /// <returns>A BufferedProcessResult object containing the output of the command that was run.</returns>
-#if NET5_0_OR_GREATER
-#endif
-    Task<BufferedProcessResult> ExecuteBufferedAsync(CliCommandConfiguration command, CancellationToken cancellationToken = default);
 }
