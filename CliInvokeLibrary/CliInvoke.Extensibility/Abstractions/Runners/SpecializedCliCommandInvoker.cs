@@ -20,7 +20,7 @@ using AlastairLundy.Extensions.Processes;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Runners;
+namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Invokers;
 
 /// <summary>
 /// An abstract class to allow creating Specialized Command runners that run Commands through other Commands.
