@@ -47,7 +47,7 @@ public static class DependencyInjectionExtensions
                 services.TryAddSingleton<IPipedProcessRunner, PipedProcessRunner>();
                 services.TryAddSingleton<IProcessPipeHandler, ProcessPipeHandler>();
                 
-                services.AddSingleton<IProcessFactory, ProcessFactory>();
+                services.AddSingleton<ICommandProcessFactory, CommandProcessFactory>();
                 services.AddSingleton<ICliCommandInvoker, CliCommandInvoker>();
                 break;
             case ServiceLifetime.Scoped:
@@ -56,7 +56,7 @@ public static class DependencyInjectionExtensions
                 services.TryAddScoped<IPipedProcessRunner, PipedProcessRunner>();
                 services.TryAddScoped<IProcessPipeHandler, ProcessPipeHandler>();
                 
-                services.AddScoped<IProcessFactory, ProcessFactory>();
+                services.AddScoped<ICommandProcessFactory, CommandProcessFactory>();
                 services.AddScoped<ICliCommandInvoker, CliCommandInvoker>();
                 break;
             case ServiceLifetime.Transient:
@@ -65,7 +65,7 @@ public static class DependencyInjectionExtensions
                 services.TryAddTransient<IPipedProcessRunner, PipedProcessRunner>();
                 services.TryAddTransient<IProcessPipeHandler, ProcessPipeHandler>();
                 
-                services.AddTransient<IProcessFactory, ProcessFactory>();
+                services.AddTransient<ICommandProcessFactory, CommandProcessFactory>();
                 services.AddTransient<ICliCommandInvoker, CliCommandInvoker>();
                 break;
             default:
