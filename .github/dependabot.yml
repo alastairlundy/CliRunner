@@ -7,9 +7,10 @@ version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directories:
-        - "/CliRunnerLibrary/CliRunner" # Location of package manifests
-        - "/CliRunnerLibrary/CliRunner.Specializations"
-        - "/CliRunnerLibrary/CliRunner.Extensions.DependencyInjection"
+        - "/src/CliInvoke" # Location of package manifests
+        - "/src/CliInvoke.Specializations"
+        - "/src/CliInvoke.Extensibility"
+        - "/src/CliInvoke.Extensions"
     schedule:
       interval: "weekly"
     versioning-strategy: increase-if-necessary
