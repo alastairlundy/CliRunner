@@ -7,6 +7,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System.Threading.Tasks;
 using AlastairLundy.CliInvoke.Abstractions;
 
 namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Invokers;
@@ -19,4 +20,10 @@ public interface ISpecializedCliCommandInvoker : ICliCommandInvoker
     /// <param name="inputCommand">The command to be run by the Command Runner command.</param>
     /// <returns>The built Command that will run the input command.</returns>
     CliCommandConfiguration CreateRunnerCommand(CliCommandConfiguration inputCommand);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    Task<bool> IsInvokerInstalledAsync();
 }
