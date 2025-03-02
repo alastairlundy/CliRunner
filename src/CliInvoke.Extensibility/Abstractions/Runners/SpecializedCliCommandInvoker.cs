@@ -25,7 +25,7 @@ namespace AlastairLundy.CliInvoke.Extensibility.Abstractions.Runners;
 /// <summary>
 /// An abstract class to allow creating Specialized Command runners that run Commands through other Commands.
 /// </summary>
-public abstract class SpecializedCliCommandInvoker : ICliCommandInvoker, ISpecializedCliCommandInvoker
+public abstract class SpecializedCliCommandInvoker : ISpecializedCliCommandInvoker
 {
     private readonly ICliCommandInvoker _commandInvoker;
     
