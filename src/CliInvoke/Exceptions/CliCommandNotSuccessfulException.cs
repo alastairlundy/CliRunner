@@ -14,6 +14,7 @@
 using System;
 
 using AlastairLundy.CliInvoke.Internal.Localizations;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace AlastairLundy.CliInvoke.Exceptions
 {
@@ -22,10 +23,11 @@ namespace AlastairLundy.CliInvoke.Exceptions
     /// </summary>
     public sealed class CliCommandNotSuccessfulException : Exception
     {
+
+#if NET5_0_OR_GREATER
         /// <summary>
         /// The command that was executed.
         /// </summary>
-#if NET5_0_OR_GREATER
         public CliCommandConfiguration? ExecutedCliCommand { get; private set; }
 #endif
         /// <summary>

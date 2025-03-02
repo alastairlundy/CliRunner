@@ -224,10 +224,10 @@ namespace AlastairLundy.CliInvoke
         }
 
         /// <summary>
-        /// Returns whether this Command object is equal to another Command object.
+        /// Returns whether this Command configuration object is equal to another Command configuration object.
         /// </summary>
-        /// <param name="other">The other Command object to be compared.</param>
-        /// <returns>true if both Command objects are the same; false otherwise.</returns>
+        /// <param name="other">The other Command configuration object to be compared.</param>
+        /// <returns>true if both Command configuration objects are the same; false otherwise.</returns>
         public bool Equals(CliCommandConfiguration other)
         {
             if (other is null)
@@ -251,7 +251,7 @@ namespace AlastairLundy.CliInvoke
         }
 
         /// <summary>
-        /// Returns whether this Command object is equal to another object.
+        /// Returns whether this Command configuration object is equal to another object.
         /// </summary>
         /// <param name="obj">The other object to be compared.</param>
         /// <returns>true if both objects are Command objects and the same; false otherwise.</returns>
@@ -271,9 +271,9 @@ namespace AlastairLundy.CliInvoke
         }
 
         /// <summary>
-        /// Returns the hashcode of this Command object.
+        /// Returns the hashcode of this Command configuration object.
         /// </summary>
-        /// <returns>the hashcode of this Command object.</returns>
+        /// <returns>the hashcode of this Command configuration object.</returns>
         public override int GetHashCode()
         {
             unchecked
@@ -296,33 +296,33 @@ namespace AlastairLundy.CliInvoke
         }
 
         /// <summary>
-        /// Determines if a Command is equal to another command.
+        /// Determines if a Command configuration is equal to another command configuration.
         /// </summary>
-        /// <param name="left">A command to be compared.</param>
-        /// <param name="right">The other command to be compared.</param>
-        /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
+        /// <param name="left">A command configuration to be compared.</param>
+        /// <param name="right">The other command configuration to be compared.</param>
+        /// <returns>True if both Command configurations are equal to each other; false otherwise.</returns>
         public static bool Equals(CliCommandConfiguration left, CliCommandConfiguration right)
         {
             return left.Equals(right);
         }
         
         /// <summary>
-        /// Determines if a Command is equal to another command.
+        /// Determines if a Command configuration is equal to another command configuration.
         /// </summary>
-        /// <param name="left">A command to be compared.</param>
-        /// <param name="right">The other command to be compared.</param>
-        /// <returns>True if both Commands are equal to each other; false otherwise.</returns>
+        /// <param name="left">A command configuration to be compared.</param>
+        /// <param name="right">The other command configuration to be compared.</param>
+        /// <returns>True if both Command configurations are equal to each other; false otherwise.</returns>
         public static bool operator ==(CliCommandConfiguration left, CliCommandConfiguration right)
         {
             return Equals(left, right);
         }
 
         /// <summary>
-        /// Determines if a Command is not equal to another command.
+        /// Determines if a Command configuration is not equal to another command configuration.
         /// </summary>
-        /// <param name="left">A command to be compared.</param>
-        /// <param name="right">The other command to be compared.</param>
-        /// <returns>True if both Commands are not equal to each other; false otherwise.</returns>
+        /// <param name="left">A command configuration to be compared.</param>
+        /// <param name="right">The other command configuration to be compared.</param>
+        /// <returns>True if both Command configurations are not equal to each other; false otherwise.</returns>
         public static bool operator !=(CliCommandConfiguration left, CliCommandConfiguration right)
         {
             return Equals(left, right) == false;

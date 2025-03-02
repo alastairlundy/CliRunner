@@ -39,7 +39,7 @@ using System.Runtime.Versioning;
 namespace AlastairLundy.CliInvoke;
 
 /// <summary>
-/// The default implementation of the CliInvoke command running mechanism, ICliCommandInvoker.
+/// The default implementation of the CliInvoke's command running mechanism, ICliCommandInvoker.
 /// </summary>
 public class CliCommandInvoker : ICliCommandInvoker
 {
@@ -50,9 +50,9 @@ public class CliCommandInvoker : ICliCommandInvoker
         private readonly ICommandProcessFactory _commandProcessFactory;
 
         /// <summary>
-        /// Initializes the CommandRunner with the ICommandPipeHandler to be used.
+        /// Initializes the CommandInvoker with the ICommandPipeHandler to be used.
         /// </summary>
-        /// <param name="pipedProcessRunner"></param>
+        /// <param name="pipedProcessRunner">The piped process runner to be used.</param>
         /// <param name="processPipeHandler">The process pipe handler to be used.</param>
         /// <param name="commandProcessFactory">The command process factory to be used.</param>
         public CliCommandInvoker(IPipedProcessRunner pipedProcessRunner, IProcessPipeHandler processPipeHandler, ICommandProcessFactory commandProcessFactory)

@@ -25,16 +25,16 @@ public interface ICommandProcessFactory
     Process CreateProcess(ProcessStartInfo processStartInfo);
 
     /// <summary>
-    /// Creates Process Start Information based on specified Command object values.
+    /// Creates Process Start Information based on specified Command configuration object values.
     /// </summary>
-    /// <param name="commandConfiguration">The command object to specify Process info.</param>
+    /// <param name="commandConfiguration">The command configuration object to specify Process info.</param>
     /// <returns>A new ProcessStartInfo object configured with the specified Command object values.</returns>
     ProcessStartInfo ConfigureProcess(CliCommandConfiguration commandConfiguration);
 
     /// <summary>
-    /// Creates Process Start Information based on specified parameters and Command object values.
+    /// Creates Process Start Information based on specified parameters and Command configuration object values.
     /// </summary>
-    /// <param name="commandConfiguration">The command object to specify Process info.</param>
+    /// <param name="commandConfiguration">The command configuration object to specify Process info.</param>
     /// <param name="redirectStandardOutput">Whether to redirect the Standard Output.</param>
     /// <param name="redirectStandardError">Whether to redirect the Standard Error.</param>
     /// <returns>A new ProcessStartInfo object configured with the specified parameters and Command object values.</returns>
