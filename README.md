@@ -52,12 +52,12 @@ These are the CliInvoke projects:
 ### Installing CliInvoke
 CliInvoke's packages can be installed via the .NET SDK CLI, Nuget via your IDE or code editor's package interface, or via the Nuget website.
 
-| Nuget Link                                                                                                          | .NET SDK CLI command                                           |
-|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| [AlastairLundy.CliInvoke Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke)                                 | ``dotnet add package AlastairLundy.CliInvoke``                 |
-| [AlastairLundy.CliInvoke.Extensions Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensions)           | ``dotnet add package AlastairLundy.CliInvoke.Extensions``      |
-| [AlastairLundy.CliInvoke.Extensibility Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensibility)     | ``dotnet add package AlastairLundy.CliInvoke.Extensibility``   |
-| [AlastairLundy.CliInvoke.Specializations Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Specializations) | ``dotnet add package AlastairLundy.CliInvoke.Specializations`` |
+| Package Name                            | Nuget Link                                                                                                          | .NET SDK CLI command                                           |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| AlastairLundy.CliInvoke                 | [CliInvoke Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke)                                               | ``dotnet add package AlastairLundy.CliInvoke``                 |
+| AlastairLundy.CliInvoke.Extensions      | [AlastairLundy.CliInvoke.Extensions Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensions)           | ``dotnet add package AlastairLundy.CliInvoke.Extensions``      |
+| AlastairLundy.CliInvoke.Extensibility   | [AlastairLundy.CliInvoke.Extensibility Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Extensibility)     | ``dotnet add package AlastairLundy.CliInvoke.Extensibility``   |
+| AlastairLundy.CliInvoke.Specializations | [AlastairLundy.CliInvoke.Specializations Nuget](https://nuget.org/packages/AlastairLundy.CliInvoke.Specializations) | ``dotnet add package AlastairLundy.CliInvoke.Specializations`` |
 
 
 ### Supported Platforms
