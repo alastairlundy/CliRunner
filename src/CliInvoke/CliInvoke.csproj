@@ -32,10 +32,6 @@
         <PackageId>AlastairLundy.CliInvoke</PackageId>
         <Product>CliInvoke</Product>
     </PropertyGroup>
-
-    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    </PropertyGroup>
     
     <ItemGroup>
         <PackageReference Include="AlastairLundy.Extensions.System" Version="[6.0.0, 7.0.0)"/>
